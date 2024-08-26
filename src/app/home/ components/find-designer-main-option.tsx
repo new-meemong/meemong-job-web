@@ -2,6 +2,7 @@ import { colors } from "@/styles/styles";
 import { useState } from "react";
 import styled from "styled-components";
 import DesignerTypeTab from "./designer-type-tab";
+import SelectLocation from "./select-location";
 
 const Container = styled.div`
   margin: 0 24px;
@@ -17,6 +18,7 @@ const FindDesignerMainOption = () => {
   return (
     <Container>
       <DesignerTypeTab activeTab={activeTab} setActiveTab={setActiveTab} />
+      <SelectLocation />
     </Container>
   );
 };
