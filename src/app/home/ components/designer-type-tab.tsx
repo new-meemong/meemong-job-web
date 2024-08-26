@@ -1,11 +1,13 @@
+import TextPrimaryBold14 from "@/components/texts/text-primary-bold-14";
 import { colors } from "@/styles/styles";
 import styled from "styled-components";
 
 const TabContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 50px;
-  border-bottom: 1px solid ${colors.purple_primary};
+  height: 34px;
+  border-radius: 5px;
+  overflow: hidden;
 `;
 
 const Tab = styled.div<{ $active: boolean }>`
@@ -18,26 +20,26 @@ const Tab = styled.div<{ $active: boolean }>`
   text-align: center;
 
   background-color: ${(props) =>
-    props.$active ? colors.purple_background_active : colors.white};
+    props.$active ? colors.purple_background_active : colors.grey_background};
   color: ${(props) => (props.$active ? colors.purple_primary : colors.grey)};
-  font-weight: ${(props) => (props.$active ? 700 : 500)};
 `;
 
 interface TabsProps {
   activeTab: number;
   setActiveTab: (index: number) => void;
 }
-const BaseTopTabs = ({ activeTab, setActiveTab }: TabsProps) => {
+
+const DesignerTypeTab = ({ activeTab, setActiveTab }: TabsProps) => {
   return (
     <TabContainer>
       <Tab $active={activeTab === 0} onClick={() => setActiveTab(0)}>
-        매장 취업하기
+        <TextPrimaryBold14>디자이너</TextPrimaryBold14>
       </Tab>
       <Tab $active={activeTab === 1} onClick={() => setActiveTab(1)}>
-        인재 찾아보기
+        <TextPrimaryBold14>인턴</TextPrimaryBold14>
       </Tab>
     </TabContainer>
   );
 };
 
-export default BaseTopTabs;
+export default DesignerTypeTab;
