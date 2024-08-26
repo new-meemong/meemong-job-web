@@ -1,8 +1,8 @@
 import { colors } from "@/styles/styles";
 import { useState } from "react";
 import styled from "styled-components";
-import DesignerTypeTab from "./designer-type-tab";
-import SelectLocation from "./select-location";
+import DesignerTypeTab from "./options/designer-type-tab";
+import SelectLocation from "./options/select-location";
 
 const Container = styled.div`
   margin: 0 24px;

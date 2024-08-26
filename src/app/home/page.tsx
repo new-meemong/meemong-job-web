@@ -6,6 +6,7 @@ import styled from "styled-components";
 import BaseTopTabs from "./ components/base-top-tab";
 import FloatingButton from "./ components/floating-button";
 import FindDesignerMainOption from "./ components/find-designer-main-option";
+import HomeTitle from "./ components/home-title";
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ export default function Home() {
   return (
     <Container>
       <BaseTopTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      <HomeTitle />
       <FindDesignerMainOption />
       <FloatingButton />
     </Container>
