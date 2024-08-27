@@ -11,7 +11,6 @@ const BaseContainer = styled.div`
 
   min-height: 100vh;
   border: 1px solid #ccc;
-  box-sizing: border-box;
 `;
 
 export default BaseContainer;

@@ -31,7 +31,6 @@ const Location = styled.div`
   border: 1px solid ${colors.purple_primary};
   border-radius: 5px;
   padding: 12px 6px;
-  box-sizing: border-box;
 `;
 
 const LocationButton = styled.div`
@@ -43,7 +42,6 @@ const LocationButton = styled.div`
   border: 1px solid ${colors.purple_primary};
   border-radius: 5px;
   padding: 12px 6px;
-  box-sizing: border-box;
 `;
 
 const LocationText = styled(TextPrimaryBold12)``;

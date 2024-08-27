@@ -30,7 +30,6 @@ const SearchDetailButton = styled.div`
   background-color: ${colors.purple_background_active};
   border-radius: 4px;
   padding: 0 10px;
-  box-sizing: border-box;
 `;
 
 const SearchDetailText = styled(TextPrimaryBold14)`

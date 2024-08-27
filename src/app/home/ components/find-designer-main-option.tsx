@@ -11,7 +11,6 @@ const Container = styled.div`
   border: 1px solid ${colors.purple_primary};
   padding: 12px;
   width: calc(100% - 48px);
-  box-sizing: border-box;
   border-radius: 5px;
 `;
 
