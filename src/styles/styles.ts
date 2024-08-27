@@ -8,5 +8,8 @@ export const colors = {
   grey_text4: "#80888A",
   grey: "#9EA8AA",
   grey_background: "#F9F9F9",
-  black: "#000000"
+  black: "#000000",
+  grey_bg4: "#D2D8D9",
+  grey_text2: "#616869",
+  grey_text: "#303535"
 };
