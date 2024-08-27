@@ -10,7 +10,8 @@ const BaseContainer = styled.div`
   justify-content: center;
 
   min-height: 100vh;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  padding-bottom: 100px;
 `;
 
 export default BaseContainer;

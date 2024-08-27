@@ -25,7 +25,7 @@ const HomeSearchResultList = () => {
       workExperience: "경력 1년 이하"
     },
     {
-      id: 1,
+      id: 2,
       title: "안녕하세요안녕하세요안녕하세요안녕하세요안녕",
       type: "디자이너",
       gender: "여",
