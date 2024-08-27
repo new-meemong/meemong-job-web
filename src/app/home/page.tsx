@@ -8,6 +8,8 @@ import FloatingButton from "./ components/floating-button";
 import FindDesignerMainOption from "./ components/find-designer-main-option";
 import HomeTitle from "./ components/home-title";
 import TalentSearchButton from "./ components/options/talent-search-button";
+import Banner from "./ components/banner";
+import HomeSearchResultList from "./ components/home-search-list";
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +23,6 @@ const TalentSearchWrapper = styled.div`
   margin-top: 12px;
   padding-left: 24px;
   padding-right: 24px;
-  box-sizing: border-box;
 `;
 
 export default function Home() {
@@ -35,6 +36,8 @@ export default function Home() {
       <TalentSearchWrapper>
         <TalentSearchButton />
       </TalentSearchWrapper>
+      <Banner />
+      <HomeSearchResultList />
       <FloatingButton />
     </Container>
   );
