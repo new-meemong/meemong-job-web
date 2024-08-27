@@ -3,6 +3,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import DesignerTypeTab from "./options/designer-type-tab";
 import SelectLocation from "./options/select-location";
+import DropdownItem from "@/components/dropdown-item";
+import OptionDetailButton from "./options/option-detail-button";
 
 const Container = styled.div`
   margin: 0 24px;
@@ -19,6 +21,11 @@ const FindDesignerMainOption = () => {
     <Container>
       <DesignerTypeTab activeTab={activeTab} setActiveTab={setActiveTab} />
       <SelectLocation />
+      <DropdownItem label="근무형태" content="무관" />
+      <DropdownItem label="성별" content="무관" />
+      <DropdownItem label="경력" content="상관없음" />
+      <DropdownItem label="미용 라이센스" content="상관없음" />
+      <OptionDetailButton />
     </Container>
   );
 };

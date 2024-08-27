@@ -62,6 +62,7 @@ const CancelButton = styled.div`
 `;
 
 const CancelText = styled(TextPrimarySemi14)``;
+
 const SelectLocation = () => {
   const selectedLocationList = ["서울 강남구", "서울 양천구"];
 

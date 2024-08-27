@@ -5,6 +5,7 @@ export const colors = {
   purple_background_active: "#E0DDFF",
 
   white: "#FFFFFF",
+  grey_text4: "#80888A",
   grey: "#9EA8AA",
   grey_background: "#F9F9F9",
   black: "#000000"
