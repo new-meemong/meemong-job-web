@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import styled from "styled-components";
 import BaseContainer from "@/components/base-container";
+import StyledComponentsRegistry from "./registry";
 
 export const metadata: Metadata = {
   title: "미몽-구인구직",
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ margin: 0 }}>
-        <BaseContainer>{children}</BaseContainer>
+        <StyledComponentsRegistry>
+          <BaseContainer>{children}</BaseContainer>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
