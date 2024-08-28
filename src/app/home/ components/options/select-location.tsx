@@ -3,6 +3,7 @@ import CloseCircleGreyIcon from "@/components/icons/close-circle-grey-icon";
 import TextPrimaryBold12 from "@/components/texts/text-primary-bold-12";
 import TextPrimarySemi14 from "@/components/texts/text-primary-semi-14";
 import { colors } from "@/styles/styles";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -33,7 +34,7 @@ const Location = styled.div`
   padding: 12px 6px;
 `;
 
-const LocationButton = styled.div`
+const LocationButton = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,7 +79,7 @@ const SelectLocation = () => {
             </React.Fragment>
           ))}
         </Location>
-        <LocationButton>
+        <LocationButton href={`home/select-location`}>
           <LocationText>지역선택하기</LocationText>
           <ArrowRightPurpleIcon />
         </LocationButton>
