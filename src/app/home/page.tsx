@@ -3,13 +3,13 @@
 import { colors } from "@/styles/styles";
 import { useState } from "react";
 import styled from "styled-components";
-import BaseTopTabs from "./ components/base-top-tab";
-import FloatingButton from "./ components/floating-button";
-import FindDesignerMainOption from "./ components/find-designer-main-option";
-import HomeTitle from "./ components/home-title";
-import TalentSearchButton from "./ components/options/talent-search-button";
-import Banner from "./ components/banner";
-import HomeSearchResultList from "./ components/home-search-list";
+import BaseTopTabs from "./components/base-top-tab";
+import FloatingButton from "./components/floating-button";
+import FindDesignerMainOption from "./components/find-designer-main-option";
+import HomeTitle from "./components/home-title";
+import TalentSearchButton from "./components/options/talent-search-button";
+import Banner from "./components/banner";
+import HomeSearchResultList from "./components/home-search-list";
 
 const Container = styled.div`
   display: flex;
