@@ -25,7 +25,7 @@ const TalentSearchWrapper = styled.div`
   padding-right: 24px;
 `;
 
-export default function Home() {
+export default function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (

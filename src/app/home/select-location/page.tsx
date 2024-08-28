@@ -1,9 +1,13 @@
 "use client";
 
+import Header from "@/components/headers/header";
+import PageContainer from "@/components/page-container";
 import styled from "styled-components";
 
-const Container = styled.div``;
-
-export default function SelectLocation() {
-  return <Container>지역 선택</Container>;
+export default function SelectLocationPage() {
+  return (
+    <PageContainer>
+      <Header title="지역 선택 필터" /> 지역 선택
+    </PageContainer>
+  );
 }

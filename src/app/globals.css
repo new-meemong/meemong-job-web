@@ -19,6 +19,12 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* * {
+  overflow: hidden;
+} */
+
+
+
 /* :root {
   --max-width: 1100px;
   --border-radius: 12px;
