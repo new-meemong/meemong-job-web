@@ -39,7 +39,7 @@ const SearchDetailText = styled(TextPrimaryBold14)`
   align-items: center;
 `;
 
-const OptionDetailButton = () => {
+const OptionalFilterButton = () => {
   return (
     <Container>
       <InitButton>초기화</InitButton>
@@ -51,4 +51,4 @@ const OptionDetailButton = () => {
   );
 };
 
-export default OptionDetailButton;
+export default OptionalFilterButton;

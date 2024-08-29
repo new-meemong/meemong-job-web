@@ -5,9 +5,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import BaseTopTabs from "./components/base-top-tab";
 import FloatingButton from "./components/floating-button";
-import FindDesignerMainOption from "./components/find-designer-main-option";
+import FindDesignerRequiredFilter from "./components/find-designer-required-filter";
 import HomeTitle from "./components/home-title";
-import TalentSearchButton from "./components/options/talent-search-button";
+import TalentSearchButton from "./components/filters/talent-search-button";
 import Banner from "./components/banner";
 import HomeSearchResultList from "./components/home-search-list";
 
@@ -32,7 +32,7 @@ export default function HomePage() {
     <Container>
       <BaseTopTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <HomeTitle />
-      <FindDesignerMainOption />
+      <FindDesignerRequiredFilter />
       <TalentSearchWrapper>
         <TalentSearchButton />
       </TalentSearchWrapper>
