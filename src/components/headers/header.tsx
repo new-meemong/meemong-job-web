@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
-import TextGreyTex2Bold18 from "../texts/text-grey-text2-bold-18";
+import TextGreyTextBold18 from "../texts/text-grey-text-bold-18";
 import { useRouter } from "next/navigation";
 
 const Container = styled.div`
@@ -9,6 +9,7 @@ const Container = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 40px;
+  margin-bottom: 12px;
 `;
 
 const LeftContainer = styled.div`
@@ -19,7 +20,7 @@ const RightContainer = styled.div`
   width: 40px;
 `;
 
-const Title = styled(TextGreyTex2Bold18)``;
+const Title = styled(TextGreyTextBold18)``;
 
 interface TitleProps {
   title: string;
