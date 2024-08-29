@@ -2,14 +2,19 @@ import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
 import TextGreyTextBold18 from "../texts/text-grey-text-bold-18";
 import { useRouter } from "next/navigation";
+import { colors } from "@/styles/styles";
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 40px;
-  margin-bottom: 12px;
+  height: 52px;
+  padding-bottom: 12px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: 1px solid ${colors.grey_line};
 `;
 
 const LeftContainer = styled.div`
@@ -22,11 +27,7 @@ const RightContainer = styled.div`
 
 const Title = styled(TextGreyTextBold18)``;
 
-interface TitleProps {
-  title: string;
-}
-
-const Header = ({ title }: TitleProps) => {
+const LocationHeader = () => {
   const router = useRouter();
 
   const handleBackClick = () => {
@@ -38,10 +39,10 @@ const Header = ({ title }: TitleProps) => {
       <LeftContainer onClick={handleBackClick}>
         <BackIcon />
       </LeftContainer>
-      <Title>{title}</Title>
+      <Title>지역 선택 필터</Title>
       <RightContainer />
     </Container>
   );
 };
 
-export default Header;
+export default LocationHeader;
