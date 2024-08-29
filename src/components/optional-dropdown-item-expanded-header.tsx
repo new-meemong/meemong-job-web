@@ -10,6 +10,7 @@ const Container = styled.div`
   align-items: center;
   margin-top: 6px;
   margin-bottom: 6px;
+  justify-content: space-between;
 `;
 
 const LabelContainer = styled.div`
@@ -17,15 +18,8 @@ const LabelContainer = styled.div`
 `;
 const Label = styled(TextPrimarySemi14)``;
 
-const ContentContainer = styled.div`
-  width: 168px;
-`;
-
-const Content = styled(TextPrimaryBold14)``;
-
-const OptionalDropdownItem = ({
+const OptionalDropdownItemExpandedHeader = ({
   label = "라벨",
-  content = "내용",
   onClick = () => {}
 }) => {
   return (
@@ -33,12 +27,9 @@ const OptionalDropdownItem = ({
       <LabelContainer>
         <Label>{label}</Label>
       </LabelContainer>
-      <ContentContainer>
-        <Content>{content}</Content>
-      </ContentContainer>
       <ArrowDownGreyIcon />
     </Container>
   );
 };
 
-export default OptionalDropdownItem;
+export default OptionalDropdownItemExpandedHeader;

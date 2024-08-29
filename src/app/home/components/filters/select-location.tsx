@@ -2,7 +2,7 @@ import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
 import CloseCircleGreyIcon from "@/components/icons/close-circle-grey-icon";
 import TextPrimaryBold12 from "@/components/texts/text-primary-bold-12";
 import TextPrimarySemi14 from "@/components/texts/text-primary-semi-14";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -29,7 +29,7 @@ const Location = styled.div`
   align-items: center;
   width: 194.5px;
   height: 38px;
-  border: 1px solid ${colors.purple_primary};
+  border: 1px solid ${colors.purplePrimary};
   border-radius: 5px;
   padding: 12px 6px;
 `;
@@ -40,7 +40,7 @@ const LocationButton = styled(Link)`
   justify-content: space-between;
   width: 115.5px;
   height: 38px;
-  border: 1px solid ${colors.purple_primary};
+  border: 1px solid ${colors.purplePrimary};
   border-radius: 5px;
   padding: 12px 6px;
 `;

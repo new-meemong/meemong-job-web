@@ -1,6 +1,6 @@
 "use client";
 
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import { useState } from "react";
 import styled from "styled-components";
 import BaseTopTabs from "./components/base-top-tab";

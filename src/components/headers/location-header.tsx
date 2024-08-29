@@ -2,7 +2,7 @@ import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
 import TextGreyTextBold18 from "../texts/text-grey-text-bold-18";
 import { useRouter } from "next/navigation";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: white;
-  border-bottom: 1px solid ${colors.grey_line};
+  border-bottom: 1px solid ${colors.greyLine};
 `;
 
 const LeftContainer = styled.div`

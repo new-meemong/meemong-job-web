@@ -3,7 +3,7 @@
 import PageContainer from "@/components/page-container";
 import styled from "styled-components";
 import BottomArea from "./components/bottom-area";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import LocationHeader from "@/components/headers/location-header";
 import TextBlackBold14 from "@/components/texts/text-black-bold-14";
 import { useState } from "react";
@@ -43,7 +43,7 @@ const LeftListItem = styled.div<ListItemProps>`
   align-items: center;
   justify-content: center;
   border: 1px solid
-    ${(props) => (props.$selected ? colors.purple_primary : colors.grey_line2)};
+    ${(props) => (props.$selected ? colors.purplePrimary : colors.greyLine2)};
 `;
 
 const RightListItem = styled.div<ListItemProps>`
@@ -55,7 +55,7 @@ const RightListItem = styled.div<ListItemProps>`
   border-radius: 5px;
   padding: 0 20px;
   background-color: ${(props) =>
-    props.$selected ? colors.purple_secondary : colors.white};
+    props.$selected ? colors.purpleSecondary : colors.white};
 `;
 
 const SelectText = styled(TextBlackBold14)``;

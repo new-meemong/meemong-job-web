@@ -1,5 +1,5 @@
 import TextPrimaryBold14 from "@/components/texts/text-primary-bold-14";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
 
 const TabContainer = styled.div`
@@ -20,8 +20,8 @@ const Tab = styled.div<{ $active: boolean }>`
   text-align: center;
 
   background-color: ${(props) =>
-    props.$active ? colors.purple_background_active : colors.grey_background};
-  color: ${(props) => (props.$active ? colors.purple_primary : colors.grey)};
+    props.$active ? colors.purpleBackgroundActive : colors.greyBackground};
+  color: ${(props) => (props.$active ? colors.purplePrimary : colors.grey)};
 `;
 
 interface TabsProps {

@@ -1,5 +1,5 @@
 import WriteIcon from "@/components/icons/write-icon";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -8,7 +8,7 @@ const Container = styled.div``;
 const WriteButton = styled.div`
   width: 60px;
   height: 60px;
-  background-color: ${colors.purple_primary};
+  background-color: ${colors.purplePrimary};
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@ const WriteButtonText = styled.span`
 `;
 
 const AdditionalButton = styled(WriteButton)<{ offset: number }>`
-  background-color: ${colors.purple_secondary};
+  background-color: ${colors.purpleSecondary};
   bottom: ${(props) => props.offset}px;
   right: 17.5px;
   width: 55px;

@@ -1,15 +1,15 @@
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
 import TextGreyText4Bold14 from "@/components/texts/text-grey-text4-bold-14";
 import TextPrimaryBold14 from "@/components/texts/text-primary-bold-14";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
-import OptionalFilters from "./optional-filter-expand";
+import OptionalFilterExpand from "./optional-filter-expand";
 import { useState } from "react";
 import OptionalFilterUnexpand from "./optional-filter-unexpand";
 
 const Container = styled.div``;
 
-const OptionalFilter = () => {
+const OptionalFilterList = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const resetFilters = () => {};
@@ -20,7 +20,7 @@ const OptionalFilter = () => {
   return (
     <Container>
       {isExpanded ? (
-        <OptionalFilters
+        <OptionalFilterExpand
           resetFilters={resetFilters}
           toggleExpanded={toggleExpanded}
         />
@@ -34,4 +34,4 @@ const OptionalFilter = () => {
   );
 };
 
-export default OptionalFilter;
+export default OptionalFilterList;

@@ -2,8 +2,9 @@ import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
 import OptionalDropdownItem from "@/components/optional-dropdown-item";
 import TextGreyText4Bold14 from "@/components/texts/text-grey-text4-bold-14";
 import TextPrimaryBold14 from "@/components/texts/text-primary-bold-14";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
+import OptionalFilter1 from "./optional-filter1";
 
 const Container = styled.div`
   padding: 12px 8px;
@@ -41,7 +42,7 @@ const FilterExpandButton = styled.div`
   align-items: center;
   width: 223px;
   height: 40px;
-  background-color: ${colors.purple_background_active};
+  background-color: ${colors.purpleBackgroundActive};
   border-radius: 4px;
   padding: 0 10px;
 `;
@@ -77,7 +78,7 @@ const OptionalFilterExpand = ({
         label={"이전 3개월 평균 매출"}
         content={"상관없음"}
       />
-      <OptionalDropdownItem label={"학력"} content={"상관없음"} />
+      <OptionalFilter1 />
       <OptionalDropdownItem label={"희망 휴무일"} content={"상관없음"} />
       <OptionalDropdownItem label={"근무 주기"} content={"상관없음"} />
       <OptionalDropdownItem label={"기숙사"} content={"상관없음"} />

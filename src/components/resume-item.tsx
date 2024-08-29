@@ -1,4 +1,4 @@
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
 import TextGreyNormal10 from "./texts/text-grey-normal-10";
 import TextGreyText2Normal10 from "./texts/text-grey-text2-normal-10";
@@ -12,7 +12,7 @@ const Container = styled.div`
   height: 146px;
   display: flex;
   flex-direction: column;
-  border: 1px solid ${colors.grey_bg4};
+  border: 1px solid ${colors.greyBacground4};
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 6px;
@@ -55,7 +55,7 @@ const ProfileImageContainer = styled.div`
   width: 91px;
   height: 91px;
   border-radius: 5px;
-  background-color: ${colors.grey_bg4};
+  background-color: ${colors.greyBacground4};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,7 +67,7 @@ const ProfileImage = styled(Image)`
   width: 91px;
   height: 91px;
   object-fit: cover;
-  background-color: ${colors.grey_bg4};
+  background-color: ${colors.greyBacground4};
   border-radius: 5px;
 `;
 
@@ -75,7 +75,7 @@ const Divider = styled.div`
   height: 6px;
   width: 1px;
   margin: 0 4px;
-  background-color: ${colors.grey_bg4};
+  background-color: ${colors.greyBacground4};
 `;
 
 const ViewCount = styled(TextGreyNormal10)`

@@ -1,4 +1,4 @@
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -7,7 +7,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${colors.grey_background};
+  background-color: ${colors.greyBackground};
   margin-top: 28px;
 `;
 

@@ -1,7 +1,7 @@
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
 import TextGreyText4Bold14 from "@/components/texts/text-grey-text4-bold-14";
 import TextPrimaryBold14 from "@/components/texts/text-primary-bold-14";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
 
 const ButtonContainer = styled.div`
@@ -17,7 +17,7 @@ const InitButton = styled(TextGreyText4Bold14)`
   align-items: center;
   width: 67px;
   height: 40px;
-  background-color: ${colors.grey_background};
+  background-color: ${colors.greyBackground};
   border-radius: 4px;
 `;
 
@@ -27,7 +27,7 @@ const FilterExpandButton = styled.div`
   align-items: center;
   width: 236px;
   height: 40px;
-  background-color: ${colors.purple_background_active};
+  background-color: ${colors.purpleBackgroundActive};
   border-radius: 4px;
   padding: 0 10px;
 `;

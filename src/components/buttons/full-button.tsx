@@ -1,9 +1,9 @@
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
 import TextWhiteBold16 from "../texts/text-white-bold-16";
 
 const Container = styled.div`
-  background-color: ${colors.purple_primary};
+  background-color: ${colors.purplePrimary};
   height: 48px;
   border-radius: 5px;
   display: flex;

@@ -1,5 +1,5 @@
 import TextWhiteBold16 from "@/components/texts/text-white-bold-16";
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -9,7 +9,7 @@ const Button = styled(TextWhiteBold16)`
   justify-content: center;
   align-items: center;
   height: 48px;
-  background-color: ${colors.purple_primary};
+  background-color: ${colors.purplePrimary};
   border-radius: 5px;
 `;
 

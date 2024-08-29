@@ -1,11 +1,11 @@
-import { colors } from "@/styles/styles";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
 
 const TabContainer = styled.div`
   display: flex;
   width: 100%;
   height: 50px;
-  border-bottom: 1px solid ${colors.purple_primary};
+  border-bottom: 1px solid ${colors.purplePrimary};
 `;
 
 const Tab = styled.div<{ $active: boolean }>`
@@ -18,8 +18,8 @@ const Tab = styled.div<{ $active: boolean }>`
   text-align: center;
 
   background-color: ${(props) =>
-    props.$active ? colors.purple_background_active : colors.white};
-  color: ${(props) => (props.$active ? colors.purple_primary : colors.grey)};
+    props.$active ? colors.purpleBackgroundActive : colors.white};
+  color: ${(props) => (props.$active ? colors.purplePrimary : colors.grey)};
   font-weight: ${(props) => (props.$active ? 700 : 500)};
 `;
 
