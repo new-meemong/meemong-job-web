@@ -1,4 +1,4 @@
-import JobSeekerItem from "@/components/job-seeker-item";
+import ResumeItem from "@/components/resume-item";
 import TextBlackBold16 from "@/components/texts/text-grey-text-bold-16";
 import styled from "styled-components";
 
@@ -39,7 +39,7 @@ const HomeSearchResultList = () => {
     <Container>
       <Title>맞춤 검색 결과</Title>
       {resultList.map((result, index) => (
-        <JobSeekerItem key={result.id} jobSeeker={result} viewCount={234} />
+        <ResumeItem key={result.id} resume={result} viewCount={234} />
       ))}
     </Container>
   );

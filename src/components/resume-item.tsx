@@ -82,8 +82,8 @@ const ViewCount = styled(TextGreyNormal10)`
   margin-top: 6px;
 `;
 
-interface JobSeekerItemProps {
-  jobSeeker: {
+interface ResumeItemProps {
+  resume: {
     location: string;
     title: string;
     type: string;
@@ -95,7 +95,7 @@ interface JobSeekerItemProps {
   viewCount: number;
 }
 
-const JobSeekerItem = ({ jobSeeker, viewCount }: JobSeekerItemProps) => {
+const ResumeItem = ({ resume, viewCount }: ResumeItemProps) => {
   const [imgSrc, setImgSrc] = useState("/images/profile-image.png");
 
   const handleImageError = () => {
@@ -104,22 +104,22 @@ const JobSeekerItem = ({ jobSeeker, viewCount }: JobSeekerItemProps) => {
 
   return (
     <Container>
-      <Location>{jobSeeker.location}</Location>
+      <Location>{resume.location}</Location>
       <ContentContainer>
         <ProfileInfoContainer>
-          <Title>{jobSeeker.title}</Title>
+          <Title>{resume.title}</Title>
           <InfoTextContainer>
-            <ProfileInfo>{jobSeeker.type}</ProfileInfo>
+            <ProfileInfo>{resume.type}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{`${jobSeeker.gender}`}</ProfileInfo>
+            <ProfileInfo>{`${resume.gender}`}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{`${jobSeeker.age}세`}</ProfileInfo>
+            <ProfileInfo>{`${resume.age}세`}</ProfileInfo>
             <Divider />
             <ProfileInfo>
-              {jobSeeker.certificate ? "자격증 보유" : "자격증 미보유"}
+              {resume.certificate ? "자격증 보유" : "자격증 미보유"}
             </ProfileInfo>
             <Divider />
-            <ProfileInfo>{jobSeeker.workExperience}</ProfileInfo>
+            <ProfileInfo>{resume.workExperience}</ProfileInfo>
           </InfoTextContainer>
           <ViewCount>{`조회 ${viewCount}`}</ViewCount>
         </ProfileInfoContainer>
@@ -137,4 +137,4 @@ const JobSeekerItem = ({ jobSeeker, viewCount }: JobSeekerItemProps) => {
   );
 };
 
-export default JobSeekerItem;
+export default ResumeItem;
