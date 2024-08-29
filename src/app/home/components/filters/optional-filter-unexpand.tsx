@@ -1,17 +1,17 @@
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
-import TextGreyBold14 from "@/components/texts/text-grey-bold-14";
+import TextGreyText4Bold14 from "@/components/texts/text-grey-text4-bold-14";
 import TextPrimaryBold14 from "@/components/texts/text-primary-bold-14";
 import { colors } from "@/styles/styles";
 import styled from "styled-components";
 
-const Container = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 6px;
+  margin-top: 12px;
 `;
 
-const InitButton = styled(TextGreyBold14)`
+const InitButton = styled(TextGreyText4Bold14)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,7 @@ const InitButton = styled(TextGreyBold14)`
   border-radius: 4px;
 `;
 
-const SearchDetailButton = styled.div`
+const FilterExpandButton = styled.div`
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
@@ -32,23 +32,33 @@ const SearchDetailButton = styled.div`
   padding: 0 10px;
 `;
 
-const SearchDetailText = styled(TextPrimaryBold14)`
+const ExpandButtonText = styled(TextPrimaryBold14)`
   width: 205px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const OptionalFilterButton = () => {
+interface OptionalFilterUnexpandButtonProps {
+  resetFilters: () => void;
+  toggleExpanded: () => void;
+}
+
+const OptionalFilterUnexpand = ({
+  resetFilters,
+  toggleExpanded
+}: OptionalFilterUnexpandButtonProps) => {
   return (
-    <Container>
-      <InitButton>초기화</InitButton>
-      <SearchDetailButton>
-        <SearchDetailText>맞춤형 인재 상세 찾기</SearchDetailText>
+    <ButtonContainer>
+      <InitButton onClick={resetFilters}>초기화</InitButton>
+      <FilterExpandButton>
+        <ExpandButtonText onClick={toggleExpanded}>
+          맞춤형 인재 상세 찾기
+        </ExpandButtonText>
         <ArrowDownPurpleIcon />
-      </SearchDetailButton>
-    </Container>
+      </FilterExpandButton>
+    </ButtonContainer>
   );
 };
 
-export default OptionalFilterButton;
+export default OptionalFilterUnexpand;

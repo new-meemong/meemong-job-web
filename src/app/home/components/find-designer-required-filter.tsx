@@ -4,7 +4,7 @@ import styled from "styled-components";
 import DesignerTypeTab from "./filters/designer-type-tab";
 import SelectLocation from "./filters/select-location";
 import DropdownItem from "@/components/dropdown-item";
-import OptionalFilterButton from "./filters/optional-filter-button";
+import OptionalFilter from "./filters/optional-filter";
 
 const Container = styled.div`
   margin: 0 24px;
@@ -24,7 +24,7 @@ const FindDesignerRequiredFilter = () => {
       <DropdownItem label="성별" content="무관" />
       <DropdownItem label="경력" content="상관없음" />
       <DropdownItem label="미용 라이센스" content="상관없음" />
-      <OptionalFilterButton />
+      <OptionalFilter />
     </Container>
   );
 };

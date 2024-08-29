@@ -2,6 +2,7 @@ export const colors = {
   purple_primary: "#5D54B7",
   purple_secondary: "#D1CCFF",
   purple_background: "#F1F0FF",
+  purple_background2: "#ECEAFF",
   purple_background_active: "#E0DDFF",
 
   white: "#FFFFFF",
