@@ -4,7 +4,10 @@ import TextGreyText4Bold14 from "@/components/texts/text-grey-text4-bold-14";
 import TextPrimaryBold14 from "@/components/texts/text-primary-bold-14";
 import { colors } from "@/styles/colors";
 import styled from "styled-components";
-import OptionalFilter1 from "./optional-filter1";
+import OptionalFilter1 from "./options-filter-expand-items/optional-filter1";
+import OptionalFilter2 from "./options-filter-expand-items/optional-filter2";
+import OptionalFilter3 from "./options-filter-expand-items/optional-filter3";
+import { fonts } from "@/styles/fonts";
 
 const Container = styled.div`
   padding: 12px 8px;
@@ -74,12 +77,9 @@ const OptionalFilterExpand = ({
           <ArrowDownPurpleIcon />
         </FilterExpandButton>
       </ButtonContainer>
-      <OptionalDropdownItem
-        label={"이전 3개월 평균 매출"}
-        content={"상관없음"}
-      />
       <OptionalFilter1 />
-      <OptionalDropdownItem label={"희망 휴무일"} content={"상관없음"} />
+      <OptionalFilter2 />
+      <OptionalFilter3 />
       <OptionalDropdownItem label={"근무 주기"} content={"상관없음"} />
       <OptionalDropdownItem label={"기숙사"} content={"상관없음"} />
       <OptionalDropdownItem label={"희망 교육"} content={"상관없음"} />

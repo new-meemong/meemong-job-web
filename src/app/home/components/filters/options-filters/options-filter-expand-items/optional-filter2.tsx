@@ -28,10 +28,11 @@ const OptionItem = styled.div<{ $isSelected: boolean }>`
   ${(props) => (props.$isSelected ? fonts.purplePrimary12 : fonts.greySemi12)}
 `;
 
-const OptionalFilter1 = () => {
+const OptionalFilter2 = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedOption, setSelectedOption] = useState("상관없음");
 
+  const label = "학력";
   const optionList = [
     "미용고등학교 졸업",
     "미용대학교 졸업",
@@ -54,7 +55,7 @@ const OptionalFilter1 = () => {
       {isExpanded ? (
         <ExpandedContainer>
           <OptionalDropdownItemExpandedHeader
-            label={"학력"}
+            label={label}
             onClick={toggleExpanded}
           />
           <OptionContainer>
@@ -71,8 +72,8 @@ const OptionalFilter1 = () => {
         </ExpandedContainer>
       ) : (
         <OptionalDropdownItem
-          label={"학력"}
-          content={"상관없음"}
+          label={label}
+          content={selectedOption}
           onClick={toggleExpanded}
         />
       )}
@@ -80,4 +81,4 @@ const OptionalFilter1 = () => {
   );
 };
 
-export default OptionalFilter1;
+export default OptionalFilter2;
