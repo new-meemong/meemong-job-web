@@ -2,8 +2,12 @@ import styled from "styled-components";
 import TextPrimarySemi14 from "./texts/text-primary-semi-14";
 import TextPrimaryBold14 from "./texts/text-primary-bold-14";
 import ArrowDownGreyIcon from "./icons/arrow-down-grey-icon";
+import BottomModal from "@/components/bottom-modal";
+import { useState } from "react";
 
-const Container = styled.div`
+const Container = styled.div``;
+
+const InnerContainer = styled.div`
   display: flex;
   width: 100%;
   height: 34px;
@@ -23,16 +27,50 @@ const ContentContainer = styled.div`
 
 const Content = styled(TextPrimaryBold14)``;
 
-const DropdownItem = ({ label = "라벨", content = "내용" }) => {
+interface DropdownItemProps {
+  label: string;
+  options: string[];
+}
+
+const DropdownItem = ({ label, options }: DropdownItemProps) => {
+  const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string>(
+    options[options.length - 1]
+  );
+
+  const handleModalClose = () => {
+    setIsBottomModalOpen(false);
+  };
+  const handleModalOpen = () => {
+    setIsBottomModalOpen(true);
+  };
+
+  const handleOptionSelect = (option: string) => {
+    setSelectedOption(option);
+    handleModalClose();
+  };
+
   return (
     <Container>
-      <LabelContainer>
-        <Label>{label}</Label>
-      </LabelContainer>
-      <ContentContainer>
-        <Content>{content}</Content>
-      </ContentContainer>
-      <ArrowDownGreyIcon />
+      <InnerContainer
+        onClick={() => {
+          handleModalOpen();
+        }}
+      >
+        <LabelContainer>
+          <Label>{label}</Label>
+        </LabelContainer>
+        <ContentContainer>
+          <Content>{selectedOption}</Content>
+        </ContentContainer>
+        <ArrowDownGreyIcon />
+      </InnerContainer>
+      <BottomModal
+        isOpen={isBottomModalOpen}
+        onClose={handleModalClose}
+        options={options}
+        onSelect={handleOptionSelect}
+      />
     </Container>
   );
 };

@@ -96,7 +96,7 @@ interface ResumeItemProps {
 }
 
 const ResumeItem = ({ resume, viewCount }: ResumeItemProps) => {
-  const [imgSrc, setImgSrc] = useState("/images/profile-image.png");
+  const [imgSrc, setImgSrc] = useState("/images/default_profile_image.jpg");
 
   const handleImageError = () => {
     setImgSrc("/images/default_profile_image.jpg"); // 이미지 로드 실패 시 대체 이미지 경로
