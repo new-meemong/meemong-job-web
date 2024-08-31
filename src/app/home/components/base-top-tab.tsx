@@ -1,11 +1,13 @@
+import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
 const TabContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 50px;
-  border-bottom: 1px solid ${colors.purplePrimary};
+  height: ${pxToVw(50)};
+  border-bottom: ${pxToVw(1)} solid ${colors.purplePrimary};
 `;
 
 const Tab = styled.div<{ $active: boolean }>`
@@ -19,8 +21,7 @@ const Tab = styled.div<{ $active: boolean }>`
 
   background-color: ${(props) =>
     props.$active ? colors.purpleBackgroundActive : colors.white};
-  color: ${(props) => (props.$active ? colors.purplePrimary : colors.grey)};
-  font-weight: ${(props) => (props.$active ? 700 : 500)};
+  ${(props) => (props.$active ? fonts.purplePrimaryBold16 : fonts.greySemi16)}
 `;
 
 interface TabsProps {

@@ -1,13 +1,22 @@
 import React from "react";
 import Image from "next/image";
+import styled from "styled-components";
+import pxToVw from "@/lib/dpi-converter";
 
+const IconWrapper = styled.div`
+  width: ${pxToVw(20)};
+  height: ${pxToVw(20)};
+  position: relative;
+`;
 const CloseCircleGreyIcon = () => (
-  <Image
-    src="/icons/close_circle_grey.svg"
-    alt="Close Circle"
-    width={20}
-    height={20}
-  />
+  <IconWrapper>
+    <Image
+      src="/icons/close_circle_grey.svg"
+      alt="Close Circle"
+      layout="fill"
+      objectFit="contain"
+    />
+  </IconWrapper>
 );
 
 export default CloseCircleGreyIcon;

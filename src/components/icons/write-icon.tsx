@@ -1,8 +1,22 @@
 import React from "react";
 import Image from "next/image";
+import styled from "styled-components";
+import pxToVw from "@/lib/dpi-converter";
 
+const IconWrapper = styled.div`
+  width: ${pxToVw(20)};
+  height: ${pxToVw(20)};
+  position: relative;
+`;
 const WriteIcon = () => (
-  <Image src="/icons/write.svg" alt="write" width={20} height={20} />
+  <IconWrapper>
+    <Image
+      src="/icons/write.svg"
+      alt="Write"
+      layout="fill"
+      objectFit="contain"
+    />
+  </IconWrapper>
 );
 
 export default WriteIcon;

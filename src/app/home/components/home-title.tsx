@@ -1,9 +1,10 @@
+import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
 const Container = styled.div`
   ${fonts.purpleSecondaryBold20}
-  height: 88px;
+  height: ${pxToVw(88)};
   width: 100%;
   display: flex;
   justify-content: center;

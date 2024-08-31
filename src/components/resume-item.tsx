@@ -3,17 +3,17 @@ import styled from "styled-components";
 import Image from "next/image";
 import { useState } from "react";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 
 const Container = styled.div`
   width: 100%;
-  /* width: 340px; */
-  height: 146px;
+  height: ${pxToVw(146)};
   display: flex;
   flex-direction: column;
-  border: 1px solid ${colors.greyBacground4};
-  border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 6px;
+  border: ${pxToVw(1)} solid ${colors.greyBacground4};
+  border-radius: ${pxToVw(10)};
+  padding: ${pxToVw(12)};
+  margin-bottom: ${pxToVw(6)};
 `;
 
 const Location = styled.span`
@@ -22,18 +22,18 @@ const Location = styled.span`
 
 const ContentContainer = styled.div`
   display: flex;
-  margin-top: 8px;
+  margin-top: ${pxToVw(8)};
 `;
 
 const ProfileInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 12px;
+  margin-right: ${pxToVw(12)};
 `;
 
 const Title = styled.span`
   ${fonts.greyTextBold16}
-  margin-bottom: 12px;
+  margin-bottom: ${pxToVw(12)};
 `;
 
 const InfoTextContainer = styled.div`
@@ -42,11 +42,13 @@ const InfoTextContainer = styled.div`
   flex-wrap: wrap;
 
   & > * {
-    margin-bottom: 4px; /* 각 줄 사이에 4px 간격 추가 */
+    margin-bottom: ${pxToVw(4)}; /* 각 줄 사이에 4px 간격 추가 */
   }
 
   & > *:nth-child(even) {
-    margin-bottom: 0; /* 마지막 줄의 Divider는 간격을 없애기 위해 수정 */
+    margin-bottom: ${pxToVw(
+      0
+    )}; /* 마지막 줄의 Divider는 간격을 없애기 위해 수정 */
   }
 `;
 
@@ -55,9 +57,9 @@ const ProfileInfo = styled.span`
 `;
 
 const ProfileImageContainer = styled.div`
-  width: 91px;
-  height: 91px;
-  border-radius: 5px;
+  width: ${pxToVw(91)};
+  height: ${pxToVw(91)};
+  border-radius: ${pxToVw(5)};
   background-color: ${colors.greyBacground4};
   display: flex;
   justify-content: center;
@@ -67,23 +69,23 @@ const ProfileImageContainer = styled.div`
 `;
 
 const ProfileImage = styled(Image)`
-  width: 91px;
-  height: 91px;
+  width: ${pxToVw(91)};
+  height: ${pxToVw(91)};
   object-fit: cover;
   background-color: ${colors.greyBacground4};
-  border-radius: 5px;
+  border-radius: ${pxToVw(5)};
 `;
 
 const Divider = styled.div`
-  height: 6px;
-  width: 1px;
-  margin: 0 4px;
+  height: ${pxToVw(6)};
+  width: ${pxToVw(1)};
+  margin: ${pxToVw(0)} ${pxToVw(4)};
   background-color: ${colors.greyBacground4};
 `;
 
 const ViewCount = styled.span`
   ${fonts.greyNormal10}
-  margin-top: 6px;
+  margin-top: ${pxToVw(6)};
 `;
 
 interface ResumeItemProps {

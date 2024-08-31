@@ -1,4 +1,5 @@
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
+import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
@@ -7,7 +8,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 12px;
+  margin-top: ${pxToVw(12)};
 `;
 
 const InitButton = styled.div`
@@ -15,26 +16,26 @@ const InitButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 67px;
-  height: 40px;
+  width: ${pxToVw(67)};
+  height: ${pxToVw(40)};
   background-color: ${colors.greyBackground};
-  border-radius: 4px;
+  border-radius: ${pxToVw(4)};
 `;
 
 const FilterExpandButton = styled.div`
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
-  width: 236px;
-  height: 40px;
+  width: ${pxToVw(236)};
+  height: ${pxToVw(40)};
   background-color: ${colors.purpleBackgroundActive};
-  border-radius: 4px;
-  padding: 0 10px;
+  border-radius: ${pxToVw(4)};
+  padding: ${pxToVw(0)} ${pxToVw(10)};
 `;
 
 const ExpandButtonText = styled.span`
   ${fonts.purplePrimaryBold14}
-  width: 205px;
+  width: ${pxToVw(205)};
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,16 +1,17 @@
 import ResumeItem from "@/components/resume-item";
+import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
 const Container = styled.div`
-  padding: 24px;
+  padding: ${pxToVw(24)};
   width: 100%;
 `;
 
 const Title = styled.span`
   ${fonts.blackBold16}
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: ${pxToVw(20)};
 `;
 
 const HomeSearchResultList = () => {

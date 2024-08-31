@@ -1,4 +1,5 @@
 import FullButton from "@/components/buttons/full-button";
+import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
@@ -10,13 +11,13 @@ const Container = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 106px;
-  padding: 14px 24px;
+  height: ${pxToVw(106)};
+  padding: ${pxToVw(14)} ${pxToVw(24)};
 `;
 
 const CountContainer = styled.div`
   display: flex;
-  gap: 10px;
+  gap: ${pxToVw(10)};
 `;
 
 const SelectedCount = styled.span`

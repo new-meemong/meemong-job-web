@@ -10,6 +10,7 @@ import HomeTitle from "./components/home-title";
 import TalentSearchButton from "./components/filters/talent-search-button";
 import Banner from "./components/banner";
 import HomeSearchResultList from "./components/home-search-list";
+import pxToVw from "@/lib/dpi-converter";
 
 const Container = styled.div`
   display: flex;
@@ -20,9 +21,9 @@ const Container = styled.div`
 
 const TalentSearchWrapper = styled.div`
   width: 100%;
-  margin-top: 12px;
-  padding-left: 24px;
-  padding-right: 24px;
+  margin-top: ${pxToVw(12)};
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
 `;
 
 export default function HomePage() {

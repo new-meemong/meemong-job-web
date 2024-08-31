@@ -1,13 +1,23 @@
 import React from "react";
 import Image from "next/image";
+import styled from "styled-components";
+import pxToVw from "@/lib/dpi-converter";
+
+const IconWrapper = styled.div`
+  width: ${pxToVw(14)};
+  height: ${pxToVw(14)};
+  position: relative;
+`;
 
 const ArrowRightPurpleIcon = () => (
-  <Image
-    src="/icons/arrow_right_purple.svg"
-    alt="Arrow Right"
-    width={14}
-    height={14}
-  />
+  <IconWrapper>
+    <Image
+      src="/icons/arrow_right_purple.svg"
+      alt="Arrow Right"
+      layout="fill" // 이미지가 부모의 크기에 맞춰지도록 설정
+      objectFit="contain"
+    />
+  </IconWrapper>
 );
 
 export default ArrowRightPurpleIcon;

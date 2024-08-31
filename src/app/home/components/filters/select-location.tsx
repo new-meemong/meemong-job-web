@@ -1,5 +1,6 @@
 import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
 import CloseCircleGreyIcon from "@/components/icons/close-circle-grey-icon";
+import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import Link from "next/link";
@@ -15,24 +16,24 @@ const Container = styled.div`
 
 const Label = styled.span`
   ${fonts.purplePrimarySemi14}
-  padding: 12px 0;
+  padding: ${pxToVw(12)} ${pxToVw(0)};
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
-  gap: 8px;
+  gap: ${pxToVw(8)};
 `;
 const Location = styled.div`
   ${fonts.purplePrimaryBold12}
   display: flex;
   /* justify-content: center; */
   align-items: center;
-  width: 194.5px;
-  height: 38px;
-  border: 1px solid ${colors.purplePrimary};
-  border-radius: 5px;
-  padding: 12px 6px;
+  width: ${pxToVw(194.5)};
+  height: ${pxToVw(38)};
+  border: ${pxToVw(1)} solid ${colors.purplePrimary};
+  border-radius: ${pxToVw(5)};
+  padding: ${pxToVw(12)} ${pxToVw(6)};
 `;
 
 const LocationButton = styled(Link)`
@@ -40,24 +41,24 @@ const LocationButton = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 115.5px;
-  height: 38px;
-  border: 1px solid ${colors.purplePrimary};
-  border-radius: 5px;
-  padding: 12px 6px;
+  width: ${pxToVw(115.5)};
+  height: ${pxToVw(38)};
+  border: ${pxToVw(1)} solid ${colors.purplePrimary};
+  border-radius: ${pxToVw(5)};
+  padding: ${pxToVw(12)} ${pxToVw(6)};
 `;
 
 const CancelContainer = styled.div`
   display: flex;
-  padding-top: 4px;
-  gap: 12px;
+  padding-top: ${pxToVw(4)};
+  gap: ${pxToVw(12)};
   flex-wrap: wrap;
 `;
 
 const CancelButton = styled.div`
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: ${pxToVw(2)};
 `;
 
 const CancelText = styled.span`

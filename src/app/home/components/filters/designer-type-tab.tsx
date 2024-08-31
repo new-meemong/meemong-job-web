@@ -1,3 +1,4 @@
+import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
@@ -5,8 +6,8 @@ import styled from "styled-components";
 const TabContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 34px;
-  border-radius: 5px;
+  height: ${pxToVw(34)};
+  border-radius: ${pxToVw(5)};
   overflow: hidden;
 `;
 

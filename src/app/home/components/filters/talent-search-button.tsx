@@ -1,3 +1,4 @@
+import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { useState } from "react";
@@ -9,9 +10,9 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 48px;
+  height: ${pxToVw(48)};
   background-color: ${colors.purplePrimary};
-  border-radius: 5px;
+  border-radius: ${pxToVw(5)};
 `;
 
 const TalentSearchButton = () => {

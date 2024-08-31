@@ -9,26 +9,26 @@ import { useState } from "react";
 import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";
 import CheckboxUnselectIcon from "@/components/icons/checkbox-unselect-icon";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 
 const ContentContainer = styled.div`
   display: flex;
   width: 100%;
-  padding-left: 20px;
-  height: calc(100vh - 52px - 106px);
-  gap: 10px;
+  padding-left: ${pxToVw(20)};
+  gap: ${pxToVw(10)};
 `;
 
 const LeftScrollContainer = styled.div`
-  width: 107px;
+  width: ${pxToVw(107)};
   overflow-y: auto;
-  height: calc(100vh - 52px - 106px);
-  padding-top: 16px;
+  height: calc(100vh - ${pxToVw(52)} - ${pxToVw(106)});
+  padding-top: ${pxToVw(16)};
 `;
 const RightScrollContainer = styled.div`
   flex-grow: 1;
   overflow-y: auto;
-  height: calc(100vh - 52px - 106px);
-  padding-top: 16px;
+  height: calc(100vh - ${pxToVw(52)} - ${pxToVw(106)});
+  padding-top: ${pxToVw(16)};
 `;
 
 interface ListItemProps {
@@ -36,8 +36,8 @@ interface ListItemProps {
 }
 
 const LeftListItem = styled.div<ListItemProps>`
-  width: 107px;
-  height: 69px;
+  width: ${pxToVw(107)};
+  height: ${pxToVw(69)};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,13 +47,13 @@ const LeftListItem = styled.div<ListItemProps>`
 `;
 
 const RightListItem = styled.div<ListItemProps>`
-  width: 233px;
-  height: 40px;
+  width: ${pxToVw(233)};
+  height: ${pxToVw(40)};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 5px;
-  padding: 0 20px;
+  border-radius: ${pxToVw(5)};
+  padding: 0 ${pxToVw(20)};
   background-color: ${(props) =>
     props.$selected ? colors.purpleSecondary : colors.white};
   ${(props) => (props.$selected ? fonts.blackBold14 : fonts.greyNormal14)};

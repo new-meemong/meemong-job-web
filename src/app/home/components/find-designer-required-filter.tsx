@@ -6,13 +6,14 @@ import SelectLocation from "./filters/select-location";
 import OptionalFilterList from "./filters/optional-filter-list";
 import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
 import DropdownMultiSelectItem from "@/components/drop-downs/dropdown-multi-select-item";
+import pxToVw from "@/lib/dpi-converter";
 
 const Container = styled.div`
-  margin: 0 24px;
-  border: 1px solid ${colors.purplePrimary};
-  padding: 12px;
-  width: calc(100% - 48px);
-  border-radius: 5px;
+  margin: ${pxToVw(0)} ${pxToVw(24)};
+  border: ${pxToVw(1)} solid ${colors.purplePrimary};
+  padding: ${pxToVw(12)};
+  width: calc(100% - ${pxToVw(48)});
+  border-radius: ${pxToVw(5)};
 `;
 
 const FindDesignerRequiredFilter = () => {

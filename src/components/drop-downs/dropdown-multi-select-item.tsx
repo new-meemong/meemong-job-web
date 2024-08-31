@@ -3,25 +3,26 @@ import ArrowDownGreyIcon from "../icons/arrow-down-grey-icon";
 import { useState } from "react";
 import MultiSelectBottomModal from "@/components/drop-downs/multi-select-bottom-modal";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 
 const Container = styled.div``;
 
 const InnerContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 34px;
+  height: ${pxToVw(34)};
   align-items: center;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: ${pxToVw(6)};
+  margin-bottom: ${pxToVw(6)};
 `;
 
 const LabelContainer = styled.div`
   ${fonts.purplePrimarySemi14}
-  width: 120px;
+  width: ${pxToVw(120)};
 `;
 
 const ContentContainer = styled.div`
-  width: 184px;
+  width: ${pxToVw(184)};
 `;
 
 const Content = styled.span`

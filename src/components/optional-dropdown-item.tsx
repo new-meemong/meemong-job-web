@@ -1,23 +1,24 @@
 import styled from "styled-components";
 import ArrowDownGreyIcon from "./icons/arrow-down-grey-icon";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 34px;
+  height: ${pxToVw(34)};
   align-items: center;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: ${pxToVw(6)};
+  margin-bottom: ${pxToVw(6)};
 `;
 
 const LabelContainer = styled.div`
   ${fonts.purplePrimarySemi14}
-  width: 120px;
+  width: ${pxToVw(120)};
 `;
 
 const ContentContainer = styled.div`
-  width: 168px;
+  width: ${pxToVw(168)};
 `;
 
 const Content = styled.div`

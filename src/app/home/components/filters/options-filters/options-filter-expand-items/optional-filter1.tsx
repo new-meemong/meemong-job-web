@@ -4,6 +4,7 @@ import { fonts } from "@/styles/fonts";
 import { colors } from "@/styles/colors";
 import { useState } from "react";
 import styled from "styled-components";
+import pxToVw from "@/lib/dpi-converter";
 
 const Container = styled.div``;
 
@@ -12,17 +13,17 @@ const ExpandedContainer = styled.div``;
 const OptionContainer = styled.div`
   display: flex;
   flex-wrap: wrap; /* 줄 바꿈을 허용 */
-  gap: 5px; /* 아이템 간의 간격 */
+  gap: ${pxToVw(5)}; /* 아이템 간의 간격 */
 `;
 
 const OptionItem = styled.div<{ $isSelected: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90px;
-  height: 34px;
-  border-radius: 4px;
-  border: 1px solid
+  width: ${pxToVw(90)};
+  height: ${pxToVw(34)};
+  border-radius: ${pxToVw(4)};
+  border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
 
   ${(props) =>

@@ -1,29 +1,30 @@
+import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
 import { useState } from "react";
 import { Sheet } from "react-modal-sheet";
 import styled from "styled-components";
 
 const SheetContainer = styled(Sheet.Container)`
-  border-top-right-radius: 30px !important;
-  border-top-left-radius: 30px !important;
+  border-top-right-radius: ${pxToVw(30)} !important;
+  border-top-left-radius: ${pxToVw(30)} !important;
 `;
 
 const SheetHeader = styled(Sheet.Header)``;
 
 const SheetContent = styled(Sheet.Content)`
   height: 100%;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
 `;
 
 const SheetScroller = styled(Sheet.Scroller)`
-  padding-bottom: 100px;
+  padding-bottom: ${pxToVw(100)};
 `;
 
 const OptionItem = styled.div`
   ${fonts.blackSemi14}
-  padding: 16px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: ${pxToVw(16)};
+  border-bottom: ${pxToVw(1)} solid #f0f0f0;
 `;
 
 interface SingleSelectBottomModalProps {

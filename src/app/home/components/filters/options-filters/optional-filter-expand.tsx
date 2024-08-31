@@ -6,24 +6,25 @@ import OptionalFilter1 from "./options-filter-expand-items/optional-filter1";
 import OptionalFilter2 from "./options-filter-expand-items/optional-filter2";
 import OptionalFilter3 from "./options-filter-expand-items/optional-filter3";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 
 const Container = styled.div`
-  padding: 12px 8px;
-  margin-top: 12px;
-  border-radius: 4px;
+  padding: ${pxToVw(12)} ${pxToVw(8)};
+  margin-top: ${pxToVw(12)};
+  border-radius: ${pxToVw(4)};
   background-color: rgb(236, 234, 255, 0.4);
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-bottom: 12px;
-  border-bottom: 1px solid ${colors.white};
+  padding-bottom: ${pxToVw(12)};
+  border-bottom: ${pxToVw(1)} solid ${colors.white};
 `;
 
 const HeaderLine = styled.div`
   width: 100%;
-  height: 1px;
+  height: ${pxToVw(1)};
   background-color: ${colors.white};
 `;
 
@@ -32,26 +33,26 @@ const InitButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 67px;
-  height: 40px;
+  width: ${pxToVw(67)};
+  height: ${pxToVw(40)};
   background-color: ${colors.white};
-  border-radius: 4px;
+  border-radius: ${pxToVw(4)};
 `;
 
 const FilterExpandButton = styled.div`
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
-  width: 223px;
-  height: 40px;
+  width: ${pxToVw(223)};
+  height: ${pxToVw(40)};
   background-color: ${colors.purpleBackgroundActive};
-  border-radius: 4px;
-  padding: 0 10px;
+  border-radius: ${pxToVw(4)};
+  padding: ${pxToVw(0)} ${pxToVw(10)};
 `;
 
 const ExpandButtonText = styled.span`
   ${fonts.purplePrimaryBold14}
-  width: 205px;
+  width: ${pxToVw(205)};
   display: flex;
   justify-content: center;
   align-items: center;
