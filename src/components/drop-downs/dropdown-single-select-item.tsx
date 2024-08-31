@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import TextPrimarySemi14 from "../texts/text-primary-semi-14";
-import TextPrimaryBold14 from "../texts/text-primary-bold-14";
 import ArrowDownGreyIcon from "../icons/arrow-down-grey-icon";
 import SingleSelectBottomModal from "@/components/drop-downs/single-select-bottom-modal";
 import { useState } from "react";
+import { fonts } from "@/styles/fonts";
 
 const Container = styled.div``;
 
@@ -17,15 +16,17 @@ const InnerContainer = styled.div`
 `;
 
 const LabelContainer = styled.div`
+  ${fonts.purplePrimarySemi14}
   width: 120px;
 `;
-const Label = styled(TextPrimarySemi14)``;
 
 const ContentContainer = styled.div`
   width: 184px;
 `;
 
-const Content = styled(TextPrimaryBold14)``;
+const Content = styled.span`
+  ${fonts.purplePrimaryBold14}
+`;
 
 interface DropdownItemProps {
   label: string;
@@ -57,9 +58,7 @@ const DropdownSingleSelectItem = ({ label, options }: DropdownItemProps) => {
           handleModalOpen();
         }}
       >
-        <LabelContainer>
-          <Label>{label}</Label>
-        </LabelContainer>
+        <LabelContainer>{label}</LabelContainer>
         <ContentContainer>
           <Content>{selectedOption}</Content>
         </ContentContainer>

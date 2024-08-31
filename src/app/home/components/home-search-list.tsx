@@ -1,5 +1,5 @@
 import ResumeItem from "@/components/resume-item";
-import TextBlackBold16 from "@/components/texts/text-grey-text-bold-16";
+import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -7,7 +7,8 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const Title = styled(TextBlackBold16)`
+const Title = styled.span`
+  ${fonts.blackBold16}
   display: block;
   margin-bottom: 20px;
 `;

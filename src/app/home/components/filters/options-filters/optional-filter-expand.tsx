@@ -1,7 +1,5 @@
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
 import OptionalDropdownItem from "@/components/optional-dropdown-item";
-import TextGreyText4Bold14 from "@/components/texts/text-grey-text4-bold-14";
-import TextPrimaryBold14 from "@/components/texts/text-primary-bold-14";
 import { colors } from "@/styles/colors";
 import styled from "styled-components";
 import OptionalFilter1 from "./options-filter-expand-items/optional-filter1";
@@ -29,7 +27,8 @@ const HeaderLine = styled.div`
   background-color: ${colors.white};
 `;
 
-const InitButton = styled(TextGreyText4Bold14)`
+const InitButton = styled.div`
+  ${fonts.greyText4Bold14}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +49,8 @@ const FilterExpandButton = styled.div`
   padding: 0 10px;
 `;
 
-const ExpandButtonText = styled(TextPrimaryBold14)`
+const ExpandButtonText = styled.span`
+  ${fonts.purplePrimaryBold14}
   width: 205px;
   display: flex;
   justify-content: center;
@@ -70,10 +70,8 @@ const OptionalFilterExpand = ({
     <Container>
       <ButtonContainer>
         <InitButton onClick={resetFilters}>초기화</InitButton>
-        <FilterExpandButton>
-          <ExpandButtonText onClick={toggleExpanded}>
-            맞춤형 인재 상세 닫기
-          </ExpandButtonText>
+        <FilterExpandButton onClick={toggleExpanded}>
+          <ExpandButtonText>맞춤형 인재 상세 닫기</ExpandButtonText>
           <ArrowDownPurpleIcon />
         </FilterExpandButton>
       </ButtonContainer>

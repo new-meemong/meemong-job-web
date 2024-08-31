@@ -5,11 +5,10 @@ import styled from "styled-components";
 import BottomArea from "./components/bottom-area";
 import { colors } from "@/styles/colors";
 import LocationHeader from "@/components/headers/location-header";
-import TextBlackBold14 from "@/components/texts/text-black-bold-14";
 import { useState } from "react";
-import TextGreyNormal14 from "@/components/texts/text-grey-normal-14";
 import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";
 import CheckboxUnselectIcon from "@/components/icons/checkbox-unselect-icon";
+import { fonts } from "@/styles/fonts";
 
 const ContentContainer = styled.div`
   display: flex;
@@ -44,6 +43,7 @@ const LeftListItem = styled.div<ListItemProps>`
   justify-content: center;
   border: 1px solid
     ${(props) => (props.$selected ? colors.purplePrimary : colors.greyLine2)};
+  ${(props) => (props.$selected ? fonts.blackBold14 : fonts.greyNormal14)};
 `;
 
 const RightListItem = styled.div<ListItemProps>`
@@ -56,10 +56,8 @@ const RightListItem = styled.div<ListItemProps>`
   padding: 0 20px;
   background-color: ${(props) =>
     props.$selected ? colors.purpleSecondary : colors.white};
+  ${(props) => (props.$selected ? fonts.blackBold14 : fonts.greyNormal14)};
 `;
-
-const SelectText = styled(TextBlackBold14)``;
-const UnselectText = styled(TextGreyNormal14)``;
 
 export default function SelectLocationPage() {
   const list1 = [
@@ -135,11 +133,7 @@ export default function SelectLocationPage() {
                 $selected={isSelected}
                 onClick={() => handleLeftItemClick(item)}
               >
-                {isSelected ? (
-                  <SelectText>{item}</SelectText>
-                ) : (
-                  <UnselectText>{item}</UnselectText>
-                )}
+                {item}
               </LeftListItem>
             );
           })}
@@ -154,11 +148,7 @@ export default function SelectLocationPage() {
                 $selected={isSelected}
                 onClick={() => handleRightItemClick(item)}
               >
-                {isSelected ? (
-                  <SelectText>{item}</SelectText>
-                ) : (
-                  <UnselectText>{item}</UnselectText>
-                )}
+                {item}
                 {isSelected ? <CheckboxSelectIcon /> : <CheckboxUnselectIcon />}
               </RightListItem>
             );

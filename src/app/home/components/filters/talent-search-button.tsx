@@ -1,9 +1,10 @@
-import TextWhiteBold16 from "@/components/texts/text-white-bold-16";
 import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 import { useState } from "react";
 import styled from "styled-components";
 
-const Button = styled(TextWhiteBold16)`
+const Button = styled.div`
+  ${fonts.whiteBold16}
   width: 100%;
   display: flex;
   justify-content: center;

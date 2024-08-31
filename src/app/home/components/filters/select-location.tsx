@@ -1,8 +1,7 @@
 import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
 import CloseCircleGreyIcon from "@/components/icons/close-circle-grey-icon";
-import TextPrimaryBold12 from "@/components/texts/text-primary-bold-12";
-import TextPrimarySemi14 from "@/components/texts/text-primary-semi-14";
 import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -14,7 +13,8 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const Label = styled(TextPrimarySemi14)`
+const Label = styled.span`
+  ${fonts.purplePrimarySemi14}
   padding: 12px 0;
 `;
 
@@ -24,6 +24,7 @@ const ButtonContainer = styled.div`
   gap: 8px;
 `;
 const Location = styled.div`
+  ${fonts.purplePrimaryBold12}
   display: flex;
   /* justify-content: center; */
   align-items: center;
@@ -35,6 +36,7 @@ const Location = styled.div`
 `;
 
 const LocationButton = styled(Link)`
+  ${fonts.purplePrimaryBold12}
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,8 +46,6 @@ const LocationButton = styled(Link)`
   border-radius: 5px;
   padding: 12px 6px;
 `;
-
-const LocationText = styled(TextPrimaryBold12)``;
 
 const CancelContainer = styled.div`
   display: flex;
@@ -60,7 +60,9 @@ const CancelButton = styled.div`
   gap: 2px;
 `;
 
-const CancelText = styled(TextPrimarySemi14)``;
+const CancelText = styled.span`
+  ${fonts.purplePrimarySemi14}
+`;
 
 const SelectLocation = () => {
   const selectedLocationList = ["서울 강남구", "서울 양천구"];
@@ -72,15 +74,13 @@ const SelectLocation = () => {
         <Location>
           {selectedLocationList.map((label, index) => (
             <React.Fragment key={label}>
-              <LocationText>{label}</LocationText>
-              {index < selectedLocationList.length - 1 && (
-                <LocationText>,&nbsp;</LocationText>
-              )}
+              {label}
+              {index < selectedLocationList.length - 1 && ",\u00A0"}
             </React.Fragment>
           ))}
         </Location>
         <LocationButton href={`home/select-location`}>
-          <LocationText>지역선택하기</LocationText>
+          지역선택하기
           <ArrowRightPurpleIcon />
         </LocationButton>
       </ButtonContainer>

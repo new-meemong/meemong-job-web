@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
-import TextGreyTextBold18 from "../texts/text-grey-text-bold-18";
 import { useRouter } from "next/navigation";
 import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +25,9 @@ const RightContainer = styled.div`
   width: 40px;
 `;
 
-const Title = styled(TextGreyTextBold18)``;
+const Title = styled.span`
+  ${fonts.greyTextBold18}
+`;
 
 const LocationHeader = () => {
   const router = useRouter();

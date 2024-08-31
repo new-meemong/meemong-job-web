@@ -1,10 +1,8 @@
 import { colors } from "@/styles/colors";
 import styled from "styled-components";
-import TextGreyNormal10 from "./texts/text-grey-normal-10";
-import TextGreyText2Normal10 from "./texts/text-grey-text2-normal-10";
 import Image from "next/image";
-import TextGreyTextBold16 from "./texts/text-grey-text-bold-16";
 import { useState } from "react";
+import { fonts } from "@/styles/fonts";
 
 const Container = styled.div`
   width: 100%;
@@ -18,7 +16,9 @@ const Container = styled.div`
   margin-bottom: 6px;
 `;
 
-const Location = styled(TextGreyNormal10)``;
+const Location = styled.span`
+  ${fonts.greyNormal10}
+`;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -31,7 +31,8 @@ const ProfileInfoContainer = styled.div`
   margin-right: 12px;
 `;
 
-const Title = styled(TextGreyTextBold16)`
+const Title = styled.span`
+  ${fonts.greyTextBold16}
   margin-bottom: 12px;
 `;
 
@@ -49,7 +50,9 @@ const InfoTextContainer = styled.div`
   }
 `;
 
-const ProfileInfo = styled(TextGreyText2Normal10)``;
+const ProfileInfo = styled.span`
+  ${fonts.greyText2Normal10}
+`;
 
 const ProfileImageContainer = styled.div`
   width: 91px;
@@ -78,7 +81,8 @@ const Divider = styled.div`
   background-color: ${colors.greyBacground4};
 `;
 
-const ViewCount = styled(TextGreyNormal10)`
+const ViewCount = styled.span`
+  ${fonts.greyNormal10}
   margin-top: 6px;
 `;
 

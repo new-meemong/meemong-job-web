@@ -25,12 +25,13 @@ const OptionItem = styled.div<{ $isSelected: boolean }>`
   border: 1px solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
 
-  ${(props) => (props.$isSelected ? fonts.purplePrimary12 : fonts.greySemi12)}
+  ${(props) =>
+    props.$isSelected ? fonts.purplePrimarySemi12 : fonts.greySemi12}
 `;
 
 const NoticeMultiple = styled.div`
   padding-bottom: 8px;
-  ${fonts.purplePrimary12}
+  ${fonts.purplePrimarySemi12}
 `;
 
 const OptionalFilter3 = () => {

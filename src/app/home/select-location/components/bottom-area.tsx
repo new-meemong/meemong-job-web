@@ -1,6 +1,5 @@
 import FullButton from "@/components/buttons/full-button";
-import TextBlackBold14 from "@/components/texts/text-black-bold-14";
-import TextGreyNormal14 from "@/components/texts/text-grey-normal-14";
+import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -20,9 +19,13 @@ const CountContainer = styled.div`
   gap: 10px;
 `;
 
-const SelectedCount = styled(TextBlackBold14)``;
+const SelectedCount = styled.span`
+  ${fonts.blackBold14}
+`;
 
-const Label = styled(TextGreyNormal14)``;
+const Label = styled.span`
+  ${fonts.greyNormal14}
+`;
 
 interface BottomAreaProps {
   selectedCount: number;

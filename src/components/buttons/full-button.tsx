@@ -1,8 +1,9 @@
 import { colors } from "@/styles/colors";
 import styled from "styled-components";
-import TextWhiteBold16 from "../texts/text-white-bold-16";
+import { fonts } from "@/styles/fonts";
 
 const Container = styled.div`
+  ${fonts.whiteBold16}
   background-color: ${colors.purplePrimary};
   height: 48px;
   border-radius: 5px;
@@ -11,19 +12,13 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Title = styled(TextWhiteBold16)``;
-
 interface TitleProps {
   title: string;
   onClick: () => void;
 }
 
 const FullButton = ({ title, onClick }: TitleProps) => {
-  return (
-    <Container onClick={onClick}>
-      <Title>{title}</Title>
-    </Container>
-  );
+  return <Container onClick={onClick}>{title}</Container>;
 };
 
 export default FullButton;

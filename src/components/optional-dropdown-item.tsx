@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import TextPrimarySemi14 from "./texts/text-primary-semi-14";
-import TextPrimaryBold14 from "./texts/text-primary-bold-14";
 import ArrowDownGreyIcon from "./icons/arrow-down-grey-icon";
+import { fonts } from "@/styles/fonts";
 
 const Container = styled.div`
   display: flex;
@@ -13,15 +12,17 @@ const Container = styled.div`
 `;
 
 const LabelContainer = styled.div`
+  ${fonts.purplePrimarySemi14}
   width: 120px;
 `;
-const Label = styled(TextPrimarySemi14)``;
 
 const ContentContainer = styled.div`
   width: 168px;
 `;
 
-const Content = styled(TextPrimaryBold14)``;
+const Content = styled.div`
+  ${fonts.purplePrimaryBold14}
+`;
 
 const OptionalDropdownItem = ({
   label = "라벨",
@@ -30,9 +31,7 @@ const OptionalDropdownItem = ({
 }) => {
   return (
     <Container onClick={onClick}>
-      <LabelContainer>
-        <Label>{label}</Label>
-      </LabelContainer>
+      <LabelContainer>{label}</LabelContainer>
       <ContentContainer>
         <Content>{content}</Content>
       </ContentContainer>
