@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import TextPrimarySemi14 from "./texts/text-primary-semi-14";
-import TextPrimaryBold14 from "./texts/text-primary-bold-14";
-import ArrowDownGreyIcon from "./icons/arrow-down-grey-icon";
-import BottomModal from "@/components/bottom-modal";
+import TextPrimarySemi14 from "../texts/text-primary-semi-14";
+import TextPrimaryBold14 from "../texts/text-primary-bold-14";
+import ArrowDownGreyIcon from "../icons/arrow-down-grey-icon";
+import SingleSelectBottomModal from "@/components/drop-downs/single-select-bottom-modal";
 import { useState } from "react";
 
 const Container = styled.div``;
@@ -32,7 +32,7 @@ interface DropdownItemProps {
   options: string[];
 }
 
-const DropdownItem = ({ label, options }: DropdownItemProps) => {
+const DropdownSingleSelectItem = ({ label, options }: DropdownItemProps) => {
   const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string>(
     options[options.length - 1]
@@ -65,7 +65,7 @@ const DropdownItem = ({ label, options }: DropdownItemProps) => {
         </ContentContainer>
         <ArrowDownGreyIcon />
       </InnerContainer>
-      <BottomModal
+      <SingleSelectBottomModal
         isOpen={isBottomModalOpen}
         onClose={handleModalClose}
         options={options}
@@ -75,4 +75,4 @@ const DropdownItem = ({ label, options }: DropdownItemProps) => {
   );
 };
 
-export default DropdownItem;
+export default DropdownSingleSelectItem;

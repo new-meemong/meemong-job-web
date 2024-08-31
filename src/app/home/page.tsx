@@ -10,7 +10,6 @@ import HomeTitle from "./components/home-title";
 import TalentSearchButton from "./components/filters/talent-search-button";
 import Banner from "./components/banner";
 import HomeSearchResultList from "./components/home-search-list";
-import BottomModal from "../../components/bottom-modal";
 
 const Container = styled.div`
   display: flex;

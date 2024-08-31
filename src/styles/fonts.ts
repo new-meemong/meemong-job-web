@@ -15,10 +15,20 @@ export const fonts = {
     font-weight: 500;
     color: ${colors.black};
   `,
+  blackSemi14: css`
+    font-size: 14px;
+    font-weight: 500;
+    color: ${colors.black};
+  `,
 
   //grey
   greySemi12: css`
     font-size: 12px;
+    font-weight: 500;
+    color: ${colors.grey};
+  `,
+  greySemi14: css`
+    font-size: 14px;
     font-weight: 500;
     color: ${colors.grey};
   `
