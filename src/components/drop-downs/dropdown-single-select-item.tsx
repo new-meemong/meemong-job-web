@@ -5,6 +5,20 @@ import { useState } from "react";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import TooltipIcon from "../icons/tooltip";
+import Modal from "react-modal";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: pxToVw(10),
+    padding: 0
+  }
+};
 
 const Container = styled.div``;
 
@@ -22,7 +36,6 @@ const LabelContainer = styled.div`
   align-items: center;
   ${fonts.purplePrimarySemi14}
   width: ${pxToVw(120)};
-  gap: ${pxToVw(4)};
 `;
 
 const ClickArea = styled.div`
@@ -38,7 +51,32 @@ const Content = styled.span`
   ${fonts.purplePrimaryBold14}
 `;
 
-const Tooltip = styled(TooltipIcon)``;
+const TooltipContainer = styled.div`
+  width: ${pxToVw(260)};
+  height: ${pxToVw(140)};
+  border-radius: ${pxToVw(10)};
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: ${pxToVw(20)};
+  padding: ${pxToVw(20)};
+`;
+
+const TooltipButton = styled.div`
+  padding: ${pxToVw(4)};
+`;
+
+const TooltipContent = styled.div`
+  ${fonts.greyTextSemi16}
+  white-space: pre-line;
+  text-align: center;
+`;
+
+const ConfirmButton = styled.div`
+  ${fonts.greyTextBold14}
+`;
 
 interface DropdownItemProps {
   label: string;
@@ -51,21 +89,29 @@ const DropdownSingleSelectItem = ({
   options,
   tooltip
 }: DropdownItemProps) => {
-  const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
+  const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
+  const [isTooltipModalOpen, setIsTooltipModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string>(
     options[options.length - 1]
   );
 
-  const handleModalClose = () => {
-    setIsBottomModalOpen(false);
+  const handleOptionModalClose = () => {
+    setIsOptionModalOpen(false);
   };
-  const handleModalOpen = () => {
-    setIsBottomModalOpen(true);
+  const handleOptionModalOpen = () => {
+    setIsOptionModalOpen(true);
   };
 
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
-    handleModalClose();
+    handleOptionModalClose();
+  };
+
+  const handleTooltipModalOpen = () => {
+    setIsTooltipModalOpen(true);
+  };
+  const handleTooltipModalClose = () => {
+    setIsTooltipModalOpen(false);
   };
 
   return (
@@ -73,9 +119,13 @@ const DropdownSingleSelectItem = ({
       <InnerContainer>
         <LabelContainer>
           {label}
-          {tooltip && <Tooltip />}
+          {tooltip && (
+            <TooltipButton onClick={handleTooltipModalOpen}>
+              <TooltipIcon />
+            </TooltipButton>
+          )}
         </LabelContainer>
-        <ClickArea onClick={handleModalOpen}>
+        <ClickArea onClick={handleOptionModalOpen}>
           <ContentContainer>
             <Content>{selectedOption}</Content>
           </ContentContainer>
@@ -83,11 +133,21 @@ const DropdownSingleSelectItem = ({
         </ClickArea>
       </InnerContainer>
       <SingleSelectBottomModal
-        isOpen={isBottomModalOpen}
-        onClose={handleModalClose}
+        isOpen={isOptionModalOpen}
+        onClose={handleOptionModalClose}
         options={options}
         onSelect={handleOptionSelect}
       />
+      <Modal
+        isOpen={isTooltipModalOpen}
+        onRequestClose={handleTooltipModalClose}
+        style={customStyles}
+      >
+        <TooltipContainer>
+          <TooltipContent>{tooltip}</TooltipContent>
+          <ConfirmButton onClick={handleTooltipModalClose}>확인</ConfirmButton>
+        </TooltipContainer>
+      </Modal>
     </Container>
   );
 };
