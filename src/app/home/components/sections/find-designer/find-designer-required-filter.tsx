@@ -1,9 +1,9 @@
 import { colors } from "@/styles/colors";
 import { useState } from "react";
 import styled from "styled-components";
-import DesignerTypeTab from "./filters/designer-type-tab";
-import SelectLocation from "./filters/select-location";
-import OptionalFilterList from "./filters/optional-filter-list";
+import DesignerTypeTab from "../../filters/designer-type-tab";
+import SelectLocation from "../../filters/select-location";
+import OptionalFilterList from "../../filters/optional-filter-list";
 import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
 import DropdownMultiSelectItem from "@/components/drop-downs/dropdown-multi-select-item";
 import pxToVw from "@/lib/dpi-converter";

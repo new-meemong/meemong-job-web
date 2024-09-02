@@ -14,7 +14,7 @@ const Title = styled.span`
   margin-bottom: ${pxToVw(20)};
 `;
 
-const HomeSearchResultList = () => {
+const HomeDesignerSearchResultList = () => {
   const resultList = [
     {
       id: 1,
@@ -47,4 +47,4 @@ const HomeSearchResultList = () => {
   );
 };
 
-export default HomeSearchResultList;
+export default HomeDesignerSearchResultList;

@@ -21,6 +21,11 @@ const LabelContainer = styled.div`
   width: ${pxToVw(120)};
 `;
 
+const ClickArea = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const ContentContainer = styled.div`
   width: ${pxToVw(184)};
 `;
@@ -72,10 +77,12 @@ const DropdownMultiSelectItem = ({ label, options }: DropdownItemProps) => {
         }}
       >
         <LabelContainer>{label}</LabelContainer>
-        <ContentContainer>
-          <Content>{selectedOptions.join(", ")}</Content>
-        </ContentContainer>
-        <ArrowDownGreyIcon />
+        <ClickArea>
+          <ContentContainer>
+            <Content>{selectedOptions.join(", ")}</Content>
+          </ContentContainer>
+          <ArrowDownGreyIcon />
+        </ClickArea>
       </InnerContainer>
       <MultiSelectBottomModal
         selectedOptions={selectedOptions}
