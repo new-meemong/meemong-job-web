@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div`
   width: 100%;
@@ -79,6 +80,7 @@ const ViewCount = styled.span`
 
 interface ResumeItemProps {
   resume: {
+    id: number;
     location: string;
     title: string;
     type: string;
@@ -92,13 +94,18 @@ interface ResumeItemProps {
 
 const ResumeItem = ({ resume, viewCount }: ResumeItemProps) => {
   const [imgSrc, setImgSrc] = useState("/images/default_profile_image.jpg");
+  const router = useRouter();
 
   const handleImageError = () => {
     setImgSrc("/images/default_profile_image.jpg"); // 이미지 로드 실패 시 대체 이미지 경로
   };
 
+  const handleClick = () => {
+    router.push(`/resume/${resume.id}`);
+  };
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <Location>{resume.location}</Location>
       <ContentContainer>
         <ProfileInfoContainer>

@@ -3,7 +3,7 @@ import FindDesignerRequiredFilter from "./find-designer-required-filter";
 import pxToVw from "@/lib/dpi-converter";
 import TalentSearchButton from "./talent-search-button";
 import Banner from "../../banner";
-import HomeDesignerSearchResultList from "./home-designer-search-list";
+import ResumeList from "./resume-list";
 
 const Container = styled.div`
   width: 100%;
@@ -24,7 +24,7 @@ const FindDesignerSection = () => {
         <TalentSearchButton />
       </TalentSearchWrapper>
       <Banner />
-      <HomeDesignerSearchResultList />
+      <ResumeList />
     </Container>
   );
 };

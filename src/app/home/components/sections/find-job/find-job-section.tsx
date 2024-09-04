@@ -1,14 +1,11 @@
 import styled from "styled-components";
-import FindDesignerRequiredFilter from "../find-designer/find-designer-required-filter";
 import pxToVw from "@/lib/dpi-converter";
-import TalentSearchButton from "../find-designer/talent-search-button";
 import Banner from "../../banner";
-import HomeDesignerSearchResultList from "../find-designer/home-designer-search-list";
 import FindJobRequiredFilter from "./find-job-required-filter";
 import JobSearchButton from "./job-search-button";
 import NearJobSearchButton from "./near-job-search-button";
 import PremiumJobPosting from "./premium-job-posting";
-import HomeJobSearchList from "./home-job-saerch-list";
+import JobPostingList from "./job-posting-list";
 
 const Container = styled.div`
   width: 100%;
@@ -33,13 +30,7 @@ const FindJobSection = () => {
       </SearchButtonWrapper>
       <PremiumJobPosting />
       <Banner />
-      <HomeJobSearchList />
-      {/*
-      <TalentSearchWrapper>
-        <TalentSearchButton />
-      </TalentSearchWrapper>
-      <Banner />
-      <HomeDesignerSearchResultList /> */}
+      <JobPostingList />
     </Container>
   );
 };

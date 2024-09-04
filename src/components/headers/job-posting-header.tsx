@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import OptionIcon from "./header-icons/option-icon";
 
 const Container = styled.div`
   display: flex;
@@ -17,7 +18,6 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: white;
-  border-bottom: ${pxToVw(1)} solid ${colors.greyLine};
 `;
 
 const LeftContainer = styled.div`
@@ -32,7 +32,11 @@ const Title = styled.span`
   ${fonts.greyTextBold18}
 `;
 
-const LocationHeader = () => {
+interface ResumeHeaderProps {
+  title: string;
+}
+
+const JobPostingHeader = ({ title }: ResumeHeaderProps) => {
   const router = useRouter();
 
   const handleBackClick = () => {
@@ -44,10 +48,12 @@ const LocationHeader = () => {
       <LeftContainer onClick={handleBackClick}>
         <BackIcon />
       </LeftContainer>
-      <Title>지역 선택 필터</Title>
-      <RightContainer />
+      <Title>{title}</Title>
+      <RightContainer>
+        <OptionIcon />
+      </RightContainer>
     </Container>
   );
 };
 
-export default LocationHeader;
+export default JobPostingHeader;

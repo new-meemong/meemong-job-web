@@ -13,8 +13,8 @@ const Title = styled.span`
   margin-bottom: ${pxToVw(20)};
 `;
 
-const HomeJobSearchList = () => {
-  const resultList = [{}, {}, {}, {}];
+const JobPostingList = () => {
+  const resultList = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
   return (
     <Container>
       <Title>매장 취업하기</Title>
@@ -25,4 +25,4 @@ const HomeJobSearchList = () => {
   );
 };
 
-export default HomeJobSearchList;
+export default JobPostingList;

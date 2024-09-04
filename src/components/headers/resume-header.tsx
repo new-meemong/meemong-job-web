@@ -12,12 +12,11 @@ const Container = styled.div`
   width: 100%;
   height: ${pxToVw(52)};
   padding-bottom: ${pxToVw(12)};
-  padding-left: ${pxToVw(8)};
-  padding-right: ${pxToVw(8)};
+  padding-left: ${pxToVw(12)};
+  padding-right: ${pxToVw(12)};
   position: sticky;
   top: 0;
   background-color: white;
-  border-bottom: ${pxToVw(1)} solid ${colors.greyLine};
 `;
 
 const LeftContainer = styled.div`
@@ -32,7 +31,11 @@ const Title = styled.span`
   ${fonts.greyTextBold18}
 `;
 
-const LocationHeader = () => {
+interface ResumeHeaderProps {
+  title: string;
+}
+
+const ResumeHeader = ({ title }: ResumeHeaderProps) => {
   const router = useRouter();
 
   const handleBackClick = () => {
@@ -44,10 +47,10 @@ const LocationHeader = () => {
       <LeftContainer onClick={handleBackClick}>
         <BackIcon />
       </LeftContainer>
-      <Title>지역 선택 필터</Title>
+      <Title>{title}</Title>
       <RightContainer />
     </Container>
   );
 };
 
-export default LocationHeader;
+export default ResumeHeader;

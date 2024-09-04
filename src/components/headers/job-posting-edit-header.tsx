@@ -17,7 +17,6 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: white;
-  border-bottom: ${pxToVw(1)} solid ${colors.greyLine};
 `;
 
 const LeftContainer = styled.div`
@@ -32,7 +31,7 @@ const Title = styled.span`
   ${fonts.greyTextBold18}
 `;
 
-const LocationHeader = () => {
+const JobPostingEditHeader = () => {
   const router = useRouter();
 
   const handleBackClick = () => {
@@ -44,10 +43,10 @@ const LocationHeader = () => {
       <LeftContainer onClick={handleBackClick}>
         <BackIcon />
       </LeftContainer>
-      <Title>지역 선택 필터</Title>
+      <Title>구인 공고 작성</Title>
       <RightContainer />
     </Container>
   );
 };
 
-export default LocationHeader;
+export default JobPostingEditHeader;

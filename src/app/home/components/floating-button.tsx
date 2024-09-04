@@ -1,6 +1,7 @@
 import WriteIcon from "@/components/icons/write-icon";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -46,20 +47,29 @@ const AdditionalButtonText = styled(WriteButtonText)`
 
 const FloatingButton = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const router = useRouter();
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleResumeClick = () => {
+    router.push("/resume/new/edit");
+  };
+
+  const handleJobPostingClick = () => {
+    router.push("/job-posting/new/edit");
   };
 
   return (
     <Container>
       {isExpanded && (
         <>
-          <AdditionalButton offset={90}>
+          <AdditionalButton offset={90} onClick={handleJobPostingClick}>
             <WriteIcon />
             <AdditionalButtonText>{`매장정보\n등록`}</AdditionalButtonText>
           </AdditionalButton>
-          <AdditionalButton offset={160}>
+          <AdditionalButton offset={160} onClick={handleResumeClick}>
             <WriteIcon />
             <AdditionalButtonText>{`이력서\n작성`}</AdditionalButtonText>
           </AdditionalButton>

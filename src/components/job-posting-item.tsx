@@ -3,6 +3,7 @@ import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { Content } from "next/font/google";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -97,13 +98,18 @@ interface JobPostingItemProps {
 
 const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   const [imgSrc, setImgSrc] = useState("/images/default_profile_image.jpg");
+  const router = useRouter();
 
   const handleImageError = () => {
     setImgSrc("/images/default_profile_image.jpg"); // 이미지 로드 실패 시 대체 이미지 경로
   };
 
+  const handleClick = () => {
+    router.push(`/job-posting/${jobPosting.id}`);
+  };
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <HeaderContainer>
         <HeaderTitle>{`준오헤어`}</HeaderTitle>
         <Divider />
