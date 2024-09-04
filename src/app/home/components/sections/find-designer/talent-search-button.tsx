@@ -13,6 +13,7 @@ const Button = styled.div`
   height: ${pxToVw(48)};
   background-color: ${colors.purplePrimary};
   border-radius: ${pxToVw(5)};
+  margin-bottom: ${pxToVw(28)};
 `;
 
 const TalentSearchButton = () => {

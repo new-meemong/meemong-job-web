@@ -69,7 +69,7 @@ const PremiumJobPosting = () => {
       <JobPostingContainer>
         {jobPostings.map((jobPosting, index) => (
           <SnapItem key={index} $isFirst={index === 0}>
-            <JobPostingItem job={jobPosting} />
+            <JobPostingItem jobPosting={jobPosting} />
           </SnapItem>
         ))}
       </JobPostingContainer>

@@ -9,7 +9,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${colors.greyBackground};
-  margin-top: ${pxToVw(28)};
 `;
 
 const Banner = () => {

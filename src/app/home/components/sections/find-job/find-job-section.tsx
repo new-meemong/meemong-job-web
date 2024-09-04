@@ -8,6 +8,7 @@ import FindJobRequiredFilter from "./find-job-required-filter";
 import JobSearchButton from "./job-search-button";
 import NearJobSearchButton from "./near-job-search-button";
 import PremiumJobPosting from "./premium-job-posting";
+import HomeJobSearchList from "./home-job-saerch-list";
 
 const Container = styled.div`
   width: 100%;
@@ -31,6 +32,8 @@ const FindJobSection = () => {
         <NearJobSearchButton />
       </SearchButtonWrapper>
       <PremiumJobPosting />
+      <Banner />
+      <HomeJobSearchList />
       {/*
       <TalentSearchWrapper>
         <TalentSearchButton />

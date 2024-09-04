@@ -13,6 +13,8 @@ const Container = styled.div`
   height: ${pxToVw(145)};
   flex: 0 0 auto;
   background-color: ${colors.white};
+  border: 1px solid ${colors.greyBacground4};
+  margin-bottom: ${pxToVw(6)};
 `;
 
 const HeaderContainer = styled.div`
@@ -90,10 +92,10 @@ const ProfileImage = styled(Image)`
 `;
 
 interface JobPostingItemProps {
-  job: any;
+  jobPosting: any;
 }
 
-const JobPostingItem = ({ job }: JobPostingItemProps) => {
+const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   const [imgSrc, setImgSrc] = useState("/images/default_profile_image.jpg");
 
   const handleImageError = () => {
