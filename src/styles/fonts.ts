@@ -70,14 +70,14 @@ export const fonts = {
     font-weight: 500;
     color: ${colors.grey};
   `,
-  greyNormal14: css`
-    font-size: ${pxToVw(14)};
-    font-weight: 400;
-    color: ${colors.grey};
-  `,
   greySemi12: css`
     font-size: ${pxToVw(12)};
     font-weight: 500;
+    color: ${colors.grey};
+  `,
+  greyNormal14: css`
+    font-size: ${pxToVw(14)};
+    font-weight: 400;
     color: ${colors.grey};
   `,
   greyNormal10: css`
@@ -97,14 +97,14 @@ export const fonts = {
     font-weight: 700;
     color: ${colors.greyText};
   `,
-  greyTextSemi16: css`
-    font-size: ${pxToVw(16)};
-    font-weight: 500;
-    color: ${colors.greyText};
-  `,
   greyTextBold14: css`
     font-size: ${pxToVw(14)};
     font-weight: 700;
+    color: ${colors.greyText};
+  `,
+  greyTextSemi16: css`
+    font-size: ${pxToVw(16)};
+    font-weight: 500;
     color: ${colors.greyText};
   `,
 
@@ -125,6 +125,11 @@ export const fonts = {
   //white
   whiteBold16: css`
     font-size: ${pxToVw(16)};
+    font-weight: 700;
+    color: ${colors.white};
+  `,
+  whiteBold14: css`
+    font-size: ${pxToVw(14)};
     font-weight: 700;
     color: ${colors.white};
   `

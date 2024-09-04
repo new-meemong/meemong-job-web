@@ -7,7 +7,7 @@ import BaseTopTabs from "./components/base-top-tab";
 import FloatingButton from "./components/floating-button";
 import FindDesignerRequiredFilter from "./components/sections/find-designer/find-designer-required-filter";
 import HomeTitle from "./components/home-title";
-import TalentSearchButton from "./components/filters/talent-search-button";
+import TalentSearchButton from "./components/sections/find-designer/talent-search-button";
 import Banner from "./components/banner";
 import HomeSearchResultList from "./components/sections/find-designer/home-designer-search-list";
 import pxToVw from "@/lib/dpi-converter";
@@ -28,7 +28,7 @@ export default function HomePage() {
     <Container>
       <BaseTopTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <HomeTitle />
-      {activeTab === 0 ? <FindDesignerSection /> : <FindJobSection />}
+      {activeTab === 0 ? <FindJobSection /> : <FindDesignerSection />}
       <FloatingButton />
     </Container>
   );

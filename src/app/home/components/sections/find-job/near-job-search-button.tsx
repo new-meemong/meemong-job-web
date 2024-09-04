@@ -5,19 +5,19 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const Button = styled.div`
-  ${fonts.whiteBold16}
+  ${fonts.purplePrimaryBold14}
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   height: ${pxToVw(48)};
-  background-color: ${colors.purplePrimary};
+  background-color: ${colors.purpleSecondary2};
   border-radius: ${pxToVw(5)};
 `;
 
-const TalentSearchButton = () => {
-  const [text, setText] = useState("인재 탐색하기");
+const NearJobSearchButton = () => {
+  const [text, setText] = useState("내 주변 구인 매장보기");
   return <Button>{text}</Button>;
 };
 
-export default TalentSearchButton;
+export default NearJobSearchButton;

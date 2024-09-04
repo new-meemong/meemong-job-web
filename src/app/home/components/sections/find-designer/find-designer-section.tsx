@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import FindDesignerRequiredFilter from "./find-designer-required-filter";
 import pxToVw from "@/lib/dpi-converter";
-import TalentSearchButton from "../../filters/talent-search-button";
+import TalentSearchButton from "./talent-search-button";
 import Banner from "../../banner";
 import HomeDesignerSearchResultList from "./home-designer-search-list";
 
