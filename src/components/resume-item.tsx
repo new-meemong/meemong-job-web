@@ -56,24 +56,13 @@ const ProfileInfo = styled.span`
   ${fonts.greyText2Normal10}
 `;
 
-const ProfileImageContainer = styled.div`
-  width: ${pxToVw(91)};
-  height: ${pxToVw(91)};
-  border-radius: ${pxToVw(5)};
-  background-color: ${colors.greyBacground4};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
 const ProfileImage = styled(Image)`
   width: ${pxToVw(91)};
   height: ${pxToVw(91)};
   object-fit: cover;
   background-color: ${colors.greyBacground4};
   border-radius: ${pxToVw(5)};
+  border: 1px solid ${colors.greyBacground4};
 `;
 
 const Divider = styled.div`
@@ -129,15 +118,13 @@ const ResumeItem = ({ resume, viewCount }: ResumeItemProps) => {
           </InfoTextContainer>
           <ViewCount>{`조회 ${viewCount}`}</ViewCount>
         </ProfileInfoContainer>
-        <ProfileImageContainer>
-          <ProfileImage
-            src={imgSrc}
-            alt="profile Image"
-            width={91}
-            height={91}
-            onError={handleImageError}
-          />
-        </ProfileImageContainer>
+        <ProfileImage
+          src={imgSrc}
+          alt="profile Image"
+          width={91}
+          height={91}
+          onError={handleImageError}
+        />
       </ContentContainer>
     </Container>
   );

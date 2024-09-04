@@ -7,7 +7,8 @@ import styled from "styled-components";
 
 const Container = styled.div`
   margin-top: ${pxToVw(20)};
-  padding: ${pxToVw(20)};
+  padding-top: ${pxToVw(20)};
+  padding-bottom: ${pxToVw(24)};
   background-color: ${colors.purpleSecondary};
   border: 1px solid ${colors.greyBacground4};
 `;
@@ -15,6 +16,7 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  padding-left: ${pxToVw(20)};
 `;
 const HeaderTitleArea = styled.div`
   display: flex;
@@ -32,7 +34,6 @@ const HeaderSubTitle = styled.span`
 const JobPostingContainer = styled.div`
   display: flex;
   overflow-x: auto;
-  gap: ${pxToVw(10)};
 
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -40,9 +41,18 @@ const JobPostingContainer = styled.div`
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scroll-snap-stop: always;
-  /* &::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
-  } */
+  }
+
+  padding-right: ${pxToVw(20)};
+  padding-top: ${pxToVw(20)};
+`;
+
+const SnapItem = styled.div<{ $isFirst: boolean }>`
+  scroll-snap-align: start; /* Ensures each item snaps into place */
+  scroll-snap-stop: always;
+  padding-left: ${(props) => (props.$isFirst ? pxToVw(20) : pxToVw(12))};
 `;
 
 const PremiumJobPosting = () => {
@@ -58,7 +68,9 @@ const PremiumJobPosting = () => {
       </Header>
       <JobPostingContainer>
         {jobPostings.map((jobPosting, index) => (
-          <JobPostingItem key={index} job={jobPosting} />
+          <SnapItem key={index} $isFirst={index === 0}>
+            <JobPostingItem job={jobPosting} />
+          </SnapItem>
         ))}
       </JobPostingContainer>
     </Container>
