@@ -122,6 +122,13 @@ export const fonts = {
     color: ${colors.greyText4};
   `,
 
+  //greyTextEditLabel
+  greyTextEditLabelBold16: css`
+    font-size: ${pxToVw(16)};
+    font-weight: 700;
+    color: ${colors.greyTextEditLabel};
+  `,
+
   //white
   whiteBold16: css`
     font-size: ${pxToVw(16)};
