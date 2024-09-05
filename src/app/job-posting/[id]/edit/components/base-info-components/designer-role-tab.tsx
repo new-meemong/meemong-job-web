@@ -1,12 +1,15 @@
 import pxToVw from "@/lib/dpi-converter";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
+import { jobPostingType } from "@/types/job-posting-type";
 
 const TabContainer = styled.div`
   display: flex;
   width: 100%;
-  height: ${pxToVw(34)};
+  height: ${pxToVw(40)};
+  margin-top: ${pxToVw(8)};
   border-radius: ${pxToVw(4)};
   overflow: hidden;
 `;
@@ -26,22 +29,22 @@ const Tab = styled.div<{ $active: boolean }>`
     props.$active ? fonts.purplePrimaryBold14 : fonts.greyText4Bold14};
 `;
 
-interface TabsProps {
-  activeTab: number;
-  setActiveTab: (index: number) => void;
-}
+const DesignerRoleTab = () => {
+  const { role, setRole } = useJobPostingEditStore();
 
-const DesignerTypeTab = ({ activeTab, setActiveTab }: TabsProps) => {
   return (
     <TabContainer>
-      <Tab $active={activeTab === 0} onClick={() => setActiveTab(0)}>
-        디자이너
+      <Tab
+        $active={role === jobPostingType.role["디자이너"]}
+        onClick={() => setRole("디자이너")}
+      >
+        {jobPostingType.role["디자이너"]}
       </Tab>
-      <Tab $active={activeTab === 1} onClick={() => setActiveTab(1)}>
-        인턴
+      <Tab $active={role === "인턴"} onClick={() => setRole("인턴")}>
+        {jobPostingType.role["인턴"]}
       </Tab>
     </TabContainer>
   );
 };
 
-export default DesignerTypeTab;
+export default DesignerRoleTab;

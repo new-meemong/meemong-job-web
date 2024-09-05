@@ -80,7 +80,7 @@ const SelectLocation = () => {
             </React.Fragment>
           ))}
         </Location>
-        <LocationButton href={`home/select-location`}>
+        <LocationButton href={`/home/select-location`}>
           지역선택하기
           <ArrowRightPurpleIcon />
         </LocationButton>
