@@ -18,5 +18,7 @@ export const colors = {
   greyBacground4: "#D2D8D9",
   greyText2: "#616869",
   greyText: "#303535",
-  greyTextEditLabel: "#3D3C3F"
+  greyTextEditLabel: "#3D3C3F",
+
+  red: "#FF0000"
 };

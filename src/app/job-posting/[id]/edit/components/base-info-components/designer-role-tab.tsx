@@ -3,7 +3,7 @@ import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
-import { jobPostingType } from "@/types/job-posting-type";
+import { jobPostingTypes } from "@/types/job-posting-types";
 
 const TabContainer = styled.div`
   display: flex;
@@ -35,13 +35,13 @@ const DesignerRoleTab = () => {
   return (
     <TabContainer>
       <Tab
-        $active={role === jobPostingType.role["디자이너"]}
+        $active={role === jobPostingTypes.role["디자이너"]}
         onClick={() => setRole("디자이너")}
       >
-        {jobPostingType.role["디자이너"]}
+        {jobPostingTypes.role["디자이너"]}
       </Tab>
       <Tab $active={role === "인턴"} onClick={() => setRole("인턴")}>
-        {jobPostingType.role["인턴"]}
+        {jobPostingTypes.role["인턴"]}
       </Tab>
     </TabContainer>
   );

@@ -15,6 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-bottom: ${pxToVw(100)};
 `;
 
 const ContentContainer = styled.div`

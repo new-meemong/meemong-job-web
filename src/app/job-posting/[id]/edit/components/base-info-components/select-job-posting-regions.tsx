@@ -74,7 +74,7 @@ const CancelText = styled.span`
   ${fonts.purplePrimarySemi14}
 `;
 
-const JobPostingRegions = () => {
+const SelectJobPostingRegions = () => {
   // const selectedLicationList = ["서울 강남구", "서울 강동구", "서울 강북구"];
   const selectedLicationList: string[] = [];
   return (
@@ -103,4 +103,4 @@ const JobPostingRegions = () => {
   );
 };
 
-export default JobPostingRegions;
+export default SelectJobPostingRegions;

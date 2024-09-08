@@ -2,7 +2,8 @@ import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 import DesignerRoleTab from "./base-info-components/designer-role-tab";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import JobPostingRegions from "./base-info-components/job-posting-regions";
+import SelectJobPostingRegions from "./base-info-components/select-job-posting-regions";
+import SelectEducation from "./base-info-components/select-education";
 
 const Container = styled.div``;
 
@@ -17,7 +18,8 @@ const JobPostingEditBaseInfo = () => {
     <Container>
       <HeaderLabel>기본 정보 입력*</HeaderLabel>
       <DesignerRoleTab />
-      <JobPostingRegions />
+      <SelectJobPostingRegions />
+      <SelectEducation />
     </Container>
   );
 };

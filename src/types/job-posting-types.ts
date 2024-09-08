@@ -210,15 +210,20 @@
 //   ])
 // };
 
-export const jobPostingType = {
+export const jobPostingTypes = {
   role: {
     디자이너: "디자이너",
     인턴: "인턴"
   },
-  monthlyEducationCount: {
+  monthlyEducationDesignerCount: {
     "월 1회 이상": "월 1회 이상",
     "월 2회 이상": "월 2회 이상",
     "월 3회 이상": "월 3회 이상"
+  },
+  monthlyEducationInternCount: {
+    "월 2회 이하": "월 2회 이하",
+    "월 3회 이상": "월 3회 이상",
+    "월 4회 이상": "월 4회 이상"
   },
   availableOffDays: {
     월: "월",
@@ -426,12 +431,14 @@ type ExtractType<T> = T extends { true: any; false: any } ? boolean : keyof T;
 
 // jobPostingType 안의 모든 키에 대한 타입을 자동으로 생성하는 유틸리티 타입
 type JobPostingTypeKeys = {
-  [K in keyof typeof jobPostingType]: ExtractType<(typeof jobPostingType)[K]>;
+  [K in keyof typeof jobPostingTypes]: ExtractType<(typeof jobPostingTypes)[K]>;
 };
 
 export type RoleType = JobPostingTypeKeys["role"];
-export type MonthlyEducationCountType =
-  JobPostingTypeKeys["monthlyEducationCount"];
+export type MonthlyEducationDesignerCountType =
+  JobPostingTypeKeys["monthlyEducationDesignerCount"];
+export type MonthlyEducationInternCountType =
+  JobPostingTypeKeys["monthlyEducationInternCount"];
 export type AvailableOffDaysType = JobPostingTypeKeys["availableOffDays"];
 export type SettlementAllowanceType = JobPostingTypeKeys["settlementAllowance"];
 export type IncentiveType = JobPostingTypeKeys["incentive"];
