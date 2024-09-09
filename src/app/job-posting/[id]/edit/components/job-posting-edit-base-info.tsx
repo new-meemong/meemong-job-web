@@ -4,6 +4,7 @@ import DesignerRoleTab from "./base-info-components/designer-role-tab";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import SelectJobPostingRegions from "./base-info-components/select-job-posting-regions";
 import SelectEducation from "./base-info-components/select-education";
+import SelectOffDays from "./base-info-components/select-off-days";
 
 const Container = styled.div``;
 
@@ -20,6 +21,7 @@ const JobPostingEditBaseInfo = () => {
       <DesignerRoleTab />
       <SelectJobPostingRegions />
       <SelectEducation />
+      <SelectOffDays />
     </Container>
   );
 };

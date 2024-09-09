@@ -50,7 +50,7 @@ const SelectEducation = () => {
             : monthlyEducationInternCount
         }
         errorMessage="교육 횟수를 선택해주세요."
-        onSelect={() => {}}
+        onSelect={handleSelect}
         isError={false}
       />
     </Container>

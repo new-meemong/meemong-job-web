@@ -1,4 +1,5 @@
 import {
+  AvailableOffDaysType,
   jobPostingTypes,
   MonthlyEducationDesignerCountType,
   MonthlyEducationInternCountType,
@@ -12,6 +13,7 @@ type JobPostingEditState = {
   role: RoleType;
   monthlyEducationDesignerCount: MonthlyEducationDesignerCountType | null;
   monthlyEducationInternCount: MonthlyEducationInternCountType | null;
+  availableOffDays: AvailableOffDaysType[];
 };
 
 type JobPostingEditActions = {
@@ -23,18 +25,22 @@ type JobPostingEditActions = {
   setMonthlyEducationInternCount: (
     monthlyEducationInternCount: MonthlyEducationInternCountType
   ) => void;
+  setAvailableOffDays: (
+    day: keyof (typeof jobPostingTypes)["availableOffDays"]
+  ) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
   title: "",
   role: jobPostingTypes.role.디자이너 as RoleType,
   monthlyEducationDesignerCount: null,
-  monthlyEducationInternCount: null
+  monthlyEducationInternCount: null,
+  availableOffDays: []
 };
 
 export const useJobPostingEditStore = create(
   persist<JobPostingEditState & JobPostingEditActions>(
-    (set) => ({
+    (set, get) => ({
       ...defaultJobPostingEditState,
       setTitle: (title: string) => set({ title }),
       setRole: (role: RoleType) => set({ role }),
@@ -43,7 +49,25 @@ export const useJobPostingEditStore = create(
       ) => set({ monthlyEducationDesignerCount }),
       setMonthlyEducationInternCount: (
         monthlyEducationInternCount: MonthlyEducationInternCountType
-      ) => set({ monthlyEducationInternCount })
+      ) => set({ monthlyEducationInternCount }),
+      setAvailableOffDays: (
+        day: keyof (typeof jobPostingTypes)["availableOffDays"]
+      ) => {
+        const { availableOffDays } = get();
+        if (availableOffDays?.includes(day)) {
+          // day가 이미 선택된 경우, 제거
+          set({
+            availableOffDays: availableOffDays.filter(
+              (selectedDay) => selectedDay !== day
+            )
+          });
+        } else {
+          // day가 선택되지 않은 경우, 추가
+          set({
+            availableOffDays: [...(availableOffDays || []), day]
+          });
+        }
+      }
     }),
     {
       name: "job-posting-edit-store",

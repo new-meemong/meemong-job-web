@@ -10,6 +10,11 @@ const Label = styled.div`
   padding: ${pxToVw(8)} 0;
 `;
 
+const SubLabel = styled.div`
+  ${fonts.purplePrimarySemi12};
+  padding-left: ${pxToVw(2)};
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -35,31 +40,34 @@ const ErrorMessage = styled.div`
   padding-left: ${pxToVw(10)};
 `;
 
-interface BaseSingleSelectProps {
+interface BaseMultiSelectProps {
   label: string;
+  subLabel?: string;
   options: string[];
-  selectedOption: string | null;
+  selectedOptions: string[];
   errorMessage: string;
   isError: boolean;
   onSelect: (option: string) => void;
 }
 
-const BaseSingleSelect = ({
+const BaseMultiSelect = ({
   label,
+  subLabel = "복수 선택 가능",
   options,
-  selectedOption,
+  selectedOptions,
   errorMessage,
   onSelect,
   isError
-}: BaseSingleSelectProps) => {
+}: BaseMultiSelectProps) => {
   return (
     <Container>
-      <Label>교육</Label>
+      <Label>{label}</Label>
+      <SubLabel>{subLabel}</SubLabel>
       <ButtonContainer>
         {options.map((option) => (
           <Button
             key={option}
-            $isSelected={selectedOption === option}
+            $isSelected={selectedOptions.includes(option)}
             onClick={() => onSelect(option)}
           >
             {option}
@@ -71,4 +79,4 @@ const BaseSingleSelect = ({
   );
 };
 
-export default BaseSingleSelect;
+export default BaseMultiSelect;
