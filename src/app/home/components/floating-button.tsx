@@ -1,5 +1,7 @@
 import WriteIcon from "@/components/icons/write-icon";
+import offsetToVw from "@/lib/dpi-converter";
 import pxToVw from "@/lib/dpi-converter";
+import numberToVw from "@/lib/dpi-number-converter";
 import { colors } from "@/styles/colors";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -65,11 +67,17 @@ const FloatingButton = () => {
     <Container>
       {isExpanded && (
         <>
-          <AdditionalButton offset={90} onClick={handleJobPostingClick}>
+          <AdditionalButton
+            offset={numberToVw(90)}
+            onClick={handleJobPostingClick}
+          >
             <WriteIcon />
             <AdditionalButtonText>{`매장정보\n등록`}</AdditionalButtonText>
           </AdditionalButton>
-          <AdditionalButton offset={160} onClick={handleResumeClick}>
+          <AdditionalButton
+            offset={numberToVw(160)}
+            onClick={handleResumeClick}
+          >
             <WriteIcon />
             <AdditionalButtonText>{`이력서\n작성`}</AdditionalButtonText>
           </AdditionalButton>
