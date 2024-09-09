@@ -1,9 +1,12 @@
 import {
   AvailableOffDaysType,
+  IncentiveType,
   jobPostingTypes,
   MonthlyEducationDesignerCountType,
   MonthlyEducationInternCountType,
-  RoleType
+  RoleType,
+  SettlementAllowanceType,
+  SexType
 } from "@/types/job-posting-types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -14,6 +17,9 @@ type JobPostingEditState = {
   monthlyEducationDesignerCount: MonthlyEducationDesignerCountType | null;
   monthlyEducationInternCount: MonthlyEducationInternCountType | null;
   availableOffDays: AvailableOffDaysType[];
+  settlementAllowance: SettlementAllowanceType | null;
+  incentive: IncentiveType | null;
+  sex: SexType | null;
 };
 
 type JobPostingEditActions = {
@@ -28,6 +34,11 @@ type JobPostingEditActions = {
   setAvailableOffDays: (
     day: keyof (typeof jobPostingTypes)["availableOffDays"]
   ) => void;
+  setSettlementAllowance: (
+    settlementAllowance: SettlementAllowanceType
+  ) => void;
+  setIncentive: (incentive: IncentiveType) => void;
+  setSex: (sex: SexType) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -35,7 +46,10 @@ const defaultJobPostingEditState: JobPostingEditState = {
   role: jobPostingTypes.role.디자이너 as RoleType,
   monthlyEducationDesignerCount: null,
   monthlyEducationInternCount: null,
-  availableOffDays: []
+  availableOffDays: [],
+  settlementAllowance: null,
+  incentive: null,
+  sex: null
 };
 
 export const useJobPostingEditStore = create(
@@ -67,7 +81,11 @@ export const useJobPostingEditStore = create(
             availableOffDays: [...(availableOffDays || []), day]
           });
         }
-      }
+      },
+      setSettlementAllowance: (settlementAllowance: SettlementAllowanceType) =>
+        set({ settlementAllowance }),
+      setIncentive: (incentive: IncentiveType) => set({ incentive }),
+      setSex: (sex: SexType) => set({ sex })
     }),
     {
       name: "job-posting-edit-store",

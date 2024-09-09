@@ -8,7 +8,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import JobPostingEditSearchLocation from "./components/job-posting-edit-search-location";
 import Divider from "./components/divider";
-import JobPostingEditBaseInfo from "./components/job-posting-edit-base-info";
+import JobPostingEditBaseOption from "./components/job-posting-edit-base-option";
 
 const Container = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ export default function JobPostingEditPage() {
         <JobPostingEditTitle />
         <JobPostingEditSearchLocation />
         <Divider />
-        <JobPostingEditBaseInfo />
+        <JobPostingEditBaseOption />
       </ContentContainer>
     </Container>
   );

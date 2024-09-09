@@ -215,16 +215,19 @@ export const jobPostingTypes = {
     디자이너: "디자이너",
     인턴: "인턴"
   },
+  // 교육-디자이너
   monthlyEducationDesignerCount: {
     "월 1회 이상": "월 1회 이상",
     "월 2회 이상": "월 2회 이상",
     "월 3회 이상": "월 3회 이상"
   },
+  // 교육-인턴
   monthlyEducationInternCount: {
     "월 2회 이하": "월 2회 이하",
     "월 3회 이상": "월 3회 이상",
     "월 4회 이상": "월 4회 이상"
   },
+  // 휴무 가능일
   availableOffDays: {
     월: "월",
     화: "화",
@@ -234,7 +237,8 @@ export const jobPostingTypes = {
     토: "토",
     일: "일"
   },
-  // 디자이너
+
+  // 정착지원금-디자이너
   settlementAllowance: {
     "179만원 이하": "179만원 이하",
     "180만원 이상": "180만원 이상",

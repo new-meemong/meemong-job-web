@@ -1,6 +1,7 @@
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import { ReactNode } from "react";
 import styled from "styled-components";
 
 const Container = styled.div``;
@@ -35,26 +36,40 @@ const ErrorMessage = styled.div`
   padding-left: ${pxToVw(10)};
 `;
 
-interface BaseSingleSelectProps {
+const Info = styled.div`
+  ${fonts.purplePrimarySemi12}
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+interface BaseSingleInfoSelectProps {
   label: string;
   options: string[];
   selectedOption: string | null;
   errorMessage: string;
   isError: boolean;
   onSelect: (option: string) => void;
+  infoLabel: string;
+  info: ReactNode;
 }
 
-const BaseSingleSelect = ({
+const BaseSingleInfoSelect = ({
   label,
   options,
   selectedOption,
   errorMessage,
   onSelect,
-  isError
-}: BaseSingleSelectProps) => {
+  isError,
+  infoLabel,
+  info
+}: BaseSingleInfoSelectProps) => {
   return (
     <Container>
       <Label>{label}</Label>
+      <Info>{infoLabel}</Info>
       <ButtonContainer>
         {options.map((option) => (
           <Button
@@ -71,4 +86,4 @@ const BaseSingleSelect = ({
   );
 };
 
-export default BaseSingleSelect;
+export default BaseSingleInfoSelect;
