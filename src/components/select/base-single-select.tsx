@@ -13,7 +13,7 @@ const Label = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${pxToVw(5)};
+  gap: ${pxToVw(4)};
   padding: ${pxToVw(8)} 0;
 `;
 
@@ -23,7 +23,7 @@ const Button = styled.div<{ $isSelected: boolean }>`
   justify-content: center;
   align-items: center;
   height: ${pxToVw(34)};
-  width: ${pxToVw(105)};
+  width: ${pxToVw(102)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
