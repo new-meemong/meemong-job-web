@@ -8,7 +8,7 @@ import SelectOffDays from "./base-option-components/select-off-days";
 import SelectSettlementAllowance from "./base-option-components/select-settlement-allowance";
 import SelectEducationIntern from "./base-option-components/select-education-intern";
 import SelectIncentive from "./base-option-components/select-incentive";
-import JobPostingEditDetailInfo from "./Job-posting-edit-detail-option";
+import JobPostingEditDetailOption from "./job-posting-edit-detail-option";
 
 const Container = styled.div``;
 
@@ -28,7 +28,7 @@ const JobPostingEditBaseOption = () => {
       <SelectOffDays />
       <SelectSettlementAllowance />
       <SelectIncentive />
-      <JobPostingEditDetailInfo />
+      <JobPostingEditDetailOption />
     </Container>
   );
 };

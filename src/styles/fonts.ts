@@ -43,6 +43,11 @@ export const fonts = {
   `,
 
   //black
+  blackBold18: css`
+    font-size: ${pxToVw(18)};
+    font-weight: 700;
+    color: ${colors.black};
+  `,
   blackBold16: css`
     font-size: ${pxToVw(16)};
     font-weight: 700;
@@ -56,6 +61,11 @@ export const fonts = {
   blackSemi14: css`
     font-size: ${pxToVw(14)};
     font-weight: 500;
+    color: ${colors.black};
+  `,
+  blackNormal14: css`
+    font-size: ${pxToVw(14)};
+    font-weight: 400;
     color: ${colors.black};
   `,
   blackSemi12: css`

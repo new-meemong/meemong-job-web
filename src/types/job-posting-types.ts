@@ -280,9 +280,13 @@ export const jobPostingTypes = {
     남자: "남자",
     여자: "여자"
   },
-  age: {
-    "연령 무관": "연령 무관",
-    "연령 제한": "연령 제한"
+  isRestrictedAge: {
+    false: "연령 무관",
+    true: "연령 제한"
+  },
+  isPossibleMiddleAge: {
+    false: false,
+    true: true
   },
   designerLicenses: {
     자격증: "자격증",
@@ -449,7 +453,8 @@ export type IncentiveType = JobPostingTypeKeys["incentive"];
 export type EducationCostType = JobPostingTypeKeys["educationCost"];
 export type InternSalaryType = JobPostingTypeKeys["internSalary"];
 export type SexType = JobPostingTypeKeys["sex"];
-export type AgeType = JobPostingTypeKeys["age"];
+export type isRestrictedAgeType = JobPostingTypeKeys["isRestrictedAge"];
+export type isPossibleMiddleAgeType = JobPostingTypeKeys["isPossibleMiddleAge"];
 export type DesignerLicensesType = JobPostingTypeKeys["designerLicenses"];
 export type StoreTypesType = JobPostingTypeKeys["storeTypes"];
 export type EmployeeCountType = JobPostingTypeKeys["employeeCount"];

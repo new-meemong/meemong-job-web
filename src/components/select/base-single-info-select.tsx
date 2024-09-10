@@ -1,8 +1,11 @@
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import styled from "styled-components";
+import TooltipHelpPurpleIcon from "../icons/tooltip-help-purple-icon";
+import { Sheet } from "react-modal-sheet";
+import CancelGreyIcon from "../icons/cancel-grey-icon";
 
 const Container = styled.div``;
 
@@ -14,7 +17,7 @@ const Label = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${pxToVw(4)};
+  gap: ${pxToVw(5)};
   padding: ${pxToVw(8)} 0;
 `;
 
@@ -25,7 +28,7 @@ const Button = styled.div<{ $isSelected: boolean }>`
   justify-content: center;
   align-items: center;
   height: ${pxToVw(34)};
-  width: ${pxToVw(102)};
+  width: ${pxToVw(105)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
@@ -43,6 +46,31 @@ const Info = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: ${colors.white};
+`;
+
+const SheetContainer = styled(Sheet.Container)`
+  border-top-right-radius: ${pxToVw(30)} !important;
+  border-top-left-radius: ${pxToVw(30)} !important;
+  height: ${pxToVw(450)};
+  padding-top: ${pxToVw(35)};
+  padding-bottom: ${pxToVw(35)};
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
+  border-top-right-radius: ${pxToVw(10)} !important;
+  border-top-left-radius: ${pxToVw(10)} !important;
+`;
+
+const SheetHeader = styled(Sheet.Header)`
+  ${fonts.blackBold18}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SheetContent = styled(Sheet.Content)`
+  height: 100%;
+  margin-top: ${pxToVw(35)};
 `;
 
 interface BaseSingleInfoSelectProps {
@@ -53,6 +81,7 @@ interface BaseSingleInfoSelectProps {
   isError: boolean;
   onSelect: (option: string) => void;
   infoLabel: string;
+  infoHeader: string;
   info: ReactNode;
 }
 
@@ -64,12 +93,26 @@ const BaseSingleInfoSelect = ({
   onSelect,
   isError,
   infoLabel,
+  infoHeader,
   info
 }: BaseSingleInfoSelectProps) => {
+  const [isOpenInfo, setIsOpenInfo] = useState(false);
+
+  const handleOpenInfo = () => {
+    setIsOpenInfo(true);
+  };
+
+  const handleCloseInfo = () => {
+    setIsOpenInfo(false);
+  };
+
   return (
     <Container>
       <Label>{label}</Label>
-      <Info>{infoLabel}</Info>
+      <Info onClick={handleOpenInfo}>
+        {infoLabel}
+        <TooltipHelpPurpleIcon />
+      </Info>
       <ButtonContainer>
         {options.map((option) => (
           <Button
@@ -82,6 +125,17 @@ const BaseSingleInfoSelect = ({
         ))}
       </ButtonContainer>
       {isError && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      <Sheet
+        isOpen={isOpenInfo}
+        onClose={handleCloseInfo}
+        detent="content-height"
+      >
+        <Sheet.Backdrop onTap={handleCloseInfo} />
+        <SheetContainer>
+          <SheetHeader>{infoHeader}</SheetHeader>
+          <SheetContent>{info}</SheetContent>
+        </SheetContainer>
+      </Sheet>
     </Container>
   );
 };

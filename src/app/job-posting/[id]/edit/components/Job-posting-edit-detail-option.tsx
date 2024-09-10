@@ -3,6 +3,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
+import SelectSex from "./detail-option-components/select-sex";
 
 const Container = styled.div`
   background-color: ${colors.purpleBackground2};
@@ -23,6 +24,7 @@ const JobPostingEditDetailOption = () => {
   return (
     <Container>
       <HeaderLabel>매장 상세정보 입력*</HeaderLabel>
+      <SelectSex />
     </Container>
   );
 };
