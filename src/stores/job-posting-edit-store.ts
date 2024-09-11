@@ -20,6 +20,8 @@ type JobPostingEditState = {
   settlementAllowance: SettlementAllowanceType | null;
   incentive: IncentiveType | null;
   sex: SexType | null;
+  isRestrictedAge: boolean | null;
+  isPossibleMiddleAge: boolean | null;
 };
 
 type JobPostingEditActions = {
@@ -39,6 +41,8 @@ type JobPostingEditActions = {
   ) => void;
   setIncentive: (incentive: IncentiveType) => void;
   setSex: (sex: SexType) => void;
+  setIsRestrictedAge: (isRestrictedAge: boolean) => void;
+  setIsPossibleMiddleAge: (isPossibleMiddleAge: boolean) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -49,7 +53,9 @@ const defaultJobPostingEditState: JobPostingEditState = {
   availableOffDays: [],
   settlementAllowance: null,
   incentive: null,
-  sex: null
+  sex: null,
+  isRestrictedAge: null,
+  isPossibleMiddleAge: null
 };
 
 export const useJobPostingEditStore = create(
@@ -85,8 +91,17 @@ export const useJobPostingEditStore = create(
       setSettlementAllowance: (settlementAllowance: SettlementAllowanceType) =>
         set({ settlementAllowance }),
       setIncentive: (incentive: IncentiveType) => set({ incentive }),
-      setSex: (sex: SexType) => set({ sex })
+      setSex: (sex: SexType) => set({ sex }),
+      setIsRestrictedAge: (isRestrictedAge: boolean) => {
+        set({ isRestrictedAge });
+        if (!isRestrictedAge) {
+          set({ isPossibleMiddleAge: null });
+        }
+      },
+      setIsPossibleMiddleAge: (isPossibleMiddleAge: boolean) =>
+        set({ isPossibleMiddleAge })
     }),
+
     {
       name: "job-posting-edit-store",
       getStorage: () => localStorage

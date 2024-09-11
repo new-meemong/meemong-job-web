@@ -20,12 +20,7 @@ const BackIcon = () => {
   return (
     <Container>
       <IconWrapper>
-        <Image
-          src="/icons/headers/back.svg"
-          alt="Back"
-          layout="fill"
-          objectFit="contain"
-        />
+        <Image src="/icons/headers/back.svg" alt="Back" fill />
       </IconWrapper>
     </Container>
   );

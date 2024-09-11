@@ -20,12 +20,7 @@ const OptionIcon = () => {
   return (
     <Container>
       <IconWrapper>
-        <Image
-          src="/icons/headers/option.svg"
-          alt="Back"
-          layout="fill"
-          objectFit="contain"
-        />
+        <Image src="/icons/headers/option.svg" alt="Back" fill />
       </IconWrapper>
     </Container>
   );

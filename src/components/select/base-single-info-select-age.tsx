@@ -27,7 +27,7 @@ const Button = styled.div<{ $isSelected: boolean }>`
   justify-content: center;
   align-items: center;
   height: ${pxToVw(34)};
-  width: ${pxToVw(104)};
+  width: ${pxToVw(160)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
@@ -54,7 +54,6 @@ const SheetContainer = styled(Sheet.Container)`
   align-items: center;
   border-top-right-radius: ${pxToVw(30)} !important;
   border-top-left-radius: ${pxToVw(30)} !important;
-
   padding-top: ${pxToVw(35)};
   padding-bottom: ${pxToVw(35)};
   padding-left: ${pxToVw(24)};
@@ -64,7 +63,7 @@ const SheetContainer = styled(Sheet.Container)`
 `;
 
 const SheetHeader = styled(Sheet.Header)`
-  ${fonts.blackBold18}
+  ${fonts.greyTitleBold18}
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -101,7 +100,7 @@ interface BaseSingleInfoSelectProps {
   info: ReactNode;
 }
 
-const BaseSingleInfoSelect = ({
+const BaseSingleInfoSelectAge = ({
   label,
   options,
   selectedOption,
@@ -157,4 +156,4 @@ const BaseSingleInfoSelect = ({
   );
 };
 
-export default BaseSingleInfoSelect;
+export default BaseSingleInfoSelectAge;

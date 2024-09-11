@@ -14,8 +14,7 @@ const ArrowRightGreyOutlineIcon = () => (
     <Image
       src="/icons/arrow_right_grey_outline.svg"
       alt="Arrow Right Outline"
-      layout="fill" // 이미지가 부모의 크기에 맞춰지도록 설정
-      objectFit="contain"
+      fill // 이미지가 부모의 크기에 맞춰지도록 설정
     />
   </IconWrapper>
 );

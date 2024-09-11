@@ -10,12 +10,7 @@ const IconWrapper = styled.div`
 `;
 const CheckboxSelectIcon = () => (
   <IconWrapper>
-    <Image
-      src="/icons/checkbox_select.svg"
-      alt="Checkbox Select"
-      layout="fill"
-      objectFit="contain"
-    />
+    <Image src="/icons/checkbox_select.svg" alt="Checkbox Select" fill />
   </IconWrapper>
 );
 

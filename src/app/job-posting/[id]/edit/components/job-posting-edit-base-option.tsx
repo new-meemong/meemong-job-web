@@ -3,7 +3,6 @@ import styled from "styled-components";
 import DesignerRoleTab from "./base-option-components/designer-role-tab";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import SelectJobPostingRegions from "./base-option-components/select-job-posting-regions";
-import SelectEducationDesigner from "./base-option-components/select-education-designer";
 import SelectOffDays from "./base-option-components/select-off-days";
 import SelectSettlementAllowance from "./base-option-components/select-settlement-allowance";
 import SelectEducationIntern from "./base-option-components/select-education-intern";

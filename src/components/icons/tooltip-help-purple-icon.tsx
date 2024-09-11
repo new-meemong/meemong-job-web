@@ -11,12 +11,7 @@ const IconWrapper = styled.div`
 
 const TooltipHelpPurpleIcon = () => (
   <IconWrapper>
-    <Image
-      src="/icons/tooltip_help.svg"
-      alt="Tootip Help"
-      layout="fill"
-      objectFit="contain"
-    />
+    <Image src="/icons/tooltip_help.svg" alt="Tootip Help" fill />
   </IconWrapper>
 );
 

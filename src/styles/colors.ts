@@ -4,6 +4,7 @@ export const colors = {
   purpleSecondary2: "#C3EFFB",
   purpleBackground: "#F1F0FF",
   purpleBackground2: "#ECEAFF",
+  purpleBackground3: "#ECEAFF66",
   purpleBackgroundActive: "#E0DDFF",
 
   white: "#FFFFFF",
@@ -19,6 +20,8 @@ export const colors = {
   greyText2: "#616869",
   greyText: "#303535",
   greyTextEditLabel: "#3D3C3F",
+  greyTitle: "#222222",
 
-  red: "#FF0000"
+  red: "#FF0000",
+  deepCyan: "#1584A0"
 };

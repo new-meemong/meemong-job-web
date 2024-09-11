@@ -10,12 +10,7 @@ const IconWrapper = styled.div`
 `;
 const CloseCircleGreyIcon = () => (
   <IconWrapper>
-    <Image
-      src="/icons/close_circle_grey.svg"
-      alt="Close Circle"
-      layout="fill"
-      objectFit="contain"
-    />
+    <Image src="/icons/close_circle_grey.svg" alt="Close Circle" fill />
   </IconWrapper>
 );
 

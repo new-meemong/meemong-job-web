@@ -14,7 +14,7 @@ const ArrowDownPurpleIcon = () => (
     <Image
       src="/icons/arrow_down_purple.svg"
       alt="Arrow Down"
-      layout="fill"
+      fill
       objectFit="contain"
     />
   </IconWrapper>

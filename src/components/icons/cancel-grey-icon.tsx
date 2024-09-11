@@ -11,12 +11,7 @@ const IconWrapper = styled.div`
 
 const CancelGreyIcon = () => (
   <IconWrapper>
-    <Image
-      src="/icons/headers/cancel.svg"
-      alt="Close"
-      layout="fill"
-      objectFit="contain"
-    />
+    <Image src="/icons/headers/cancel.svg" alt="Close" fill />
   </IconWrapper>
 );
 

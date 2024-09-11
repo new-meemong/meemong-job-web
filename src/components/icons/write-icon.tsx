@@ -10,12 +10,7 @@ const IconWrapper = styled.div`
 `;
 const WriteIcon = () => (
   <IconWrapper>
-    <Image
-      src="/icons/write.svg"
-      alt="Write"
-      layout="fill"
-      objectFit="contain"
-    />
+    <Image src="/icons/write.svg" alt="Write" fill />
   </IconWrapper>
 );
 

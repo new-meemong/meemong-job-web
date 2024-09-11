@@ -3,7 +3,7 @@ import { colors } from "./colors";
 import pxToVw from "@/lib/dpi-converter";
 
 export const fonts = {
-  //purplePrimary
+  // purplePrimary
   purplePrimaryBold16: css`
     font-size: ${pxToVw(16)};
     font-weight: 700;
@@ -35,14 +35,14 @@ export const fonts = {
     color: ${colors.purplePrimary};
   `,
 
-  //purpleSecondary
+  // purpleSecondary
   purpleSecondaryBold20: css`
     font-size: ${pxToVw(20)};
     font-weight: 700;
     color: ${colors.purpleSecondary};
   `,
 
-  //black
+  // black
   blackBold18: css`
     font-size: ${pxToVw(18)};
     font-weight: 700;
@@ -79,7 +79,7 @@ export const fonts = {
     color: ${colors.black};
   `,
 
-  //grey
+  // grey
   greySemi16: css`
     font-size: ${pxToVw(16)};
     font-weight: 500;
@@ -111,7 +111,7 @@ export const fonts = {
     color: ${colors.grey};
   `,
 
-  //greyText
+  // greyText
   greyTextBold18: css`
     font-size: ${pxToVw(18)};
     font-weight: 700;
@@ -133,28 +133,40 @@ export const fonts = {
     color: ${colors.greyText};
   `,
 
-  //greyText2
+  // greyText2
   greyText2Normal10: css`
     font-size: ${pxToVw(10)};
     font-weight: 400;
     color: ${colors.greyText2};
   `,
 
-  //greyText4
+  // greyText4
   greyText4Bold14: css`
     font-size: ${pxToVw(14)};
     font-weight: 700;
     color: ${colors.greyText4};
   `,
 
-  //greyTextEditLabel
+  // greyTextEditLabel
   greyTextEditLabelBold16: css`
     font-size: ${pxToVw(16)};
     font-weight: 700;
     color: ${colors.greyTextEditLabel};
   `,
+  greyTextEditLabelSemi12: css`
+    font-size: ${pxToVw(12)};
+    font-weight: 500;
+    color: ${colors.greyTextEditLabel};
+  `,
 
-  //white
+  // greyTitle
+  greyTitleBold18: css`
+    font-size: ${pxToVw(18)};
+    font-weight: 700;
+    color: ${colors.greyTitle};
+  `,
+
+  // white
   whiteBold16: css`
     font-size: ${pxToVw(16)};
     font-weight: 700;
@@ -164,5 +176,12 @@ export const fonts = {
     font-size: ${pxToVw(14)};
     font-weight: 700;
     color: ${colors.white};
+  `,
+
+  // red
+  redBold14: css`
+    font-size: ${pxToVw(14)};
+    font-weight: 700;
+    color: ${colors.red};
   `
 };

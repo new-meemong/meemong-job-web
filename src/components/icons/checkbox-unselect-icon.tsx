@@ -10,12 +10,7 @@ const IconWrapper = styled.div`
 `;
 const CheckboxUnselectIcon = () => (
   <IconWrapper>
-    <Image
-      src="/icons/checkbox_unselect.svg"
-      alt="Checkbox Unselect"
-      layout="fill"
-      objectFit="contain"
-    />
+    <Image src="/icons/checkbox_unselect.svg" alt="Checkbox Unselect" fill />
   </IconWrapper>
 );
 

@@ -14,8 +14,7 @@ const ArrowRightPurpleIcon = () => (
     <Image
       src="/icons/arrow_right_purple.svg"
       alt="Arrow Right"
-      layout="fill" // 이미지가 부모의 크기에 맞춰지도록 설정
-      objectFit="contain"
+      fill // 이미지가 부모의 크기에 맞춰지도록 설정
     />
   </IconWrapper>
 );
