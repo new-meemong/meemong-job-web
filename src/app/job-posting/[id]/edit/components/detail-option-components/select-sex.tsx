@@ -86,10 +86,16 @@ const Info = () => {
 
 const SelectSex = () => {
   const { sex, setSex } = useJobPostingEditStore();
-  const sexs = Object.values(jobPostingTypes.sex);
+  const sexs = Object.entries(jobPostingTypes.sex).map(([key, value]) => ({
+    key,
+    value
+  }));
 
   const handleSelect = (selectedOption: string) => {
-    setSex(selectedOption as SexType);
+    const selectedKey = Object.entries(jobPostingTypes.sex).find(
+      ([key, value]) => key === selectedOption
+    )?.[0];
+    setSex(selectedKey as SexType);
   };
   return (
     <Container>

@@ -125,14 +125,16 @@ const Info = () => {
 
 const SelectIsRestrictedAge = () => {
   const { isRestrictedAge, setIsRestrictedAge } = useJobPostingEditStore();
-  const options = Object.values(jobPostingTypes.isRestrictedAge);
+  const options = Object.entries(jobPostingTypes.isRestrictedAge).map(
+    ([key, value]) => ({
+      key,
+      value
+    })
+  );
 
   const handleSelect = (option: string) => {
-    if (option === jobPostingTypes.isRestrictedAge.true) {
-      setIsRestrictedAge(true);
-    } else {
-      setIsRestrictedAge(false);
-    }
+    const booleanValue = option === "true";
+    setIsRestrictedAge(booleanValue);
   };
 
   return (

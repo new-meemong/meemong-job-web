@@ -8,6 +8,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   gap: ${pxToVw(4)};
+  padding-bottom: ${pxToVw(8)};
 `;
 
 const CheckBox = styled.input.attrs({ type: "checkbox" })`

@@ -1,5 +1,6 @@
 import {
   AvailableOffDaysType,
+  DesignerLicensesType,
   IncentiveType,
   jobPostingTypes,
   MonthlyEducationDesignerCountType,
@@ -22,6 +23,7 @@ type JobPostingEditState = {
   sex: SexType | null;
   isRestrictedAge: boolean | null;
   isPossibleMiddleAge: boolean | null;
+  designerLicenses: DesignerLicensesType[];
 };
 
 type JobPostingEditActions = {
@@ -43,6 +45,9 @@ type JobPostingEditActions = {
   setSex: (sex: SexType) => void;
   setIsRestrictedAge: (isRestrictedAge: boolean) => void;
   setIsPossibleMiddleAge: (isPossibleMiddleAge: boolean) => void;
+  setDesignerLicenses: (
+    designerLicense: keyof (typeof jobPostingTypes)["designerLicenses"]
+  ) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -55,7 +60,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   incentive: null,
   sex: null,
   isRestrictedAge: null,
-  isPossibleMiddleAge: null
+  isPossibleMiddleAge: null,
+  designerLicenses: []
 };
 
 export const useJobPostingEditStore = create(
@@ -99,7 +105,25 @@ export const useJobPostingEditStore = create(
         }
       },
       setIsPossibleMiddleAge: (isPossibleMiddleAge: boolean) =>
-        set({ isPossibleMiddleAge })
+        set({ isPossibleMiddleAge }),
+      setDesignerLicenses: (
+        license: keyof (typeof jobPostingTypes)["designerLicenses"]
+      ) => {
+        const { designerLicenses } = get();
+        if (designerLicenses?.includes(license)) {
+          // day가 이미 선택된 경우, 제거
+          set({
+            designerLicenses: designerLicenses.filter(
+              (selectedLicense) => selectedLicense !== license
+            )
+          });
+        } else {
+          // day가 선택되지 않은 경우, 추가
+          set({
+            designerLicenses: [...(designerLicenses || []), license]
+          });
+        }
+      }
     }),
 
     {

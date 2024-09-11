@@ -34,14 +34,17 @@ const Button = styled.div<{ $isSelected: boolean }>`
 const ErrorMessage = styled.div`
   padding-left: ${pxToVw(10)};
 `;
-
+interface Option {
+  key: string;
+  value: string;
+}
 interface BaseSingleSelectProps {
   label: string;
-  options: string[];
+  options: Option[];
   selectedOption: string | null;
   errorMessage: string;
   isError: boolean;
-  onSelect: (option: string) => void;
+  onSelect: (optionKey: string) => void;
 }
 
 const BaseSingleSelect = ({
@@ -58,11 +61,11 @@ const BaseSingleSelect = ({
       <ButtonContainer>
         {options.map((option) => (
           <Button
-            key={option}
-            $isSelected={selectedOption === option}
-            onClick={() => onSelect(option)}
+            key={option.key}
+            $isSelected={selectedOption === option.key}
+            onClick={() => onSelect(option.key)}
           >
-            {option}
+            {option.value}
           </Button>
         ))}
       </ButtonContainer>

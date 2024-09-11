@@ -29,7 +29,7 @@ const Button = styled.div<{ $isSelected: boolean }>`
   justify-content: center;
   align-items: center;
   height: ${pxToVw(34)};
-  width: ${pxToVw(102)};
+  width: ${pxToVw(104)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
@@ -40,14 +40,19 @@ const ErrorMessage = styled.div`
   padding-left: ${pxToVw(10)};
 `;
 
+interface Option {
+  key: string;
+  value: string;
+}
+
 interface BaseMultiSelectProps {
   label: string;
   subLabel?: string;
-  options: string[];
+  options: Option[];
   selectedOptions: string[];
   errorMessage: string;
   isError: boolean;
-  onSelect: (option: string) => void;
+  onSelect: (optionKey: string) => void;
 }
 
 const BaseMultiSelect = ({
@@ -66,11 +71,11 @@ const BaseMultiSelect = ({
       <ButtonContainer>
         {options.map((option) => (
           <Button
-            key={option}
-            $isSelected={selectedOptions.includes(option)}
-            onClick={() => onSelect(option)}
+            key={option.key}
+            $isSelected={selectedOptions.includes(option.key)}
+            onClick={() => onSelect(option.key)}
           >
-            {option}
+            {option.value}
           </Button>
         ))}
       </ButtonContainer>
