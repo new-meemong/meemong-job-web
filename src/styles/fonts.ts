@@ -146,6 +146,11 @@ export const fonts = {
     font-weight: 700;
     color: ${colors.greyText4};
   `,
+  greyText4Semi10: css`
+    font-size: ${pxToVw(10)};
+    font-weight: 500;
+    color: ${colors.greyText4};
+  `,
 
   // greyTextEditLabel
   greyTextEditLabelBold16: css`

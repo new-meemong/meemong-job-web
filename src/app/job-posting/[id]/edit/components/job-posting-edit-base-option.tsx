@@ -8,6 +8,8 @@ import SelectSettlementAllowance from "./base-option-components/select-settlemen
 import SelectEducationIntern from "./base-option-components/select-education-intern";
 import SelectIncentive from "./base-option-components/select-incentive";
 import JobPostingEditDetailOption from "./job-posting-edit-detail-option";
+import Divider from "./divider";
+import JobPostingEditStoreImage from "./job-posting-edit-store-image";
 
 const Container = styled.div``;
 
@@ -28,6 +30,9 @@ const JobPostingEditBaseOption = () => {
       <SelectSettlementAllowance />
       <SelectIncentive />
       <JobPostingEditDetailOption />
+      <Divider />
+      <JobPostingEditStoreImage />
+      <Divider />
     </Container>
   );
 };
