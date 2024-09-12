@@ -9,6 +9,7 @@ import CheckIsPossibleMiddleAge from "./detail-option-components/check-is-possib
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import SelectDesignerLicense from "./detail-option-components/select-designer-license";
 import SelectStore from "./detail-option-components/select-store";
+import SelectEmployeeCount from "./detail-option-components/select-employee-count";
 
 const Container = styled.div`
   background-color: #eceaff66;
@@ -36,6 +37,7 @@ const JobPostingEditDetailOption = () => {
       {isRestrictedAge && <CheckIsPossibleMiddleAge />}
       <SelectDesignerLicense />
       <SelectStore />
+      <SelectEmployeeCount />
     </Container>
   );
 };

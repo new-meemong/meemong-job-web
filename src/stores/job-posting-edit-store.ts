@@ -1,6 +1,7 @@
 import {
   AvailableOffDaysKey,
   DesignerLicensesKey,
+  EmployeeCountKey,
   IncentiveKey,
   IsPossibleMiddleAgeKey,
   IsRestrictedAgeKey,
@@ -28,6 +29,7 @@ type JobPostingEditState = {
   isPossibleMiddleAge: IsPossibleMiddleAgeKey | null;
   designerLicenses: DesignerLicensesKey[];
   store: StoreKey[];
+  employeeCount: EmployeeCountKey | null;
 };
 
 type JobPostingEditActions = {
@@ -47,6 +49,7 @@ type JobPostingEditActions = {
   setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) => void;
   setDesignerLicenses: (designerLicense: DesignerLicensesKey) => void;
   setStore: (store: StoreKey) => void;
+  setEmployeeCount: (employeeCount: EmployeeCountKey) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -61,7 +64,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   isRestrictedAge: null,
   isPossibleMiddleAge: null,
   designerLicenses: [],
-  store: []
+  store: [],
+  employeeCount: null
 };
 
 export const useJobPostingEditStore = create(
@@ -103,7 +107,9 @@ export const useJobPostingEditStore = create(
           return;
         }
         set({ store: toggleSelect(store, selectedStore) });
-      }
+      },
+      setEmployeeCount: (employeeCount: EmployeeCountKey) =>
+        set({ employeeCount })
     }),
 
     {

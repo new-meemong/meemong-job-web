@@ -1,6 +1,7 @@
 import {
   AvailableOffDaysKey,
   DesignerLicensesKey,
+  EmployeeCountKey,
   IncentiveKey,
   IsPossibleMiddleAgeKey,
   IsRestrictedAgeKey,
@@ -12,60 +13,24 @@ import {
   StoreKey
 } from "./job-posting-types";
 
-interface RoleOption {
-  key: RoleKey;
+interface Option<KeyType> {
+  key: KeyType;
   value: string;
 }
 
-interface MonthlyEducationDesignerCountOption {
-  key: MonthlyEducationDesignerCountKey;
-  value: string;
-}
-
-interface MonthlyEducationInternCountOption {
-  key: MonthlyEducationInternCountKey;
-  value: string;
-}
-
-interface AvailableOffDaysOption {
-  key: AvailableOffDaysKey;
-  value: string;
-}
-
-interface SettlementAllowanceOption {
-  key: SettlementAllowanceKey;
-  value: string;
-}
-
-interface IncentiveOption {
-  key: IncentiveKey;
-  value: string;
-}
-
-interface SexOption {
-  key: SexKey;
-  value: string;
-}
-
-interface isRestrictedAgeOption {
-  key: IsRestrictedAgeKey;
-  value: string;
-}
-
-interface IsPossibleMiddleAgeOption {
-  key: IsPossibleMiddleAgeKey;
-  value: string;
-}
-
-interface DesignerLicensesOption {
-  key: DesignerLicensesKey;
-  value: string;
-}
-
-interface StoreOption {
-  key: StoreKey;
-  value: string;
-}
+type RoleOption = Option<RoleKey>;
+type MonthlyEducationDesignerCountOption =
+  Option<MonthlyEducationDesignerCountKey>;
+type MonthlyEducationInternCountOption = Option<MonthlyEducationInternCountKey>;
+type AvailableOffDaysOption = Option<AvailableOffDaysKey>;
+type SettlementAllowanceOption = Option<SettlementAllowanceKey>;
+type IncentiveOption = Option<IncentiveKey>;
+type SexOption = Option<SexKey>;
+type IsRestrictedAgeOption = Option<IsRestrictedAgeKey>;
+type IsPossibleMiddleAgeOption = Option<IsPossibleMiddleAgeKey>;
+type DesignerLicensesOption = Option<DesignerLicensesKey>;
+type StoreOption = Option<StoreKey>;
+type EmployeeCountOption = Option<EmployeeCountKey>;
 
 export const jobPostingOptions: {
   role: RoleOption[];
@@ -75,10 +40,11 @@ export const jobPostingOptions: {
   settlementAllowance: SettlementAllowanceOption[];
   incentive: IncentiveOption[];
   sex: SexOption[];
-  isRestrictedAge: isRestrictedAgeOption[];
+  isRestrictedAge: IsRestrictedAgeOption[];
   isPossibleMiddleAge: IsPossibleMiddleAgeOption[];
   designerLicenses: DesignerLicensesOption[];
   store: StoreOption[];
+  employeeCount: EmployeeCountOption[];
 } = {
   role: [
     { key: "디자이너", value: "디자이너" },
@@ -157,5 +123,12 @@ export const jobPostingOptions: {
     { key: "대형샵 (60평 이상)", value: "대형샵 (60평 이상)" },
     { key: "남성전문 (맨즈살롱/바버샵)", value: "남성전문\n(맨즈살롱/바버샵)" },
     { key: "공유미용실", value: "공유미용실" }
+  ],
+  // 현재 직원수
+  employeeCount: [
+    { key: "3인 이하", value: "3인 이하" },
+    { key: "4인 이상", value: "4인 이상" },
+    { key: "7인 이상", value: "7인 이상" },
+    { key: "10인 이상", value: "10인 이상" }
   ]
 };

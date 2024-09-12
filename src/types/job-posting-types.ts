@@ -66,6 +66,13 @@ export type IsPossibleMiddleAgeKey = boolean;
 // 미용 라이센스
 export type DesignerLicensesKey = "자격증" | "면허증" | "상관없음";
 
+// 현재 직원수
+export type EmployeeCountKey =
+  | "3인 이하"
+  | "4인 이상"
+  | "7인 이상"
+  | "10인 이상";
+
 // 매장형태 (복수선택)
 export type StoreKey =
   | "소형샵 (25평 이하)"
@@ -75,12 +82,6 @@ export type StoreKey =
   | "공유미용실";
 
 export const jobPostingTypes = {
-  employeeCount: {
-    "3인 이하": "3인 이하",
-    "4인 이상": "4인 이상",
-    "7인 이상": "7인 이상",
-    "10인 이상": "10인 이상"
-  },
   storeInteriorRenovationAgo: {
     "1년 이내": "1년 이내",
     "3년 이내": "3년 이내",
@@ -217,7 +218,6 @@ type JobPostingTypeKeys = {
   [K in keyof typeof jobPostingTypes]: ExtractType<(typeof jobPostingTypes)[K]>;
 };
 
-export type EmployeeCountType = JobPostingTypeKeys["employeeCount"];
 export type StoreInteriorRenovationAgoType =
   JobPostingTypeKeys["storeInteriorRenovationAgo"];
 export type WorkType = JobPostingTypeKeys["workType"];

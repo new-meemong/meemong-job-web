@@ -17,14 +17,19 @@ const ButtonContainer = styled.div`
   padding: ${pxToVw(8)} 0;
 `;
 
-const Button = styled.div<{ $isSelected: boolean }>`
+const Button = styled.div<{ $isSelected: boolean; $size: string }>`
   ${(props) =>
     props.$isSelected ? fonts.purplePrimaryNormal12 : fonts.greyNormal12};
   display: flex;
   justify-content: center;
   align-items: center;
   height: ${pxToVw(34)};
-  width: ${pxToVw(102)};
+  width: ${(props) =>
+    props.$size === "large"
+      ? pxToVw(102)
+      : props.$size === "small"
+      ? pxToVw(77)
+      : pxToVw(86)}; /* medium에 대한 기본값 설정 */
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
@@ -38,6 +43,8 @@ interface Option {
   key: string;
   value: string;
 }
+
+type ButtonSize = "small" | "large";
 interface BaseSingleSelectProps {
   label: string;
   options: Option[];
@@ -45,6 +52,7 @@ interface BaseSingleSelectProps {
   errorMessage: string;
   isError: boolean;
   onSelect: (optionKey: string) => void;
+  buttonSize?: ButtonSize;
 }
 
 const BaseSingleSelect = ({
@@ -53,7 +61,8 @@ const BaseSingleSelect = ({
   selectedOption,
   errorMessage,
   onSelect,
-  isError
+  isError,
+  buttonSize = "large"
 }: BaseSingleSelectProps) => {
   return (
     <Container>
@@ -63,6 +72,7 @@ const BaseSingleSelect = ({
           <Button
             key={option.key}
             $isSelected={selectedOption === option.key}
+            $size={buttonSize}
             onClick={() => onSelect(option.key)}
           >
             {option.value}
