@@ -159,6 +159,9 @@ export type IsExistedCleaningSupplierKey = boolean;
 // 수건 업체
 export type IsExistedTowelSupplierKey = boolean;
 
+// 기본 커트 가격
+export type BasicCutPriceKey = number;
+
 export const jobPostingTypes = {
   // 인턴
   internExperienceYearNumber: {

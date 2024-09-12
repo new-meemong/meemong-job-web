@@ -166,6 +166,12 @@ export const fonts = {
     color: ${colors.greyTitle};
   `,
 
+  greyPlaceholderBold14: css`
+    font-size: ${pxToVw(14)};
+    font-weight: 700;
+    color: ${colors.greyBacground4};
+  `,
+
   // white
   whiteBold16: css`
     font-size: ${pxToVw(16)};

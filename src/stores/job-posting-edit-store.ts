@@ -2,6 +2,7 @@ import {
   AdminAgeKey,
   AdminSexKey,
   AvailableOffDaysKey,
+  BasicCutPriceKey,
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
   EmployeeCountKey,
@@ -68,6 +69,9 @@ type JobPostingEditState = {
   parkingSpotCount: ParkingSpotCountKey | null;
   isExistedCleaningSupplier: IsExistedCleaningSupplierKey | null;
   isExistedTowelSupplier: IsExistedTowelSupplierKey | null;
+
+  // other form fields
+  basicCutPrice: BasicCutPriceKey | null;
 };
 
 type JobPostingEditActions = {
@@ -125,6 +129,7 @@ type JobPostingEditActions = {
   setIsExistedTowelSupplier: (
     isExistedTowelSupplier: IsExistedTowelSupplierKey
   ) => void;
+  setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -159,7 +164,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   leaveDayCount: null,
   parkingSpotCount: null,
   isExistedCleaningSupplier: null,
-  isExistedTowelSupplier: null
+  isExistedTowelSupplier: null,
+  basicCutPrice: null
 };
 
 export const useJobPostingEditStore = create(
@@ -248,7 +254,9 @@ export const useJobPostingEditStore = create(
       ) => set({ isExistedCleaningSupplier }),
       setIsExistedTowelSupplier: (
         isExistedTowelSupplier: IsExistedTowelSupplierKey
-      ) => set({ isExistedTowelSupplier })
+      ) => set({ isExistedTowelSupplier }),
+      setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) =>
+        set({ basicCutPrice })
     }),
 
     {

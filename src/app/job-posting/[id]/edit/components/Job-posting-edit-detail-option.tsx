@@ -29,6 +29,7 @@ import SelectLeaveDayCount from "./detail-option-components/select-leave-day-cou
 import SelectParkingSpotCount from "./detail-option-components/select-parking-spot-count";
 import SelectIsExistedCleaningSupplier from "./detail-option-components/select-is-existed-cleaning-supplier";
 import SelectIsExistedTowelSupplier from "./detail-option-components/select-is-existed-towel-supplier";
+import InputBasicCutPrice from "./detail-option-components/input-basic-cut-price";
 
 const Container = styled.div`
   background-color: #eceaff66;
@@ -76,6 +77,7 @@ const JobPostingEditDetailOption = () => {
       <SelectParkingSpotCount />
       <SelectIsExistedCleaningSupplier />
       <SelectIsExistedTowelSupplier />
+      <InputBasicCutPrice />
     </Container>
   );
 };
