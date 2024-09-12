@@ -39,23 +39,23 @@ const Button = styled.div<{ $isSelected: boolean; $size: string }>`
 const ErrorMessage = styled.div`
   padding-left: ${pxToVw(10)};
 `;
-interface Option {
-  key: string;
+interface Option<T> {
+  key: T;
   value: string;
 }
 
 type ButtonSize = "small" | "large";
-interface BaseSingleSelectProps {
+interface BaseSingleSelectProps<T> {
   label: string;
-  options: Option[];
-  selectedOption: string | null;
+  options: Option<T>[];
+  selectedOption: T | null;
   errorMessage: string;
   isError: boolean;
-  onSelect: (optionKey: string) => void;
+  onSelect: (optionKey: T) => void;
   buttonSize?: ButtonSize;
 }
 
-const BaseSingleSelect = ({
+const BaseSingleSelect = <T extends string | boolean>({
   label,
   options,
   selectedOption,
@@ -63,14 +63,14 @@ const BaseSingleSelect = ({
   onSelect,
   isError,
   buttonSize = "large"
-}: BaseSingleSelectProps) => {
+}: BaseSingleSelectProps<T>) => {
   return (
     <Container>
       <Label>{label}</Label>
       <ButtonContainer>
         {options.map((option) => (
           <Button
-            key={option.key}
+            key={String(option.key)}
             $isSelected={selectedOption === option.key}
             $size={buttonSize}
             onClick={() => onSelect(option.key)}

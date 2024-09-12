@@ -3,6 +3,7 @@ import {
   DesignerLicensesKey,
   EmployeeCountKey,
   IncentiveKey,
+  isExistedInternSystemKey,
   IsPossibleMiddleAgeKey,
   IsRestrictedAgeKey,
   MonthlyEducationDesignerCountKey,
@@ -31,6 +32,7 @@ type IsPossibleMiddleAgeOption = Option<IsPossibleMiddleAgeKey>;
 type DesignerLicensesOption = Option<DesignerLicensesKey>;
 type StoreOption = Option<StoreKey>;
 type EmployeeCountOption = Option<EmployeeCountKey>;
+type IsExistedInternSystemOption = Option<isExistedInternSystemKey>;
 
 export const jobPostingOptions: {
   role: RoleOption[];
@@ -45,6 +47,7 @@ export const jobPostingOptions: {
   designerLicenses: DesignerLicensesOption[];
   store: StoreOption[];
   employeeCount: EmployeeCountOption[];
+  isExistedInternSystem: IsExistedInternSystemOption[];
 } = {
   role: [
     { key: "디자이너", value: "디자이너" },
@@ -130,5 +133,10 @@ export const jobPostingOptions: {
     { key: "4인 이상", value: "4인 이상" },
     { key: "7인 이상", value: "7인 이상" },
     { key: "10인 이상", value: "10인 이상" }
+  ],
+  // 인턴배정 시스템
+  isExistedInternSystem: [
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ]
 };

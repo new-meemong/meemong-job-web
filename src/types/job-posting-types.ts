@@ -81,6 +81,9 @@ export type StoreKey =
   | "남성전문 (맨즈살롱/바버샵)"
   | "공유미용실";
 
+// 인턴배정 시스템
+export type isExistedInternSystemKey = boolean;
+
 export const jobPostingTypes = {
   storeInteriorRenovationAgo: {
     "1년 이내": "1년 이내",

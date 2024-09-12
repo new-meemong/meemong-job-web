@@ -10,6 +10,7 @@ import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import SelectDesignerLicense from "./detail-option-components/select-designer-license";
 import SelectStore from "./detail-option-components/select-store";
 import SelectEmployeeCount from "./detail-option-components/select-employee-count";
+import SelectIsExistedInternSystem from "./detail-option-components/select-is-existed-intern-system";
 
 const Container = styled.div`
   background-color: #eceaff66;
@@ -38,6 +39,7 @@ const JobPostingEditDetailOption = () => {
       <SelectDesignerLicense />
       <SelectStore />
       <SelectEmployeeCount />
+      <SelectIsExistedInternSystem />
     </Container>
   );
 };

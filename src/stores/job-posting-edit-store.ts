@@ -3,6 +3,7 @@ import {
   DesignerLicensesKey,
   EmployeeCountKey,
   IncentiveKey,
+  isExistedInternSystemKey,
   IsPossibleMiddleAgeKey,
   IsRestrictedAgeKey,
   jobPostingTypes,
@@ -30,6 +31,7 @@ type JobPostingEditState = {
   designerLicenses: DesignerLicensesKey[];
   store: StoreKey[];
   employeeCount: EmployeeCountKey | null;
+  isExistedInternSystem: isExistedInternSystemKey | null;
 };
 
 type JobPostingEditActions = {
@@ -50,6 +52,9 @@ type JobPostingEditActions = {
   setDesignerLicenses: (designerLicense: DesignerLicensesKey) => void;
   setStore: (store: StoreKey) => void;
   setEmployeeCount: (employeeCount: EmployeeCountKey) => void;
+  setIsExistedInternSystem: (
+    isExistedInternSystem: isExistedInternSystemKey
+  ) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -65,7 +70,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   isPossibleMiddleAge: null,
   designerLicenses: [],
   store: [],
-  employeeCount: null
+  employeeCount: null,
+  isExistedInternSystem: null
 };
 
 export const useJobPostingEditStore = create(
@@ -109,7 +115,10 @@ export const useJobPostingEditStore = create(
         set({ store: toggleSelect(store, selectedStore) });
       },
       setEmployeeCount: (employeeCount: EmployeeCountKey) =>
-        set({ employeeCount })
+        set({ employeeCount }),
+      setIsExistedInternSystem: (
+        isExistedInternSystem: isExistedInternSystemKey
+      ) => set({ isExistedInternSystem })
     }),
 
     {
