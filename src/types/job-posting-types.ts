@@ -10,7 +10,7 @@ export type MonthlyEducationInternCountKey =
   | "월 2회 이하"
   | "월 3회 이상"
   | "월 4회 이상";
-// 휴무 가능일
+// 휴무 가능일 (복수선택)
 export type AvailableOffDaysKey =
   | "월"
   | "화"
@@ -66,14 +66,15 @@ export type IsPossibleMiddleAgeKey = boolean;
 // 미용 라이센스
 export type DesignerLicensesKey = "자격증" | "면허증" | "상관없음";
 
+// 매장형태 (복수선택)
+export type StoreKey =
+  | "소형샵 (25평 이하)"
+  | "중형샵 (60평 이하)"
+  | "대형샵 (60평 이상)"
+  | "남성전문 (맨즈살롱/바버샵)"
+  | "공유미용실";
+
 export const jobPostingTypes = {
-  storeTypes: {
-    "소형샵 (25평 이하)": "소형샵 (25평 이하)",
-    "중형샵 (60평 이하)": "중형샵 (60평 이하)",
-    "대형샵 (60평 이상)": "대형샵 (60평 이상)",
-    "남성전문 (맨즈살롱/바버샵)": "남성전문 (맨즈살롱/바버샵)",
-    공유미용실: "공유미용실"
-  },
   employeeCount: {
     "3인 이하": "3인 이하",
     "4인 이상": "4인 이상",
@@ -216,7 +217,6 @@ type JobPostingTypeKeys = {
   [K in keyof typeof jobPostingTypes]: ExtractType<(typeof jobPostingTypes)[K]>;
 };
 
-export type StoreTypesType = JobPostingTypeKeys["storeTypes"];
 export type EmployeeCountType = JobPostingTypeKeys["employeeCount"];
 export type StoreInteriorRenovationAgoType =
   JobPostingTypeKeys["storeInteriorRenovationAgo"];

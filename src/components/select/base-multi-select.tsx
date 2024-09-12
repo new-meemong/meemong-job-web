@@ -34,6 +34,8 @@ const Button = styled.div<{ $isSelected: boolean }>`
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
   cursor: pointer;
+  white-space: pre-line;
+  text-align: center;
 `;
 
 const ErrorMessage = styled.div`

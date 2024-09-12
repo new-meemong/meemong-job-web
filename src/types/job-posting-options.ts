@@ -8,7 +8,8 @@ import {
   MonthlyEducationInternCountKey,
   RoleKey,
   SettlementAllowanceKey,
-  SexKey
+  SexKey,
+  StoreKey
 } from "./job-posting-types";
 
 interface RoleOption {
@@ -61,6 +62,11 @@ interface DesignerLicensesOption {
   value: string;
 }
 
+interface StoreOption {
+  key: StoreKey;
+  value: string;
+}
+
 export const jobPostingOptions: {
   role: RoleOption[];
   monthlyEducationDesignerCount: MonthlyEducationDesignerCountOption[];
@@ -72,6 +78,7 @@ export const jobPostingOptions: {
   isRestrictedAge: isRestrictedAgeOption[];
   isPossibleMiddleAge: IsPossibleMiddleAgeOption[];
   designerLicenses: DesignerLicensesOption[];
+  store: StoreOption[];
 } = {
   role: [
     { key: "디자이너", value: "디자이너" },
@@ -142,5 +149,13 @@ export const jobPostingOptions: {
     { key: "자격증", value: "자격증" },
     { key: "면허증", value: "면허증" },
     { key: "상관없음", value: "상관없음" }
+  ],
+  // 매장 형태
+  store: [
+    { key: "소형샵 (25평 이하)", value: "소형샵 (25평 이하)" },
+    { key: "중형샵 (60평 이하)", value: "중형샵 (60평 이상)" },
+    { key: "대형샵 (60평 이상)", value: "대형샵 (60평 이상)" },
+    { key: "남성전문 (맨즈살롱/바버샵)", value: "남성전문\n(맨즈살롱/바버샵)" },
+    { key: "공유미용실", value: "공유미용실" }
   ]
 };

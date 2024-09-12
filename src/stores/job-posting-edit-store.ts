@@ -9,7 +9,8 @@ import {
   MonthlyEducationInternCountKey,
   RoleKey,
   SettlementAllowanceKey,
-  SexKey
+  SexKey,
+  StoreKey
 } from "@/types/job-posting-types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -26,6 +27,7 @@ type JobPostingEditState = {
   isRestrictedAge: IsRestrictedAgeKey | null;
   isPossibleMiddleAge: IsPossibleMiddleAgeKey | null;
   designerLicenses: DesignerLicensesKey[];
+  store: StoreKey[];
 };
 
 type JobPostingEditActions = {
@@ -44,6 +46,7 @@ type JobPostingEditActions = {
   setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey) => void;
   setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) => void;
   setDesignerLicenses: (designerLicense: DesignerLicensesKey) => void;
+  setStore: (store: StoreKey) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -57,7 +60,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   sex: null,
   isRestrictedAge: null,
   isPossibleMiddleAge: null,
-  designerLicenses: []
+  designerLicenses: [],
+  store: []
 };
 
 export const useJobPostingEditStore = create(
@@ -91,6 +95,14 @@ export const useJobPostingEditStore = create(
       setDesignerLicenses: (license: DesignerLicensesKey) => {
         const { designerLicenses } = get();
         set({ designerLicenses: toggleSelect(designerLicenses, license) });
+      },
+      setStore: (selectedStore: StoreKey) => {
+        const { store } = get();
+        if (store.length >= 2 && !store.includes(selectedStore)) {
+          // 최대 2개까지 선택 가능
+          return;
+        }
+        set({ store: toggleSelect(store, selectedStore) });
       }
     }),
 
