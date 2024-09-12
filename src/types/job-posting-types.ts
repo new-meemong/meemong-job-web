@@ -84,60 +84,82 @@ export type StoreKey =
 // 인턴배정 시스템
 export type isExistedInternSystemKey = boolean;
 
+// 매장 인테리어
+export type StoreInteriorRenovationAgoKey =
+  | "1년 이내"
+  | "3년 이내"
+  | "5년 이상";
+
+// 근무 형태
+export type WorkTypeKey = "정규직" | "스페어(알바)";
+
+// 근무 주기
+export type WorkCycleKey = "주 4일" | "주 5일" | "주 6일" | "격주 5일";
+
+// 교육비 지원-디자이너
+export type IsExistedEducationSupportKey = boolean;
+
+// 식대 지원-디자이너
+export type IsExistedMealSupportKey = boolean;
+
+// 식사 시간
+export type MealTimeKey =
+  | "30분 이상"
+  | "1시간 이상"
+  | "1시간 30분 이상"
+  | "2시간 이상";
+
+// 시술제품 지원
+export type IsExistedProductSupportKey = boolean;
+
+// 기숙사
+export type IsExistedDormitorySupportKey = boolean;
+
+// 점판 수당
+export type SalesCommissionKey = "30% 이상" | "50% 이상" | "70% 이상" | "100%";
+
+//디자이너 경력-디자이너
+export type DesignerExperienceYearNumberKey =
+  | "1년 이하"
+  | "3년 이하"
+  | "5년 이하"
+  | "5년 이상"
+  | "상관 없음";
+
+// 이전 3개월 평균 매출-디자이너
+export type SalesLast3MonthsAvgKey =
+  | "500만원 이하"
+  | "500만원 이상"
+  | "1000만원 이상"
+  | "1500만원 이상"
+  | "상관없음";
+
+// 지하철 접근성
+export type SubwayAccessibilityKey =
+  | "도보 3분 이하"
+  | "도보 5분 이하"
+  | "도보 15분 이하"
+  | "해당없음";
+
+// 관리자 나이
+export type AdminAgeKey = "20대 이상" | "30대 이상" | "40대 이상";
+
+// 관리자 성별
+export type AdminSexKey = "남" | "여";
+
+// 휴가 일수
+export type LeaveDayCountKey = "4일 이하" | "5일 이상" | "10일 이상";
+
+// 매장 주차 가능 대수
+export type ParkingSpotCountKey = "3대 이하" | "4대 이상" | "10대 이상";
+
+// 청소 업체
+export type IsExistedCleaningSupplierKey = boolean;
+
+// 수건 업체
+export type IsExistedTowelSupplierKey = boolean;
+
 export const jobPostingTypes = {
-  storeInteriorRenovationAgo: {
-    "1년 이내": "1년 이내",
-    "3년 이내": "3년 이내",
-    "5년 이상": "5년 이상"
-  },
-  workType: {
-    정규직: "정규직",
-    "스페어(알바)": "스페어(알바)"
-  },
-  workCycleTypes: {
-    "주 4일": "주 4일",
-    "주 5일": "주 5일",
-    "주 6일": "주 6일",
-    "격주 5일": "격주 5일"
-  },
-  // 디자이너
-  isExistedEducationSupport: {
-    true: "유",
-    false: "무"
-  },
-  // 디자이너
-  isExistedMealSupport: {
-    true: "유",
-    false: "무"
-  },
-  mealTime: {
-    "30분 이상": "30분 이상",
-    "1시간 이상": "1시간 이상",
-    "1시간 30분 이상": "1시간 30분 이상",
-    "2시간 이상": "2시간 이상"
-  },
-  isExistedProductSupport: {
-    true: "유",
-    false: "무"
-  },
-  isExistedDormitorySupport: {
-    true: "유",
-    false: "무"
-  },
-  salesCommission: {
-    "30% 이상": "30% 이상",
-    "50% 이상": "50% 이상",
-    "70% 이상": "70% 이상",
-    "100%": "100%"
-  },
-  // 디자이너
-  designerExperienceYearNumber: {
-    "1년 이하": "1년 이하",
-    "3년 이하": "3년 이하",
-    "5년 이하": "5년 이하",
-    "5년 이상": "5년 이상",
-    "상관 없음": "상관 없음"
-  },
   // 인턴
   internExperienceYearNumber: {
     신입: "신입",
@@ -155,47 +177,7 @@ export const jobPostingTypes = {
     "3년 미만": "3년 미만",
     "3년 이상": "3년 이상"
   },
-  // 디자이너
-  salesLast3MonthsAvg: {
-    "500만원 이하": "500만원 이하",
-    "500만원 이상": "500만원 이상",
-    "1000만원 이상": "1000만원 이상",
-    "1500만원 이상": "1500만원 이상",
-    상관없음: "상관없음"
-  },
-  subwayAccessibility: {
-    "도보 3분 이하": "도보 3분 이하",
-    "도보 5분 이하": "도보 5분 이하",
-    "도보 15분 이하": "도보 15분 이하",
-    해당없음: "해당없음"
-  },
-  adminAge: {
-    "20대 이상": "20대 이상",
-    "30대 이상": "30대 이상",
-    "40대 이상": "40대 이상"
-  },
-  adminSex: {
-    남: "남",
-    여: "여"
-  },
-  leaveDayCount: {
-    "4일 이하": "4일 이하",
-    "5일 이상": "5일 이상",
-    "10일 이상": "10일 이상"
-  },
-  parkingSpotCount: {
-    "3대 이하": "3대 이하",
-    "4대 이상": "4대 이상",
-    "10대 이상": "10대 이상"
-  },
-  isExistedCleaningSupplier: {
-    true: "유",
-    false: "무"
-  },
-  isExistedTowelSupplier: {
-    true: "유",
-    false: "무"
-  },
+
   // 인턴
   isOnsiteManager: {
     true: "유",
@@ -221,36 +203,10 @@ type JobPostingTypeKeys = {
   [K in keyof typeof jobPostingTypes]: ExtractType<(typeof jobPostingTypes)[K]>;
 };
 
-export type StoreInteriorRenovationAgoType =
-  JobPostingTypeKeys["storeInteriorRenovationAgo"];
-export type WorkType = JobPostingTypeKeys["workType"];
-export type WorkCycleTypesType = JobPostingTypeKeys["workCycleTypes"];
-export type IsExistedEducationSupportType =
-  JobPostingTypeKeys["isExistedEducationSupport"];
-export type IsExistedMealSupportType =
-  JobPostingTypeKeys["isExistedMealSupport"];
-export type MealTimeType = JobPostingTypeKeys["mealTime"];
-export type IsExistedProductSupportType =
-  JobPostingTypeKeys["isExistedProductSupport"];
-export type IsExistedDormitorySupportType =
-  JobPostingTypeKeys["isExistedDormitorySupport"];
-export type SalesCommissionType = JobPostingTypeKeys["salesCommission"];
-export type DesignerExperienceYearNumberType =
-  JobPostingTypeKeys["designerExperienceYearNumber"];
 export type InternExperienceYearNumberType =
   JobPostingTypeKeys["internExperienceYearNumber"];
 export type DesignerPromotionPeriodType =
   JobPostingTypeKeys["designerPromotionPeriod"];
-export type SalesLast3MonthsAvgType = JobPostingTypeKeys["salesLast3MonthsAvg"];
-export type SubwayAccessibilityType = JobPostingTypeKeys["subwayAccessibility"];
-export type AdminAgeType = JobPostingTypeKeys["adminAge"];
-export type AdminSexType = JobPostingTypeKeys["adminSex"];
-export type LeaveDayCountType = JobPostingTypeKeys["leaveDayCount"];
-export type ParkingSpotCountType = JobPostingTypeKeys["parkingSpotCount"];
-export type IsExistedCleaningSupplierType =
-  JobPostingTypeKeys["isExistedCleaningSupplier"];
-export type IsExistedTowelSupplierType =
-  JobPostingTypeKeys["isExistedTowelSupplier"];
 export type IsOnsiteManagerType = JobPostingTypeKeys["isOnsiteManager"];
 export type IsExistedFourInsurancesType =
   JobPostingTypeKeys["isExistedFourInsurances"];

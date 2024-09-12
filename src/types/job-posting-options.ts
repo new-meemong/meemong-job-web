@@ -1,17 +1,35 @@
 import {
+  AdminAgeKey,
+  AdminSexKey,
   AvailableOffDaysKey,
+  DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
   EmployeeCountKey,
   IncentiveKey,
+  IsExistedCleaningSupplierKey,
+  IsExistedDormitorySupportKey,
+  IsExistedEducationSupportKey,
   isExistedInternSystemKey,
+  IsExistedMealSupportKey,
+  IsExistedProductSupportKey,
+  IsExistedTowelSupplierKey,
   IsPossibleMiddleAgeKey,
   IsRestrictedAgeKey,
+  LeaveDayCountKey,
+  MealTimeKey,
   MonthlyEducationDesignerCountKey,
   MonthlyEducationInternCountKey,
+  ParkingSpotCountKey,
   RoleKey,
+  SalesCommissionKey,
+  SalesLast3MonthsAvgKey,
   SettlementAllowanceKey,
   SexKey,
-  StoreKey
+  StoreInteriorRenovationAgoKey,
+  StoreKey,
+  SubwayAccessibilityKey,
+  WorkCycleKey,
+  WorkTypeKey
 } from "./job-posting-types";
 
 interface Option<KeyType> {
@@ -33,6 +51,25 @@ type DesignerLicensesOption = Option<DesignerLicensesKey>;
 type StoreOption = Option<StoreKey>;
 type EmployeeCountOption = Option<EmployeeCountKey>;
 type IsExistedInternSystemOption = Option<isExistedInternSystemKey>;
+type StoreInteriorRenovationAgoOption = Option<StoreInteriorRenovationAgoKey>;
+type WorkTypeOption = Option<WorkTypeKey>;
+type WorkCycleOption = Option<WorkCycleKey>;
+type IsExistedEducationSupportOption = Option<IsExistedEducationSupportKey>;
+type IsExistedMealSupportOption = Option<IsExistedMealSupportKey>;
+type MealTimeOption = Option<MealTimeKey>;
+type IsExistedProductSupportOption = Option<IsExistedProductSupportKey>;
+type IsExistedDormitorySupportOption = Option<IsExistedDormitorySupportKey>;
+type SalesCommissionOption = Option<SalesCommissionKey>;
+type DesignerExperienceYearNumberOption =
+  Option<DesignerExperienceYearNumberKey>;
+type SalesLast3MonthsAvgOption = Option<SalesLast3MonthsAvgKey>;
+type SubwayAccessibilityOption = Option<SubwayAccessibilityKey>;
+type AdminAgeOption = Option<AdminAgeKey>;
+type AdminSexOption = Option<AdminSexKey>;
+type LeaveDayCountOption = Option<LeaveDayCountKey>;
+type ParkingSpotCountOption = Option<ParkingSpotCountKey>;
+type IsExistedCleaningSupplierOption = Option<IsExistedCleaningSupplierKey>;
+type IsExistedTowelSupplierOption = Option<IsExistedTowelSupplierKey>;
 
 export const jobPostingOptions: {
   role: RoleOption[];
@@ -48,6 +85,24 @@ export const jobPostingOptions: {
   store: StoreOption[];
   employeeCount: EmployeeCountOption[];
   isExistedInternSystem: IsExistedInternSystemOption[];
+  storeInteriorRenovationAgo: StoreInteriorRenovationAgoOption[];
+  workType: WorkTypeOption[];
+  workCycle: WorkCycleOption[];
+  isExistedEducationSupport: IsExistedEducationSupportOption[];
+  isExistedMealSupport: IsExistedMealSupportOption[];
+  mealTime: MealTimeOption[];
+  isExistedProductSupport: IsExistedProductSupportOption[];
+  isExistedDormitorySupport: IsExistedDormitorySupportOption[];
+  salesCommission: SalesCommissionOption[];
+  designerExperienceYearNumber: DesignerExperienceYearNumberOption[];
+  salesLast3MonthsAvg: SalesLast3MonthsAvgOption[];
+  subwayAccessibility: SubwayAccessibilityOption[];
+  adminAge: AdminAgeOption[];
+  adminSex: AdminSexOption[];
+  leaveDayCount: LeaveDayCountOption[];
+  parkingSpotCount: ParkingSpotCountOption[];
+  isExistedCleaningSupplier: IsExistedCleaningSupplierOption[];
+  isExistedTowelSupplier: IsExistedTowelSupplierOption[];
 } = {
   role: [
     { key: "디자이너", value: "디자이너" },
@@ -138,5 +193,113 @@ export const jobPostingOptions: {
   isExistedInternSystem: [
     { key: true, value: "있음" },
     { key: false, value: "없음" }
+  ],
+  // 매장 인테리어
+  storeInteriorRenovationAgo: [
+    { key: "1년 이내", value: "1년 이내" },
+    { key: "3년 이내", value: "3년 이내" },
+    { key: "5년 이상", value: "5년 이상" }
+  ],
+  // 근무 형태
+  workType: [
+    { key: "정규직", value: "정규직" },
+    { key: "스페어(알바)", value: "스페어(알바)" }
+  ],
+  // 근무 주기
+  workCycle: [
+    { key: "주 4일", value: "주 4일" },
+    { key: "주 5일", value: "주 5일" },
+    { key: "주 6일", value: "주 6일" },
+    { key: "격주 5일", value: "격주 5일" }
+  ],
+  // 교육비 지원-디자이너
+  isExistedEducationSupport: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
+  ],
+  // 식대 지원-디자이너
+  isExistedMealSupport: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
+  ],
+  // 식사 시간
+  mealTime: [
+    { key: "30분 이상", value: "30분 이상" },
+    { key: "1시간 이상", value: "1시간 이상" },
+    { key: "1시간 30분 이상", value: "1시간 30분 이상" },
+    { key: "2시간 이상", value: "2시간 이상" }
+  ],
+  // 시술제품 지원
+  isExistedProductSupport: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
+  ],
+  // 기숙사
+  isExistedDormitorySupport: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
+  ],
+  // 점판 수당
+  salesCommission: [
+    { key: "30% 이상", value: "30% 이상" },
+    { key: "50% 이상", value: "50% 이상" },
+    { key: "70% 이상", value: "70% 이상" },
+    { key: "100%", value: "100%" }
+  ],
+  // 디자이너 경력-디자이너
+  designerExperienceYearNumber: [
+    { key: "1년 이하", value: "1년 이하" },
+    { key: "3년 이하", value: "3년 이하" },
+    { key: "5년 이하", value: "5년 이하" },
+    { key: "5년 이상", value: "5년 이상" },
+    { key: "상관 없음", value: "상관 없음" }
+  ],
+  // 이전 3개월 평균 매출-디자이너
+  salesLast3MonthsAvg: [
+    { key: "500만원 이하", value: "500만원 이하" },
+    { key: "500만원 이상", value: "500만원 이상" },
+    { key: "1000만원 이상", value: "1000만원 이상" },
+    { key: "1500만원 이상", value: "1500만원 이상" },
+    { key: "상관없음", value: "상관없음" }
+  ],
+  // 지하철 접근성
+  subwayAccessibility: [
+    { key: "도보 3분 이하", value: "도보 3분 이하" },
+    { key: "도보 5분 이하", value: "도보 5분 이하" },
+    { key: "도보 15분 이하", value: "도보 15분 이하" },
+    { key: "해당없음", value: "해당없음" }
+  ],
+  // 관리자 나이
+  adminAge: [
+    { key: "20대 이상", value: "20대 이상" },
+    { key: "30대 이상", value: "30대 이상" },
+    { key: "40대 이상", value: "40대 이상" }
+  ],
+  // 관리자 나이
+  adminSex: [
+    { key: "남", value: "남" },
+    { key: "여", value: "여" }
+  ],
+  // 휴가 일수
+  leaveDayCount: [
+    { key: "4일 이하", value: "4일 이하" },
+    { key: "5일 이상", value: "5일 이상" },
+    { key: "10일 이상", value: "10일 이상" }
+  ],
+  // 매장 주차 가능 대수
+  parkingSpotCount: [
+    { key: "3대 이하", value: "3대 이하" },
+    { key: "4대 이상", value: "4대 이상" },
+    { key: "10대 이상", value: "10대 이상" }
+  ],
+  // 청소 업체
+  isExistedCleaningSupplier: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
+  ],
+  // 수건 업체
+  isExistedTowelSupplier: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
   ]
 };

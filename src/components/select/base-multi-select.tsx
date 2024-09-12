@@ -22,14 +22,19 @@ const ButtonContainer = styled.div`
   padding: ${pxToVw(8)} 0;
 `;
 
-const Button = styled.div<{ $isSelected: boolean }>`
+const Button = styled.div<{ $isSelected: boolean; $size: string }>`
   ${(props) =>
     props.$isSelected ? fonts.purplePrimaryNormal12 : fonts.greyNormal12};
   display: flex;
   justify-content: center;
   align-items: center;
   height: ${pxToVw(34)};
-  width: ${pxToVw(104)};
+  width: ${(props) =>
+    props.$size === "large"
+      ? pxToVw(102)
+      : props.$size === "small"
+      ? pxToVw(77)
+      : pxToVw(86)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
@@ -47,6 +52,8 @@ interface Option {
   value: string;
 }
 
+type ButtonSize = "small" | "large";
+
 interface BaseMultiSelectProps {
   label: string;
   subLabel?: string;
@@ -55,6 +62,7 @@ interface BaseMultiSelectProps {
   errorMessage: string;
   isError: boolean;
   onSelect: (optionKey: string) => void;
+  buttonSize?: ButtonSize;
 }
 
 const BaseMultiSelect = ({
@@ -64,7 +72,8 @@ const BaseMultiSelect = ({
   selectedOptions,
   errorMessage,
   onSelect,
-  isError
+  isError,
+  buttonSize = "large"
 }: BaseMultiSelectProps) => {
   return (
     <Container>
@@ -75,6 +84,7 @@ const BaseMultiSelect = ({
           <Button
             key={option.key}
             $isSelected={selectedOptions.includes(option.key)}
+            $size={buttonSize}
             onClick={() => onSelect(option.key)}
           >
             {option.value}

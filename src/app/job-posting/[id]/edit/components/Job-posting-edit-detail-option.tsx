@@ -11,6 +11,24 @@ import SelectDesignerLicense from "./detail-option-components/select-designer-li
 import SelectStore from "./detail-option-components/select-store";
 import SelectEmployeeCount from "./detail-option-components/select-employee-count";
 import SelectIsExistedInternSystem from "./detail-option-components/select-is-existed-intern-system";
+import SelectStoreInteriorRenovationAgo from "./detail-option-components/select-store-interior-renovation-ago";
+import SelectWorkType from "./detail-option-components/select-work-type";
+import SelectWorkCycle from "./detail-option-components/select-work-cycle";
+import SelectIsExistedEducationSupport from "./detail-option-components/select-is-existed-education-support";
+import SelectIsExistedMealSupport from "./detail-option-components/select-is-existed-meal-support";
+import SelectMealTime from "./detail-option-components/select-meal-time";
+import SelectIsExistedProductSupport from "./detail-option-components/select-is-existed-product-support";
+import SelectIsExistedDormitorySupport from "./detail-option-components/select-is-existed-dormitory-support";
+import SelectSalesCommission from "./detail-option-components/select-sales-commission";
+import SelectDesignerExperienceYearNumber from "./detail-option-components/select-designer-experience-year-number";
+import SelectSalesLast3MonthAvg from "./detail-option-components/select-sales-last-3month-avg";
+import SelectSubwayAccessibility from "./detail-option-components/select-subway-accessibility";
+import SelectAdminAge from "./detail-option-components/select-admin-age";
+import SelectAdminSex from "./detail-option-components/select-admin-sex";
+import SelectLeaveDayCount from "./detail-option-components/select-leave-day-count";
+import SelectParkingSpotCount from "./detail-option-components/select-parking-spot-count";
+import SelectIsExistedCleaningSupplier from "./detail-option-components/select-is-existed-cleaning-supplier";
+import SelectIsExistedTowelSupplier from "./detail-option-components/select-is-existed-towel-supplier";
 
 const Container = styled.div`
   background-color: #eceaff66;
@@ -40,6 +58,24 @@ const JobPostingEditDetailOption = () => {
       <SelectStore />
       <SelectEmployeeCount />
       <SelectIsExistedInternSystem />
+      <SelectStoreInteriorRenovationAgo />
+      <SelectWorkType />
+      <SelectWorkCycle />
+      <SelectIsExistedEducationSupport />
+      <SelectIsExistedMealSupport />
+      <SelectMealTime />
+      <SelectIsExistedProductSupport />
+      <SelectIsExistedDormitorySupport />
+      <SelectSalesCommission />
+      <SelectDesignerExperienceYearNumber />
+      <SelectSalesLast3MonthAvg />
+      <SelectSubwayAccessibility />
+      <SelectAdminAge />
+      <SelectAdminSex />
+      <SelectLeaveDayCount />
+      <SelectParkingSpotCount />
+      <SelectIsExistedCleaningSupplier />
+      <SelectIsExistedTowelSupplier />
     </Container>
   );
 };

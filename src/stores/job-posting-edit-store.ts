@@ -1,18 +1,36 @@
 import {
+  AdminAgeKey,
+  AdminSexKey,
   AvailableOffDaysKey,
+  DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
   EmployeeCountKey,
   IncentiveKey,
+  IsExistedCleaningSupplierKey,
+  IsExistedDormitorySupportKey,
+  IsExistedEducationSupportKey,
   isExistedInternSystemKey,
+  IsExistedMealSupportKey,
+  IsExistedProductSupportKey,
+  IsExistedTowelSupplierKey,
   IsPossibleMiddleAgeKey,
   IsRestrictedAgeKey,
   jobPostingTypes,
+  LeaveDayCountKey,
+  MealTimeKey,
   MonthlyEducationDesignerCountKey,
   MonthlyEducationInternCountKey,
+  ParkingSpotCountKey,
   RoleKey,
+  SalesCommissionKey,
+  SalesLast3MonthsAvgKey,
   SettlementAllowanceKey,
   SexKey,
-  StoreKey
+  StoreInteriorRenovationAgoKey,
+  StoreKey,
+  SubwayAccessibilityKey,
+  WorkCycleKey,
+  WorkTypeKey
 } from "@/types/job-posting-types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -32,6 +50,24 @@ type JobPostingEditState = {
   store: StoreKey[];
   employeeCount: EmployeeCountKey | null;
   isExistedInternSystem: isExistedInternSystemKey | null;
+  storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null;
+  workType: WorkTypeKey | null;
+  workCycle: WorkCycleKey[];
+  isExistedEducationSupport: IsExistedEducationSupportKey | null;
+  isExistedMealSupport: IsExistedMealSupportKey | null;
+  mealTime: MealTimeKey | null;
+  isExistedProductSupport: IsExistedProductSupportKey | null;
+  isExistedDormitorySupport: IsExistedDormitorySupportKey | null;
+  salesCommission: SalesCommissionKey | null;
+  designerExperienceYearNumber: DesignerExperienceYearNumberKey | null;
+  salesLast3MonthsAvg: SalesLast3MonthsAvgKey | null;
+  subwayAccessibility: SubwayAccessibilityKey | null;
+  adminAge: AdminAgeKey | null;
+  adminSex: AdminSexKey | null;
+  leaveDayCount: LeaveDayCountKey | null;
+  parkingSpotCount: ParkingSpotCountKey | null;
+  isExistedCleaningSupplier: IsExistedCleaningSupplierKey | null;
+  isExistedTowelSupplier: IsExistedTowelSupplierKey | null;
 };
 
 type JobPostingEditActions = {
@@ -55,6 +91,40 @@ type JobPostingEditActions = {
   setIsExistedInternSystem: (
     isExistedInternSystem: isExistedInternSystemKey
   ) => void;
+  setStoreInteriorRenovationAgo: (
+    storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey
+  ) => void;
+  setWorkType: (workType: WorkTypeKey) => void;
+  setWorkCycle: (workCycle: WorkCycleKey) => void;
+  setIsExistedEducationSupport: (
+    isExistedEducationSupport: IsExistedEducationSupportKey
+  ) => void;
+  setIsExistedMealSupport: (
+    isExistedMealSupport: IsExistedMealSupportKey
+  ) => void;
+  setMealTime: (mealTime: MealTimeKey) => void;
+  setIsExistedProductSupport: (
+    isExistedProductSupport: IsExistedProductSupportKey
+  ) => void;
+  setIsExistedDormitorySupport: (
+    isExistedDormitorySupport: IsExistedDormitorySupportKey
+  ) => void;
+  setSalesCommission: (salesCommission: SalesCommissionKey) => void;
+  setDesignerExperienceYearNumber: (
+    designerExperienceYearNumber: DesignerExperienceYearNumberKey
+  ) => void;
+  setSalesLast3MonthsAvg: (salesLast3MonthsAvg: SalesLast3MonthsAvgKey) => void;
+  setSubwayAccessibility: (subwayAccessibility: SubwayAccessibilityKey) => void;
+  setAdminAge: (adminAge: AdminAgeKey) => void;
+  setAdminSex: (adminSex: AdminSexKey) => void;
+  setLeaveDayCount: (leaveDayCount: LeaveDayCountKey) => void;
+  setParkingSpotCount: (parkingSpotCount: ParkingSpotCountKey) => void;
+  setIsExistedCleaningSupplier: (
+    isExistedCleaningSupplier: IsExistedCleaningSupplierKey
+  ) => void;
+  setIsExistedTowelSupplier: (
+    isExistedTowelSupplier: IsExistedTowelSupplierKey
+  ) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -71,7 +141,25 @@ const defaultJobPostingEditState: JobPostingEditState = {
   designerLicenses: [],
   store: [],
   employeeCount: null,
-  isExistedInternSystem: null
+  isExistedInternSystem: null,
+  storeInteriorRenovationAgo: null,
+  workType: null,
+  workCycle: [],
+  isExistedEducationSupport: null,
+  isExistedMealSupport: null,
+  mealTime: null,
+  isExistedProductSupport: null,
+  isExistedDormitorySupport: null,
+  salesCommission: null,
+  designerExperienceYearNumber: null,
+  salesLast3MonthsAvg: null,
+  subwayAccessibility: null,
+  adminAge: null,
+  adminSex: null,
+  leaveDayCount: null,
+  parkingSpotCount: null,
+  isExistedCleaningSupplier: null,
+  isExistedTowelSupplier: null
 };
 
 export const useJobPostingEditStore = create(
@@ -118,7 +206,49 @@ export const useJobPostingEditStore = create(
         set({ employeeCount }),
       setIsExistedInternSystem: (
         isExistedInternSystem: isExistedInternSystemKey
-      ) => set({ isExistedInternSystem })
+      ) => set({ isExistedInternSystem }),
+      setStoreInteriorRenovationAgo: (
+        storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey
+      ) => set({ storeInteriorRenovationAgo }),
+      setWorkType: (workType: WorkTypeKey) => set({ workType }),
+      setWorkCycle: (selectedWorkCycle: WorkCycleKey) => {
+        const { workCycle } = get();
+        set({ workCycle: toggleSelect(workCycle, selectedWorkCycle) });
+      },
+      setIsExistedEducationSupport: (
+        isExistedEducationSupport: IsExistedEducationSupportKey
+      ) => set({ isExistedEducationSupport }),
+      setIsExistedMealSupport: (
+        isExistedMealSupport: IsExistedMealSupportKey
+      ) => set({ isExistedMealSupport }),
+      setMealTime: (mealTime: MealTimeKey) => set({ mealTime }),
+      setIsExistedProductSupport: (
+        isExistedProductSupport: IsExistedProductSupportKey
+      ) => set({ isExistedProductSupport }),
+      setIsExistedDormitorySupport: (
+        isExistedDormitorySupport: IsExistedDormitorySupportKey
+      ) => set({ isExistedDormitorySupport }),
+      setSalesCommission: (salesCommission: SalesCommissionKey) =>
+        set({ salesCommission }),
+      setDesignerExperienceYearNumber: (
+        designerExperienceYearNumber: DesignerExperienceYearNumberKey
+      ) => set({ designerExperienceYearNumber }),
+      setSalesLast3MonthsAvg: (salesLast3MonthsAvg: SalesLast3MonthsAvgKey) =>
+        set({ salesLast3MonthsAvg }),
+      setSubwayAccessibility: (subwayAccessibility: SubwayAccessibilityKey) =>
+        set({ subwayAccessibility }),
+      setAdminAge: (adminAge: AdminAgeKey) => set({ adminAge }),
+      setAdminSex: (adminSex: AdminSexKey) => set({ adminSex }),
+      setLeaveDayCount: (leaveDayCount: LeaveDayCountKey) =>
+        set({ leaveDayCount }),
+      setParkingSpotCount: (parkingSpotCount: ParkingSpotCountKey) =>
+        set({ parkingSpotCount }),
+      setIsExistedCleaningSupplier: (
+        isExistedCleaningSupplier: IsExistedCleaningSupplierKey
+      ) => set({ isExistedCleaningSupplier }),
+      setIsExistedTowelSupplier: (
+        isExistedTowelSupplier: IsExistedTowelSupplierKey
+      ) => set({ isExistedTowelSupplier })
     }),
 
     {
