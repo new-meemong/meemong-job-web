@@ -1,10 +1,8 @@
 import BaseMultiSelect from "@/components/select/base-multi-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import {
-  AvailableOffDaysType,
-  jobPostingTypes
-} from "@/types/job-posting-types";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import { AvailableOffDaysKey } from "@/types/job-posting-types";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -15,20 +13,12 @@ const Container = styled.div`
 
 const SelectOffDays = () => {
   const { availableOffDays, setAvailableOffDays } = useJobPostingEditStore();
-  const offDays = Object.entries(jobPostingTypes.availableOffDays).map(
-    ([key, value]) => ({
-      key,
-      value
-    })
-  );
+  const offDays = jobPostingOptions.availableOffDays;
 
   const handleSelect = (selectedOption: string) => {
-    const selectedKey = Object.entries(jobPostingTypes.availableOffDays).find(
-      ([key, value]) => key === selectedOption
-    )?.[0];
-
-    setAvailableOffDays(selectedKey as AvailableOffDaysType);
+    setAvailableOffDays(selectedOption as AvailableOffDaysKey);
   };
+
   return (
     <Container>
       <BaseMultiSelect

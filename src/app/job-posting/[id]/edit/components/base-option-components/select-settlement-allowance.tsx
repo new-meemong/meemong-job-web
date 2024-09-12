@@ -1,10 +1,8 @@
 import BaseSingleSelect from "@/components/select/base-single-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import {
-  jobPostingTypes,
-  SettlementAllowanceType
-} from "@/types/job-posting-types";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import { SettlementAllowanceKey } from "@/types/job-posting-types";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -16,12 +14,10 @@ const Container = styled.div`
 const SelectSettlementAllowance = () => {
   const { settlementAllowance, setSettlementAllowance } =
     useJobPostingEditStore();
-  const settlementAllowances = Object.values(
-    jobPostingTypes.settlementAllowance
-  );
+  const settlementAllowances = jobPostingOptions.settlementAllowance;
 
   const handleSelect = (selectedOption: string) => {
-    setSettlementAllowance(selectedOption as SettlementAllowanceType);
+    setSettlementAllowance(selectedOption as SettlementAllowanceKey);
   };
 
   return (

@@ -1,7 +1,8 @@
 import BaseSingleSelect from "@/components/select/base-single-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { IncentiveType, jobPostingTypes } from "@/types/job-posting-types";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import { IncentiveKey } from "@/types/job-posting-types";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -12,10 +13,10 @@ const Container = styled.div`
 
 const SelectIncentive = () => {
   const { incentive, setIncentive } = useJobPostingEditStore();
-  const incentives = Object.values(jobPostingTypes.incentive);
+  const incentives = jobPostingOptions.incentive;
 
   const handleSelect = (selectedOption: string) => {
-    setIncentive(selectedOption as IncentiveType);
+    setIncentive(selectedOption as IncentiveKey);
   };
 
   return (

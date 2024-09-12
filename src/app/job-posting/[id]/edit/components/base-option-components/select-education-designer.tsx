@@ -1,11 +1,10 @@
 import BaseSingleSelect from "@/components/select/base-single-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { jobPostingOptions } from "@/types/job-posting-options";
 import {
   jobPostingTypes,
-  MonthlyEducationDesignerCountType,
-  MonthlyEducationInternCountType,
-  RoleType
+  MonthlyEducationDesignerCountKey
 } from "@/types/job-posting-types";
 import styled from "styled-components";
 
@@ -18,13 +17,11 @@ const Container = styled.div`
 const SelectEducation = () => {
   const { monthlyEducationDesignerCount, setMonthlyEducationDesignerCount } =
     useJobPostingEditStore();
-  const educationCounts = Object.values(
-    jobPostingTypes.monthlyEducationDesignerCount
-  );
+  const educationCounts = jobPostingOptions.monthlyEducationDesignerCount;
 
   const handleSelect = (selectedOption: string) => {
     setMonthlyEducationDesignerCount(
-      selectedOption as MonthlyEducationDesignerCountType
+      selectedOption as MonthlyEducationDesignerCountKey
     );
   };
   return (

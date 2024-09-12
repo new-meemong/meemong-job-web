@@ -1,10 +1,9 @@
-import BaseSingleInfoSelect from "@/components/select/base-single-info-select";
 import BaseSingleInfoSelectAge from "@/components/select/base-single-info-select-age";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { jobPostingTypes } from "@/types/job-posting-types";
+import { jobPostingOptions } from "@/types/job-posting-options";
 import Link from "next/link";
 import styled from "styled-components";
 
@@ -125,16 +124,10 @@ const Info = () => {
 
 const SelectIsRestrictedAge = () => {
   const { isRestrictedAge, setIsRestrictedAge } = useJobPostingEditStore();
-  const options = Object.entries(jobPostingTypes.isRestrictedAge).map(
-    ([key, value]) => ({
-      key,
-      value
-    })
-  );
+  const options = jobPostingOptions.isRestrictedAge;
 
-  const handleSelect = (option: string) => {
-    const booleanValue = option === "true";
-    setIsRestrictedAge(booleanValue);
+  const handleSelect = (option: boolean) => {
+    setIsRestrictedAge(option);
   };
 
   return (
@@ -142,11 +135,7 @@ const SelectIsRestrictedAge = () => {
       <BaseSingleInfoSelectAge
         label="연령"
         options={options}
-        selectedOption={
-          isRestrictedAge === true
-            ? jobPostingTypes.isRestrictedAge.true
-            : jobPostingTypes.isRestrictedAge.false
-        }
+        selectedOption={isRestrictedAge}
         errorMessage="연령을 선택해주세요."
         isError={false}
         onSelect={handleSelect}

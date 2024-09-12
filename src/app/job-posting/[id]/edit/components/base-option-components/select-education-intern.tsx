@@ -1,12 +1,8 @@
 import BaseSingleSelect from "@/components/select/base-single-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import {
-  jobPostingTypes,
-  MonthlyEducationDesignerCountType,
-  MonthlyEducationInternCountType,
-  RoleType
-} from "@/types/job-posting-types";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import { MonthlyEducationInternCountKey } from "@/types/job-posting-types";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -16,18 +12,13 @@ const Container = styled.div`
 `;
 
 const SelectEducationIntern = () => {
-  const {
-    monthlyEducationInternCount,
-
-    setMonthlyEducationInternCount
-  } = useJobPostingEditStore();
-  const educationCounts = Object.values(
-    jobPostingTypes.monthlyEducationInternCount
-  );
+  const { monthlyEducationInternCount, setMonthlyEducationInternCount } =
+    useJobPostingEditStore();
+  const educationCounts = jobPostingOptions.monthlyEducationInternCount;
 
   const handleSelect = (selectedOption: string) => {
     setMonthlyEducationInternCount(
-      selectedOption as MonthlyEducationInternCountType
+      selectedOption as MonthlyEducationInternCountKey
     );
   };
 

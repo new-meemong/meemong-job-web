@@ -89,16 +89,16 @@ const ConfirmButton = styled.div`
 `;
 
 interface Option {
-  key: string;
+  key: boolean;
   value: string;
 }
 interface BaseSingleInfoSelectProps {
   label: string;
   options: Option[];
-  selectedOption: string | null;
+  selectedOption: boolean | null;
   errorMessage: string;
   isError: boolean;
-  onSelect: (optionKey: string) => void;
+  onSelect: (optionKey: boolean) => void;
   infoLabel: string;
   infoHeader: string;
   info: ReactNode;
@@ -135,7 +135,7 @@ const BaseSingleInfoSelectAge = ({
       <ButtonContainer>
         {options.map((option) => (
           <Button
-            key={option.key}
+            key={String(option.key)}
             $isSelected={selectedOption === option.key}
             onClick={() => onSelect(option.key)}
           >

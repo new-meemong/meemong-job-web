@@ -1,58 +1,54 @@
 import {
-  AvailableOffDaysType,
-  DesignerLicensesType,
-  IncentiveType,
+  AvailableOffDaysKey,
+  DesignerLicensesKey,
+  IncentiveKey,
+  IsPossibleMiddleAgeKey,
+  IsRestrictedAgeKey,
   jobPostingTypes,
-  MonthlyEducationDesignerCountType,
-  MonthlyEducationInternCountType,
-  RoleType,
-  SettlementAllowanceType,
-  SexType
+  MonthlyEducationDesignerCountKey,
+  MonthlyEducationInternCountKey,
+  RoleKey,
+  SettlementAllowanceKey,
+  SexKey
 } from "@/types/job-posting-types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type JobPostingEditState = {
   title: string;
-  role: RoleType;
-  monthlyEducationDesignerCount: MonthlyEducationDesignerCountType | null;
-  monthlyEducationInternCount: MonthlyEducationInternCountType | null;
-  availableOffDays: AvailableOffDaysType[];
-  settlementAllowance: SettlementAllowanceType | null;
-  incentive: IncentiveType | null;
-  sex: SexType | null;
-  isRestrictedAge: boolean | null;
-  isPossibleMiddleAge: boolean | null;
-  designerLicenses: DesignerLicensesType[];
+  role: RoleKey;
+  monthlyEducationDesignerCount: MonthlyEducationDesignerCountKey | null;
+  monthlyEducationInternCount: MonthlyEducationInternCountKey | null;
+  availableOffDays: AvailableOffDaysKey[];
+  settlementAllowance: SettlementAllowanceKey | null;
+  incentive: IncentiveKey | null;
+  sex: SexKey | null;
+  isRestrictedAge: IsRestrictedAgeKey | null;
+  isPossibleMiddleAge: IsPossibleMiddleAgeKey | null;
+  designerLicenses: DesignerLicensesKey[];
 };
 
 type JobPostingEditActions = {
   setTitle: (title: string) => void;
-  setRole: (role: RoleType) => void;
+  setRole: (role: RoleKey) => void;
   setMonthlyEducationDesignerCount: (
-    monthlyEducationDesignerCount: MonthlyEducationDesignerCountType
+    monthlyEducationDesignerCount: MonthlyEducationDesignerCountKey
   ) => void;
   setMonthlyEducationInternCount: (
-    monthlyEducationInternCount: MonthlyEducationInternCountType
+    monthlyEducationInternCount: MonthlyEducationInternCountKey
   ) => void;
-  setAvailableOffDays: (
-    day: keyof (typeof jobPostingTypes)["availableOffDays"]
-  ) => void;
-  setSettlementAllowance: (
-    settlementAllowance: SettlementAllowanceType
-  ) => void;
-  setIncentive: (incentive: IncentiveType) => void;
-  setSex: (sex: SexType) => void;
-  setIsRestrictedAge: (isRestrictedAge: boolean) => void;
-  setIsPossibleMiddleAge: (isPossibleMiddleAge: boolean) => void;
-  setDesignerLicenses: (
-    designerLicense: keyof (typeof jobPostingTypes)["designerLicenses"]
-  ) => void;
+  setAvailableOffDays: (day: AvailableOffDaysKey) => void;
+  setSettlementAllowance: (settlementAllowance: SettlementAllowanceKey) => void;
+  setIncentive: (incentive: IncentiveKey) => void;
+  setSex: (sex: SexKey) => void;
+  setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey) => void;
+  setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) => void;
+  setDesignerLicenses: (designerLicense: DesignerLicensesKey) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
   title: "",
-  role: jobPostingTypes.role.디자이너 as RoleType,
+  role: "디자이너",
   monthlyEducationDesignerCount: null,
   monthlyEducationInternCount: null,
   availableOffDays: [],
@@ -69,60 +65,32 @@ export const useJobPostingEditStore = create(
     (set, get) => ({
       ...defaultJobPostingEditState,
       setTitle: (title: string) => set({ title }),
-      setRole: (role: RoleType) => set({ role }),
+      setRole: (role: RoleKey) => set({ role }),
       setMonthlyEducationDesignerCount: (
-        monthlyEducationDesignerCount: MonthlyEducationDesignerCountType
+        monthlyEducationDesignerCount: MonthlyEducationDesignerCountKey
       ) => set({ monthlyEducationDesignerCount }),
       setMonthlyEducationInternCount: (
-        monthlyEducationInternCount: MonthlyEducationInternCountType
+        monthlyEducationInternCount: MonthlyEducationInternCountKey
       ) => set({ monthlyEducationInternCount }),
-      setAvailableOffDays: (
-        day: keyof (typeof jobPostingTypes)["availableOffDays"]
-      ) => {
+      setAvailableOffDays: (day: AvailableOffDaysKey) => {
         const { availableOffDays } = get();
-        if (availableOffDays?.includes(day)) {
-          // day가 이미 선택된 경우, 제거
-          set({
-            availableOffDays: availableOffDays.filter(
-              (selectedDay) => selectedDay !== day
-            )
-          });
-        } else {
-          // day가 선택되지 않은 경우, 추가
-          set({
-            availableOffDays: [...(availableOffDays || []), day]
-          });
-        }
+        set({ availableOffDays: toggleSelect(availableOffDays, day) });
       },
-      setSettlementAllowance: (settlementAllowance: SettlementAllowanceType) =>
+      setSettlementAllowance: (settlementAllowance: SettlementAllowanceKey) =>
         set({ settlementAllowance }),
-      setIncentive: (incentive: IncentiveType) => set({ incentive }),
-      setSex: (sex: SexType) => set({ sex }),
-      setIsRestrictedAge: (isRestrictedAge: boolean) => {
+      setIncentive: (incentive: IncentiveKey) => set({ incentive }),
+      setSex: (sex: SexKey) => set({ sex }),
+      setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey) => {
         set({ isRestrictedAge });
         if (!isRestrictedAge) {
           set({ isPossibleMiddleAge: null });
         }
       },
-      setIsPossibleMiddleAge: (isPossibleMiddleAge: boolean) =>
+      setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) =>
         set({ isPossibleMiddleAge }),
-      setDesignerLicenses: (
-        license: keyof (typeof jobPostingTypes)["designerLicenses"]
-      ) => {
+      setDesignerLicenses: (license: DesignerLicensesKey) => {
         const { designerLicenses } = get();
-        if (designerLicenses?.includes(license)) {
-          // day가 이미 선택된 경우, 제거
-          set({
-            designerLicenses: designerLicenses.filter(
-              (selectedLicense) => selectedLicense !== license
-            )
-          });
-        } else {
-          // day가 선택되지 않은 경우, 추가
-          set({
-            designerLicenses: [...(designerLicenses || []), license]
-          });
-        }
+        set({ designerLicenses: toggleSelect(designerLicenses, license) });
       }
     }),
 
@@ -132,3 +100,14 @@ export const useJobPostingEditStore = create(
     }
   )
 );
+
+// 중복 선택 가능 항목 처리를 위한 함수
+const toggleSelect = <T>(selectedItems: T[], item: T): T[] => {
+  if (selectedItems.includes(item)) {
+    // 이미 선택된 경우, 제거
+    return selectedItems.filter((selectedItem) => selectedItem !== item);
+  } else {
+    // 선택되지 않은 경우, 추가
+    return [...selectedItems, item];
+  }
+};

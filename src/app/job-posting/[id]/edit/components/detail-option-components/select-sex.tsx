@@ -3,7 +3,8 @@ import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { jobPostingTypes, SexType } from "@/types/job-posting-types";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import { SexKey } from "@/types/job-posting-types";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -86,16 +87,10 @@ const Info = () => {
 
 const SelectSex = () => {
   const { sex, setSex } = useJobPostingEditStore();
-  const sexs = Object.entries(jobPostingTypes.sex).map(([key, value]) => ({
-    key,
-    value
-  }));
+  const sexs = jobPostingOptions.sex;
 
   const handleSelect = (selectedOption: string) => {
-    const selectedKey = Object.entries(jobPostingTypes.sex).find(
-      ([key, value]) => key === selectedOption
-    )?.[0];
-    setSex(selectedKey as SexType);
+    setSex(selectedOption as SexKey);
   };
   return (
     <Container>
