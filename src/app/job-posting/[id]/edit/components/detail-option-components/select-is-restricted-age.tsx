@@ -1,4 +1,4 @@
-import BaseSingleInfoSelectAge from "@/components/select/base-single-info-select-age";
+import BaseSingleInfoSelectAge from "@/components/selects/base-single-info-select-age";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";

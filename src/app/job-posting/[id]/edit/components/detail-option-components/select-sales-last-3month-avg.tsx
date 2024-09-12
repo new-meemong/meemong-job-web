@@ -1,4 +1,4 @@
-import BaseSingleSelect from "@/components/select/base-single-select";
+import BaseSingleSelect from "@/components/selects/base-single-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";

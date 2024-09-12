@@ -1,4 +1,4 @@
-import BaseMultiSelect from "@/components/select/base-multi-select";
+import BaseMultiSelect from "@/components/selects/base-multi-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";

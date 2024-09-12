@@ -1,4 +1,4 @@
-import BaseSingleInfoSelect from "@/components/select/base-single-info-select";
+import BaseSingleInfoSelect from "@/components/selects/base-single-info-select";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
