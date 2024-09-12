@@ -162,6 +162,18 @@ export type IsExistedTowelSupplierKey = boolean;
 // 기본 커트 가격
 export type BasicCutPriceKey = number;
 
+// 근무 시작 시간
+export type StartWorkTimeKey = string;
+
+// 근무 종료 시간
+export type EndWorkTimeKey = string;
+
+// 매장 인스타
+export type StoreInstagramUrlKey = string;
+
+// 메인 염모제
+export type MainHairDyeKey = string;
+
 export const jobPostingTypes = {
   // 인턴
   internExperienceYearNumber: {

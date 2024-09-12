@@ -6,6 +6,7 @@ import {
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
   EmployeeCountKey,
+  EndWorkTimeKey,
   IncentiveKey,
   IsExistedCleaningSupplierKey,
   IsExistedDormitorySupportKey,
@@ -18,6 +19,7 @@ import {
   IsRestrictedAgeKey,
   jobPostingTypes,
   LeaveDayCountKey,
+  MainHairDyeKey,
   MealTimeKey,
   MonthlyEducationDesignerCountKey,
   MonthlyEducationInternCountKey,
@@ -27,6 +29,8 @@ import {
   SalesLast3MonthsAvgKey,
   SettlementAllowanceKey,
   SexKey,
+  StartWorkTimeKey,
+  StoreInstagramUrlKey,
   StoreInteriorRenovationAgoKey,
   StoreKey,
   SubwayAccessibilityKey,
@@ -72,6 +76,14 @@ type JobPostingEditState = {
 
   // other form fields
   basicCutPrice: BasicCutPriceKey | null;
+
+  // imageUrlList
+
+  // etc options
+  startWorkTime: StartWorkTimeKey | null;
+  endWorkTime: EndWorkTimeKey | null;
+  storeInstagramUrl: StoreInstagramUrlKey | null;
+  mainHairDie: MainHairDyeKey | null;
 };
 
 type JobPostingEditActions = {
@@ -130,6 +142,12 @@ type JobPostingEditActions = {
     isExistedTowelSupplier: IsExistedTowelSupplierKey
   ) => void;
   setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) => void;
+  setStartWorkTime: (startWorkTime: string) => void;
+  setEndWorkTime: (endWorkTime: string) => void;
+  setStoreInstagramUrl: (
+    storeInstagramUrl: StoreInstagramUrlKey | null
+  ) => void;
+  setMainHairDie: (mainHaireDie: MainHairDyeKey | null) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -165,7 +183,11 @@ const defaultJobPostingEditState: JobPostingEditState = {
   parkingSpotCount: null,
   isExistedCleaningSupplier: null,
   isExistedTowelSupplier: null,
-  basicCutPrice: null
+  basicCutPrice: null,
+  startWorkTime: null,
+  endWorkTime: null,
+  storeInstagramUrl: null,
+  mainHairDie: null
 };
 
 export const useJobPostingEditStore = create(
@@ -256,7 +278,16 @@ export const useJobPostingEditStore = create(
         isExistedTowelSupplier: IsExistedTowelSupplierKey
       ) => set({ isExistedTowelSupplier }),
       setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) =>
-        set({ basicCutPrice })
+        set({ basicCutPrice }),
+      setStartWorkTime: (startWorkTime: StartWorkTimeKey) =>
+        set({ startWorkTime }),
+      setEndWorkTime: (endWorkTime: EndWorkTimeKey) => set({ endWorkTime }),
+      setStoreInstagramUrl: (storeInstagramUrl: StoreInstagramUrlKey | null) =>
+        set({
+          storeInstagramUrl
+        }),
+      setMainHairDie: (mainHairDie: MainHairDyeKey | null) =>
+        set({ mainHairDie })
     }),
 
     {
