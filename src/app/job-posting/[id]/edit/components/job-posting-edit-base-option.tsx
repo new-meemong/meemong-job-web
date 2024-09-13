@@ -13,6 +13,7 @@ import JobPostingEditStoreImage from "./job-posting-edit-store-image";
 import JobPostingEditEtcOption from "./job-posting-edit-etc-option";
 import InputDescription from "./input-description";
 import JobPostingEditNote from "./job-posting-edit-note";
+import JobPostingEditConfirmButton from "./job-posting-edit-confirm-button";
 
 const Container = styled.div``;
 
@@ -39,6 +40,7 @@ const JobPostingEditBaseOption = () => {
       <JobPostingEditEtcOption />
       <InputDescription />
       <JobPostingEditNote />
+      <JobPostingEditConfirmButton />
     </Container>
   );
 };
