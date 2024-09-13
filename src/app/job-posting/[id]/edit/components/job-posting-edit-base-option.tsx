@@ -12,6 +12,7 @@ import Divider from "./divider";
 import JobPostingEditStoreImage from "./job-posting-edit-store-image";
 import JobPostingEditEtcOption from "./job-posting-edit-etc-option";
 import InputDescription from "./input-description";
+import JobPostingEditNote from "./job-posting-edit-note";
 
 const Container = styled.div``;
 
@@ -37,6 +38,7 @@ const JobPostingEditBaseOption = () => {
       <Divider />
       <JobPostingEditEtcOption />
       <InputDescription />
+      <JobPostingEditNote />
     </Container>
   );
 };

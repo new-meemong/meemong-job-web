@@ -146,6 +146,16 @@ export const fonts = {
     font-weight: 700;
     color: ${colors.greyText4};
   `,
+  greyText4Bold12: css`
+    font-size: ${pxToVw(12)};
+    font-weight: 700;
+    color: ${colors.greyText4};
+  `,
+  greyText4Semi12: css`
+    font-size: ${pxToVw(12)};
+    font-weight: 500;
+    color: ${colors.greyText4};
+  `,
   greyText4Semi10: css`
     font-size: ${pxToVw(10)};
     font-weight: 500;
