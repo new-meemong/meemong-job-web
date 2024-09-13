@@ -174,6 +174,9 @@ export type StoreInstagramUrlKey = string;
 // 메인 염모제
 export type MainHairDyeKey = string;
 
+// 상세 설명(선택)
+export type DescriptionKey = string;
+
 export const jobPostingTypes = {
   // 인턴
   internExperienceYearNumber: {

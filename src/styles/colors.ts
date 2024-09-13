@@ -21,6 +21,7 @@ export const colors = {
   greyText: "#303535",
   greyTextEditLabel: "#3D3C3F",
   greyTitle: "#222222",
+  greyBorder: "#EAEDED",
 
   red: "#FF0000",
   deepCyan: "#1584A0"

@@ -3,6 +3,7 @@ import {
   AdminSexKey,
   AvailableOffDaysKey,
   BasicCutPriceKey,
+  DescriptionKey,
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
   EmployeeCountKey,
@@ -84,6 +85,7 @@ type JobPostingEditState = {
   endWorkTime: EndWorkTimeKey | null;
   storeInstagramUrl: StoreInstagramUrlKey | null;
   mainHairDie: MainHairDyeKey | null;
+  description: DescriptionKey | null;
 };
 
 type JobPostingEditActions = {
@@ -148,6 +150,7 @@ type JobPostingEditActions = {
     storeInstagramUrl: StoreInstagramUrlKey | null
   ) => void;
   setMainHairDie: (mainHaireDie: MainHairDyeKey | null) => void;
+  setDescription: (description: DescriptionKey | null) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -187,7 +190,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   startWorkTime: null,
   endWorkTime: null,
   storeInstagramUrl: null,
-  mainHairDie: null
+  mainHairDie: null,
+  description: null
 };
 
 export const useJobPostingEditStore = create(
@@ -287,7 +291,9 @@ export const useJobPostingEditStore = create(
           storeInstagramUrl
         }),
       setMainHairDie: (mainHairDie: MainHairDyeKey | null) =>
-        set({ mainHairDie })
+        set({ mainHairDie }),
+      setDescription: (description: DescriptionKey | null) =>
+        set({ description })
     }),
 
     {
