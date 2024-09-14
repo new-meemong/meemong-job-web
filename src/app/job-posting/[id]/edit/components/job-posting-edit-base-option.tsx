@@ -14,12 +14,39 @@ import JobPostingEditEtcOption from "./job-posting-edit-etc-option";
 import InputDescription from "./input-description";
 import JobPostingEditNote from "./job-posting-edit-note";
 import JobPostingEditConfirmButton from "./job-posting-edit-confirm-button";
+import SelectEducationDesigner from "./base-option-components/select-education-designer";
+import SelectEducationCost from "./base-option-components/select-education-cost";
+import SelectInternSalary from "./base-option-components/select-intern-salary";
 
 const Container = styled.div``;
 
 const HeaderLabel = styled.span`
   ${fonts.greyTextEditLabelBold16}
 `;
+
+const DesignerOptions = () => {
+  return (
+    <>
+      <SelectEducationDesigner />
+      <SelectOffDays />
+      <SelectSettlementAllowance />
+      <SelectIncentive />
+      <JobPostingEditDetailOption />
+    </>
+  );
+};
+
+const InternOptions = () => {
+  return (
+    <>
+      <SelectEducationIntern />
+      <SelectEducationCost />
+      <SelectOffDays />
+      <SelectInternSalary />
+      <JobPostingEditDetailOption />
+    </>
+  );
+};
 
 const JobPostingEditBaseOption = () => {
   const { role } = useJobPostingEditStore();
@@ -29,11 +56,7 @@ const JobPostingEditBaseOption = () => {
       <HeaderLabel>기본 정보 입력*</HeaderLabel>
       <DesignerRoleTab />
       <SelectJobPostingRegions />
-      <SelectEducationIntern />
-      <SelectOffDays />
-      <SelectSettlementAllowance />
-      <SelectIncentive />
-      <JobPostingEditDetailOption />
+      {role === "디자이너" ? <DesignerOptions /> : <InternOptions />}
       <Divider />
       <JobPostingEditStoreImage />
       <Divider />

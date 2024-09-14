@@ -51,7 +51,7 @@ export type EducationCostKey =
   | "40만원 이상"
   | "50만원 이상";
 
-// 급여-인턴
+// 희망 급여-인턴
 export type InternSalaryKey = "210만원 이하" | "210만원 이상" | "250만원 이상";
 
 // 성별
@@ -177,56 +177,28 @@ export type MainHairDyeKey = string;
 // 상세 설명(선택)
 export type DescriptionKey = string;
 
-export const jobPostingTypes = {
-  // 인턴
-  internExperienceYearNumber: {
-    신입: "신입",
-    "1년 이하": "1년 이하",
-    "3년 이하": "3년 이하",
-    "5년 이하": "5년 이하",
-    "5년 이상": "5년 이상",
-    "상관 없음": "상관 없음"
-  },
-  // 인턴
-  designerPromotionPeriod: {
-    "1년 이하": "1년 이하",
-    "1년 6개월 이하": "1년 6개월 이하",
-    "2년 이하": "2년 이하",
-    "3년 미만": "3년 미만",
-    "3년 이상": "3년 이상"
-  },
+// 디자이너 승급기간 - 인턴
+export type DesignerPromitionPeriodKey =
+  | "1년 이하"
+  | "1년 6개월 이하"
+  | "2년 이하"
+  | "3년 미만"
+  | "3년 이상";
 
-  // 인턴
-  isOnsiteManager: {
-    true: "유",
-    false: "무"
-  },
-  // 인턴
-  isExistedFourInsurances: {
-    true: "유",
-    false: "무"
-  },
-  // 인턴
-  isExistedRetirementPay: {
-    true: "유",
-    false: "무"
-  }
-};
+// 인턴 경력 - 인턴
+export type InternExperienceYearNumberKey =
+  | "신입"
+  | "1년 이하"
+  | "3년 이하"
+  | "5년 이하"
+  | "5년 이상"
+  | "상관 없음";
 
-// ExtractType 함수 정의 - boolean을 처리하는 조건부 타입
-type ExtractType<T> = T extends { true: any; false: any } ? boolean : keyof T;
+// 샵 매니저 상주 - 인턴
+export type IsOnsiteManagerKey = boolean;
 
-// jobPostingType 안의 모든 키에 대한 타입을 자동으로 생성하는 유틸리티 타입
-type JobPostingTypeKeys = {
-  [K in keyof typeof jobPostingTypes]: ExtractType<(typeof jobPostingTypes)[K]>;
-};
+// 4대보험 - 인턴
+export type IsExistedFourInsurancesKey = boolean;
 
-export type InternExperienceYearNumberType =
-  JobPostingTypeKeys["internExperienceYearNumber"];
-export type DesignerPromotionPeriodType =
-  JobPostingTypeKeys["designerPromotionPeriod"];
-export type IsOnsiteManagerType = JobPostingTypeKeys["isOnsiteManager"];
-export type IsExistedFourInsurancesType =
-  JobPostingTypeKeys["isExistedFourInsurances"];
-export type IsExistedRetirementPayType =
-  JobPostingTypeKeys["isExistedRetirementPay"];
+// 퇴직금 - 인턴
+export type IsExistedRetirementPayKey = boolean;

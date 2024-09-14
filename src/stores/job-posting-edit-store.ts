@@ -6,19 +6,25 @@ import {
   DescriptionKey,
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
+  DesignerPromitionPeriodKey,
+  EducationCostKey,
   EmployeeCountKey,
   EndWorkTimeKey,
   IncentiveKey,
+  InternExperienceYearNumberKey,
+  InternSalaryKey,
   IsExistedCleaningSupplierKey,
   IsExistedDormitorySupportKey,
   IsExistedEducationSupportKey,
+  IsExistedFourInsurancesKey,
   isExistedInternSystemKey,
   IsExistedMealSupportKey,
   IsExistedProductSupportKey,
+  IsExistedRetirementPayKey,
   IsExistedTowelSupplierKey,
+  IsOnsiteManagerKey,
   IsPossibleMiddleAgeKey,
   IsRestrictedAgeKey,
-  jobPostingTypes,
   LeaveDayCountKey,
   MainHairDyeKey,
   MealTimeKey,
@@ -86,6 +92,15 @@ type JobPostingEditState = {
   storeInstagramUrl: StoreInstagramUrlKey | null;
   mainHairDie: MainHairDyeKey | null;
   description: DescriptionKey | null;
+
+  // intern
+  educationCost: EducationCostKey | null;
+  internSalary: InternSalaryKey | null;
+  designerPromitionPeriod: DesignerPromitionPeriodKey | null;
+  internExperienceYearNumber: InternExperienceYearNumberKey | null;
+  isOnsiteManager: IsOnsiteManagerKey | null;
+  isExistedFourInsurances: IsExistedFourInsurancesKey | null;
+  isExistedRetirementPay: IsExistedRetirementPayKey | null;
 };
 
 type JobPostingEditActions = {
@@ -151,6 +166,21 @@ type JobPostingEditActions = {
   ) => void;
   setMainHairDie: (mainHaireDie: MainHairDyeKey | null) => void;
   setDescription: (description: DescriptionKey | null) => void;
+  setEducationCost: (educationCost: EducationCostKey | null) => void;
+  setInternSalary: (internSalary: InternSalaryKey | null) => void;
+  setDesignerPromitionPeriod: (
+    designerPromitionPeriod: DesignerPromitionPeriodKey | null
+  ) => void;
+  setInternExperienceYearNumber: (
+    internExperienceYearNumber: InternExperienceYearNumberKey | null
+  ) => void;
+  setIsOnsiteManager: (isOnsiteManager: IsOnsiteManagerKey | null) => void;
+  setIsExistedFourInsurances: (
+    isExistedFourInsurances: IsExistedFourInsurancesKey | null
+  ) => void;
+  setIsExistedRetirementPay: (
+    isExistedRetirementPay: IsExistedRetirementPayKey | null
+  ) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -191,7 +221,14 @@ const defaultJobPostingEditState: JobPostingEditState = {
   endWorkTime: null,
   storeInstagramUrl: null,
   mainHairDie: null,
-  description: null
+  description: null,
+  educationCost: null,
+  internSalary: null,
+  designerPromitionPeriod: null,
+  internExperienceYearNumber: null,
+  isOnsiteManager: null,
+  isExistedFourInsurances: null,
+  isExistedRetirementPay: null
 };
 
 export const useJobPostingEditStore = create(
@@ -293,7 +330,25 @@ export const useJobPostingEditStore = create(
       setMainHairDie: (mainHairDie: MainHairDyeKey | null) =>
         set({ mainHairDie }),
       setDescription: (description: DescriptionKey | null) =>
-        set({ description })
+        set({ description }),
+      setEducationCost: (educationCost: EducationCostKey | null) =>
+        set({ educationCost }),
+      setInternSalary: (internSalary: InternSalaryKey | null) =>
+        set({ internSalary }),
+      setDesignerPromitionPeriod: (
+        designerPromitionPeriod: DesignerPromitionPeriodKey | null
+      ) => set({ designerPromitionPeriod }),
+      setInternExperienceYearNumber: (
+        internExperienceYearNumber: InternExperienceYearNumberKey | null
+      ) => set({ internExperienceYearNumber }),
+      setIsOnsiteManager: (isOnsiteManager: IsOnsiteManagerKey | null) =>
+        set({ isOnsiteManager }),
+      setIsExistedFourInsurances: (
+        isExistedFourInsurances: IsExistedFourInsurancesKey | null
+      ) => set({ isExistedFourInsurances }),
+      setIsExistedRetirementPay: (
+        isExistedRetirementPay: IsExistedRetirementPayKey | null
+      ) => set({ isExistedRetirementPay })
     }),
 
     {

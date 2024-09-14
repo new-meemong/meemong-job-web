@@ -1,6 +1,4 @@
-import BaseSingleInfoSelect from "@/components/selects/base-single-info-select";
 import pxToVw from "@/lib/dpi-converter";
-import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 import SelectSex from "./detail-option-components/select-sex";
@@ -30,6 +28,11 @@ import SelectParkingSpotCount from "./detail-option-components/select-parking-sp
 import SelectIsExistedCleaningSupplier from "./detail-option-components/select-is-existed-cleaning-supplier";
 import SelectIsExistedTowelSupplier from "./detail-option-components/select-is-existed-towel-supplier";
 import InputBasicCutPrice from "./detail-option-components/input-basic-cut-price";
+import SelectDesignerPromitionPeriod from "./detail-option-components/select-designer-promotion-period";
+import SelectInternExperienceYearNumber from "./detail-option-components/select-intern-experience-year-number";
+import SelectIsOnsiteManger from "./detail-option-components/select-is-onsite-manager";
+import SelectIsExistedRetirementPay from "./detail-option-components/select-is-existed-retirement-pay";
+import SelectIsExistedFourInsurance from "./detail-option-components/select-is-existed-four-insurance";
 
 const Container = styled.div`
   background-color: #eceaff66;
@@ -47,11 +50,11 @@ const HeaderLabel = styled.div`
   align-items: center;
 `;
 
-const JobPostingEditDetailOption = () => {
+const DesignerOptions = () => {
   const { isRestrictedAge } = useJobPostingEditStore();
+
   return (
-    <Container>
-      <HeaderLabel>매장 상세정보 입력*</HeaderLabel>
+    <>
       <SelectSex />
       <SelectIsRestrictedAge />
       {isRestrictedAge && <CheckIsPossibleMiddleAge />}
@@ -78,6 +81,52 @@ const JobPostingEditDetailOption = () => {
       <SelectIsExistedCleaningSupplier />
       <SelectIsExistedTowelSupplier />
       <InputBasicCutPrice />
+    </>
+  );
+};
+
+const InternOptions = () => {
+  const { isRestrictedAge } = useJobPostingEditStore();
+
+  return (
+    <>
+      <SelectSex />
+      <SelectIsRestrictedAge />
+      {isRestrictedAge && <CheckIsPossibleMiddleAge />}
+      <SelectDesignerLicense />
+      <SelectStore />
+      <SelectEmployeeCount />
+      <SelectIsExistedInternSystem />
+      <SelectDesignerPromitionPeriod />
+      <SelectStoreInteriorRenovationAgo />
+      <SelectWorkType />
+      <SelectWorkCycle />
+      <SelectIsExistedMealSupport />
+      <SelectMealTime />
+      <SelectIsExistedProductSupport />
+      <SelectIsExistedDormitorySupport />
+      <SelectSalesCommission />
+      <SelectInternExperienceYearNumber />
+      <SelectSubwayAccessibility />
+      <SelectAdminAge />
+      <SelectAdminSex />
+      <SelectLeaveDayCount />
+      <SelectParkingSpotCount />
+      <SelectIsExistedCleaningSupplier />
+      <SelectIsExistedTowelSupplier />
+      <SelectIsOnsiteManger />
+      <SelectIsExistedFourInsurance />
+      <SelectIsExistedRetirementPay />
+    </>
+  );
+};
+
+const JobPostingEditDetailOption = () => {
+  const { role } = useJobPostingEditStore();
+  return (
+    <Container>
+      <HeaderLabel>매장 상세정보 입력*</HeaderLabel>
+      {role === "디자이너" ? <DesignerOptions /> : <InternOptions />}
     </Container>
   );
 };

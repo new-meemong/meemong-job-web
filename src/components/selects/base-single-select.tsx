@@ -10,6 +10,10 @@ const Label = styled.div`
   padding: ${pxToVw(8)} 0;
 `;
 
+const Description = styled.div`
+  ${fonts.purplePrimaryNormal12}
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -47,6 +51,7 @@ interface Option<T> {
 type ButtonSize = "small" | "large";
 interface BaseSingleSelectProps<T> {
   label: string;
+  description?: string;
   options: Option<T>[];
   selectedOption: T | null;
   errorMessage: string;
@@ -57,6 +62,7 @@ interface BaseSingleSelectProps<T> {
 
 const BaseSingleSelect = <T extends string | boolean>({
   label,
+  description,
   options,
   selectedOption,
   errorMessage,
@@ -67,6 +73,7 @@ const BaseSingleSelect = <T extends string | boolean>({
   return (
     <Container>
       <Label>{label}</Label>
+      {description && <Description>{description}</Description>}
       <ButtonContainer>
         {options.map((option) => (
           <Button

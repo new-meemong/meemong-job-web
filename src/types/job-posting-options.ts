@@ -4,15 +4,22 @@ import {
   AvailableOffDaysKey,
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
+  DesignerPromitionPeriodKey,
+  EducationCostKey,
   EmployeeCountKey,
   IncentiveKey,
+  InternExperienceYearNumberKey,
+  InternSalaryKey,
   IsExistedCleaningSupplierKey,
   IsExistedDormitorySupportKey,
   IsExistedEducationSupportKey,
+  IsExistedFourInsurancesKey,
   isExistedInternSystemKey,
   IsExistedMealSupportKey,
   IsExistedProductSupportKey,
+  IsExistedRetirementPayKey,
   IsExistedTowelSupplierKey,
+  IsOnsiteManagerKey,
   IsPossibleMiddleAgeKey,
   IsRestrictedAgeKey,
   LeaveDayCountKey,
@@ -71,6 +78,15 @@ type ParkingSpotCountOption = Option<ParkingSpotCountKey>;
 type IsExistedCleaningSupplierOption = Option<IsExistedCleaningSupplierKey>;
 type IsExistedTowelSupplierOption = Option<IsExistedTowelSupplierKey>;
 
+//인턴
+type EducationCostOption = Option<EducationCostKey>;
+type InternSalaryOption = Option<InternSalaryKey>;
+type DesignerPromitionPeriodOption = Option<DesignerPromitionPeriodKey>;
+type InternExperienceYearNumberOption = Option<InternExperienceYearNumberKey>;
+type IsOnsiteManagerOption = Option<IsOnsiteManagerKey>;
+type IsExistedFourInsurancesOption = Option<IsExistedFourInsurancesKey>;
+type IsExistedRetirementPayOption = Option<IsExistedRetirementPayKey>;
+
 export const jobPostingOptions: {
   role: RoleOption[];
   monthlyEducationDesignerCount: MonthlyEducationDesignerCountOption[];
@@ -103,6 +119,13 @@ export const jobPostingOptions: {
   parkingSpotCount: ParkingSpotCountOption[];
   isExistedCleaningSupplier: IsExistedCleaningSupplierOption[];
   isExistedTowelSupplier: IsExistedTowelSupplierOption[];
+  educationCost: EducationCostOption[];
+  internSalary: InternSalaryOption[];
+  designerPromitionPeriod: DesignerPromitionPeriodOption[];
+  internExperienceYearNumber: InternExperienceYearNumberOption[];
+  isOnsiteManager: IsOnsiteManagerOption[];
+  isExistedFourInsurances: IsExistedFourInsurancesOption[];
+  isExistedRetirementPay: IsExistedRetirementPayOption[];
 } = {
   role: [
     { key: "디자이너", value: "디자이너" },
@@ -299,6 +322,55 @@ export const jobPostingOptions: {
   ],
   // 수건 업체
   isExistedTowelSupplier: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
+  ],
+
+  ///////////////////// 인턴
+  // 교육비
+  educationCost: [
+    { key: "무상 지원", value: "무상 지원" },
+    { key: "10만원 이상", value: "10만원 이상" },
+    { key: "20만원 이상", value: "20만원 이상" },
+    { key: "30만원 이상", value: "30만원 이상" },
+    { key: "40만원 이상", value: "40만원 이상" },
+    { key: "50만원 이상", value: "50만원 이상" }
+  ],
+  // 희망 급여
+  internSalary: [
+    { key: "210만원 이하", value: "210만원 이하" },
+    { key: "210만원 이상", value: "210만원 이상" },
+    { key: "250만원 이상", value: "250만원 이상" }
+  ],
+  // 디자이너 승급기간
+  designerPromitionPeriod: [
+    { key: "1년 이하", value: "1년 이하" },
+    { key: "1년 6개월 이하", value: "1년 6개월 이하" },
+    { key: "2년 이하", value: "2년 이하" },
+    { key: "3년 미만", value: "3년 미만" },
+    { key: "3년 이상", value: "3년 이상" }
+  ],
+  // 인턴 경력
+  internExperienceYearNumber: [
+    { key: "신입", value: "신입" },
+    { key: "1년 이하", value: "1년 이하" },
+    { key: "3년 이하", value: "3년 이하" },
+    { key: "5년 이하", value: "5년 이하" },
+    { key: "5년 이상", value: "5년 이상" },
+    { key: "상관 없음", value: "상관 없음" }
+  ],
+  // 샵 매니저 상주
+  isOnsiteManager: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
+  ],
+  // 4대보험
+  isExistedFourInsurances: [
+    { key: true, value: "유" },
+    { key: false, value: "무" }
+  ],
+  // 퇴직금
+  isExistedRetirementPay: [
     { key: true, value: "유" },
     { key: false, value: "무" }
   ]

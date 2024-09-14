@@ -14,7 +14,7 @@ const Container = styled.div`
   padding-top: ${pxToVw(8)};
 `;
 
-const SelectEducation = () => {
+const SelectEducationDesigner = () => {
   const { monthlyEducationDesignerCount, setMonthlyEducationDesignerCount } =
     useJobPostingEditStore();
   const educationCounts = jobPostingOptions.monthlyEducationDesignerCount;
@@ -38,4 +38,4 @@ const SelectEducation = () => {
   );
 };
 
-export default SelectEducation;
+export default SelectEducationDesigner;
