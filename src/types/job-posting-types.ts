@@ -168,8 +168,8 @@ export type StartWorkTimeKey = string;
 // 근무 종료 시간
 export type EndWorkTimeKey = string;
 
-// 매장 인스타
-export type StoreInstagramUrlKey = string;
+// 매장 링크
+export type StoreUrlKey = string;
 
 // 메인 염모제
 export type MainHairDyeKey = string;

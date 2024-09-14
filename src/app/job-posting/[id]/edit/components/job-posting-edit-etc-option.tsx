@@ -1,7 +1,7 @@
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 import InputWorkTime from "./etc-option-components/input-work-time";
-import InputStoreInstagramUrl from "./etc-option-components/input-store-instagram-url";
+import InputStoreInstagramUrl from "./etc-option-components/input-store-url";
 import InputMainHairDie from "./etc-option-components/input-main-haire-die";
 
 const Container = styled.div``;

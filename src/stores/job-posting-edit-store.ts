@@ -37,7 +37,7 @@ import {
   SettlementAllowanceKey,
   SexKey,
   StartWorkTimeKey,
-  StoreInstagramUrlKey,
+  StoreUrlKey,
   StoreInteriorRenovationAgoKey,
   StoreKey,
   SubwayAccessibilityKey,
@@ -89,7 +89,7 @@ type JobPostingEditState = {
   // etc options
   startWorkTime: StartWorkTimeKey | null;
   endWorkTime: EndWorkTimeKey | null;
-  storeInstagramUrl: StoreInstagramUrlKey | null;
+  storeUrl: StoreUrlKey | null;
   mainHairDie: MainHairDyeKey | null;
   description: DescriptionKey | null;
 
@@ -101,6 +101,10 @@ type JobPostingEditState = {
   isOnsiteManager: IsOnsiteManagerKey | null;
   isExistedFourInsurances: IsExistedFourInsurancesKey | null;
   isExistedRetirementPay: IsExistedRetirementPayKey | null;
+
+  // 에러 표시
+  hasDesignerOptionNull: boolean;
+  hasInternOptionNull: boolean;
 };
 
 type JobPostingEditActions = {
@@ -161,9 +165,7 @@ type JobPostingEditActions = {
   setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) => void;
   setStartWorkTime: (startWorkTime: string) => void;
   setEndWorkTime: (endWorkTime: string) => void;
-  setStoreInstagramUrl: (
-    storeInstagramUrl: StoreInstagramUrlKey | null
-  ) => void;
+  setStoreUrl: (storeUrl: StoreUrlKey | null) => void;
   setMainHairDie: (mainHaireDie: MainHairDyeKey | null) => void;
   setDescription: (description: DescriptionKey | null) => void;
   setEducationCost: (educationCost: EducationCostKey | null) => void;
@@ -181,6 +183,10 @@ type JobPostingEditActions = {
   setIsExistedRetirementPay: (
     isExistedRetirementPay: IsExistedRetirementPayKey | null
   ) => void;
+
+  // 공고 제출
+  submitDesignerJobPosting: () => void;
+  submitInternJobPosting: () => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -219,7 +225,7 @@ const defaultJobPostingEditState: JobPostingEditState = {
   basicCutPrice: null,
   startWorkTime: null,
   endWorkTime: null,
-  storeInstagramUrl: null,
+  storeUrl: null,
   mainHairDie: null,
   description: null,
   educationCost: null,
@@ -228,7 +234,9 @@ const defaultJobPostingEditState: JobPostingEditState = {
   internExperienceYearNumber: null,
   isOnsiteManager: null,
   isExistedFourInsurances: null,
-  isExistedRetirementPay: null
+  isExistedRetirementPay: null,
+  hasDesignerOptionNull: false,
+  hasInternOptionNull: false
 };
 
 export const useJobPostingEditStore = create(
@@ -323,9 +331,9 @@ export const useJobPostingEditStore = create(
       setStartWorkTime: (startWorkTime: StartWorkTimeKey) =>
         set({ startWorkTime }),
       setEndWorkTime: (endWorkTime: EndWorkTimeKey) => set({ endWorkTime }),
-      setStoreInstagramUrl: (storeInstagramUrl: StoreInstagramUrlKey | null) =>
+      setStoreUrl: (storeUrl: StoreUrlKey | null) =>
         set({
-          storeInstagramUrl
+          storeUrl
         }),
       setMainHairDie: (mainHairDie: MainHairDyeKey | null) =>
         set({ mainHairDie }),
@@ -348,7 +356,9 @@ export const useJobPostingEditStore = create(
       ) => set({ isExistedFourInsurances }),
       setIsExistedRetirementPay: (
         isExistedRetirementPay: IsExistedRetirementPayKey | null
-      ) => set({ isExistedRetirementPay })
+      ) => set({ isExistedRetirementPay }),
+      submitDesignerJobPosting: () => {},
+      submitInternJobPosting: () => {}
     }),
 
     {

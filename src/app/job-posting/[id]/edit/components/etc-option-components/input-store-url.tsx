@@ -39,24 +39,24 @@ const InputField = styled.input`
   }
 `;
 
-const InputStoreInstagramUrl = () => {
-  const { storeInstagramUrl, setStoreInstagramUrl } = useJobPostingEditStore();
+const InputStoreUrl = () => {
+  const { storeUrl, setStoreUrl } = useJobPostingEditStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setStoreInstagramUrl(e.target.value === "" ? null : e.target.value);
+    setStoreUrl(e.target.value === "" ? null : e.target.value);
   };
 
   return (
     <Container>
-      <Label>매장 인스타</Label>
+      <Label>매장 링크</Label>
       <InputField
-        placeholder="입력 가능"
+        placeholder="매장 링크를 입력해주세요 ex)인스타"
         type="text"
-        value={storeInstagramUrl || ""}
+        value={storeUrl || ""}
         onChange={handleChange}
       />
     </Container>
   );
 };
 
-export default InputStoreInstagramUrl;
+export default InputStoreUrl;
