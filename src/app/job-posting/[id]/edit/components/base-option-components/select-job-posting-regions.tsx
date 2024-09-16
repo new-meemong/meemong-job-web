@@ -94,7 +94,7 @@ const SelectJobPostingRegions = () => {
             ))
           )}
         </Location>
-        <LocationButton href="">
+        <LocationButton href="/job-posting/select-location">
           지역선택하기
           <ArrowRightGreyIcon />
         </LocationButton>

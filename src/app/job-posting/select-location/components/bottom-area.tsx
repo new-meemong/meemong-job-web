@@ -1,5 +1,6 @@
 import FullButton from "@/components/buttons/full-button";
 import pxToVw from "@/lib/dpi-converter";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
@@ -29,17 +30,27 @@ const Label = styled.span`
 `;
 
 interface BottomAreaProps {
-  selectedCount: number;
+  selectedLeftItem: { key: string; value: string };
+  selectedRightItems: { key: string; value: string }[];
 }
 
-const BottomArea = ({ selectedCount }: BottomAreaProps) => {
+const BottomArea = ({
+  selectedLeftItem,
+  selectedRightItems
+}: BottomAreaProps) => {
+  const { setPostingRegions } = useJobPostingEditStore();
   return (
     <Container>
       <CountContainer>
-        <SelectedCount>{`선택한 지역 ${selectedCount}`}</SelectedCount>
+        <SelectedCount>{`선택한 지역 ${selectedRightItems.length}`}</SelectedCount>
         <Label>최대 3개</Label>
       </CountContainer>
-      <FullButton title="필터 적용하기" onClick={() => {}} />
+      <FullButton
+        title="필터 적용하기"
+        onClick={() => {
+          setPostingRegions(selectedRightItems);
+        }}
+      />
     </Container>
   );
 };

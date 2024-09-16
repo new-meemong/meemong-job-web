@@ -1,3 +1,4 @@
+import { postJobPostings } from "@/apis/job-postings";
 import {
   AdminAgeKey,
   AdminSexKey,
@@ -105,6 +106,10 @@ type JobPostingEditState = {
   // 에러 표시
   hasDesignerOptionNull: boolean;
   hasInternOptionNull: boolean;
+
+  // 노출 지역 (콤마로 구분)
+  postingRegions: string | null;
+  postingRegionSiNames: string | null;
 };
 
 type JobPostingEditActions = {
@@ -187,6 +192,11 @@ type JobPostingEditActions = {
   // 공고 제출
   submitDesignerJobPosting: () => void;
   submitInternJobPosting: () => void;
+
+  // 노출지역
+  setPostingRegions: (
+    selectedRightItems: { key: string; value: string }[]
+  ) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -236,7 +246,9 @@ const defaultJobPostingEditState: JobPostingEditState = {
   isExistedFourInsurances: null,
   isExistedRetirementPay: null,
   hasDesignerOptionNull: false,
-  hasInternOptionNull: false
+  hasInternOptionNull: false,
+  postingRegions: null,
+  postingRegionSiNames: null
 };
 
 export const useJobPostingEditStore = create(
@@ -357,8 +369,45 @@ export const useJobPostingEditStore = create(
       setIsExistedRetirementPay: (
         isExistedRetirementPay: IsExistedRetirementPayKey | null
       ) => set({ isExistedRetirementPay }),
-      submitDesignerJobPosting: () => {},
-      submitInternJobPosting: () => {}
+      submitDesignerJobPosting: async () => {
+        const { role, title } = get();
+
+        try {
+          const jobPostingData = {
+            role,
+            title
+          };
+
+          const response = await postJobPostings(jobPostingData);
+          if (response.status === 200 || response.status === 201) {
+            // set({ ...defaultJobPostingEditState });
+            alert("채용 공고 등록이 완료되었습니다.");
+          } else {
+            alert("채용 공고 등록에 실패했습니다. 다시 시도해주세요.");
+          }
+        } catch (e) {
+          console.error("디자이너 구인 공고 등록 중 오류 발생:", e);
+          alert("디자이너 구인 공고 등록 중 오류가 발생했습니다.");
+        }
+      },
+      submitInternJobPosting: async () => {},
+      setPostingRegions: (
+        selectedRightItems: { key: string; value: string }[]
+      ) => {
+        const postingRegionSiNames = Array.from(
+          new Set(selectedRightItems.map((item) => item.key.split(" ")[0]))
+        ).join(",");
+
+        const postingRegions = selectedRightItems
+          .filter((item) => !item.value.includes("전체")) // "전체"가 포함되지 않은 항목만 필터링
+          .map((item) => item.key)
+          .join(",");
+
+        set({
+          postingRegions,
+          postingRegionSiNames
+        });
+      }
     }),
 
     {
