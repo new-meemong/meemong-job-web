@@ -2,6 +2,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
+import { ErrorMessage } from "../error-message";
 
 const Container = styled.div``;
 
@@ -22,7 +23,11 @@ const ButtonContainer = styled.div`
   padding: ${pxToVw(8)} 0;
 `;
 
-const Button = styled.div<{ $isSelected: boolean; $size: string }>`
+const Button = styled.div<{
+  $isSelected: boolean;
+  $size: string;
+  $hasError: boolean;
+}>`
   ${(props) =>
     props.$isSelected ? fonts.purplePrimaryNormal12 : fonts.greyNormal12};
   display: flex;
@@ -37,14 +42,15 @@ const Button = styled.div<{ $isSelected: boolean; $size: string }>`
       : pxToVw(86)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
-    ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
+    ${(props) =>
+      props.$isSelected
+        ? colors.purplePrimary
+        : props.$hasError
+        ? colors.red
+        : colors.grey};
   cursor: pointer;
   white-space: pre-line;
   text-align: center;
-`;
-
-const ErrorMessage = styled.div`
-  padding-left: ${pxToVw(10)};
 `;
 
 interface Option {
@@ -86,6 +92,7 @@ const BaseMultiSelect = ({
             $isSelected={selectedOptions.includes(option.key)}
             $size={buttonSize}
             onClick={() => onSelect(option.key)}
+            $hasError={isError}
           >
             {option.value}
           </Button>

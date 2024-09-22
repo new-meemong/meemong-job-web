@@ -28,7 +28,6 @@ const ContentContainer = styled.div`
 `;
 
 export default function JobPostingEditPage() {
-  const { title } = useJobPostingEditStore();
   const { id } = useParams();
 
   return (

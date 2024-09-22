@@ -10,8 +10,21 @@ const Container = styled.div`
 `;
 
 const SelectWorkCycle = () => {
-  const { workCycle, setWorkCycle } = useJobPostingEditStore();
+  const {
+    workCycle,
+    setWorkCycle,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.workCycle;
+  let hasError = false;
+
+  if (role === "디자이너") {
+    hasError = workCycle.length === 0 && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = workCycle.length === 0 && hasInternOptionNull;
+  }
 
   const handleSelect = (selectedOption: string) => {
     setWorkCycle(selectedOption as WorkCycleKey);
@@ -24,7 +37,7 @@ const SelectWorkCycle = () => {
         selectedOptions={workCycle}
         errorMessage="근무 주기를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

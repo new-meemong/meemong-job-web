@@ -10,10 +10,24 @@ const Container = styled.div`
 `;
 
 const SelectEmployeeCount = () => {
-  const { employeeCount, setEmployeeCount } = useJobPostingEditStore();
+  const {
+    employeeCount,
+    setEmployeeCount,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const employeeCounts = jobPostingOptions.employeeCount;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = employeeCount === null && hasDesignerOptionNull;
+  }
+  if (role === "인턴") {
+    hasError = employeeCount === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setEmployeeCount(selectedOption as EmployeeCountKey);
   };
   return (
@@ -24,7 +38,7 @@ const SelectEmployeeCount = () => {
         selectedOption={employeeCount}
         errorMessage="직원수를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
         buttonSize={"small"}
       />
     </Container>

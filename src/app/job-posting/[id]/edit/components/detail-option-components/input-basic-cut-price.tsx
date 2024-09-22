@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@/components/error-message";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { fonts } from "@/styles/fonts";
@@ -6,6 +7,9 @@ import styled from "styled-components";
 
 const Container = styled.div`
   padding-top: ${pxToVw(8)};
+  padding-bottom: ${pxToVw(12)};
+`;
+const InnerContainer = styled.div`
   display: flex;
 `;
 
@@ -39,7 +43,13 @@ const PriceInput = styled.input`
 `;
 
 const InputBasicCutPrice = () => {
-  const { basicCutPrice, setBasicCutPrice } = useJobPostingEditStore();
+  const { basicCutPrice, setBasicCutPrice, hasDesignerOptionNull } =
+    useJobPostingEditStore();
+  let hasError = false;
+
+  if (basicCutPrice === null && hasDesignerOptionNull) {
+    hasError = true;
+  }
 
   const formatPriceWithCommas = (value: number | null): string => {
     if (value === null) return "";
@@ -53,14 +63,17 @@ const InputBasicCutPrice = () => {
 
   return (
     <Container>
-      <Label>기본 커트 가격</Label>
-      <PriceInput
-        placeholder="숫자만 입력 가능"
-        type="text" // 화면에는 text로 입력
-        value={formatPriceWithCommas(basicCutPrice)} // 화면에 표시할 때만 콤마 추가
-        onChange={handleChange}
-        inputMode="numeric" // 숫자 입력을 위한 키패드
-      />
+      <InnerContainer>
+        <Label>기본 커트 가격</Label>
+        <PriceInput
+          placeholder="숫자만 입력 가능"
+          type="text" // 화면에는 text로 입력
+          value={formatPriceWithCommas(basicCutPrice)} // 화면에 표시할 때만 콤마 추가
+          onChange={handleChange}
+          inputMode="numeric" // 숫자 입력을 위한 키패드
+        />
+      </InnerContainer>
+      {hasError && <ErrorMessage>기본 컷트가격을 입력해주세요.</ErrorMessage>}
     </Container>
   );
 };

@@ -2,10 +2,7 @@ import BaseSingleSelect from "@/components/selects/base-single-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
-import {
-  jobPostingTypes,
-  MonthlyEducationDesignerCountKey
-} from "@/types/job-posting-types";
+import { MonthlyEducationDesignerCountKey } from "@/types/job-posting-types";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -15,15 +12,20 @@ const Container = styled.div`
 `;
 
 const SelectEducationDesigner = () => {
-  const { monthlyEducationDesignerCount, setMonthlyEducationDesignerCount } =
-    useJobPostingEditStore();
+  const {
+    monthlyEducationDesignerCount,
+    setMonthlyEducationDesignerCount,
+    hasDesignerOptionNull
+  } = useJobPostingEditStore();
   const educationCounts = jobPostingOptions.monthlyEducationDesignerCount;
 
-  const handleSelect = (selectedOption: string) => {
+  const handleSelect = (selectedOption: string | null) => {
     setMonthlyEducationDesignerCount(
       selectedOption as MonthlyEducationDesignerCountKey
     );
   };
+  const hasError = !monthlyEducationDesignerCount && hasDesignerOptionNull;
+
   return (
     <Container>
       <BaseSingleSelect
@@ -32,7 +34,7 @@ const SelectEducationDesigner = () => {
         selectedOption={monthlyEducationDesignerCount}
         errorMessage="교육 횟수를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

@@ -12,10 +12,12 @@ const Container = styled.div`
 `;
 
 const SelectIncentive = () => {
-  const { incentive, setIncentive } = useJobPostingEditStore();
+  const { incentive, setIncentive, hasDesignerOptionNull } =
+    useJobPostingEditStore();
   const incentives = jobPostingOptions.incentive;
+  const hasError = !incentive && hasDesignerOptionNull;
 
-  const handleSelect = (selectedOption: string) => {
+  const handleSelect = (selectedOption: string | null) => {
     setIncentive(selectedOption as IncentiveKey);
   };
 
@@ -27,7 +29,7 @@ const SelectIncentive = () => {
         selectedOption={incentive}
         onSelect={handleSelect}
         errorMessage={"인센티브를 선택해주세요"}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

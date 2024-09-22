@@ -9,11 +9,19 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedEducationSupport = () => {
-  const { isExistedEducationSupport, setIsExistedEducationSupport } =
-    useJobPostingEditStore();
+  const {
+    isExistedEducationSupport,
+    setIsExistedEducationSupport,
+    hasDesignerOptionNull
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedEducationSupport;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: boolean) => {
+  if (isExistedEducationSupport === null && hasDesignerOptionNull) {
+    hasError = true;
+  }
+
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedEducationSupport(selectedOption);
   };
   return (
@@ -24,7 +32,7 @@ const SelectIsExistedEducationSupport = () => {
         selectedOption={isExistedEducationSupport}
         errorMessage="교육비 지원 여부를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

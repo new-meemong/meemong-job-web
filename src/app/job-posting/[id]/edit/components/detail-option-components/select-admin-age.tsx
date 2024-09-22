@@ -10,10 +10,23 @@ const Container = styled.div`
 `;
 
 const SelectAdminAge = () => {
-  const { adminAge, setAdminAge } = useJobPostingEditStore();
+  const {
+    adminAge,
+    setAdminAge,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.adminAge;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = adminAge === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = adminAge === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setAdminAge(selectedOption as AdminAgeKey);
   };
   return (
@@ -24,7 +37,7 @@ const SelectAdminAge = () => {
         selectedOption={adminAge}
         onSelect={handleSelect}
         errorMessage="관리자 나이를 선택해주세요."
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

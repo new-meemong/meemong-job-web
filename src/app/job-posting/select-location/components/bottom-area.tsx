@@ -2,6 +2,7 @@ import FullButton from "@/components/buttons/full-button";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { fonts } from "@/styles/fonts";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -39,6 +40,8 @@ const BottomArea = ({
   selectedRightItems
 }: BottomAreaProps) => {
   const { setPostingRegions } = useJobPostingEditStore();
+  const router = useRouter();
+
   return (
     <Container>
       <CountContainer>
@@ -49,6 +52,7 @@ const BottomArea = ({
         title="필터 적용하기"
         onClick={() => {
           setPostingRegions(selectedRightItems);
+          router.back();
         }}
       />
     </Container>

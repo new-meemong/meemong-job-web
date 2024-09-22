@@ -10,11 +10,19 @@ const Container = styled.div`
 `;
 
 const SelectDesignerExperienceYearNumber = () => {
-  const { designerExperienceYearNumber, setDesignerExperienceYearNumber } =
-    useJobPostingEditStore();
+  const {
+    designerExperienceYearNumber,
+    setDesignerExperienceYearNumber,
+    hasDesignerOptionNull
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.designerExperienceYearNumber;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (designerExperienceYearNumber === null && hasDesignerOptionNull) {
+    hasError = true;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setDesignerExperienceYearNumber(
       selectedOption as DesignerExperienceYearNumberKey
     );
@@ -27,7 +35,7 @@ const SelectDesignerExperienceYearNumber = () => {
         selectedOption={designerExperienceYearNumber}
         onSelect={handleSelect}
         errorMessage="디자이너 경력을 선택해주세요."
-        isError={false}
+        isError={hasError}
         buttonSize="small"
       />
     </Container>

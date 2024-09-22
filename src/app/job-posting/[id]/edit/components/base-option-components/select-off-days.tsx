@@ -12,8 +12,21 @@ const Container = styled.div`
 `;
 
 const SelectOffDays = () => {
-  const { availableOffDays, setAvailableOffDays } = useJobPostingEditStore();
+  const {
+    availableOffDays,
+    setAvailableOffDays,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const offDays = jobPostingOptions.availableOffDays;
+  let hasError = false;
+
+  if (role === "디자이너") {
+    hasError = availableOffDays.length === 0 && hasDesignerOptionNull;
+  } else {
+    hasError = availableOffDays.length === 0 && hasInternOptionNull;
+  }
 
   const handleSelect = (selectedOption: string) => {
     setAvailableOffDays(selectedOption as AvailableOffDaysKey);
@@ -27,7 +40,7 @@ const SelectOffDays = () => {
         selectedOptions={availableOffDays}
         errorMessage="휴무 가능일을 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

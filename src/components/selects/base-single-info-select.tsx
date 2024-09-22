@@ -5,6 +5,7 @@ import { ReactNode, useState } from "react";
 import styled from "styled-components";
 import TooltipHelpPurpleIcon from "../icons/tooltip-help-purple-icon";
 import { Sheet } from "react-modal-sheet";
+import { ErrorMessage } from "../error-message";
 
 const Container = styled.div``;
 
@@ -20,7 +21,7 @@ const ButtonContainer = styled.div`
   padding: ${pxToVw(8)} 0;
 `;
 
-const Button = styled.div<{ $isSelected: boolean }>`
+const Button = styled.div<{ $isSelected: boolean; $hasError: boolean }>`
   ${(props) =>
     props.$isSelected ? fonts.purplePrimaryNormal12 : fonts.greyNormal12};
   display: flex;
@@ -30,12 +31,13 @@ const Button = styled.div<{ $isSelected: boolean }>`
   width: ${pxToVw(104)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
-    ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
+    ${(props) =>
+      props.$isSelected
+        ? colors.purplePrimary
+        : props.$hasError
+        ? colors.red
+        : colors.grey};
   cursor: pointer;
-`;
-
-const ErrorMessage = styled.div`
-  padding-left: ${pxToVw(10)};
 `;
 
 const Info = styled.div`
@@ -99,7 +101,7 @@ interface BaseSingleInfoSelectProps {
   selectedOption: string | null;
   errorMessage: string;
   isError: boolean;
-  onSelect: (optionKey: string) => void;
+  onSelect: (optionKey: string | null) => void;
   infoLabel: string;
   infoHeader: string;
   info: ReactNode;
@@ -126,6 +128,14 @@ const BaseSingleInfoSelect = ({
     setIsOpenInfo(false);
   };
 
+  const handleSelect = (optionKey: string | null) => {
+    if (selectedOption === optionKey) {
+      onSelect(null);
+    } else {
+      onSelect(optionKey);
+    }
+  };
+
   return (
     <Container>
       <Label>{label}</Label>
@@ -138,7 +148,8 @@ const BaseSingleInfoSelect = ({
           <Button
             key={option.key}
             $isSelected={selectedOption === option.key}
-            onClick={() => onSelect(option.key)}
+            onClick={() => handleSelect(option.key)}
+            $hasError={isError}
           >
             {option.value}
           </Button>

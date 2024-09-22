@@ -9,11 +9,23 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedDormitorySupport = () => {
-  const { isExistedDormitorySupport, setIsExistedDormitorySupport } =
-    useJobPostingEditStore();
+  const {
+    isExistedDormitorySupport,
+    setIsExistedDormitorySupport,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedDormitorySupport;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: boolean) => {
+  if (role === "디자이너") {
+    hasError = isExistedDormitorySupport === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = isExistedDormitorySupport === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedDormitorySupport(selectedOption);
   };
 
@@ -25,7 +37,7 @@ const SelectIsExistedDormitorySupport = () => {
         selectedOption={isExistedDormitorySupport}
         onSelect={handleSelect}
         errorMessage="기숙사 지원 여부를 선택해주세요."
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

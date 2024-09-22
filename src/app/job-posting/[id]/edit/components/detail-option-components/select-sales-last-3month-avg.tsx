@@ -10,11 +10,16 @@ const Container = styled.div`
 `;
 
 const SelectSalesLast3MonthAvg = () => {
-  const { salesLast3MonthsAvg, setSalesLast3MonthsAvg } =
+  const { salesLast3MonthsAvg, setSalesLast3MonthsAvg, hasDesignerOptionNull } =
     useJobPostingEditStore();
   const options = jobPostingOptions.salesLast3MonthsAvg;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (salesLast3MonthsAvg === null && hasDesignerOptionNull) {
+    hasError = true;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setSalesLast3MonthsAvg(selectedOption as SalesLast3MonthsAvgKey);
   };
   return (
@@ -25,7 +30,7 @@ const SelectSalesLast3MonthAvg = () => {
         selectedOption={salesLast3MonthsAvg}
         onSelect={handleSelect}
         errorMessage="최근 3개월 평균 매출을 선택해주세요."
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

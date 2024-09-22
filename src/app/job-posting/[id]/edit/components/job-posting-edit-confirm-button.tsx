@@ -1,4 +1,5 @@
 import pxToVw from "@/lib/dpi-converter";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
@@ -27,9 +28,20 @@ const Button = styled.div`
 `;
 
 const JobPostingEditConfirmButton = () => {
+  const { submitDesignerJobPosting, submitInternJobPosting, role } =
+    useJobPostingEditStore();
+
+  const handleConfirm = () => {
+    if (role === "디자이너") {
+      submitDesignerJobPosting();
+    } else {
+      submitInternJobPosting();
+    }
+  };
+
   return (
     <Container>
-      <Button>공고 수정하기</Button>
+      <Button onClick={handleConfirm}>공고 수정하기</Button>
     </Container>
   );
 };

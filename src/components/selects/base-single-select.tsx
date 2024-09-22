@@ -2,6 +2,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
+import { ErrorMessage } from "../error-message";
 
 const Container = styled.div``;
 
@@ -21,7 +22,11 @@ const ButtonContainer = styled.div`
   padding: ${pxToVw(8)} 0;
 `;
 
-const Button = styled.div<{ $isSelected: boolean; $size: string }>`
+const Button = styled.div<{
+  $isSelected: boolean;
+  $size: string;
+  $hasError: boolean;
+}>`
   ${(props) =>
     props.$isSelected ? fonts.purplePrimaryNormal12 : fonts.greyNormal12};
   display: flex;
@@ -36,13 +41,15 @@ const Button = styled.div<{ $isSelected: boolean; $size: string }>`
       : pxToVw(86)}; /* medium에 대한 기본값 설정 */
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
-    ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
+    ${(props) =>
+      props.$isSelected
+        ? colors.purplePrimary
+        : props.$hasError
+        ? colors.red
+        : colors.grey};
   cursor: pointer;
 `;
 
-const ErrorMessage = styled.div`
-  padding-left: ${pxToVw(10)};
-`;
 interface Option<T> {
   key: T;
   value: string;
@@ -56,7 +63,7 @@ interface BaseSingleSelectProps<T> {
   selectedOption: T | null;
   errorMessage: string;
   isError: boolean;
-  onSelect: (optionKey: T) => void;
+  onSelect: (optionKey: T | null) => void;
   buttonSize?: ButtonSize;
 }
 
@@ -70,6 +77,14 @@ const BaseSingleSelect = <T extends string | boolean>({
   isError,
   buttonSize = "large"
 }: BaseSingleSelectProps<T>) => {
+  const handleSelect = (optionKey: T) => {
+    if (selectedOption === optionKey) {
+      onSelect(null);
+    } else {
+      onSelect(optionKey);
+    }
+  };
+
   return (
     <Container>
       <Label>{label}</Label>
@@ -80,7 +95,8 @@ const BaseSingleSelect = <T extends string | boolean>({
             key={String(option.key)}
             $isSelected={selectedOption === option.key}
             $size={buttonSize}
-            onClick={() => onSelect(option.key)}
+            $hasError={isError}
+            onClick={() => handleSelect(option.key)}
           >
             {option.value}
           </Button>

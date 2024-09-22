@@ -12,11 +12,12 @@ const Container = styled.div`
 `;
 
 const SelectSettlementAllowance = () => {
-  const { settlementAllowance, setSettlementAllowance } =
+  const { settlementAllowance, setSettlementAllowance, hasDesignerOptionNull } =
     useJobPostingEditStore();
   const settlementAllowances = jobPostingOptions.settlementAllowance;
+  const hasError = !settlementAllowance && hasDesignerOptionNull;
 
-  const handleSelect = (selectedOption: string) => {
+  const handleSelect = (selectedOption: string | null) => {
     setSettlementAllowance(selectedOption as SettlementAllowanceKey);
   };
 
@@ -28,7 +29,7 @@ const SelectSettlementAllowance = () => {
         selectedOption={settlementAllowance}
         errorMessage="정착 지원금을 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

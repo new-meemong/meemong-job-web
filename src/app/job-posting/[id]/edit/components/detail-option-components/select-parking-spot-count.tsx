@@ -10,10 +10,23 @@ const Container = styled.div`
 `;
 
 const SelectParkingSpotCount = () => {
-  const { parkingSpotCount, setParkingSpotCount } = useJobPostingEditStore();
+  const {
+    parkingSpotCount,
+    setParkingSpotCount,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.parkingSpotCount;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = parkingSpotCount === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = parkingSpotCount === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setParkingSpotCount(selectedOption as ParkingSpotCountKey);
   };
   return (
@@ -24,7 +37,7 @@ const SelectParkingSpotCount = () => {
         selectedOption={parkingSpotCount}
         errorMessage="주차 가능 대수를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

@@ -10,10 +10,23 @@ const Container = styled.div`
 `;
 
 const SelectLeaveDayCount = () => {
-  const { leaveDayCount, setLeaveDayCount } = useJobPostingEditStore();
+  const {
+    leaveDayCount,
+    setLeaveDayCount,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.leaveDayCount;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = leaveDayCount === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = leaveDayCount === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setLeaveDayCount(selectedOption as LeaveDayCountKey);
   };
 
@@ -25,7 +38,7 @@ const SelectLeaveDayCount = () => {
         selectedOption={leaveDayCount}
         onSelect={handleSelect}
         errorMessage="휴가 일수를 선택해주세요."
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

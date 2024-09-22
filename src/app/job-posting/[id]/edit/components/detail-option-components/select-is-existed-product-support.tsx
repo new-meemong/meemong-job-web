@@ -9,11 +9,23 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedProductSupport = () => {
-  const { isExistedProductSupport, setIsExistedProductSupport } =
-    useJobPostingEditStore();
+  const {
+    isExistedProductSupport,
+    setIsExistedProductSupport,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedProductSupport;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: boolean) => {
+  if (role === "디자이너") {
+    hasError = isExistedProductSupport === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = isExistedProductSupport === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedProductSupport(selectedOption);
   };
 
@@ -25,7 +37,7 @@ const SelectIsExistedProductSupport = () => {
         selectedOption={isExistedProductSupport}
         onSelect={handleSelect}
         errorMessage={"시술제품 지원 여부를 선택해주세요."}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

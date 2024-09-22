@@ -9,11 +9,23 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedMealSupport = () => {
-  const { isExistedMealSupport, setIsExistedMealSupport } =
-    useJobPostingEditStore();
+  const {
+    isExistedMealSupport,
+    setIsExistedMealSupport,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedMealSupport;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: boolean) => {
+  if (role === "디자이너") {
+    hasError = isExistedMealSupport === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = isExistedMealSupport === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedMealSupport(selectedOption);
   };
   return (
@@ -24,7 +36,7 @@ const SelectIsExistedMealSupport = () => {
         selectedOption={isExistedMealSupport}
         errorMessage="식대 지원 여부를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

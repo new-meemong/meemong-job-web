@@ -9,11 +9,23 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedCleaningSupplier = () => {
-  const { isExistedCleaningSupplier, setIsExistedCleaningSupplier } =
-    useJobPostingEditStore();
+  const {
+    isExistedCleaningSupplier,
+    setIsExistedCleaningSupplier,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedCleaningSupplier;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: boolean) => {
+  if (role === "디자이너") {
+    hasError = isExistedCleaningSupplier === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = isExistedCleaningSupplier === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedCleaningSupplier(selectedOption);
   };
   return (
@@ -24,7 +36,7 @@ const SelectIsExistedCleaningSupplier = () => {
         selectedOption={isExistedCleaningSupplier}
         errorMessage="청소 업체 여부를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

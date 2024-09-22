@@ -123,10 +123,23 @@ const Info = () => {
 };
 
 const SelectIsRestrictedAge = () => {
-  const { isRestrictedAge, setIsRestrictedAge } = useJobPostingEditStore();
+  const {
+    isRestrictedAge,
+    setIsRestrictedAge,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isRestrictedAge;
+  let hasError = false;
 
-  const handleSelect = (option: boolean) => {
+  if (role === "디자이너") {
+    hasError = isRestrictedAge === null && hasDesignerOptionNull;
+  } else {
+    hasError = isRestrictedAge === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (option: boolean | null) => {
     setIsRestrictedAge(option);
   };
 
@@ -137,7 +150,7 @@ const SelectIsRestrictedAge = () => {
         options={options}
         selectedOption={isRestrictedAge}
         errorMessage="연령을 선택해주세요."
-        isError={false}
+        isError={hasError}
         onSelect={handleSelect}
         infoLabel="연령차별금지법 안내"
         infoHeader="연령차별금지법"

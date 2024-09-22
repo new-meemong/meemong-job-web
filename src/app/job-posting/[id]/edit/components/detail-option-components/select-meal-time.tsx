@@ -10,10 +10,23 @@ const Container = styled.div`
 `;
 
 const SelectMealTime = () => {
-  const { mealTime, setMealTime } = useJobPostingEditStore();
+  const {
+    mealTime,
+    setMealTime,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.mealTime;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = mealTime === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = mealTime === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setMealTime(selectedOption as MealTimeKey);
   };
 
@@ -25,7 +38,7 @@ const SelectMealTime = () => {
         selectedOption={mealTime}
         errorMessage="식사 시간을 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

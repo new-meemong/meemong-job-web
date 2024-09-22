@@ -10,8 +10,16 @@ const Container = styled.div`
 `;
 
 const SelectStore = () => {
-  const { store, setStore } = useJobPostingEditStore();
+  const { store, setStore, hasDesignerOptionNull, hasInternOptionNull, role } =
+    useJobPostingEditStore();
   const stores = jobPostingOptions.store;
+  let hasError = false;
+
+  if (role === "디자이너") {
+    hasError = store.length === 0 && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = store.length === 0 && hasInternOptionNull;
+  }
 
   const handleSelect = (selectedOption: string) => {
     setStore(selectedOption as StoreKey);
@@ -26,7 +34,7 @@ const SelectStore = () => {
         selectedOptions={store}
         errorMessage="매장 형태를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

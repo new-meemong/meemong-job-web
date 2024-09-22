@@ -86,12 +86,21 @@ const Info = () => {
 };
 
 const SelectSex = () => {
-  const { sex, setSex } = useJobPostingEditStore();
+  const { sex, setSex, hasDesignerOptionNull, hasInternOptionNull, role } =
+    useJobPostingEditStore();
   const sexs = jobPostingOptions.sex;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = !sex && hasDesignerOptionNull;
+  } else {
+    hasError = !sex && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setSex(selectedOption as SexKey);
   };
+
   return (
     <Container>
       <BaseSingleInfoSelect
@@ -100,7 +109,7 @@ const SelectSex = () => {
         onSelect={handleSelect}
         selectedOption={sex}
         errorMessage="성별을 선택해주세요."
-        isError={false}
+        isError={hasError}
         infoLabel="남녀고용평등법 안내"
         infoHeader="남녀고용평등법"
         info={<Info />}

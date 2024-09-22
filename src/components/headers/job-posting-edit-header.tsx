@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -34,9 +35,13 @@ const Title = styled.span`
 `;
 
 const JobPostingEditHeader = () => {
+  const { setHasDesignerOptionNull, setHasInternOptionNull } =
+    useJobPostingEditStore();
   const router = useRouter();
 
   const handleBackClick = () => {
+    setHasDesignerOptionNull(false);
+    setHasInternOptionNull(false);
     router.back();
   };
 

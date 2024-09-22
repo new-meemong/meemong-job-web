@@ -10,10 +10,23 @@ const Container = styled.div`
 `;
 
 const SelectAdminSex = () => {
-  const { adminSex, setAdminSex } = useJobPostingEditStore();
+  const {
+    adminSex,
+    setAdminSex,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.adminSex;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = adminSex === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = adminSex === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setAdminSex(selectedOption as AdminSexKey);
   };
   return (
@@ -24,7 +37,7 @@ const SelectAdminSex = () => {
         selectedOption={adminSex}
         onSelect={handleSelect}
         errorMessage="관리자 성별을 선택해주세요."
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

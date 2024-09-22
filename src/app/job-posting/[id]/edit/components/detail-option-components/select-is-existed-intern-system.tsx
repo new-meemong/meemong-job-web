@@ -10,13 +10,26 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedInternSystem = () => {
-  const { isExistedInternSystem, setIsExistedInternSystem } =
-    useJobPostingEditStore();
+  const {
+    isExistedInternSystem,
+    setIsExistedInternSystem,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedInternSystem;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: boolean) => {
+  if (role === "디자이너") {
+    hasError = isExistedInternSystem === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = isExistedInternSystem === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedInternSystem(selectedOption as isExistedInternSystemKey);
   };
+
   return (
     <Container>
       <BaseSingleSelect
@@ -25,7 +38,7 @@ const SelectIsExistedInternSystem = () => {
         selectedOption={isExistedInternSystem}
         errorMessage="인턴배정 시스템을 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
         buttonSize={"small"}
       />
     </Container>

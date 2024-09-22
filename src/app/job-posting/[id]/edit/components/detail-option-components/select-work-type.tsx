@@ -10,10 +10,23 @@ const Container = styled.div`
 `;
 
 const SelectWorkType = () => {
-  const { workType, setWorkType } = useJobPostingEditStore();
+  const {
+    workType,
+    setWorkType,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.workType;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = workType === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = workType === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setWorkType(selectedOption as WorkTypeKey);
   };
 
@@ -25,7 +38,7 @@ const SelectWorkType = () => {
         selectedOption={workType}
         errorMessage="근무 형태를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

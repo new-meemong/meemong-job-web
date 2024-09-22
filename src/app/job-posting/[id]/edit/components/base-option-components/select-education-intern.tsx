@@ -12,11 +12,15 @@ const Container = styled.div`
 `;
 
 const SelectEducationIntern = () => {
-  const { monthlyEducationInternCount, setMonthlyEducationInternCount } =
-    useJobPostingEditStore();
+  const {
+    monthlyEducationInternCount,
+    setMonthlyEducationInternCount,
+    hasInternOptionNull
+  } = useJobPostingEditStore();
   const educationCounts = jobPostingOptions.monthlyEducationInternCount;
+  const hasError = !monthlyEducationInternCount && hasInternOptionNull;
 
-  const handleSelect = (selectedOption: string) => {
+  const handleSelect = (selectedOption: string | null) => {
     setMonthlyEducationInternCount(
       selectedOption as MonthlyEducationInternCountKey
     );
@@ -30,7 +34,7 @@ const SelectEducationIntern = () => {
         selectedOption={monthlyEducationInternCount}
         errorMessage="교육 횟수를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

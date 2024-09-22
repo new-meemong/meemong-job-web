@@ -9,11 +9,15 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedFourInsurance = () => {
-  const { isExistedFourInsurances, setIsExistedFourInsurances } =
-    useJobPostingEditStore();
+  const {
+    isExistedFourInsurances,
+    setIsExistedFourInsurances,
+    hasInternOptionNull
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedFourInsurances;
+  const hasError = isExistedFourInsurances === null && hasInternOptionNull;
 
-  const handleSelect = (selectedOption: boolean) => {
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedFourInsurances(selectedOption);
   };
 
@@ -23,9 +27,9 @@ const SelectIsExistedFourInsurance = () => {
         label="4대보험"
         options={options}
         selectedOption={isExistedFourInsurances}
-        errorMessage="샵 매니저 상주 여부를 선택해주세요"
+        errorMessage="4대보험 여부를 선택해주세요"
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

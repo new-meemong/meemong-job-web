@@ -10,10 +10,23 @@ const Container = styled.div`
 `;
 
 const SelectSalesCommission = () => {
-  const { salesCommission, setSalesCommission } = useJobPostingEditStore();
+  const {
+    salesCommission,
+    setSalesCommission,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.salesCommission;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = salesCommission === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = salesCommission === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setSalesCommission(selectedOption as SalesCommissionKey);
   };
   return (
@@ -24,7 +37,7 @@ const SelectSalesCommission = () => {
         selectedOption={salesCommission}
         onSelect={handleSelect}
         errorMessage="점판 수당을 선택해주세요."
-        isError={false}
+        isError={hasError}
         buttonSize="small"
       />
     </Container>

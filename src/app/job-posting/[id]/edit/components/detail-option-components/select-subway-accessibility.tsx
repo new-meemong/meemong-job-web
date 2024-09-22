@@ -10,11 +10,23 @@ const Container = styled.div`
 `;
 
 const SelectSubwayAccessibility = () => {
-  const { subwayAccessibility, setSubwayAccessibility } =
-    useJobPostingEditStore();
+  const {
+    subwayAccessibility,
+    setSubwayAccessibility,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.subwayAccessibility;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: string) => {
+  if (role === "디자이너") {
+    hasError = subwayAccessibility === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = subwayAccessibility === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string | null) => {
     setSubwayAccessibility(selectedOption as SubwayAccessibilityKey);
   };
   return (
@@ -25,7 +37,7 @@ const SelectSubwayAccessibility = () => {
         selectedOption={subwayAccessibility}
         onSelect={handleSelect}
         errorMessage="지하철 접근성을 선택해주세요."
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

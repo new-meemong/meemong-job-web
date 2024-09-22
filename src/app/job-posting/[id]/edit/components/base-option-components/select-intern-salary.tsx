@@ -12,10 +12,12 @@ const Container = styled.div`
 `;
 
 const SelectInternSalary = () => {
-  const { internSalary, setInternSalary } = useJobPostingEditStore();
+  const { internSalary, setInternSalary, hasInternOptionNull } =
+    useJobPostingEditStore();
   const options = jobPostingOptions.internSalary;
+  const hasError = !internSalary && hasInternOptionNull;
 
-  const handleSelect = (selectedOption: string) => {
+  const handleSelect = (selectedOption: string | null) => {
     setInternSalary(selectedOption as InternSalaryKey);
   };
   return (
@@ -26,7 +28,7 @@ const SelectInternSalary = () => {
         selectedOption={internSalary}
         onSelect={handleSelect}
         errorMessage={"인턴급여를 선택해주세요."}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

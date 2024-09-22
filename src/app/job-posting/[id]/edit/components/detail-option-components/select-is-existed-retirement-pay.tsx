@@ -9,11 +9,15 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedRetirementPay = () => {
-  const { isExistedRetirementPay, setIsExistedRetirementPay } =
-    useJobPostingEditStore();
+  const {
+    isExistedRetirementPay,
+    setIsExistedRetirementPay,
+    hasInternOptionNull
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedRetirementPay;
+  const hasError = isExistedRetirementPay === null && hasInternOptionNull;
 
-  const handleSelect = (selectedOption: boolean) => {
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedRetirementPay(selectedOption);
   };
 
@@ -25,7 +29,7 @@ const SelectIsExistedRetirementPay = () => {
         selectedOption={isExistedRetirementPay}
         errorMessage="퇴직금 여부를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

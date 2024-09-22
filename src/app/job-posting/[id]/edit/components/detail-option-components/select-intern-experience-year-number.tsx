@@ -10,11 +10,15 @@ const Container = styled.div`
 `;
 
 const SelectInternExperienceYearNumber = () => {
-  const { internExperienceYearNumber, setInternExperienceYearNumber } =
-    useJobPostingEditStore();
+  const {
+    internExperienceYearNumber,
+    setInternExperienceYearNumber,
+    hasInternOptionNull
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.internExperienceYearNumber;
+  const hasError = internExperienceYearNumber === null && hasInternOptionNull;
 
-  const handleSelect = (selectedOption: string) => {
+  const handleSelect = (selectedOption: string | null) => {
     setInternExperienceYearNumber(
       selectedOption as InternExperienceYearNumberKey
     );
@@ -28,7 +32,7 @@ const SelectInternExperienceYearNumber = () => {
         selectedOption={internExperienceYearNumber}
         errorMessage="인턴 경력년을 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

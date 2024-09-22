@@ -10,8 +10,22 @@ const Container = styled.div`
 `;
 
 const SelectDesignerLicense = () => {
-  const { designerLicenses, setDesignerLicenses } = useJobPostingEditStore();
+  const {
+    designerLicenses,
+    setDesignerLicenses,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const licenses = jobPostingOptions.designerLicenses;
+
+  let hasError = false;
+
+  if (role === "디자이너") {
+    hasError = designerLicenses.length === 0 && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = designerLicenses.length === 0 && hasInternOptionNull;
+  }
 
   const handleSelect = (selectedOption: string) => {
     setDesignerLicenses(selectedOption as DesignerLicensesKey);
@@ -25,7 +39,7 @@ const SelectDesignerLicense = () => {
         selectedOptions={designerLicenses}
         errorMessage="라이센스을 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

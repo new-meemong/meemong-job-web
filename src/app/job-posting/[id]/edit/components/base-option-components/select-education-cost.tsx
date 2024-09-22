@@ -12,10 +12,12 @@ const Container = styled.div`
 `;
 
 const SelectEducationCost = () => {
-  const { educationCost, setEducationCost } = useJobPostingEditStore();
+  const { educationCost, setEducationCost, hasInternOptionNull } =
+    useJobPostingEditStore();
   const options = jobPostingOptions.educationCost;
+  const hasError = !educationCost && hasInternOptionNull;
 
-  const handleSelect = (selectedOption: string) => {
+  const handleSelect = (selectedOption: string | null) => {
     setEducationCost(selectedOption as EducationCostKey);
   };
   return (
@@ -26,7 +28,7 @@ const SelectEducationCost = () => {
         selectedOption={educationCost}
         errorMessage="교육비를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

@@ -10,11 +10,15 @@ const Container = styled.div`
 `;
 
 const SelectDesignerPromitionPeriod = () => {
-  const { designerPromitionPeriod, setDesignerPromitionPeriod } =
-    useJobPostingEditStore();
+  const {
+    designerPromitionPeriod,
+    setDesignerPromitionPeriod,
+    hasInternOptionNull
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.designerPromitionPeriod;
+  const hasError = designerPromitionPeriod === null && hasInternOptionNull;
 
-  const handleSelect = (selectedOption: string) => {
+  const handleSelect = (selectedOption: string | null) => {
     setDesignerPromitionPeriod(selectedOption as DesignerPromitionPeriodKey);
   };
   return (
@@ -25,7 +29,7 @@ const SelectDesignerPromitionPeriod = () => {
         selectedOption={designerPromitionPeriod}
         errorMessage="디자이너 승급기간을 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
         description="개인차가 있을 수 있습니다"
       />
     </Container>

@@ -9,11 +9,23 @@ const Container = styled.div`
 `;
 
 const SelectIsExistedTowelSupplier = () => {
-  const { isExistedTowelSupplier, setIsExistedTowelSupplier } =
-    useJobPostingEditStore();
+  const {
+    isExistedTowelSupplier,
+    setIsExistedTowelSupplier,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
   const options = jobPostingOptions.isExistedTowelSupplier;
+  let hasError = false;
 
-  const handleSelect = (selectedOption: boolean) => {
+  if (role === "디자이너") {
+    hasError = isExistedTowelSupplier === null && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = isExistedTowelSupplier === null && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsExistedTowelSupplier(selectedOption);
   };
   return (
@@ -24,7 +36,7 @@ const SelectIsExistedTowelSupplier = () => {
         selectedOption={isExistedTowelSupplier}
         errorMessage="수건 업체 여부를 선택해주세요."
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

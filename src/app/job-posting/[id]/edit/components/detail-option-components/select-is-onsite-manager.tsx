@@ -9,10 +9,12 @@ const Container = styled.div`
 `;
 
 const SelectIsOnsiteManger = () => {
-  const { isOnsiteManager, setIsOnsiteManager } = useJobPostingEditStore();
+  const { isOnsiteManager, setIsOnsiteManager, hasInternOptionNull } =
+    useJobPostingEditStore();
   const options = jobPostingOptions.isOnsiteManager;
+  const hasError = isOnsiteManager === null && hasInternOptionNull;
 
-  const handleSelect = (selectedOption: boolean) => {
+  const handleSelect = (selectedOption: boolean | null) => {
     setIsOnsiteManager(selectedOption);
   };
 
@@ -24,7 +26,7 @@ const SelectIsOnsiteManger = () => {
         selectedOption={isOnsiteManager}
         errorMessage="샵 매니저 상주 여부를 선택해주세요"
         onSelect={handleSelect}
-        isError={false}
+        isError={hasError}
       />
     </Container>
   );

@@ -49,13 +49,23 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type JobPostingEditState = {
-  title: string;
+  postingTitle: string | null;
+  storeName: string | null;
+  storeRegion: string | null;
+  storeRegionSiName: string | null;
+
+  // 기본 정보
   role: RoleKey;
+  _postingRegions: { key: string; value: string }[]; // 노출 지역, 내부 관리용
+  postingRegions: string | null; // 노출 지역 (콤마로 구분)
+  postingRegionSiNames: string | null; // 노출 지역의 시 (콤마로 구분)
   monthlyEducationDesignerCount: MonthlyEducationDesignerCountKey | null;
   monthlyEducationInternCount: MonthlyEducationInternCountKey | null;
   availableOffDays: AvailableOffDaysKey[];
   settlementAllowance: SettlementAllowanceKey | null;
   incentive: IncentiveKey | null;
+
+  // 상세 정보
   sex: SexKey | null;
   isRestrictedAge: IsRestrictedAgeKey | null;
   isPossibleMiddleAge: IsPossibleMiddleAgeKey | null;
@@ -106,14 +116,10 @@ type JobPostingEditState = {
   // 에러 표시
   hasDesignerOptionNull: boolean;
   hasInternOptionNull: boolean;
-
-  // 노출 지역 (콤마로 구분)
-  postingRegions: string | null;
-  postingRegionSiNames: string | null;
 };
 
 type JobPostingEditActions = {
-  setTitle: (title: string) => void;
+  setPostingTitle: (title: string) => void;
   setRole: (role: RoleKey) => void;
   setMonthlyEducationDesignerCount: (
     monthlyEducationDesignerCount: MonthlyEducationDesignerCountKey
@@ -125,7 +131,7 @@ type JobPostingEditActions = {
   setSettlementAllowance: (settlementAllowance: SettlementAllowanceKey) => void;
   setIncentive: (incentive: IncentiveKey) => void;
   setSex: (sex: SexKey) => void;
-  setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey) => void;
+  setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey | null) => void;
   setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) => void;
   setDesignerLicenses: (designerLicense: DesignerLicensesKey) => void;
   setStore: (store: StoreKey) => void;
@@ -134,22 +140,22 @@ type JobPostingEditActions = {
     isExistedInternSystem: isExistedInternSystemKey
   ) => void;
   setStoreInteriorRenovationAgo: (
-    storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey
+    storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null
   ) => void;
   setWorkType: (workType: WorkTypeKey) => void;
   setWorkCycle: (workCycle: WorkCycleKey) => void;
   setIsExistedEducationSupport: (
-    isExistedEducationSupport: IsExistedEducationSupportKey
+    isExistedEducationSupport: IsExistedEducationSupportKey | null
   ) => void;
   setIsExistedMealSupport: (
-    isExistedMealSupport: IsExistedMealSupportKey
+    isExistedMealSupport: IsExistedMealSupportKey | null
   ) => void;
   setMealTime: (mealTime: MealTimeKey) => void;
   setIsExistedProductSupport: (
-    isExistedProductSupport: IsExistedProductSupportKey
+    isExistedProductSupport: IsExistedProductSupportKey | null
   ) => void;
   setIsExistedDormitorySupport: (
-    isExistedDormitorySupport: IsExistedDormitorySupportKey
+    isExistedDormitorySupport: IsExistedDormitorySupportKey | null
   ) => void;
   setSalesCommission: (salesCommission: SalesCommissionKey) => void;
   setDesignerExperienceYearNumber: (
@@ -162,10 +168,10 @@ type JobPostingEditActions = {
   setLeaveDayCount: (leaveDayCount: LeaveDayCountKey) => void;
   setParkingSpotCount: (parkingSpotCount: ParkingSpotCountKey) => void;
   setIsExistedCleaningSupplier: (
-    isExistedCleaningSupplier: IsExistedCleaningSupplierKey
+    isExistedCleaningSupplier: IsExistedCleaningSupplierKey | null
   ) => void;
   setIsExistedTowelSupplier: (
-    isExistedTowelSupplier: IsExistedTowelSupplierKey
+    isExistedTowelSupplier: IsExistedTowelSupplierKey | null
   ) => void;
   setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) => void;
   setStartWorkTime: (startWorkTime: string) => void;
@@ -197,10 +203,16 @@ type JobPostingEditActions = {
   setPostingRegions: (
     selectedRightItems: { key: string; value: string }[]
   ) => void;
+
+  setHasDesignerOptionNull: (hasDesignerOptionNull: boolean) => void;
+  setHasInternOptionNull: (hasInternOptionNull: boolean) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
-  title: "",
+  postingTitle: null,
+  storeName: null,
+  storeRegion: null,
+  storeRegionSiName: null,
   role: "디자이너",
   monthlyEducationDesignerCount: null,
   monthlyEducationInternCount: null,
@@ -247,6 +259,7 @@ const defaultJobPostingEditState: JobPostingEditState = {
   isExistedRetirementPay: null,
   hasDesignerOptionNull: false,
   hasInternOptionNull: false,
+  _postingRegions: [],
   postingRegions: null,
   postingRegionSiNames: null
 };
@@ -255,8 +268,15 @@ export const useJobPostingEditStore = create(
   persist<JobPostingEditState & JobPostingEditActions>(
     (set, get) => ({
       ...defaultJobPostingEditState,
-      setTitle: (title: string) => set({ title }),
-      setRole: (role: RoleKey) => set({ role }),
+      setPostingTitle: (postingTitle: string) => set({ postingTitle }),
+      setRole: (role: RoleKey) => {
+        set({ role });
+        if (role === "디자이너") {
+          set({ hasInternOptionNull: false });
+        } else if (role === "인턴") {
+          set({ hasDesignerOptionNull: false });
+        }
+      },
       setMonthlyEducationDesignerCount: (
         monthlyEducationDesignerCount: MonthlyEducationDesignerCountKey
       ) => set({ monthlyEducationDesignerCount }),
@@ -271,7 +291,7 @@ export const useJobPostingEditStore = create(
         set({ settlementAllowance }),
       setIncentive: (incentive: IncentiveKey) => set({ incentive }),
       setSex: (sex: SexKey) => set({ sex }),
-      setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey) => {
+      setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey | null) => {
         set({ isRestrictedAge });
         if (!isRestrictedAge) {
           set({ isPossibleMiddleAge: null });
@@ -297,7 +317,7 @@ export const useJobPostingEditStore = create(
         isExistedInternSystem: isExistedInternSystemKey
       ) => set({ isExistedInternSystem }),
       setStoreInteriorRenovationAgo: (
-        storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey
+        storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null
       ) => set({ storeInteriorRenovationAgo }),
       setWorkType: (workType: WorkTypeKey) => set({ workType }),
       setWorkCycle: (selectedWorkCycle: WorkCycleKey) => {
@@ -305,17 +325,17 @@ export const useJobPostingEditStore = create(
         set({ workCycle: toggleSelect(workCycle, selectedWorkCycle) });
       },
       setIsExistedEducationSupport: (
-        isExistedEducationSupport: IsExistedEducationSupportKey
+        isExistedEducationSupport: IsExistedEducationSupportKey | null
       ) => set({ isExistedEducationSupport }),
       setIsExistedMealSupport: (
-        isExistedMealSupport: IsExistedMealSupportKey
+        isExistedMealSupport: IsExistedMealSupportKey | null
       ) => set({ isExistedMealSupport }),
       setMealTime: (mealTime: MealTimeKey) => set({ mealTime }),
       setIsExistedProductSupport: (
-        isExistedProductSupport: IsExistedProductSupportKey
+        isExistedProductSupport: IsExistedProductSupportKey | null
       ) => set({ isExistedProductSupport }),
       setIsExistedDormitorySupport: (
-        isExistedDormitorySupport: IsExistedDormitorySupportKey
+        isExistedDormitorySupport: IsExistedDormitorySupportKey | null
       ) => set({ isExistedDormitorySupport }),
       setSalesCommission: (salesCommission: SalesCommissionKey) =>
         set({ salesCommission }),
@@ -333,10 +353,10 @@ export const useJobPostingEditStore = create(
       setParkingSpotCount: (parkingSpotCount: ParkingSpotCountKey) =>
         set({ parkingSpotCount }),
       setIsExistedCleaningSupplier: (
-        isExistedCleaningSupplier: IsExistedCleaningSupplierKey
+        isExistedCleaningSupplier: IsExistedCleaningSupplierKey | null
       ) => set({ isExistedCleaningSupplier }),
       setIsExistedTowelSupplier: (
-        isExistedTowelSupplier: IsExistedTowelSupplierKey
+        isExistedTowelSupplier: IsExistedTowelSupplierKey | null
       ) => set({ isExistedTowelSupplier }),
       setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) =>
         set({ basicCutPrice }),
@@ -370,13 +390,61 @@ export const useJobPostingEditStore = create(
         isExistedRetirementPay: IsExistedRetirementPayKey | null
       ) => set({ isExistedRetirementPay }),
       submitDesignerJobPosting: async () => {
-        const { role, title } = get();
+        const {
+          postingTitle,
+          storeName,
+          storeRegion,
+          storeRegionSiName,
+          // 기본 정보
+          role,
+          postingRegions,
+          postingRegionSiNames,
+          monthlyEducationDesignerCount,
+          availableOffDays,
+          settlementAllowance,
+          incentive,
+          // 상세 정보
+          sex,
+          isRestrictedAge
+        } = get();
 
         try {
           const jobPostingData = {
+            postingTitle,
+            // storeName,
+            // storeRegion,
+            // storeRegionSiName,
+            // 기본 정보
             role,
-            title
+            postingRegions,
+            postingRegionSiNames,
+            monthlyEducationDesignerCount,
+            availableOffDays:
+              availableOffDays.length > 0 ? availableOffDays : null,
+            settlementAllowance,
+            incentive,
+            // 상세 정보
+            sex,
+            isRestrictedAge
           };
+
+          if (role !== "디자이너") {
+            return;
+          }
+
+          const hasNullField = Object.values(jobPostingData).some(
+            (value) => value === null
+          );
+
+          if (hasNullField) {
+            set({ hasDesignerOptionNull: true });
+            alert(
+              "필수 항목 중 일부가 누락되었습니다. 모든 항목을 입력해주세요."
+            );
+            return;
+          } else {
+            set({ hasDesignerOptionNull: false });
+          }
 
           const response = await postJobPostings(jobPostingData);
           if (response.status === 200 || response.status === 201) {
@@ -390,7 +458,57 @@ export const useJobPostingEditStore = create(
           alert("디자이너 구인 공고 등록 중 오류가 발생했습니다.");
         }
       },
-      submitInternJobPosting: async () => {},
+      submitInternJobPosting: async () => {
+        const {
+          postingTitle,
+          storeName,
+          storeRegion,
+          storeRegionSiName,
+          // 기본 정보
+          role,
+          postingRegions,
+          postingRegionSiNames,
+          monthlyEducationInternCount,
+          availableOffDays,
+          internSalary
+        } = get();
+
+        try {
+          const jobPostingData = {
+            postingTitle,
+            // storeName,
+            // storeRegion,
+            // storeRegionSiName,
+            // 기본 정보
+            role,
+            postingRegions,
+            postingRegionSiNames,
+            monthlyEducationInternCount,
+            availableOffDays:
+              availableOffDays.length > 0 ? availableOffDays : null,
+            internSalary
+          };
+
+          if (role !== "인턴") {
+            return;
+          }
+
+          const hasNullField = Object.values(jobPostingData).some(
+            (value) => value === null
+          );
+
+          if (hasNullField) {
+            set({ hasInternOptionNull: true });
+            alert(
+              "필수 항목 중 일부가 누락되었습니다. 모든 항목을 입력해주세요."
+            );
+            return;
+          }
+        } catch (e) {
+          console.error("인턴 구인 공고 등록 중 오류 발생:", e);
+          alert("인턴 구인 공고 등록 중 오류가 발생했습니다.");
+        }
+      },
       setPostingRegions: (
         selectedRightItems: { key: string; value: string }[]
       ) => {
@@ -404,10 +522,15 @@ export const useJobPostingEditStore = create(
           .join(",");
 
         set({
+          _postingRegions: selectedRightItems,
           postingRegions,
           postingRegionSiNames
         });
-      }
+      },
+      setHasDesignerOptionNull: (hasDesignerOptionNull: boolean) =>
+        set({ hasDesignerOptionNull }),
+      setHasInternOptionNull: (hasInternOptionNull: boolean) =>
+        set({ hasInternOptionNull })
     }),
 
     {
