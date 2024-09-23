@@ -6,7 +6,7 @@ import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 
@@ -81,12 +81,13 @@ const InfoDot = styled.div`
 `;
 
 const JobPostingEditStoreImage = () => {
-  const { JobPostingsStoreImages, setJobPostingsStoreImages } =
+  const { jobPostingsStoreImages, setJobPostingsStoreImages } =
     useJobPostingEditStore();
   const [isUploading, setIsUploading] = useState(false);
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null); // 롱클릭 타이머
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (JobPostingsStoreImages.length === 5) {
+    if (jobPostingsStoreImages.length === 5) {
       alert("이미지는 최대 5장까지 가능합니다.");
       return;
     }
@@ -104,7 +105,9 @@ const JobPostingEditStoreImage = () => {
         const thumbnailUri = `${IMAGE_STORAGE_URL}${data?.imageThumbnailFile?.fileuri}`;
         // console.log("Image uploaded:", uri, thumbnailUri);
         if (uri && thumbnailUri) {
-          setJobPostingsStoreImages({ uri, thumbnailUri });
+          const newImage = { uri, thumbnailUri };
+          const updatedImages = [...jobPostingsStoreImages, newImage];
+          setJobPostingsStoreImages(updatedImages);
         }
 
         setIsUploading(false);
@@ -114,6 +117,31 @@ const JobPostingEditStoreImage = () => {
       }
     }
   };
+
+  const handleImageDelete = (index: number) => {
+    // 삭제 여부 확인 팝업
+    const confirmed = confirm("이미지 삭제하시겠습니까?");
+    if (confirmed) {
+      // 이미지를 삭제하고 상태 업데이트
+      const updatedImages = jobPostingsStoreImages.filter(
+        (_, i) => i !== index
+      );
+      setJobPostingsStoreImages(updatedImages);
+    }
+  };
+
+  const handleMouseDown = (index: number) => {
+    longPressTimer.current = setTimeout(() => {
+      handleImageDelete(index); // 롱클릭시 이미지 삭제
+    }, 800); // 800ms 이상 클릭 시 롱클릭으로 간주
+  };
+
+  const handleMouseUp = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current); // 클릭을 짧게 했을 경우 타이머 초기화
+    }
+  };
+
   return (
     <Container>
       <Label>매장 이미지 등록*</Label>
@@ -133,8 +161,14 @@ const JobPostingEditStoreImage = () => {
           accept=".jpg,.png,.gif"
           onChange={handleFileChange}
         />
-        {JobPostingsStoreImages.map((image, index) => (
-          <UploadedImageWrapper key={index}>
+        {jobPostingsStoreImages.map((image, index) => (
+          <UploadedImageWrapper
+            key={index}
+            onMouseDown={() => handleMouseDown(index)} // 마우스 클릭 시작
+            onMouseUp={handleMouseUp} // 마우스 클릭 해제
+            onTouchStart={() => handleMouseDown(index)} // 모바일 터치 시작
+            onTouchEnd={handleMouseUp} // 모바일 터치 종료
+          >
             <Image
               src={image.thumbnailUri}
               alt="Uploaded"
