@@ -69,4 +69,70 @@ export type InternExperienceYearNumberKeyResume =
 // 근무기간 - 인턴
 // export type InternExperienceDurationKeyResume = string
 
-//
+// 이전 3개월 평균 매출
+export type SalesLast3MonthsAvgKeyResume =
+  | "500만원 이하"
+  | "500만원 이상"
+  | "1000만원 이상"
+  | "1500만원 이상";
+
+// 학력
+export type CompletedEducationLevelKeyResume =
+  | "미용고등학교 졸업"
+  | "미용대학교 졸업"
+  | "일반고등학교 졸업"
+  | "일반대학교 졸업"
+  | "해당없음";
+
+// 희망휴무일(중복가능)
+export type PreferredOffDaysKeyResume =
+  | "월"
+  | "화"
+  | "수"
+  | "목"
+  | "금"
+  | "토"
+  | "일"
+  | "상관없음";
+
+// 근무주기(중복가능)
+export type WorkCycleTypesKeyResume =
+  | "주 4일"
+  | "주 5일"
+  | "주 6일"
+  | "격주 5일";
+
+// 디자이너 승급기간 - 인턴
+export type DesignerPromotionPeriodKeyResume =
+  | "1년 이하"
+  | "1년 6개월 이하"
+  | "2년 이하"
+  | "3년 미만"
+  | "3년 이상"
+  | "상관없음";
+
+// 기숙사
+export type IsPreferredDormitorySupportKeyResume = boolean;
+
+// 희망 교육 - 디자이너
+export type PreferredMonthlyEducationDesignerCountKeyResume =
+  | "월 1회 이상"
+  | "월 2회 이상"
+  | "월 3회 이상"
+  | "상관없음";
+
+// 희망 교육 - 인턴
+export type PreferredMonthlyEducationInternCountKeyResume =
+  | "월 2회 이하"
+  | "월 3회 이상"
+  | "월 4회 이상"
+  | "상관없음";
+
+// 식대 지원
+export type IsPreferredMealSupportKeyResume = boolean;
+
+// 주차 희망 여부
+export type IsPreferredParkingKeyResume = boolean;
+
+// 자기소개서 최대 300자
+export type DescriptionKeyResume = string;
