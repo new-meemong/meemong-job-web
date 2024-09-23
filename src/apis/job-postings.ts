@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/stores/auth-store";
 import { apiFetch } from "./fetch";
 
 export const postJobPostings = async (jobPosting: object) => {
@@ -5,6 +6,7 @@ export const postJobPostings = async (jobPosting: object) => {
 };
 
 export const uploadJobPostingImage = async (image: File) => {
+  const jwt = useAuthStore.getState().jwt;
   const formData = new FormData();
   const url = `http://13.125.169.213:80/api/v1/uploads/job-postings/stores`;
   formData.append("image", image);
@@ -13,17 +15,11 @@ export const uploadJobPostingImage = async (image: File) => {
     method: "POST",
     body: formData,
     headers: {
-      // Authorization: `jwt ${TEST_JWT}`
+      Authorization: `${jwt}`
     }
   });
 
-  const response = await fetch(url, {
-    method: "POST",
-    body: formData,
-    headers: {
-      // Authorization: `jwt ${TEST_JWT}`
-    }
-  });
+  const response = await fetch(request);
   console.log(response);
   if (!response.ok) {
     throw new Error("Image upload failed");
