@@ -87,34 +87,44 @@ const JobPostingEditStoreImage = () => {
   const longPressTimer = useRef<NodeJS.Timeout | null>(null); // 롱클릭 타이머
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (!files || files.length === 0) return;
+
+    const selectedFile = files[0];
+
     if (jobPostingsStoreImages.length === 5) {
       alert("이미지는 최대 5장까지 가능합니다.");
       return;
     }
 
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      const selectedFile = files[0];
-      setIsUploading(true);
+    const MAX_SIZE_MB = 10;
+    const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024; // 10MB
 
-      try {
-        // 서버에 이미지 업로드
-        const { data } = await uploadJobPostingImage(selectedFile);
-        const uri = `${IMAGE_STORAGE_URL}${data?.imageFile?.fileuri}`;
+    if (selectedFile.size > MAX_SIZE_BYTES) {
+      alert(`이미지 용량이 너무 큽니다. (최대 ${MAX_SIZE_MB}MB)`);
+      return;
+    }
 
-        const thumbnailUri = `${IMAGE_STORAGE_URL}${data?.imageThumbnailFile?.fileuri}`;
-        // console.log("Image uploaded:", uri, thumbnailUri);
-        if (uri && thumbnailUri) {
-          const newImage = { uri, thumbnailUri };
-          const updatedImages = [...jobPostingsStoreImages, newImage];
-          setJobPostingsStoreImages(updatedImages);
-        }
+    setIsUploading(true);
 
-        setIsUploading(false);
-      } catch (error) {
-        console.error("Image upload failed:", error);
-        setIsUploading(false);
+    try {
+      // 서버에 이미지 업로드
+      const { data } = await uploadJobPostingImage(selectedFile);
+      const uri = `${IMAGE_STORAGE_URL}${data?.imageFile?.fileuri}`;
+
+      const thumbnailUri = `${IMAGE_STORAGE_URL}${data?.imageThumbnailFile?.fileuri}`;
+      // console.log("Image uploaded:", uri, thumbnailUri);
+      if (uri && thumbnailUri) {
+        const newImage = { uri, thumbnailUri };
+        const updatedImages = [...jobPostingsStoreImages, newImage];
+        setJobPostingsStoreImages(updatedImages);
       }
+
+      setIsUploading(false);
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      setIsUploading(false);
     }
   };
 
