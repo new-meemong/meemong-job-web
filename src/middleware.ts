@@ -4,12 +4,14 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   const url = request.nextUrl.clone();
   const userId = request.nextUrl.searchParams.get("userId");
-  console.log("middleware response", response);
-  console.log("middleware url", url);
+
   console.log("middleware userId", userId);
-  if (userId) {
-    url.searchParams.set("userId", userId);
+  if (!userId) {
+    return NextResponse.json("User id is required.", { status: 400 });
   }
+
+  url.searchParams.set("userId", userId);
+
   return response;
 }
 
