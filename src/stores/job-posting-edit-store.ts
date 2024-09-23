@@ -174,8 +174,8 @@ type JobPostingEditActions = {
     isExistedTowelSupplier: IsExistedTowelSupplierKey | null
   ) => void;
   setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) => void;
-  setStartWorkTime: (startWorkTime: string) => void;
-  setEndWorkTime: (endWorkTime: string) => void;
+  setStartWorkTime: (startWorkTime: string | null) => void;
+  setEndWorkTime: (endWorkTime: string | null) => void;
   setStoreUrl: (storeUrl: StoreUrlKey | null) => void;
   setMainHairDie: (mainHaireDie: MainHairDyeKey | null) => void;
   setDescription: (description: DescriptionKey | null) => void;
@@ -360,9 +360,10 @@ export const useJobPostingEditStore = create(
       ) => set({ isExistedTowelSupplier }),
       setBasicCutPrice: (basicCutPrice: BasicCutPriceKey | null) =>
         set({ basicCutPrice }),
-      setStartWorkTime: (startWorkTime: StartWorkTimeKey) =>
+      setStartWorkTime: (startWorkTime: StartWorkTimeKey | null) =>
         set({ startWorkTime }),
-      setEndWorkTime: (endWorkTime: EndWorkTimeKey) => set({ endWorkTime }),
+      setEndWorkTime: (endWorkTime: EndWorkTimeKey | null) =>
+        set({ endWorkTime }),
       setStoreUrl: (storeUrl: StoreUrlKey | null) =>
         set({
           storeUrl

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import BaseTopTabs from "./components/base-top-tab";
 import FloatingButton from "./components/floating-button";
 import HomeTitle from "./components/home-title";
 import FindDesignerSection from "./components/sections/find-designer/find-designer-section";
 import FindJobSection from "./components/sections/find-job/find-job-section";
+import { useAuthStore } from "@/stores/auth-store";
 
 const Container = styled.div`
   display: flex;
@@ -15,8 +16,23 @@ const Container = styled.div`
   width: 100%;
 `;
 
-export default function HomePage() {
+interface SearchParams {
+  searchParams: {
+    userId: string;
+  };
+}
+
+export default function HomePage({ searchParams }: SearchParams) {
   const [activeTab, setActiveTab] = useState(0);
+  const userId = searchParams.userId;
+
+  const login = useAuthStore((state) => state.login);
+
+  useEffect(() => {
+    if (userId) {
+      login(userId);
+    }
+  }, [userId, login]);
 
   return (
     <Container>

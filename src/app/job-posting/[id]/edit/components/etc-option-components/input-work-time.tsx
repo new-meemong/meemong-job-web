@@ -132,7 +132,12 @@ const InputWorkTime = () => {
         onClose={handleCloseStartTimeModal}
         snapPoints={[0.6]}
       >
-        <Sheet.Backdrop onTap={handleCloseStartTimeModal} />
+        <Sheet.Backdrop
+          onTap={() => {
+            setStartWorkTime(null);
+            handleCloseStartTimeModal();
+          }}
+        />
         <SheetContainer>
           <SheetHeader />
           <SheetContent>
@@ -154,7 +159,12 @@ const InputWorkTime = () => {
         onClose={handleCloseEndTimeModal}
         snapPoints={[0.6]}
       >
-        <Sheet.Backdrop onTap={handleCloseEndTimeModal} />
+        <Sheet.Backdrop
+          onTap={() => {
+            setEndWorkTime(null);
+            handleCloseEndTimeModal();
+          }}
+        />
         <SheetContainer>
           <SheetHeader />
           <SheetContent>
