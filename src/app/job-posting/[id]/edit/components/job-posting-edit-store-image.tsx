@@ -1,9 +1,13 @@
+import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import { uploadJobPostingImage } from "@/apis/job-postings";
 import ImageUploadIcon from "@/components/icons/image-upload-icon";
 import pxToVw from "@/lib/dpi-converter";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import Image from "next/image";
 import { ChangeEvent, useState } from "react";
+import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 
 const Container = styled.div``;
@@ -11,14 +15,41 @@ const Container = styled.div``;
 const Label = styled.div`
   ${fonts.greyTextBold16}
 `;
-const ImageContainer = styled.div``;
+const ImageContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${pxToVw(10)};
+  margin-top: ${pxToVw(8)};
+  margin-bottom: ${pxToVw(8)};
+`;
+
+const UploadedImageWrapper = styled.div`
+  position: relative;
+  width: ${pxToVw(72)};
+  height: ${pxToVw(72)};
+  border-radius: ${pxToVw(5)};
+  overflow: hidden;
+`;
+
+const SpinnerWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const ImageUploadButton = styled.label`
+  position: relative;
   padding: ${pxToVw(10)} 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  width: ${pxToVw(72)}; /* 버튼의 고정 너비 */
+  height: ${pxToVw(72)}; /* 버튼의 고정 높이 */
 `;
 
 const HiddenFileInput = styled.input`
@@ -50,24 +81,36 @@ const InfoDot = styled.div`
 `;
 
 const JobPostingEditStoreImage = () => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [uploadStatus, setUploadStatus] = useState<string>("");
+  const { JobPostingsStoreImages, setJobPostingsStoreImages } =
+    useJobPostingEditStore();
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (JobPostingsStoreImages.length === 5) {
+      alert("이미지는 최대 5장까지 가능합니다.");
+      return;
+    }
+
     const files = e.target.files;
     if (files && files.length > 0) {
       const selectedFile = files[0];
-      setSelectedImage(selectedFile);
-      setUploadStatus("이미지 업로드 중...");
+      setIsUploading(true);
 
       try {
         // 서버에 이미지 업로드
-        const response = await uploadJobPostingImage(selectedFile);
-        console.log("Image uploaded:", response);
-        setUploadStatus("이미지 업로드 성공");
+        const { data } = await uploadJobPostingImage(selectedFile);
+        const uri = `${IMAGE_STORAGE_URL}${data?.imageFile?.fileuri}`;
+
+        const thumbnailUri = `${IMAGE_STORAGE_URL}${data?.imageThumbnailFile?.fileuri}`;
+        // console.log("Image uploaded:", uri, thumbnailUri);
+        if (uri && thumbnailUri) {
+          setJobPostingsStoreImages({ uri, thumbnailUri });
+        }
+
+        setIsUploading(false);
       } catch (error) {
         console.error("Image upload failed:", error);
-        setUploadStatus("이미지 업로드 실패");
+        setIsUploading(false);
       }
     }
   };
@@ -76,7 +119,13 @@ const JobPostingEditStoreImage = () => {
       <Label>매장 이미지 등록*</Label>
       <ImageContainer>
         <ImageUploadButton htmlFor="image-upload">
-          <ImageUploadIcon />
+          {isUploading ? (
+            <SpinnerWrapper>
+              <ClipLoader color={colors.purplePrimary} size={30} />
+            </SpinnerWrapper>
+          ) : (
+            <ImageUploadIcon />
+          )}
         </ImageUploadButton>
         <HiddenFileInput
           id="image-upload"
@@ -84,6 +133,16 @@ const JobPostingEditStoreImage = () => {
           accept=".jpg,.png,.gif"
           onChange={handleFileChange}
         />
+        {JobPostingsStoreImages.map((image, index) => (
+          <UploadedImageWrapper key={index}>
+            <Image
+              src={image.thumbnailUri}
+              alt="Uploaded"
+              layout="fill" // 이미지가 부모 요소를 채우도록 설정
+              objectFit="cover" // 이미지를 부모 요소에 맞게 커버
+            />
+          </UploadedImageWrapper>
+        ))}
       </ImageContainer>
       <DescriptionContainer>
         <DotContainer>

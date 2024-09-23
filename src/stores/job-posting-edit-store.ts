@@ -47,7 +47,10 @@ import {
 } from "@/types/job-posting-types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
+type JobPostingsStoreImage = {
+  uri: string;
+  thumbnailUri: string;
+};
 type JobPostingEditState = {
   postingTitle: string | null;
   storeName: string | null;
@@ -96,6 +99,7 @@ type JobPostingEditState = {
   basicCutPrice: BasicCutPriceKey | null;
 
   // imageUrlList
+  JobPostingsStoreImages: JobPostingsStoreImage[];
 
   // etc options
   startWorkTime: StartWorkTimeKey | null;
@@ -206,6 +210,7 @@ type JobPostingEditActions = {
 
   setHasDesignerOptionNull: (hasDesignerOptionNull: boolean) => void;
   setHasInternOptionNull: (hasInternOptionNull: boolean) => void;
+  setJobPostingsStoreImages: (images: JobPostingsStoreImage) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -261,7 +266,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   hasInternOptionNull: false,
   _postingRegions: [],
   postingRegions: null,
-  postingRegionSiNames: null
+  postingRegionSiNames: null,
+  JobPostingsStoreImages: []
 };
 
 export const useJobPostingEditStore = create(
@@ -531,7 +537,18 @@ export const useJobPostingEditStore = create(
       setHasDesignerOptionNull: (hasDesignerOptionNull: boolean) =>
         set({ hasDesignerOptionNull }),
       setHasInternOptionNull: (hasInternOptionNull: boolean) =>
-        set({ hasInternOptionNull })
+        set({ hasInternOptionNull }),
+      setJobPostingsStoreImages: (newImage: JobPostingsStoreImage) => {
+        const { JobPostingsStoreImages } = get();
+        // 이미지가 5개를 초과할 경우 추가를 막음
+        if (JobPostingsStoreImages.length >= 5) {
+          alert("이미지는 최대 5개까지 추가할 수 있습니다.");
+          return;
+        }
+        set({
+          JobPostingsStoreImages: [...JobPostingsStoreImages, newImage]
+        });
+      }
     }),
 
     {
