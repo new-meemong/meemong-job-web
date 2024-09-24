@@ -93,7 +93,7 @@ const ProfileImage = styled(Image)`
 `;
 
 interface JobPostingItemProps {
-  jobPosting: any;
+  jobPosting: JobPosting;
 }
 
 const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {

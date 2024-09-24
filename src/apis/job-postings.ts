@@ -1,8 +1,20 @@
 import { useAuthStore } from "@/stores/auth-store";
 import { apiFetch } from "./fetch";
 
+export const getJobPostings = async () => {
+  try {
+    return await apiFetch("/api/v1/job-postings", "GET");
+  } catch (e) {
+    console.error("[getJobPostings] failed", e);
+  }
+};
+
 export const postJobPostings = async (jobPosting: object) => {
-  return apiFetch("/job-postings", "POST", jobPosting);
+  try {
+    return await apiFetch("/api/v1/job-postings", "POST", jobPosting);
+  } catch (e) {
+    console.error("[postJobPostings] failed", e);
+  }
 };
 
 export const uploadJobPostingImage = async (image: File) => {

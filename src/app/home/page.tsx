@@ -8,6 +8,7 @@ import HomeTitle from "./components/home-title";
 import FindDesignerSection from "./components/sections/find-designer/find-designer-section";
 import FindJobSection from "./components/sections/find-job/find-job-section";
 import { useAuthStore } from "@/stores/auth-store";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ interface SearchParams {
 }
 
 export default function HomePage({ searchParams }: SearchParams) {
+  const { getJobPostingList } = useJobPostingListStore();
   const [activeTab, setActiveTab] = useState(0);
   const userId = searchParams.userId;
 
@@ -33,6 +35,12 @@ export default function HomePage({ searchParams }: SearchParams) {
       login(userId);
     }
   }, [userId, login]);
+
+  useEffect(() => {
+    if (activeTab === 0) {
+      getJobPostingList();
+    }
+  }, [activeTab]);
 
   return (
     <Container>

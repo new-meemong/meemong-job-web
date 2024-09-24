@@ -2,6 +2,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -30,10 +31,14 @@ const Button = styled.div`
 const JobPostingEditConfirmButton = () => {
   const { submitDesignerJobPosting, submitInternJobPosting, role } =
     useJobPostingEditStore();
+  const router = useRouter();
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (role === "디자이너") {
-      submitDesignerJobPosting();
+      const submit = await submitDesignerJobPosting();
+      if (submit) {
+        router.back();
+      }
     } else {
       submitInternJobPosting();
     }

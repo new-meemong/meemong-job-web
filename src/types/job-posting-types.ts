@@ -74,7 +74,7 @@ export type EmployeeCountKey =
   | "10인 이상";
 
 // 매장형태 (복수선택)
-export type StoreKey =
+export type StoreTypesKey =
   | "소형샵 (25평 이하)"
   | "중형샵 (60평 이하)"
   | "대형샵 (60평 이상)"
@@ -94,7 +94,7 @@ export type StoreInteriorRenovationAgoKey =
 export type WorkTypeKey = "정규직" | "스페어(알바)";
 
 // 근무 주기
-export type WorkCycleKey = "주 4일" | "주 5일" | "주 6일" | "격주 5일";
+export type WorkCycleTypeKey = "주 4일" | "주 5일" | "주 6일" | "격주 5일";
 
 // 교육비 지원-디자이너
 export type IsExistedEducationSupportKey = boolean;

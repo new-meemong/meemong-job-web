@@ -1,5 +1,6 @@
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import { uploadJobPostingImage } from "@/apis/job-postings";
+import { ErrorMessage } from "@/components/error-message";
 import ImageUploadIcon from "@/components/icons/image-upload-icon";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
@@ -41,7 +42,7 @@ const SpinnerWrapper = styled.div`
   align-items: center;
 `;
 
-const ImageUploadButton = styled.label`
+const ImageUploadButton = styled.label<{ $hasError: boolean }>`
   position: relative;
   padding: ${pxToVw(10)} 0;
   display: flex;
@@ -50,6 +51,10 @@ const ImageUploadButton = styled.label`
   cursor: pointer;
   width: ${pxToVw(72)}; /* 버튼의 고정 너비 */
   height: ${pxToVw(72)}; /* 버튼의 고정 높이 */
+  border: ${(props) =>
+    props.$hasError
+      ? `1px solid ${colors.red}`
+      : `1px solid ${colors.greyText4}`};
 `;
 
 const HiddenFileInput = styled.input`
@@ -81,8 +86,20 @@ const InfoDot = styled.div`
 `;
 
 const JobPostingEditStoreImage = () => {
-  const { jobPostingsStoreImages, setJobPostingsStoreImages } =
-    useJobPostingEditStore();
+  const {
+    jobPostingsStoreImages,
+    setJobPostingsStoreImages,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
+  let hasError = false;
+
+  if (role === "디자이너") {
+    hasError = jobPostingsStoreImages.length === 0 && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = jobPostingsStoreImages.length === 0 && hasInternOptionNull;
+  }
   const [isUploading, setIsUploading] = useState(false);
   const longPressTimer = useRef<NodeJS.Timeout | null>(null); // 롱클릭 타이머
 
@@ -111,9 +128,10 @@ const JobPostingEditStoreImage = () => {
     try {
       // 서버에 이미지 업로드
       const { data } = await uploadJobPostingImage(selectedFile);
-      const uri = `${IMAGE_STORAGE_URL}${data?.imageFile?.fileuri}`;
 
-      const thumbnailUri = `${IMAGE_STORAGE_URL}${data?.imageThumbnailFile?.fileuri}`;
+      const uri = `${data?.imageFile?.fileuri}`;
+
+      const thumbnailUri = `${data?.imageThumbnailFile?.fileuri}`;
       // console.log("Image uploaded:", uri, thumbnailUri);
       if (uri && thumbnailUri) {
         const newImage = { uri, thumbnailUri };
@@ -156,7 +174,7 @@ const JobPostingEditStoreImage = () => {
     <Container>
       <Label>매장 이미지 등록*</Label>
       <ImageContainer>
-        <ImageUploadButton htmlFor="image-upload">
+        <ImageUploadButton htmlFor="image-upload" $hasError={hasError}>
           {isUploading ? (
             <SpinnerWrapper>
               <ClipLoader color={colors.purplePrimary} size={30} />
@@ -171,22 +189,25 @@ const JobPostingEditStoreImage = () => {
           accept=".jpg,.png,.gif"
           onChange={handleFileChange}
         />
-        {jobPostingsStoreImages.map((image, index) => (
-          <UploadedImageWrapper
-            key={index}
-            onMouseDown={() => handleMouseDown(index)} // 마우스 클릭 시작
-            onMouseUp={handleMouseUp} // 마우스 클릭 해제
-            onTouchStart={() => handleMouseDown(index)} // 모바일 터치 시작
-            onTouchEnd={handleMouseUp} // 모바일 터치 종료
-          >
-            <Image
-              src={image.thumbnailUri}
-              alt="Uploaded"
-              layout="fill" // 이미지가 부모 요소를 채우도록 설정
-              objectFit="cover" // 이미지를 부모 요소에 맞게 커버
-            />
-          </UploadedImageWrapper>
-        ))}
+        {jobPostingsStoreImages.map((image, index) => {
+          const imageUri = `${IMAGE_STORAGE_URL}${image.thumbnailUri}`;
+          return (
+            <UploadedImageWrapper
+              key={index}
+              onMouseDown={() => handleMouseDown(index)} // 마우스 클릭 시작
+              onMouseUp={handleMouseUp} // 마우스 클릭 해제
+              onTouchStart={() => handleMouseDown(index)} // 모바일 터치 시작
+              onTouchEnd={handleMouseUp} // 모바일 터치 종료
+            >
+              <Image
+                src={imageUri}
+                alt="Uploaded"
+                layout="fill" // 이미지가 부모 요소를 채우도록 설정
+                objectFit="cover" // 이미지를 부모 요소에 맞게 커버
+              />
+            </UploadedImageWrapper>
+          );
+        })}
       </ImageContainer>
       <DescriptionContainer>
         <DotContainer>
@@ -202,6 +223,9 @@ const JobPostingEditStoreImage = () => {
         </DotContainer>
         <Description>이미지는 최대 5장까지 가능합니다.</Description>
       </DescriptionContainer>
+      {hasError && (
+        <ErrorMessage>매장 이미지를 최소 1장 등록해주세요.</ErrorMessage>
+      )}
     </Container>
   );
 };

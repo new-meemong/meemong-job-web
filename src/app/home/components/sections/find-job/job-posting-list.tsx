@@ -1,5 +1,6 @@
 import JobPostingItem from "@/components/job-posting-item";
 import pxToVw from "@/lib/dpi-converter";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
@@ -14,11 +15,12 @@ const Title = styled.span`
 `;
 
 const JobPostingList = () => {
-  const resultList = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+  const { jobPostingList = [] } = useJobPostingListStore();
+
   return (
     <Container>
       <Title>매장 취업하기</Title>
-      {resultList.map((result, index) => (
+      {jobPostingList.map((result, index) => (
         <JobPostingItem key={index} jobPosting={result} />
       ))}
     </Container>

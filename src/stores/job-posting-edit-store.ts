@@ -40,10 +40,10 @@ import {
   StartWorkTimeKey,
   StoreUrlKey,
   StoreInteriorRenovationAgoKey,
-  StoreKey,
+  StoreTypesKey,
   SubwayAccessibilityKey,
-  WorkCycleKey,
-  WorkTypeKey
+  WorkTypeKey,
+  WorkCycleTypeKey
 } from "@/types/job-posting-types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -79,12 +79,12 @@ type JobPostingEditState = {
   isRestrictedAge: IsRestrictedAgeKey | null;
   isPossibleMiddleAge: IsPossibleMiddleAgeKey | null;
   designerLicenses: DesignerLicensesKey[];
-  store: StoreKey[];
+  storeTypes: StoreTypesKey[];
   employeeCount: EmployeeCountKey | null;
   isExistedInternSystem: isExistedInternSystemKey | null;
   storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null;
   workType: WorkTypeKey | null;
-  workCycle: WorkCycleKey[];
+  workCycleType: WorkCycleTypeKey[];
   isExistedEducationSupport: IsExistedEducationSupportKey | null;
   isExistedMealSupport: IsExistedMealSupportKey | null;
   mealTime: MealTimeKey | null;
@@ -144,7 +144,7 @@ type JobPostingEditActions = {
   setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey | null) => void;
   setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) => void;
   setDesignerLicenses: (designerLicense: DesignerLicensesKey) => void;
-  setStore: (store: StoreKey) => void;
+  setStoreTypes: (store: StoreTypesKey) => void;
   setEmployeeCount: (employeeCount: EmployeeCountKey) => void;
   setIsExistedInternSystem: (
     isExistedInternSystem: isExistedInternSystemKey
@@ -153,7 +153,7 @@ type JobPostingEditActions = {
     storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null
   ) => void;
   setWorkType: (workType: WorkTypeKey) => void;
-  setWorkCycle: (workCycle: WorkCycleKey) => void;
+  setWorkCycle: (workCycle: WorkCycleTypeKey) => void;
   setIsExistedEducationSupport: (
     isExistedEducationSupport: IsExistedEducationSupportKey | null
   ) => void;
@@ -206,8 +206,8 @@ type JobPostingEditActions = {
   ) => void;
 
   // 공고 제출
-  submitDesignerJobPosting: () => void;
-  submitInternJobPosting: () => void;
+  submitDesignerJobPosting: () => Promise<boolean>;
+  submitInternJobPosting: () => Promise<boolean>;
 
   // 노출지역
   setPostingRegions: (
@@ -236,12 +236,12 @@ const defaultJobPostingEditState: JobPostingEditState = {
   isRestrictedAge: null,
   isPossibleMiddleAge: null,
   designerLicenses: [],
-  store: [],
+  storeTypes: [],
   employeeCount: null,
   isExistedInternSystem: null,
   storeInteriorRenovationAgo: null,
   workType: null,
-  workCycle: [],
+  workCycleType: [],
   isExistedEducationSupport: null,
   isExistedMealSupport: null,
   mealTime: null,
@@ -317,13 +317,13 @@ export const useJobPostingEditStore = create(
         const { designerLicenses } = get();
         set({ designerLicenses: toggleSelect(designerLicenses, license) });
       },
-      setStore: (selectedStore: StoreKey) => {
-        const { store } = get();
-        if (store.length >= 2 && !store.includes(selectedStore)) {
+      setStoreTypes: (selectedStore: StoreTypesKey) => {
+        const { storeTypes } = get();
+        if (storeTypes.length >= 2 && !storeTypes.includes(selectedStore)) {
           // 최대 2개까지 선택 가능
           return;
         }
-        set({ store: toggleSelect(store, selectedStore) });
+        set({ storeTypes: toggleSelect(storeTypes, selectedStore) });
       },
       setEmployeeCount: (employeeCount: EmployeeCountKey) =>
         set({ employeeCount }),
@@ -334,9 +334,9 @@ export const useJobPostingEditStore = create(
         storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null
       ) => set({ storeInteriorRenovationAgo }),
       setWorkType: (workType: WorkTypeKey) => set({ workType }),
-      setWorkCycle: (selectedWorkCycle: WorkCycleKey) => {
-        const { workCycle } = get();
-        set({ workCycle: toggleSelect(workCycle, selectedWorkCycle) });
+      setWorkCycle: (selectedWorkCycle: WorkCycleTypeKey) => {
+        const { workCycleType } = get();
+        set({ workCycleType: toggleSelect(workCycleType, selectedWorkCycle) });
       },
       setIsExistedEducationSupport: (
         isExistedEducationSupport: IsExistedEducationSupportKey | null
@@ -405,50 +405,67 @@ export const useJobPostingEditStore = create(
         isExistedRetirementPay: IsExistedRetirementPayKey | null
       ) => set({ isExistedRetirementPay }),
       submitDesignerJobPosting: async () => {
-        const {
-          postingTitle,
-          storeName,
-          storeRegion,
-          storeRegionSiName,
-          // 기본 정보
-          role,
-          postingRegions,
-          postingRegionSiNames,
-          monthlyEducationDesignerCount,
-          availableOffDays,
-          settlementAllowance,
-          incentive,
-          // 상세 정보
-          sex,
-          isRestrictedAge
-        } = get();
-
         try {
-          const jobPostingData = {
-            postingTitle,
-            // storeName,
-            // storeRegion,
-            // storeRegionSiName,
+          let jobPostingData: Record<string, any> = {
+            postingTitle: get().postingTitle, // 게시글 제목
+            storeName: get().storeName, // 매장명
+            storeAddress: get().storeAddress, // 매장 주소
+            storeRegion: get().storeRegion,
+            storeRegionSiName: get().storeRegionSiName,
             // 기본 정보
-            role,
-            postingRegions,
-            postingRegionSiNames,
-            monthlyEducationDesignerCount,
+            role: get().role,
+            postingRegions: get().postingRegions, // 노출 지역
+            postingRegionSiNames: get().postingRegionSiNames, // 노출 지역의 시
+            monthlyEducationCount: get().monthlyEducationDesignerCount, // 교육
+            // 휴무 가능일
             availableOffDays:
-              availableOffDays.length > 0 ? availableOffDays : null,
-            settlementAllowance,
-            incentive,
+              get().availableOffDays.length > 0
+                ? get().availableOffDays.join()
+                : null,
+            settlementAllowance: get().settlementAllowance, // 정착 지원금
+            incentive: get().incentive, // 월 매출 100만원 시 인센티브
+
             // 상세 정보
-            sex,
-            isRestrictedAge
+            sex: get().sex, // 성별
+            isRestrictedAge: get().isRestrictedAge, // 연령 제한
+            isPossibleMiddleAge: get().isPossibleMiddleAge || false, // 중년 가능
+            designerLicenses: get().designerLicenses.join(), // 미용 라이센스
+            storeTypes: get().storeTypes.join(), // 매장 형태
+            employeeCount: get().employeeCount, // 직원 수
+            isExistedInternSystem: get().isExistedInternSystem, // 인턴 시스템
+            storeInteriorRenovationAgo: get().storeInteriorRenovationAgo, // 매장 리모델링
+            workType: get().workType, // 근무 형태
+            workCycleType: get().workCycleType.join(), // 근무 주기
+            isExistedEducationSupport: get().isExistedEducationSupport, // 교육 지원
+            isExistedMealSupport: get().isExistedMealSupport, // 식대 지원
+            mealTime: get().mealTime, // 식사 시간
+            isExistedProductSupport: get().isExistedProductSupport, // 제품 지원
+            isExistedDormitorySupport: get().isExistedDormitorySupport, // 기숙사 지원
+            salesCommission: get().salesCommission, // 매출 수수료
+            designerExperienceYearNumber: get().designerExperienceYearNumber, // 경력
+            salesLast3MonthsAvg: get().salesLast3MonthsAvg, // 최근 3개월 매출
+            subwayAccessibility: get().subwayAccessibility, // 지하철 접근성
+            adminAge: get().adminAge, // 관리자 연령
+            adminSex: get().adminSex, // 관리자 성별
+            leaveDayCount: get().leaveDayCount, // 휴가일수
+            parkingSpotCount: get().parkingSpotCount, // 주차장
+            isExistedCleaningSupplier: get().isExistedCleaningSupplier, // 청소 업체
+            isExistedTowelSupplier: get().isExistedTowelSupplier, // 수건 업체
+            basicCutPrice: get().basicCutPrice, // 기본 컷 가격
+            jobPostingStoreImages: get().jobPostingsStoreImages
           };
 
-          if (role !== "디자이너") {
-            return;
+          if (jobPostingData.role !== "디자이너") {
+            return false;
           }
 
+          console.log("jobPostingData", jobPostingData);
+
           const hasNullField = Object.values(jobPostingData).some(
-            (value) => value === null
+            (value) =>
+              value === null ||
+              value === "" ||
+              (Array.isArray(value) && value.length === 0)
           );
 
           if (hasNullField) {
@@ -456,21 +473,28 @@ export const useJobPostingEditStore = create(
             alert(
               "필수 항목 중 일부가 누락되었습니다. 모든 항목을 입력해주세요."
             );
-            return;
+            return false;
           } else {
             set({ hasDesignerOptionNull: false });
           }
 
+          jobPostingData = convertToNullJobPostingData(jobPostingData);
+
+          console.log("jobPostingData2", jobPostingData);
+
           const response = await postJobPostings(jobPostingData);
-          if (response.status === 200 || response.status === 201) {
+          if (response.data) {
             // set({ ...defaultJobPostingEditState });
             alert("채용 공고 등록이 완료되었습니다.");
+            return true;
           } else {
             alert("채용 공고 등록에 실패했습니다. 다시 시도해주세요.");
+            return false;
           }
         } catch (e) {
           console.error("디자이너 구인 공고 등록 중 오류 발생:", e);
           alert("디자이너 구인 공고 등록 중 오류가 발생했습니다.");
+          return false;
         }
       },
       submitInternJobPosting: async () => {
@@ -479,6 +503,7 @@ export const useJobPostingEditStore = create(
           storeName,
           storeRegion,
           storeRegionSiName,
+          storeAddress,
           // 기본 정보
           role,
           postingRegions,
@@ -490,10 +515,11 @@ export const useJobPostingEditStore = create(
 
         try {
           const jobPostingData = {
-            postingTitle,
-            // storeName,
-            // storeRegion,
-            // storeRegionSiName,
+            postingTitle, //게시글 제목
+            storeName, // 매장명
+            storeAddress, // 매장 주소
+            storeRegion,
+            storeRegionSiName,
             // 기본 정보
             role,
             postingRegions,
@@ -503,9 +529,10 @@ export const useJobPostingEditStore = create(
               availableOffDays.length > 0 ? availableOffDays : null,
             internSalary
           };
+          console.log("postingRegions", postingRegions);
 
           if (role !== "인턴") {
-            return;
+            return false;
           }
 
           const hasNullField = Object.values(jobPostingData).some(
@@ -517,11 +544,14 @@ export const useJobPostingEditStore = create(
             alert(
               "필수 항목 중 일부가 누락되었습니다. 모든 항목을 입력해주세요."
             );
-            return;
+            return false;
           }
+
+          return true;
         } catch (e) {
           console.error("인턴 구인 공고 등록 중 오류 발생:", e);
           alert("인턴 구인 공고 등록 중 오류가 발생했습니다.");
+          return false;
         }
       },
       setPostingRegions: (
@@ -583,7 +613,22 @@ export const useJobPostingEditStore = create(
 );
 
 // 중복 선택 가능 항목 처리를 위한 함수
-const toggleSelect = <T>(selectedItems: T[], item: T): T[] => {
+const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
+  // "상관없음"이라는 항목이 선택된 경우 처리
+  const indifferentOption = "상관없음" as T; // "상관없음" 값을 직접 비교하기 위해 저장
+
+  if (item === indifferentOption) {
+    // "상관없음"이 선택되면 다른 항목들은 모두 해제하고 "상관없음"만 선택
+    return [indifferentOption];
+  }
+
+  // 이미 "상관없음"이 선택된 상태에서 다른 항목을 선택하려는 경우, "상관없음" 해제
+  if (selectedItems.includes(indifferentOption)) {
+    selectedItems = selectedItems.filter(
+      (selectedItem) => selectedItem !== indifferentOption
+    );
+  }
+
   if (selectedItems.includes(item)) {
     // 이미 선택된 경우, 제거
     return selectedItems.filter((selectedItem) => selectedItem !== item);
@@ -591,4 +636,15 @@ const toggleSelect = <T>(selectedItems: T[], item: T): T[] => {
     // 선택되지 않은 경우, 추가
     return [...selectedItems, item];
   }
+};
+
+const convertToNullJobPostingData = (
+  data: Record<string, any>
+): Record<string, any> => {
+  return Object.fromEntries(
+    Object.entries(data).map(([key, value]) => [
+      key,
+      value === "상관없음" ? null : value
+    ])
+  );
 };

@@ -33,9 +33,9 @@ import {
   SettlementAllowanceKey,
   SexKey,
   StoreInteriorRenovationAgoKey,
-  StoreKey,
+  StoreTypesKey,
   SubwayAccessibilityKey,
-  WorkCycleKey,
+  WorkCycleTypeKey,
   WorkTypeKey
 } from "./job-posting-types";
 
@@ -55,12 +55,12 @@ type SexOption = Option<SexKey>;
 type IsRestrictedAgeOption = Option<IsRestrictedAgeKey>;
 type IsPossibleMiddleAgeOption = Option<IsPossibleMiddleAgeKey>;
 type DesignerLicensesOption = Option<DesignerLicensesKey>;
-type StoreOption = Option<StoreKey>;
+type StoreTypesOption = Option<StoreTypesKey>;
 type EmployeeCountOption = Option<EmployeeCountKey>;
 type IsExistedInternSystemOption = Option<isExistedInternSystemKey>;
 type StoreInteriorRenovationAgoOption = Option<StoreInteriorRenovationAgoKey>;
 type WorkTypeOption = Option<WorkTypeKey>;
-type WorkCycleOption = Option<WorkCycleKey>;
+type WorkCycleOption = Option<WorkCycleTypeKey>;
 type IsExistedEducationSupportOption = Option<IsExistedEducationSupportKey>;
 type IsExistedMealSupportOption = Option<IsExistedMealSupportKey>;
 type MealTimeOption = Option<MealTimeKey>;
@@ -98,7 +98,7 @@ export const jobPostingOptions: {
   isRestrictedAge: IsRestrictedAgeOption[];
   isPossibleMiddleAge: IsPossibleMiddleAgeOption[];
   designerLicenses: DesignerLicensesOption[];
-  store: StoreOption[];
+  storeTypes: StoreTypesOption[];
   employeeCount: EmployeeCountOption[];
   isExistedInternSystem: IsExistedInternSystemOption[];
   storeInteriorRenovationAgo: StoreInteriorRenovationAgoOption[];
@@ -198,7 +198,7 @@ export const jobPostingOptions: {
     { key: "상관없음", value: "상관없음" }
   ],
   // 매장 형태
-  store: [
+  storeTypes: [
     { key: "소형샵 (25평 이하)", value: "소형샵 (25평 이하)" },
     { key: "중형샵 (60평 이하)", value: "중형샵 (60평 이상)" },
     { key: "대형샵 (60평 이상)", value: "대형샵 (60평 이상)" },

@@ -6,7 +6,7 @@ import SelectIsRestrictedAge from "./detail-option-components/select-is-restrict
 import CheckIsPossibleMiddleAge from "./detail-option-components/check-is-possible-middle-age";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import SelectDesignerLicense from "./detail-option-components/select-designer-license";
-import SelectStore from "./detail-option-components/select-store";
+import SelectStoreTypes from "./detail-option-components/select-store-types";
 import SelectEmployeeCount from "./detail-option-components/select-employee-count";
 import SelectIsExistedInternSystem from "./detail-option-components/select-is-existed-intern-system";
 import SelectStoreInteriorRenovationAgo from "./detail-option-components/select-store-interior-renovation-ago";
@@ -59,7 +59,7 @@ const DesignerOptions = () => {
       <SelectIsRestrictedAge />
       {isRestrictedAge && <CheckIsPossibleMiddleAge />}
       <SelectDesignerLicense />
-      <SelectStore />
+      <SelectStoreTypes />
       <SelectEmployeeCount />
       <SelectIsExistedInternSystem />
       <SelectStoreInteriorRenovationAgo />
@@ -94,7 +94,7 @@ const InternOptions = () => {
       <SelectIsRestrictedAge />
       {isRestrictedAge && <CheckIsPossibleMiddleAge />}
       <SelectDesignerLicense />
-      <SelectStore />
+      <SelectStoreTypes />
       <SelectEmployeeCount />
       <SelectIsExistedInternSystem />
       <SelectDesignerPromitionPeriod />
