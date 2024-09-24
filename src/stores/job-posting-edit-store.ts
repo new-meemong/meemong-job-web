@@ -46,7 +46,7 @@ import {
   WorkCycleTypeKey
 } from "@/types/job-posting-types";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 type StoreInfoType = {
   title: string;
   address: string;
@@ -607,7 +607,7 @@ export const useJobPostingEditStore = create(
 
     {
       name: "job-posting-edit-store",
-      getStorage: () => localStorage
+      storage: createJSONStorage(() => localStorage)
     }
   )
 );

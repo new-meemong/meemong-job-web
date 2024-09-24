@@ -85,6 +85,10 @@ const InfoDot = styled.div`
   background-color: ${colors.greyText4};
 `;
 
+const StyledImage = styled(Image)`
+  object-fit: cover;
+`;
+
 const JobPostingEditStoreImage = () => {
   const {
     jobPostingsStoreImages,
@@ -199,11 +203,10 @@ const JobPostingEditStoreImage = () => {
               onTouchStart={() => handleMouseDown(index)} // 모바일 터치 시작
               onTouchEnd={handleMouseUp} // 모바일 터치 종료
             >
-              <Image
+              <StyledImage
                 src={imageUri}
                 alt="Uploaded"
-                layout="fill" // 이미지가 부모 요소를 채우도록 설정
-                objectFit="cover" // 이미지를 부모 요소에 맞게 커버
+                fill // layout="fill" 대신 사용
               />
             </UploadedImageWrapper>
           );

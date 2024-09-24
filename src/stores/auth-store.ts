@@ -1,7 +1,7 @@
 import { webviewLogin } from "@/apis/auth";
 import { UserModel } from "@/models/user-model";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export type AuthState = {
   jwt: string | null;
@@ -46,7 +46,7 @@ export const useAuthStore = create(
     }),
     {
       name: "auth-store",
-      getStorage: () => sessionStorage
+      storage: createJSONStorage(() => sessionStorage)
     }
   )
 );

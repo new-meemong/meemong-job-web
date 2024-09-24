@@ -1,6 +1,6 @@
 import { getJobPostings } from "@/apis/job-postings";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export type JobPostingListState = {
   jobPostingList: JobPosting[];
@@ -26,13 +26,14 @@ export const useJobPostingListStore = create(
         set({ jobPostingListLoading: true });
         const res = await getJobPostings();
         const { dataList } = res;
+
         set({ jobPostingList: dataList as JobPosting[] });
         set({ jobPostingListLoading: false });
       }
     }),
     {
       name: "job-posting-list-store",
-      getStorage: () => sessionStorage
+      storage: createJSONStorage(() => sessionStorage)
     }
   )
 );

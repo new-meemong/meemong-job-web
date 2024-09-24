@@ -1,9 +1,17 @@
 import { useAuthStore } from "@/stores/auth-store";
 import { apiFetch } from "./fetch";
 
-export const getJobPostings = async () => {
+export const getJobPostings = async (queryParams?: Record<string, string>) => {
   try {
-    return await apiFetch("/api/v1/job-postings", "GET");
+    const defaultParams: Record<string, string> = {
+      __include: "JobPostingsStoreImages"
+    };
+
+    const combinedParams = { ...defaultParams, ...(queryParams || {}) };
+    const queryString = new URLSearchParams(combinedParams).toString();
+    const url = `/api/v1/job-postings?${queryString}`;
+
+    return await apiFetch(url, "GET");
   } catch (e) {
     console.error("[getJobPostings] failed", e);
   }

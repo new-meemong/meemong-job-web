@@ -40,7 +40,7 @@ export default function HomePage({ searchParams }: SearchParams) {
     if (activeTab === 0) {
       getJobPostingList();
     }
-  }, [activeTab]);
+  }, [activeTab, getJobPostingList]);
 
   return (
     <Container>

@@ -18,7 +18,7 @@ import {
   WorkTypeKeyResume
 } from "@/types/resume-types";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type ResumeEditState = {
   profileImageUri: string | null;
@@ -230,7 +230,7 @@ export const useResumeEditStore = create(
     }),
     {
       name: "resume-edit-store",
-      getStorage: () => localStorage
+      storage: createJSONStorage(() => sessionStorage)
     }
   )
 );
