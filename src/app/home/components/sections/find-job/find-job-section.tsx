@@ -28,7 +28,7 @@ const FindJobSection = () => {
       <SearchButtonWrapper>
         <NearJobSearchButton />
       </SearchButtonWrapper>
-      <PremiumJobPosting />
+      {/* <PremiumJobPosting /> */}
       <Banner />
       <JobPostingList />
     </Container>

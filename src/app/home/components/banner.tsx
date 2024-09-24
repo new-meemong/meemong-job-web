@@ -3,6 +3,7 @@ import { colors } from "@/styles/colors";
 import styled from "styled-components";
 
 const Container = styled.div`
+  margin-top: ${pxToVw(24)};
   width: 100%;
   height: ${pxToVw(80)};
   display: flex;
