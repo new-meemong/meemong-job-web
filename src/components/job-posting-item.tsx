@@ -21,14 +21,21 @@ const Container = styled.div`
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
 `;
 
 const HeaderTitle = styled.span`
   ${fonts.greyTextBold16}
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden; /* 넘치는 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 넘치는 텍스트에 생략 부호 표시 */
 `;
 
 const HeaderSubTitle = styled.span`
   ${fonts.greyNormal10}
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden; /* 넘치는 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 넘치는 텍스트에 생략 부호 표시 */
 `;
 
 const ContentContainer = styled.div`
@@ -111,23 +118,23 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   return (
     <Container onClick={handleClick}>
       <HeaderContainer>
-        <HeaderTitle>{`준오헤어`}</HeaderTitle>
+        <HeaderTitle>{jobPosting.storeName}</HeaderTitle>
         <Divider />
-        <HeaderSubTitle>{`00시 00시(군구)`}</HeaderSubTitle>
+        <HeaderSubTitle>{jobPosting.storeRegion}</HeaderSubTitle>
       </HeaderContainer>
       <ContentContainer>
         <ContentLeftContainer>
-          <ContentTitle>{`수석 디자이너 경력 채용 공고 2줄을 쓰면 이렇게 됩니다! 이렇게 됩니다!`}</ContentTitle>
+          <ContentTitle>{jobPosting.postingTitle}</ContentTitle>
           <InfoTextContainer>
-            <ProfileInfo>{`월 교육 2회 이상`}</ProfileInfo>
+            <ProfileInfo>{jobPosting.monthlyEducationCount}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{`휴무 화, 금`}</ProfileInfo>
+            <ProfileInfo>{jobPosting.availableOffDays}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{`정착지원금 210만원 이상`}</ProfileInfo>
+            <ProfileInfo>{jobPosting.settlementAllowance}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{`인센티브 1000/30%`}</ProfileInfo>
+            <ProfileInfo>{`인센티브 ${jobPosting.incentive}`}</ProfileInfo>
           </InfoTextContainer>
-          <ViewCount>{`조회 234`}</ViewCount>
+          {/* <ViewCount>{`조회 0`}</ViewCount> */}
         </ContentLeftContainer>
 
         <ProfileImage
