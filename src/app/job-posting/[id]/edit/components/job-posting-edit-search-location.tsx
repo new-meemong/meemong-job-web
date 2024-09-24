@@ -1,4 +1,5 @@
 import pxToVw from "@/lib/dpi-converter";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import Link from "next/link";
@@ -39,14 +40,19 @@ const LocationInfo = styled.div`
 `;
 
 const JobPostingEditSearchLocation = () => {
+  const { storeName, storeAddress } = useJobPostingEditStore();
   return (
     <Container>
       <Label>매장주소 검색*</Label>
-      <Button href="">주소 검색</Button>
+      <Button href="/search-naver">주소 검색</Button>
       <Label>매장주소*</Label>
-      <LocationInfo>주소를 검색해주세요</LocationInfo>
+      <LocationInfo>
+        {storeAddress ? storeAddress : "주소를 검색해주세요"}
+      </LocationInfo>
       <Label>매장명*</Label>
-      <LocationInfo>매장을 검색해주세요</LocationInfo>
+      <LocationInfo>
+        {storeName ? storeName : "매장을 검색해주세요"}
+      </LocationInfo>
     </Container>
   );
 };

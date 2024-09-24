@@ -47,7 +47,12 @@ import {
 } from "@/types/job-posting-types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-type JobPostingsStoreImage = {
+type StoreInfoType = {
+  title: string;
+  address: string;
+};
+
+type JobPostingsStoreImageType = {
   uri: string;
   thumbnailUri: string;
 };
@@ -56,6 +61,7 @@ type JobPostingEditState = {
   storeName: string | null;
   storeRegion: string | null;
   storeRegionSiName: string | null;
+  storeAddress: string | null;
 
   // 기본 정보
   role: RoleKey;
@@ -99,7 +105,7 @@ type JobPostingEditState = {
   basicCutPrice: BasicCutPriceKey | null;
 
   // imageUrlList
-  jobPostingsStoreImages: JobPostingsStoreImage[];
+  jobPostingsStoreImages: JobPostingsStoreImageType[];
 
   // etc options
   startWorkTime: StartWorkTimeKey | null;
@@ -210,7 +216,8 @@ type JobPostingEditActions = {
 
   setHasDesignerOptionNull: (hasDesignerOptionNull: boolean) => void;
   setHasInternOptionNull: (hasInternOptionNull: boolean) => void;
-  setJobPostingsStoreImages: (images: JobPostingsStoreImage[]) => void;
+  setJobPostingsStoreImages: (images: JobPostingsStoreImageType[]) => void;
+  setStoreRegion: (storeRegion: StoreInfoType) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -218,6 +225,7 @@ const defaultJobPostingEditState: JobPostingEditState = {
   storeName: null,
   storeRegion: null,
   storeRegionSiName: null,
+  storeAddress: null,
   role: "디자이너",
   monthlyEducationDesignerCount: null,
   monthlyEducationInternCount: null,
@@ -538,7 +546,7 @@ export const useJobPostingEditStore = create(
         set({ hasDesignerOptionNull }),
       setHasInternOptionNull: (hasInternOptionNull: boolean) =>
         set({ hasInternOptionNull }),
-      setJobPostingsStoreImages: (newImages: JobPostingsStoreImage[]) => {
+      setJobPostingsStoreImages: (newImages: JobPostingsStoreImageType[]) => {
         // 이미지가 5개를 초과할 경우 추가를 막음
         if (newImages.length >= 5) {
           alert("이미지는 최대 5개까지 추가할 수 있습니다.");
@@ -547,6 +555,23 @@ export const useJobPostingEditStore = create(
         set({
           jobPostingsStoreImages: newImages
         });
+      },
+      setStoreRegion: (storeRegion: StoreInfoType) => {
+        const title = storeRegion.title;
+        const address = storeRegion.address;
+        const regionMatch = address.match(/^(.*?[시도])\s(.*?[구군])/);
+
+        if (regionMatch) {
+          const storeRegionSiName = regionMatch[1];
+          const storeRegion = `${regionMatch[1]} ${regionMatch[2]}`;
+
+          set({
+            storeName: title,
+            storeRegion,
+            storeRegionSiName,
+            storeAddress: address
+          });
+        }
       }
     }),
 

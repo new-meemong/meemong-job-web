@@ -198,6 +198,11 @@ export const fonts = {
     font-weight: 700;
     color: ${colors.white};
   `,
+  whiteNormal16: css`
+    font-size: ${pxToVw(16)};
+    font-weight: 400;
+    color: ${colors.white};
+  `,
 
   // red
   redBold14: css`
