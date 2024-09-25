@@ -50,7 +50,14 @@ interface ImageSliderProps {
 }
 
 const ImageSlider = ({ images }: ImageSliderProps) => {
-  console.log("images", images);
+  if (images.length === 1) {
+    return (
+      <SliderContainer>
+        <StoreImage src={images[0]} alt="Slide 0" width={390} height={390} />
+      </SliderContainer>
+    );
+  }
+
   return (
     <SliderContainer>
       <Slider {...settings}>
