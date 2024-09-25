@@ -100,15 +100,34 @@ const StoreImage = styled(Image)`
   border: 1px solid ${colors.greyBacground4};
 `;
 
-interface JobPostingItemProps {
-  jobPosting: JobPostingType;
-}
+type JobPostingItemProps = Pick<
+  JobPostingType,
+  | "id"
+  | "storeName"
+  | "storeRegion"
+  | "postingTitle"
+  | "monthlyEducationCount"
+  | "availableOffDays"
+  | "settlementAllowance"
+  | "incentive"
+  | "JobPostingsStoreImages"
+>;
 
-const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
+const JobPostingItem = ({
+  id,
+  storeName,
+  storeRegion,
+  postingTitle,
+  monthlyEducationCount,
+  availableOffDays,
+  settlementAllowance,
+  incentive,
+  JobPostingsStoreImages
+}: JobPostingItemProps) => {
   const router = useRouter();
 
-  const initialImage = jobPosting.JobPostingsStoreImages[0]?.thumbnailUri
-    ? `${IMAGE_STORAGE_URL}${jobPosting.JobPostingsStoreImages[0].thumbnailUri}`
+  const initialImage = JobPostingsStoreImages[0]?.thumbnailUri
+    ? `${IMAGE_STORAGE_URL}${JobPostingsStoreImages[0].thumbnailUri}`
     : "/images/default_profile_image.jpg";
 
   const [imgSrc, setImgSrc] = useState<string>(initialImage);
@@ -118,27 +137,27 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   };
 
   const handleClick = () => {
-    router.push(`/job-posting/${jobPosting.id}`);
+    router.push(`/job-posting/${id}`);
   };
 
   return (
     <Container onClick={handleClick}>
       <HeaderContainer>
-        <HeaderTitle>{jobPosting.storeName}</HeaderTitle>
+        <HeaderTitle>{storeName}</HeaderTitle>
         <Divider />
-        <HeaderSubTitle>{jobPosting.storeRegion}</HeaderSubTitle>
+        <HeaderSubTitle>{storeRegion}</HeaderSubTitle>
       </HeaderContainer>
       <ContentContainer>
         <ContentLeftContainer>
-          <ContentTitle>{jobPosting.postingTitle}</ContentTitle>
+          <ContentTitle>{postingTitle}</ContentTitle>
           <InfoTextContainer>
-            <ProfileInfo>{jobPosting.monthlyEducationCount}</ProfileInfo>
+            <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{jobPosting.availableOffDays}</ProfileInfo>
+            <ProfileInfo>{availableOffDays}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{jobPosting.settlementAllowance}</ProfileInfo>
+            <ProfileInfo>{settlementAllowance}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{`인센티브 ${jobPosting.incentive}`}</ProfileInfo>
+            <ProfileInfo>{`인센티브 ${incentive}`}</ProfileInfo>
           </InfoTextContainer>
           {/* <ViewCount>{`조회 0`}</ViewCount> */}
         </ContentLeftContainer>

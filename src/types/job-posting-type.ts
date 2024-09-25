@@ -114,7 +114,7 @@ export interface JobPostingType {
   userId: number; // 사용자 ID
 
   // 기타 옵션
-  isRestrictedAge: IsRestrictedAgeKey | boolean; // 연령 제한 여부
+  isRestrictedAge: IsRestrictedAgeKey; // 연령 제한 여부
 
   JobPostingsStoreImages: ImageType[];
 }

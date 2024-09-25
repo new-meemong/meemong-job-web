@@ -3,6 +3,7 @@ import JobPostingItem from "@/components/job-posting-item";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import { JobPostingType } from "@/types/job-posting-type";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -56,7 +57,7 @@ const SnapItem = styled.div<{ $isFirst: boolean }>`
 `;
 
 const PremiumJobPosting = () => {
-  const jobPostings = [{}, {}, {}, {}, {}, {}];
+  const jobPostings: JobPostingType[] = [];
   return (
     <Container>
       <Header>
@@ -69,7 +70,17 @@ const PremiumJobPosting = () => {
       <JobPostingContainer>
         {jobPostings.map((jobPosting, index) => (
           <SnapItem key={index} $isFirst={index === 0}>
-            <JobPostingItem jobPosting={jobPosting} />
+            <JobPostingItem
+              id={jobPosting.id}
+              storeName={jobPosting.storeName}
+              storeRegion={jobPosting.storeRegion}
+              postingTitle={jobPosting.postingTitle}
+              monthlyEducationCount={jobPosting.monthlyEducationCount}
+              availableOffDays={jobPosting.availableOffDays}
+              settlementAllowance={jobPosting.settlementAllowance}
+              incentive={jobPosting.incentive}
+              JobPostingsStoreImages={jobPosting.JobPostingsStoreImages}
+            />
           </SnapItem>
         ))}
       </JobPostingContainer>

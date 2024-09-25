@@ -20,8 +20,19 @@ const JobPostingList = () => {
   return (
     <Container>
       <Title>매장 취업하기</Title>
-      {jobPostingList.map((result, index) => (
-        <JobPostingItem key={index} jobPosting={result} />
+      {jobPostingList.map((jobPosting, index) => (
+        <JobPostingItem
+          key={index}
+          id={jobPosting.id}
+          storeName={jobPosting.storeName}
+          storeRegion={jobPosting.storeRegion}
+          postingTitle={jobPosting.postingTitle}
+          monthlyEducationCount={jobPosting.monthlyEducationCount}
+          availableOffDays={jobPosting.availableOffDays}
+          settlementAllowance={jobPosting.settlementAllowance}
+          incentive={jobPosting.incentive}
+          JobPostingsStoreImages={jobPosting.JobPostingsStoreImages}
+        />
       ))}
     </Container>
   );

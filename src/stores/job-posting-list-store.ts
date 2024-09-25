@@ -1,9 +1,10 @@
 import { getJobPostings } from "@/apis/job-postings";
+import { JobPostingType } from "@/types/job-posting-type";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 export type JobPostingListState = {
-  jobPostingList: JobPosting[];
+  jobPostingList: JobPostingType[];
   jobPostingListLoading: boolean;
 };
 
@@ -27,7 +28,7 @@ export const useJobPostingListStore = create(
         const res = await getJobPostings();
         const { dataList } = res;
 
-        set({ jobPostingList: dataList as JobPosting[] });
+        set({ jobPostingList: dataList as JobPostingType[] });
         set({ jobPostingListLoading: false });
       }
     }),

@@ -72,9 +72,7 @@ export default function JobPostingPage() {
           <Divider />
           <DetailInfoDesigner
             sex={jobPosting.sex}
-            isRestrictedAge={
-              jobPosting.isRestrictedAge ? "연령제한" : "연령무관"
-            }
+            isRestrictedAge={jobPosting.isRestrictedAge}
             designerLicenses={jobPosting.designerLicenses}
             storeTypes={jobPosting.storeTypes}
             employeeCount={jobPosting.employeeCount}
@@ -119,9 +117,7 @@ export default function JobPostingPage() {
           <Divider />
           <DetailInfoIntern
             sex={jobPosting.sex}
-            isRestrictedAge={
-              jobPosting.isRestrictedAge ? "연령제한" : "연령무관"
-            }
+            isRestrictedAge={jobPosting.isRestrictedAge}
             designerLicenses={jobPosting.designerLicenses}
             storeTypes={jobPosting.storeTypes}
             employeeCount={jobPosting.employeeCount}
