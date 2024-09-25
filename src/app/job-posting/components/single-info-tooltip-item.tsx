@@ -1,22 +1,9 @@
 import TooltipIcon from "@/components/icons/tooltip";
+import ConfirmModal from "@/components/modals/confirm-modal";
 import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
 import { useState } from "react";
-import Modal from "react-modal";
 import styled from "styled-components";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: pxToVw(10),
-    padding: 0
-  }
-};
 
 const Container = styled.div`
   display: flex;
@@ -35,31 +22,8 @@ const Content = styled.div`
   height: ${pxToVw(24)};
 `;
 
-const TooltipContainer = styled.div`
-  width: ${pxToVw(260)};
-  height: ${pxToVw(140)};
-  border-radius: ${pxToVw(10)};
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: ${pxToVw(20)};
-  padding: ${pxToVw(20)};
-`;
-
 const TooltipButton = styled.div`
   padding: ${pxToVw(4)};
-`;
-
-const TooltipContent = styled.div`
-  ${fonts.greyTextSemi16}
-  white-space: pre-line;
-  text-align: center;
-`;
-
-const ConfirmButton = styled.div`
-  ${fonts.greyTextBold14}
 `;
 
 interface InfoItemProps {
@@ -88,16 +52,12 @@ const SingleInfoTooltipItem = ({ label, content, tooltip }: InfoItemProps) => {
       </Label>
 
       <Content>{content}</Content>
-      <Modal
+      <ConfirmModal
         isOpen={isTooltipModalOpen}
-        onRequestClose={handleTooltipModalClose}
-        style={customStyles}
-      >
-        <TooltipContainer>
-          <TooltipContent>{tooltip}</TooltipContent>
-          <ConfirmButton onClick={handleTooltipModalClose}>확인</ConfirmButton>
-        </TooltipContainer>
-      </Modal>
+        onClose={handleTooltipModalClose}
+        message={tooltip}
+        // confirmText="확인"
+      />
     </Container>
   );
 };
