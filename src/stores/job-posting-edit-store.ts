@@ -452,7 +452,8 @@ export const useJobPostingEditStore = create(
             isExistedCleaningSupplier: get().isExistedCleaningSupplier, // 청소 업체
             isExistedTowelSupplier: get().isExistedTowelSupplier, // 수건 업체
             basicCutPrice: get().basicCutPrice, // 기본 컷 가격
-            JobPostingsStoreImages: get().jobPostingsStoreImages
+
+            JobPostingsStoreImages: get().jobPostingsStoreImages // 매장 이미지
           };
 
           if (jobPostingData.role !== "디자이너") {
@@ -478,6 +479,15 @@ export const useJobPostingEditStore = create(
           } else {
             set({ hasDesignerOptionNull: false });
           }
+
+          jobPostingData = {
+            ...jobPostingData,
+            startWorkTime: get().startWorkTime, // 근무 시작 시간
+            endWorkTime: get().endWorkTime, // 근무 종료 시간
+            storeUrl: get().storeUrl, // 매장 URL
+            mainHairDye: get().mainHairDye, // 메인 염색
+            description: get().description // 상세 설명
+          };
 
           jobPostingData = convertToNullJobPostingData(jobPostingData);
 
@@ -548,7 +558,7 @@ export const useJobPostingEditStore = create(
             isExistedFourInsurance: get().isExistedFourInsurances, // 4대 보험
             isExistedRetirementPay: get().isExistedRetirementPay, // 퇴직금
 
-            JobPostingsStoreImages: get().jobPostingsStoreImages
+            JobPostingsStoreImages: get().jobPostingsStoreImages // 매장 이미지
           };
 
           if (jobPostingData.role !== "인턴") {
@@ -574,6 +584,15 @@ export const useJobPostingEditStore = create(
           } else {
             set({ hasDesignerOptionNull: false });
           }
+
+          jobPostingData = {
+            ...jobPostingData,
+            startWorkTime: get().startWorkTime, // 근무 시작 시간
+            endWorkTime: get().endWorkTime, // 근무 종료 시간
+            storeUrl: get().storeUrl, // 매장 URL
+            mainHairDye: get().mainHairDye, // 메인 염색
+            description: get().description // 상세 설명
+          };
 
           jobPostingData = convertToNullJobPostingData(jobPostingData);
 

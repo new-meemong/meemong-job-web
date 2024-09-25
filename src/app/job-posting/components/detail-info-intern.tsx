@@ -21,14 +21,13 @@ type DetailInfoInternProps = Pick<
   | "isExistedInternSystem"
   | "storeInteriorRenovationAgo"
   | "workCycleTypes"
-  | "isExistedEducationSupport"
   | "isExistedMealSupport"
   | "mealTime"
   | "isExistedProductSupport"
   | "isExistedDormitorySupport"
   | "salesCommission"
-  // | "designerExperienceYearNumber"
-  | "salesLast3MonthsAvg"
+  | "internExperienceYearNumber"
+  | "designerPromotionPeriod"
   | "subwayAccessibility"
   | "adminAge"
   | "adminSex"
@@ -36,7 +35,9 @@ type DetailInfoInternProps = Pick<
   | "parkingSpotCount"
   | "isExistedCleaningSupplier"
   | "isExistedTowelSupplier"
-  | "basicCutPrice"
+  | "isOnsiteManager"
+  | "isExistedFourInsurances"
+  | "isExistedRetirementPay"
   | "startWorkTime"
   | "endWorkTime"
   | "storeUrl"
@@ -52,14 +53,13 @@ const DetailInfoIntern = ({
   isExistedInternSystem,
   storeInteriorRenovationAgo,
   workCycleTypes,
-  isExistedEducationSupport,
   isExistedMealSupport,
   mealTime,
   isExistedProductSupport,
   isExistedDormitorySupport,
   salesCommission,
-  // designerExperienceYearNumber,
-  salesLast3MonthsAvg,
+  internExperienceYearNumber,
+  designerPromotionPeriod,
   subwayAccessibility,
   adminAge,
   adminSex,
@@ -67,12 +67,15 @@ const DetailInfoIntern = ({
   parkingSpotCount,
   isExistedCleaningSupplier,
   isExistedTowelSupplier,
-  basicCutPrice,
+  isOnsiteManager,
+  isExistedFourInsurances,
+  isExistedRetirementPay,
   startWorkTime,
   endWorkTime,
   storeUrl,
   mainHairDye
 }: DetailInfoInternProps) => {
+  console.log("internExperienceYearNumber", internExperienceYearNumber);
   return (
     <Container>
       <InfoTitle title={"매장 상세 정보"} />
@@ -87,10 +90,6 @@ const DetailInfoIntern = ({
         content={storeInteriorRenovationAgo}
       />
       <MultiInfoItem label={"근무 주기"} content={workCycleTypes} />
-      <SingleInfoItem
-        label={"교육비 지원"}
-        content={isExistedEducationSupport}
-      />
       <SingleInfoItem label={"식대 지원"} content={isExistedMealSupport} />
       <SingleInfoItem label={"식사 시간"} content={mealTime} />
       <SingleInfoItem
@@ -99,13 +98,13 @@ const DetailInfoIntern = ({
       />
       <SingleInfoItem label={"기숙사"} content={isExistedDormitorySupport} />
       <SingleInfoItem label={"점판 수당"} content={salesCommission} />
-      {/* <SingleInfoItem
-        label={"디자이너 경력"}
-        content={designerExperienceYearNumber}
-      /> */}
       <SingleInfoItem
-        label={"이전 3개월 매출 평균"}
-        content={salesLast3MonthsAvg}
+        label={"인턴 경력"}
+        content={internExperienceYearNumber}
+      />
+      <SingleInfoItem
+        label="디자이너 승급 기간"
+        content={designerPromotionPeriod}
       />
       <SingleInfoItem label={"지하철 접근성"} content={subwayAccessibility} />
       <SingleInfoItem label={"관리자 나이"} content={adminAge} />
@@ -117,10 +116,9 @@ const DetailInfoIntern = ({
       />
       <SingleInfoItem label={"청소 업체"} content={isExistedCleaningSupplier} />
       <SingleInfoItem label={"수건 업체"} content={isExistedTowelSupplier} />
-      <SingleInfoItem
-        label={"기본 컷트가격"}
-        content={`${formatPriceWithCommas(basicCutPrice || 0)}원`}
-      />
+      <SingleInfoItem label={"샵 매니저 상주"} content={isOnsiteManager} />
+      <SingleInfoItem label={"4대 보험"} content={isExistedFourInsurances} />
+      <SingleInfoItem label={"퇴직금"} content={isExistedRetirementPay} />
       <SingleInfoItem
         label={"근무 시간"}
         content={`${startWorkTime || "00:00"} ~ ${endWorkTime || "00:00"}`}

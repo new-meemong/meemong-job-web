@@ -125,16 +125,13 @@ export default function JobPostingPage() {
             isExistedInternSystem={jobPosting.isExistedInternSystem}
             storeInteriorRenovationAgo={jobPosting.storeInteriorRenovationAgo}
             workCycleTypes={jobPosting.workCycleTypes}
-            isExistedEducationSupport={jobPosting.isExistedEducationSupport}
             isExistedMealSupport={jobPosting.isExistedMealSupport}
             mealTime={jobPosting.mealTime}
             isExistedProductSupport={jobPosting.isExistedProductSupport}
             isExistedDormitorySupport={jobPosting.isExistedDormitorySupport}
             salesCommission={jobPosting.salesCommission}
-            // designerExperienceYearNumber={
-            //   jobPosting.designerExperienceYearNumber
-            // }
-            salesLast3MonthsAvg={jobPosting.salesLast3MonthsAvg}
+            internExperienceYearNumber={jobPosting.internExperienceYearNumber}
+            designerPromotionPeriod={jobPosting.designerPromotionPeriod}
             subwayAccessibility={jobPosting.subwayAccessibility}
             adminAge={jobPosting.adminAge}
             adminSex={jobPosting.adminSex}
@@ -142,7 +139,9 @@ export default function JobPostingPage() {
             parkingSpotCount={jobPosting.parkingSpotCount}
             isExistedCleaningSupplier={jobPosting.isExistedCleaningSupplier}
             isExistedTowelSupplier={jobPosting.isExistedTowelSupplier}
-            basicCutPrice={jobPosting.basicCutPrice}
+            isOnsiteManager={jobPosting.isOnsiteManager}
+            isExistedFourInsurances={jobPosting.isExistedFourInsurances}
+            isExistedRetirementPay={jobPosting.isExistedRetirementPay}
             startWorkTime={jobPosting.startWorkTime}
             endWorkTime={jobPosting.endWorkTime}
             storeUrl={jobPosting.storeUrl}

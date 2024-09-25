@@ -17,7 +17,8 @@ const Caution = styled.div`
 `;
 
 const Description = styled.div`
-  ${fonts.greyTextSemi16}
+  ${fonts.greyTextNormal16}
+  line-height: ${pxToVw(24)};
 `;
 
 type EtcInfoProps = Pick<JobPosting, "storeName" | "description">;
