@@ -1,4 +1,32 @@
-interface JobPosting {
+import {
+  AdminAgeKey,
+  AdminSexKey,
+  AvailableOffDaysKey,
+  DesignerExperienceYearNumberKey,
+  DesignerLicensesKey,
+  DesignerPromotionPeriodKey,
+  EducationCostKey,
+  EmployeeCountKey,
+  IncentiveKey,
+  InternExperienceYearNumberKey,
+  InternSalaryKey,
+  isExistedInternSystemKey,
+  IsRestrictedAgeKey,
+  LeaveDayCountKey,
+  MealTimeKey,
+  ParkingSpotCountKey,
+  SalesCommissionKey,
+  SalesLast3MonthsAvgKey,
+  SettlementAllowanceKey,
+  SexKey,
+  StoreInteriorRenovationAgoKey,
+  StoreTypesKey,
+  SubwayAccessibilityKey,
+  WorkCycleTypeKey,
+  WorkTypeKey
+} from "./job-posting-keys";
+
+export interface JobPosting {
   // 고유 식별자
   id: number;
 
@@ -17,35 +45,35 @@ interface JobPosting {
 
   // 교육 관련
   monthlyEducationCount: string; // 월 교육 횟수
-  educationCost: string; // 교육 비용
+  educationCost: EducationCostKey; // 교육 비용
 
   // 근무 관련
-  workType: string; // 근무 형태
-  workCycleTypes: string; // 근무 주기 (콤마로 구분된 문자열)
+  workType: WorkTypeKey; // 근무 형태
+  workCycleTypes: WorkCycleTypeKey; // 근무 주기 (콤마로 구분된 문자열)
   startWorkTime: string; // 근무 시작 시간 (HH:MM:SS)
   endWorkTime: string; // 근무 종료 시간 (HH:MM:SS)
-  availableOffDays: string; // 휴무 가능일 (콤마로 구분된 문자열)
-  mealTime: string; // 식사 시간
-  settlementAllowance: string; // 정착 지원금
-  incentive: string; // 인센티브
-  internSalary: string; // 인턴 월급
-  sex: string; // 성별
+  availableOffDays: AvailableOffDaysKey; // 휴무 가능일 (콤마로 구분된 문자열)
+  mealTime: MealTimeKey; // 식사 시간
+  settlementAllowance: SettlementAllowanceKey; // 정착 지원금
+  incentive: IncentiveKey; // 인센티브
+  internSalary: InternSalaryKey; // 인턴 월급
+  sex: SexKey; // 성별
 
   // 직원 및 관리
-  employeeCount: string; // 직원 수
+  employeeCount: EmployeeCountKey; // 직원 수
   isOnsiteManager: boolean; // 샵 매니저 상주 여부
-  isExistedInternSystem: string; // 인턴 시스템 존재 여부 (예: "0", "1")
+  isExistedInternSystem: isExistedInternSystemKey; // 인턴 시스템 존재 여부 (예: "0", "1")
   isPossibleMiddleAge: boolean | null; // 중년 가능 여부
-  adminAge: string; // 관리자 연령
-  adminSex: string; // 관리자 성별
-  storeTypes: string; // 매장 유형 (콤마로 구분된 문자열)
-  storeInteriorRenovationAgo: string; // 매장 내부 리모델링 이후
+  adminAge: AdminAgeKey; // 관리자 연령
+  adminSex: AdminSexKey; // 관리자 성별
+  storeTypes: StoreTypesKey; // 매장 유형 (콤마로 구분된 문자열)
+  storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey; // 매장 내부 리모델링 이후
 
   // 라이센스 및 자격
-  designerLicenses: string; // 디자이너 라이센스 (콤마로 구분된 문자열)
-  designerExperienceYearNumber: string; // 디자이너 경력
-  designerPromotionPeriod: string; // 디자이너 승진 기간
-  internExperienceYearNumber: string; // 인턴 경력
+  designerLicenses: DesignerLicensesKey; // 디자이너 라이센스 (콤마로 구분된 문자열)
+  designerExperienceYearNumber: DesignerExperienceYearNumberKey; // 디자이너 경력
+  designerPromotionPeriod: DesignerPromotionPeriodKey; // 디자이너 승진 기간
+  internExperienceYearNumber: InternExperienceYearNumberKey; // 인턴 경력
 
   // 지원 및 혜택
   isExistedEducationSupport: boolean; // 교육 지원 여부
@@ -58,13 +86,13 @@ interface JobPosting {
   isExistedRetirementPay: boolean; // 퇴직금 존재 여부
 
   // 근무 조건
-  leaveDayCount: string; // 휴가 일수
-  parkingSpotCount: string; // 주차장 대수
-  subwayAccessibility: string; // 지하철 접근성
+  leaveDayCount: LeaveDayCountKey; // 휴가 일수
+  parkingSpotCount: ParkingSpotCountKey; // 주차장 대수
+  subwayAccessibility: SubwayAccessibilityKey; // 지하철 접근성
 
   // 매출 관련
-  salesCommission: string; // 매출 수수료
-  salesLast3MonthsAvg: string; // 최근 3개월 매출 평균
+  salesCommission: SalesCommissionKey; // 매출 수수료
+  salesLast3MonthsAvg: SalesLast3MonthsAvgKey; // 최근 3개월 매출 평균
 
   // 기타
   basicCutPrice: number | null; // 기본 컷 가격
@@ -74,7 +102,7 @@ interface JobPosting {
   isExposure: boolean; // 노출 여부
 
   // 이미지
-  jobPostingsStoreImages: Image[]; // 매장 이미지 리스트
+  jobPostingsStoreImages: ImageType[]; // 매장 이미지 리스트
 
   // 타임스탬프
   createdAt: string; // 생성 일시 (ISO 8601 형식)
@@ -85,7 +113,7 @@ interface JobPosting {
   userId: number; // 사용자 ID
 
   // 기타 옵션
-  isRestrictedAge: string | boolean; // 연령 제한 여부
+  isRestrictedAge: IsRestrictedAgeKey | boolean; // 연령 제한 여부
 
-  JobPostingsStoreImages: Image[];
+  JobPostingsStoreImages: ImageType[];
 }

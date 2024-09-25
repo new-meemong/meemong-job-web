@@ -5,6 +5,10 @@ import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import OptionIcon from "./header-icons/option-icon";
+import SingleSelectBottomModal from "../modals/single-select-bottom-modal";
+import { useState } from "react";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -34,13 +38,46 @@ const Title = styled.span`
 
 interface ResumeHeaderProps {
   title: string;
+  jobPostingId: string;
 }
 
-const JobPostingHeader = ({ title }: ResumeHeaderProps) => {
+const JobPostingHeader = ({ title, jobPostingId }: ResumeHeaderProps) => {
   const router = useRouter();
+  const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
+  const { resetStore, setFromJobPosting } = useJobPostingEditStore((state) => ({
+    resetStore: state.resetStore,
+    setFromJobPosting: state.setFromJobPosting
+  }));
+  const { jobPostingList } = useJobPostingListStore((state) => ({
+    jobPostingList: state.jobPostingList
+  }));
+
+  const options = ["수정", "삭제"];
 
   const handleBackClick = () => {
     router.back();
+  };
+
+  const handleOptionClick = () => {
+    setIsOptionModalOpen(true);
+  };
+
+  const handleOptionSelect = (option: string) => {
+    if (option === "수정") {
+      const jobPosting = jobPostingList.find(
+        (posting) => posting.id.toString() === jobPostingId
+      );
+      if (jobPosting) {
+        resetStore(); // 스토어를 초기화
+        setFromJobPosting(jobPosting); // 해당 id의 데이터를 스토어에 설정
+      }
+
+      router.push(`/job-posting/${jobPostingId}/edit`);
+    } else if (option === "삭제") {
+      // 삭제 로직
+    }
+
+    setIsOptionModalOpen(false);
   };
 
   return (
@@ -49,9 +86,15 @@ const JobPostingHeader = ({ title }: ResumeHeaderProps) => {
         <BackIcon />
       </LeftContainer>
       <Title>{title}</Title>
-      <RightContainer>
+      <RightContainer onClick={handleOptionClick}>
         <OptionIcon />
       </RightContainer>
+      <SingleSelectBottomModal
+        isOpen={isOptionModalOpen}
+        onClose={() => setIsOptionModalOpen(false)}
+        options={options}
+        onSelect={handleOptionSelect}
+      />
     </Container>
   );
 };

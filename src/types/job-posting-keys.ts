@@ -178,7 +178,7 @@ export type MainHairDyeKey = string;
 export type DescriptionKey = string;
 
 // 디자이너 승급기간 - 인턴
-export type DesignerPromitionPeriodKey =
+export type DesignerPromotionPeriodKey =
   | "1년 이하"
   | "1년 6개월 이하"
   | "2년 이하"

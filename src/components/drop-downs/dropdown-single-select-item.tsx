@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ArrowDownGreyIcon from "../icons/arrow-down-grey-icon";
-import SingleSelectBottomModal from "@/components/drop-downs/single-select-bottom-modal";
+import SingleSelectBottomModal from "@/components/modals/single-select-bottom-modal";
 import { useState } from "react";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";

@@ -18,7 +18,7 @@ const SheetContent = styled(Sheet.Content)`
 `;
 
 const SheetScroller = styled(Sheet.Scroller)`
-  padding-bottom: ${pxToVw(100)};
+  padding-bottom: ${pxToVw(50)};
 `;
 
 const OptionItem = styled.div`

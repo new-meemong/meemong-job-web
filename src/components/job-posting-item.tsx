@@ -2,6 +2,7 @@ import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import { JobPosting } from "@/types/job-posting";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

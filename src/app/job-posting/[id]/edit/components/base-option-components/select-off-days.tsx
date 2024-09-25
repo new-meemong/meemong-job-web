@@ -2,7 +2,7 @@ import BaseMultiSelect from "@/components/selects/base-multi-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
-import { AvailableOffDaysKey } from "@/types/job-posting-types";
+import { AvailableOffDaysKey } from "@/types/job-posting-keys";
 import styled from "styled-components";
 
 const Container = styled.div`

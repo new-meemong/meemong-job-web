@@ -4,7 +4,7 @@ import {
   AvailableOffDaysKey,
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
-  DesignerPromitionPeriodKey,
+  DesignerPromotionPeriodKey,
   EducationCostKey,
   EmployeeCountKey,
   IncentiveKey,
@@ -37,7 +37,7 @@ import {
   SubwayAccessibilityKey,
   WorkCycleTypeKey,
   WorkTypeKey
-} from "./job-posting-types";
+} from "./job-posting-keys";
 
 interface Option<KeyType> {
   key: KeyType;
@@ -81,7 +81,7 @@ type IsExistedTowelSupplierOption = Option<IsExistedTowelSupplierKey>;
 //인턴
 type EducationCostOption = Option<EducationCostKey>;
 type InternSalaryOption = Option<InternSalaryKey>;
-type DesignerPromitionPeriodOption = Option<DesignerPromitionPeriodKey>;
+type DesignerPromotionPeriodOption = Option<DesignerPromotionPeriodKey>;
 type InternExperienceYearNumberOption = Option<InternExperienceYearNumberKey>;
 type IsOnsiteManagerOption = Option<IsOnsiteManagerKey>;
 type IsExistedFourInsurancesOption = Option<IsExistedFourInsurancesKey>;
@@ -121,7 +121,7 @@ export const jobPostingOptions: {
   isExistedTowelSupplier: IsExistedTowelSupplierOption[];
   educationCost: EducationCostOption[];
   internSalary: InternSalaryOption[];
-  designerPromitionPeriod: DesignerPromitionPeriodOption[];
+  designerPromotionPeriod: DesignerPromotionPeriodOption[];
   internExperienceYearNumber: InternExperienceYearNumberOption[];
   isOnsiteManager: IsOnsiteManagerOption[];
   isExistedFourInsurances: IsExistedFourInsurancesOption[];
@@ -343,7 +343,7 @@ export const jobPostingOptions: {
     { key: "250만원 이상", value: "250만원 이상" }
   ],
   // 디자이너 승급기간
-  designerPromitionPeriod: [
+  designerPromotionPeriod: [
     { key: "1년 이하", value: "1년 이하" },
     { key: "1년 6개월 이하", value: "1년 6개월 이하" },
     { key: "2년 이하", value: "2년 이하" },

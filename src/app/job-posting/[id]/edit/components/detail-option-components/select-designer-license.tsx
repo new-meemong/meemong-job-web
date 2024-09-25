@@ -2,7 +2,7 @@ import BaseMultiSelect from "@/components/selects/base-multi-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
-import { DesignerLicensesKey } from "@/types/job-posting-types";
+import { DesignerLicensesKey } from "@/types/job-posting-keys";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -17,14 +17,14 @@ const SelectDesignerLicense = () => {
     hasInternOptionNull,
     role
   } = useJobPostingEditStore();
-  const licenses = jobPostingOptions.designerLicenses;
+  const licenses = jobPostingOptions.designerLicenses || [];
 
   let hasError = false;
 
   if (role === "디자이너") {
-    hasError = designerLicenses.length === 0 && hasDesignerOptionNull;
+    hasError = designerLicenses?.length === 0 && hasDesignerOptionNull;
   } else if (role === "인턴") {
-    hasError = designerLicenses.length === 0 && hasInternOptionNull;
+    hasError = designerLicenses?.length === 0 && hasInternOptionNull;
   }
 
   const handleSelect = (selectedOption: string) => {

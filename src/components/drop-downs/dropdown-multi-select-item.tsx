@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ArrowDownGreyIcon from "../icons/arrow-down-grey-icon";
 import { useState } from "react";
-import MultiSelectBottomModal from "@/components/drop-downs/multi-select-bottom-modal";
+import MultiSelectBottomModal from "@/components/modals/multi-select-bottom-modal";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 

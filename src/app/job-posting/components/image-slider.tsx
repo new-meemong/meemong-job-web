@@ -50,6 +50,7 @@ interface ImageSliderProps {
 }
 
 const ImageSlider = ({ images }: ImageSliderProps) => {
+  console.log("images", images);
   return (
     <SliderContainer>
       <Slider {...settings}>

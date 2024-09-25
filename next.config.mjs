@@ -16,7 +16,7 @@ const nextConfig = {
   },
 
   images: {
-    domains: ['meemong-job-storage.s3.ap-northeast-2.amazonaws.com'], // 허용할 도메인 추가
+    domains: ['meemong-job-storage.s3.ap-northeast-2.amazonaws.com', 'meemong-job-storage.s3.ap-northeast-2.amazonaws.comnull'], // 허용할 도메인 추가
   },
 };
 

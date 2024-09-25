@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/stores/auth-store";
 import { apiFetch } from "./fetch";
+import { JobPosting } from "@/types/job-posting";
 
 export const getJobPostings = async (queryParams?: Record<string, string>) => {
   try {
@@ -17,11 +18,23 @@ export const getJobPostings = async (queryParams?: Record<string, string>) => {
   }
 };
 
-export const postJobPostings = async (jobPosting: object) => {
+export const postJobPostings = async (jobPosting: JobPosting) => {
   try {
     return await apiFetch("/api/v1/job-postings", "POST", jobPosting);
   } catch (e) {
     console.error("[postJobPostings] failed", e);
+  }
+};
+
+export const putJobPostings = async (id: string, jobPosting: JobPosting) => {
+  try {
+    return await apiFetch(
+      `/api/v1/job-postings/${jobPosting.id}`,
+      "PUT",
+      jobPosting
+    );
+  } catch (e) {
+    console.error("[putJobPosting] failed", e);
   }
 };
 

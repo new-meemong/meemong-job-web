@@ -82,14 +82,28 @@ const CancelText = styled.span`
 
 const SelectJobPostingRegions = () => {
   const { _postingRegions, hasDesignerOptionNull, hasInternOptionNull, role } =
-    useJobPostingEditStore();
+    useJobPostingEditStore((state) => ({
+      _postingRegions: state._postingRegions,
+      hasDesignerOptionNull: state.hasDesignerOptionNull,
+      hasInternOptionNull: state.hasInternOptionNull,
+      role: state.role
+    }));
 
-  const convertRegions = _postingRegions.map((item) => {
-    const siKey = item.key.split(" ")[0]; // 시/도를 추출
-    const siName = siNmShort.find((si) => si.key === siKey)?.value;
-    const district = item.value; // 구/군 이름
+  console.log(
+    "[SelectJobPostingRegions] moonsae _postingRegions",
+    _postingRegions
+  );
+  const convertRegions = _postingRegions?.map((item) => {
+    if (item && item.key) {
+      const siKey = item.key.split(" ")[0]; // 시/도를 추출
+      const siName = siNmShort.find((si) => si.key === siKey)?.value;
+      const district = item.value; // 구/군 이름
 
-    return district.includes("전체") ? `${district}` : `${siName} ${district}`;
+      return district.includes("전체")
+        ? `${district}`
+        : `${siName} ${district}`;
+    }
+    return "";
   });
 
   let hasError = false;

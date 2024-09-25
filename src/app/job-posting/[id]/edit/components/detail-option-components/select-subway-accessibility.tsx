@@ -2,7 +2,7 @@ import BaseSingleSelect from "@/components/selects/base-single-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
-import { SubwayAccessibilityKey } from "@/types/job-posting-types";
+import { SubwayAccessibilityKey } from "@/types/job-posting-keys";
 import styled from "styled-components";
 
 const Container = styled.div`

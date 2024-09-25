@@ -28,10 +28,13 @@ export default function HomePage({ searchParams }: SearchParams) {
   const [activeTab, setActiveTab] = useState(0);
   const userId = searchParams.userId;
 
-  const login = useAuthStore((state) => state.login);
+  const { login, jwt } = useAuthStore((state) => ({
+    login: state.login,
+    jwt: state.jwt
+  }));
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !jwt) {
       login(userId);
     }
   }, [userId, login]);

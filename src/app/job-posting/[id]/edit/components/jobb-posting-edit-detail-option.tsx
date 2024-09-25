@@ -28,7 +28,7 @@ import SelectParkingSpotCount from "./detail-option-components/select-parking-sp
 import SelectIsExistedCleaningSupplier from "./detail-option-components/select-is-existed-cleaning-supplier";
 import SelectIsExistedTowelSupplier from "./detail-option-components/select-is-existed-towel-supplier";
 import InputBasicCutPrice from "./detail-option-components/input-basic-cut-price";
-import SelectDesignerPromitionPeriod from "./detail-option-components/select-designer-promotion-period";
+import SelectDesignerPromotionPeriod from "./detail-option-components/select-designer-promotion-period";
 import SelectInternExperienceYearNumber from "./detail-option-components/select-intern-experience-year-number";
 import SelectIsOnsiteManger from "./detail-option-components/select-is-onsite-manager";
 import SelectIsExistedRetirementPay from "./detail-option-components/select-is-existed-retirement-pay";
@@ -97,7 +97,7 @@ const InternOptions = () => {
       <SelectStoreTypes />
       <SelectEmployeeCount />
       <SelectIsExistedInternSystem />
-      <SelectDesignerPromitionPeriod />
+      <SelectDesignerPromotionPeriod />
       <SelectStoreInteriorRenovationAgo />
       <SelectWorkType />
       <SelectWorkCycle />

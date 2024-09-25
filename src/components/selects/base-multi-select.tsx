@@ -81,6 +81,8 @@ const BaseMultiSelect = ({
   isError,
   buttonSize = "large"
 }: BaseMultiSelectProps) => {
+  const safeSelectedOptions = selectedOptions || [];
+
   return (
     <Container>
       <Label>{label}</Label>
@@ -89,7 +91,7 @@ const BaseMultiSelect = ({
         {options.map((option) => (
           <Button
             key={option.key}
-            $isSelected={selectedOptions.includes(option.key)}
+            $isSelected={safeSelectedOptions.includes(option.key)}
             $size={buttonSize}
             onClick={() => onSelect(option.key)}
             $hasError={isError}

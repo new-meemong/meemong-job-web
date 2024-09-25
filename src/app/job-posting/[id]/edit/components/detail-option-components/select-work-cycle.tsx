@@ -2,7 +2,7 @@ import BaseMultiSelect from "@/components/selects/base-multi-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
-import { WorkCycleTypeKey } from "@/types/job-posting-types";
+import { WorkCycleTypeKey } from "@/types/job-posting-keys";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -16,14 +16,27 @@ const SelectWorkCycle = () => {
     hasDesignerOptionNull,
     hasInternOptionNull,
     role
-  } = useJobPostingEditStore();
+  } = useJobPostingEditStore((state) => ({
+    workCycleType: state.workCycleType,
+    setWorkCycle: state.setWorkCycle,
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
+    hasInternOptionNull: state.hasInternOptionNull,
+    role: state.role
+  }));
+
   const options = jobPostingOptions.workCycle;
   let hasError = false;
 
   if (role === "디자이너") {
-    hasError = workCycleType.length === 0 && hasDesignerOptionNull;
+    // workCycleType이 null이거나 undefined인 경우를 처리
+    hasError =
+      (workCycleType?.length === 0 || workCycleType == null) &&
+      hasDesignerOptionNull;
   } else if (role === "인턴") {
-    hasError = workCycleType.length === 0 && hasInternOptionNull;
+    // workCycleType이 null이거나 undefined인 경우를 처리
+    hasError =
+      (workCycleType?.length === 0 || workCycleType == null) &&
+      hasInternOptionNull;
   }
 
   const handleSelect = (selectedOption: string) => {

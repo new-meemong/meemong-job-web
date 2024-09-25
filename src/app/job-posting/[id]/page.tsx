@@ -40,6 +40,7 @@ const ContentContainer = styled.div`
 
 export default function JobPostingPage() {
   const { id } = useParams();
+  const jobPostingId: string = Array.isArray(id) ? id[0] : id;
   const { jobPostingList } = useJobPostingListStore((state) => ({
     jobPostingList: state.jobPostingList
   }));
@@ -53,7 +54,8 @@ export default function JobPostingPage() {
   }
 
   console.log("moonsae", jobPosting);
-  const { JobPostingsStoreImages } = jobPosting;
+  const { JobPostingsStoreImages }: { JobPostingsStoreImages: ImageType[] } =
+    jobPosting;
 
   const renderInfo = () => {
     if (jobPosting.role === "디자이너") {
@@ -154,7 +156,7 @@ export default function JobPostingPage() {
 
   return (
     <Container>
-      <JobPostingHeader title={"구인공고"} />
+      <JobPostingHeader title={"구인공고"} jobPostingId={jobPostingId} />
       <ImageSlider
         images={JobPostingsStoreImages.map((image) =>
           image?.uri

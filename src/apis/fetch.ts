@@ -6,12 +6,15 @@ export const apiFetch = async (url: string, method: string, body?: any) => {
   const jwt = useAuthStore.getState().jwt;
 
   console.log("=== API Request ===");
-  console.log("URL:", fullUrl);
-  console.log("Method:", method);
-  console.log("Headers:", {
+  console.log(method, fullUrl, {
     "Content-Type": "application/json",
     Authorization: `${jwt}`
   });
+  // console.log("Method:", method);
+  // console.log("Headers:", {
+  //   "Content-Type": "application/json",
+  //   Authorization: `${jwt}`
+  // });
   if (body) {
     console.log("Body:", JSON.stringify(body, null, 2));
   }
@@ -29,9 +32,9 @@ export const apiFetch = async (url: string, method: string, body?: any) => {
 
     const responseData = await response.json();
     console.log("=== API Response ===");
-    console.log("URL:", fullUrl);
-    console.log("Status:", response.status);
-    console.log("Status Text:", response.statusText);
+    console.log(response.status, response.statusText, fullUrl);
+    // console.log("Status:", response.status);
+    // console.log("Status Text:", response.statusText);
     console.log("Data:", responseData);
     console.log("====================");
 

@@ -7,7 +7,7 @@ import SelectOffDays from "./base-option-components/select-off-days";
 import SelectSettlementAllowance from "./base-option-components/select-settlement-allowance";
 import SelectEducationIntern from "./base-option-components/select-education-intern";
 import SelectIncentive from "./base-option-components/select-incentive";
-import JobPostingEditDetailOption from "./job-posting-edit-detail-option";
+import JobPostingEditDetailOption from "./jobb-posting-edit-detail-option";
 import Divider from "./divider";
 import JobPostingEditStoreImage from "./job-posting-edit-store-image";
 import JobPostingEditEtcOption from "./job-posting-edit-etc-option";

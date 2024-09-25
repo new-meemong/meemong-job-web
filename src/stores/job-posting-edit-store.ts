@@ -1,4 +1,4 @@
-import { postJobPostings } from "@/apis/job-postings";
+import { postJobPostings, putJobPostings } from "@/apis/job-postings";
 import {
   AdminAgeKey,
   AdminSexKey,
@@ -7,7 +7,7 @@ import {
   DescriptionKey,
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
-  DesignerPromitionPeriodKey,
+  DesignerPromotionPeriodKey,
   EducationCostKey,
   EmployeeCountKey,
   EndWorkTimeKey,
@@ -44,9 +44,12 @@ import {
   SubwayAccessibilityKey,
   WorkTypeKey,
   WorkCycleTypeKey
-} from "@/types/job-posting-types";
+} from "@/types/job-posting-keys";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { JobPosting } from "@/types/job-posting";
+import { siSggList } from "@/types/location-type";
+
 type StoreInfoType = {
   title: string;
   address: string;
@@ -57,6 +60,7 @@ type JobPostingsStoreImageType = {
   thumbnailUri: string;
 };
 type JobPostingEditState = {
+  id: string | null;
   postingTitle: string | null;
   storeName: string | null;
   storeRegion: string | null;
@@ -117,18 +121,20 @@ type JobPostingEditState = {
   // intern
   educationCost: EducationCostKey | null;
   internSalary: InternSalaryKey | null;
-  designerPromitionPeriod: DesignerPromitionPeriodKey | null;
+  designerPromotionPeriod: DesignerPromotionPeriodKey | null;
   internExperienceYearNumber: InternExperienceYearNumberKey | null;
   isOnsiteManager: IsOnsiteManagerKey | null;
   isExistedFourInsurances: IsExistedFourInsurancesKey | null;
   isExistedRetirementPay: IsExistedRetirementPayKey | null;
 
+  /** store 내부 변수 */
   // 에러 표시
   hasDesignerOptionNull: boolean;
   hasInternOptionNull: boolean;
 };
 
 type JobPostingEditActions = {
+  setId: (id: string) => void;
   setPostingTitle: (title: string) => void;
   setRole: (role: RoleKey) => void;
   setMonthlyEducationDesignerCount: (
@@ -191,8 +197,8 @@ type JobPostingEditActions = {
   setDescription: (description: DescriptionKey | null) => void;
   setEducationCost: (educationCost: EducationCostKey | null) => void;
   setInternSalary: (internSalary: InternSalaryKey | null) => void;
-  setDesignerPromitionPeriod: (
-    designerPromitionPeriod: DesignerPromitionPeriodKey | null
+  setDesignerPromotionPeriod: (
+    designerPromotionPeriod: DesignerPromotionPeriodKey | null
   ) => void;
   setInternExperienceYearNumber: (
     internExperienceYearNumber: InternExperienceYearNumberKey | null
@@ -205,10 +211,6 @@ type JobPostingEditActions = {
     isExistedRetirementPay: IsExistedRetirementPayKey | null
   ) => void;
 
-  // 공고 제출
-  submitDesignerJobPosting: () => Promise<boolean>;
-  submitInternJobPosting: () => Promise<boolean>;
-
   // 노출지역
   setPostingRegions: (
     selectedRightItems: { key: string; value: string }[]
@@ -218,9 +220,17 @@ type JobPostingEditActions = {
   setHasInternOptionNull: (hasInternOptionNull: boolean) => void;
   setJobPostingsStoreImages: (images: JobPostingsStoreImageType[]) => void;
   setStoreRegion: (storeRegion: StoreInfoType) => void;
+
+  // 내부 함수들
+  // 공고 제출
+  submitDesignerJobPosting: () => Promise<boolean>;
+  submitInternJobPosting: () => Promise<boolean>;
+  resetStore: () => void;
+  setFromJobPosting: (jobPosting: JobPosting) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
+  id: null,
   postingTitle: null,
   storeName: null,
   storeRegion: null,
@@ -265,7 +275,7 @@ const defaultJobPostingEditState: JobPostingEditState = {
   description: null,
   educationCost: null,
   internSalary: null,
-  designerPromitionPeriod: null,
+  designerPromotionPeriod: null,
   internExperienceYearNumber: null,
   isOnsiteManager: null,
   isExistedFourInsurances: null,
@@ -282,6 +292,139 @@ export const useJobPostingEditStore = create(
   persist<JobPostingEditState & JobPostingEditActions>(
     (set, get) => ({
       ...defaultJobPostingEditState,
+      resetStore: () => set({ ...defaultJobPostingEditState }),
+      setFromJobPosting: (jobPosting: JobPosting) => {
+        console.log("[setFromJobPosting] jobPosting", jobPosting);
+
+        console.log(
+          "[setFromJobPosting] jobPosting.postingRegions",
+          jobPosting.postingRegions
+        );
+        console.log(
+          "[setFromJobPosting] jobPosting.postingRegionSiNames",
+          jobPosting.postingRegionSiNames
+        );
+        console.log(
+          "[setFromJobPosting] get()._postingRegions",
+          get()._postingRegions
+        );
+        console.log(
+          "[setFromJobPosting] get().postingRegion",
+          get().postingRegions
+        );
+        console.log(
+          "[setFromJobPosting] get().postingRegionSiNames",
+          get().postingRegionSiNames
+        );
+        let parsedPostingRegions = [];
+
+        parsedPostingRegions = jobPosting.postingRegions
+          ? jobPosting.postingRegions.split(",").map((region) => {
+              const [city, district] = region.split(" "); // '서울특별시 성북구'를 '서울특별시'와 '성북구'로 분리
+              return { key: region, value: district }; // key는 전체 주소, value는 구 이름만 설정
+            })
+          : [];
+
+        // 시만 있고 구는 없는 경우
+        if (!jobPosting.postingRegions) {
+          parsedPostingRegions = jobPosting.postingRegionSiNames
+            .split(",")
+            .map((region) => {
+              return siSggList[region][0];
+            });
+        }
+
+        // 구가 없는 시만 추출하기
+        const onlySi = jobPosting.postingRegionSiNames
+          .split(",") // 콤마로 구분하여 배열로 변환
+          .filter((si) => si !== jobPosting.postingRegions.split(" ")[0]);
+        if (onlySi.length > 0) {
+          const parsedSi = onlySi.map((si) => {
+            return siSggList[si][0];
+          });
+          parsedPostingRegions = [...parsedPostingRegions, ...parsedSi];
+        }
+
+        // if(jobPosting.role === "디자이너") {
+        //   set({monthlyEducationDesignerCount: jobPosting.monthlyEducationCount});
+        // } else if(jobPosting.role === "인턴") {
+        //   set({monthlyEducationInternCount: jobPosting.monthlyEducationCount});
+        // }
+        set({
+          postingTitle: jobPosting.postingTitle,
+          storeName: jobPosting.storeName,
+          storeRegion: jobPosting.storeRegion,
+          storeRegionSiName: jobPosting.storeRegionSiName,
+          storeAddress: jobPosting.storeAddress,
+          role: jobPosting.role,
+          availableOffDays: jobPosting.availableOffDays
+            ? (jobPosting.availableOffDays.split(",") as AvailableOffDaysKey[])
+            : [],
+          settlementAllowance: jobPosting.settlementAllowance,
+          incentive: jobPosting.incentive,
+          sex: jobPosting.sex,
+          isRestrictedAge: jobPosting.isRestrictedAge,
+          isPossibleMiddleAge: jobPosting.isPossibleMiddleAge,
+          designerLicenses: jobPosting.designerLicenses
+            ? (jobPosting.designerLicenses.split(",") as DesignerLicensesKey[])
+            : [],
+          storeTypes: jobPosting.storeTypes
+            ? (jobPosting.storeTypes.split(",") as StoreTypesKey[])
+            : [],
+          employeeCount: jobPosting.employeeCount,
+          isExistedInternSystem: jobPosting.isExistedInternSystem,
+          storeInteriorRenovationAgo: jobPosting.storeInteriorRenovationAgo,
+          workType: jobPosting.workType,
+          workCycleType: jobPosting.workCycleTypes
+            ? (jobPosting.workCycleTypes.split(",") as WorkCycleTypeKey[])
+            : [],
+          isExistedEducationSupport: jobPosting.isExistedEducationSupport,
+          isExistedMealSupport: jobPosting.isExistedMealSupport,
+          mealTime: jobPosting.mealTime,
+          isExistedProductSupport: jobPosting.isExistedProductSupport,
+          isExistedDormitorySupport: jobPosting.isExistedDormitorySupport,
+          salesCommission: jobPosting.salesCommission,
+          designerExperienceYearNumber: jobPosting.designerExperienceYearNumber,
+          salesLast3MonthsAvg: jobPosting.salesLast3MonthsAvg,
+          subwayAccessibility: jobPosting.subwayAccessibility,
+          adminAge: jobPosting.adminAge,
+          adminSex: jobPosting.adminSex,
+          leaveDayCount: jobPosting.leaveDayCount,
+          parkingSpotCount: jobPosting.parkingSpotCount,
+          isExistedCleaningSupplier: jobPosting.isExistedCleaningSupplier,
+          isExistedTowelSupplier: jobPosting.isExistedTowelSupplier,
+          basicCutPrice: jobPosting.basicCutPrice,
+          startWorkTime: jobPosting.startWorkTime,
+          endWorkTime: jobPosting.endWorkTime,
+          storeUrl: jobPosting.storeUrl,
+          mainHairDye: jobPosting.mainHairDye,
+          description: jobPosting.description,
+          educationCost: jobPosting.educationCost,
+          internSalary: jobPosting.internSalary,
+          designerPromotionPeriod: jobPosting.designerPromotionPeriod,
+          internExperienceYearNumber: jobPosting.internExperienceYearNumber,
+          isOnsiteManager: jobPosting.isOnsiteManager,
+          isExistedFourInsurances: jobPosting.isExistedFourInsurances,
+          isExistedRetirementPay: jobPosting.isExistedRetirementPay,
+
+          _postingRegions:
+            get()._postingRegions.length !== 0
+              ? get()._postingRegions
+              : parsedPostingRegions,
+          postingRegions: get().postingRegions
+            ? get().postingRegions
+            : jobPosting.postingRegions,
+          postingRegionSiNames: get().postingRegionSiNames
+            ? get().postingRegionSiNames
+            : jobPosting.postingRegionSiNames,
+          jobPostingsStoreImages: jobPosting.JobPostingsStoreImages,
+
+          // state 내부 변수
+          hasDesignerOptionNull: false,
+          hasInternOptionNull: false
+        });
+      },
+      setId: (id: string) => set({ id }),
       setPostingTitle: (postingTitle: string) => set({ postingTitle }),
       setRole: (role: RoleKey) => {
         set({ role });
@@ -390,9 +533,9 @@ export const useJobPostingEditStore = create(
         set({ educationCost }),
       setInternSalary: (internSalary: InternSalaryKey | null) =>
         set({ internSalary }),
-      setDesignerPromitionPeriod: (
-        designerPromitionPeriod: DesignerPromitionPeriodKey | null
-      ) => set({ designerPromitionPeriod }),
+      setDesignerPromotionPeriod: (
+        designerPromotionPeriod: DesignerPromotionPeriodKey | null
+      ) => set({ designerPromotionPeriod }),
       setInternExperienceYearNumber: (
         internExperienceYearNumber: InternExperienceYearNumberKey | null
       ) => set({ internExperienceYearNumber }),
@@ -493,7 +636,10 @@ export const useJobPostingEditStore = create(
 
           console.log("jobPostingData2", jobPostingData);
 
-          const response = await postJobPostings(jobPostingData);
+          const sendData = jobPostingData as JobPosting;
+          const response = get().id
+            ? await putJobPostings(get().id!, sendData)
+            : await postJobPostings(sendData);
           if (response.data) {
             // set({ ...defaultJobPostingEditState });
             alert("디자이너 구인 공고 등록이 완료되었습니다.");
@@ -537,7 +683,7 @@ export const useJobPostingEditStore = create(
             storeTypes: get().storeTypes.join(), // 매장 형태
             employeeCount: get().employeeCount, // 직원 수
             isExistedInternSystem: get().isExistedInternSystem, // 인턴 시스템
-            designerPromitionPeriod: get().designerPromitionPeriod, // 디자이너 승습 기간
+            designerPromotionPeriod: get().designerPromotionPeriod, // 디자이너 승습 기간
             storeInteriorRenovationAgo: get().storeInteriorRenovationAgo, // 매장 리모델링
             workType: get().workType, // 근무 형태
             workCycleType: get().workCycleType.join(), // 근무 주기
@@ -598,7 +744,10 @@ export const useJobPostingEditStore = create(
 
           console.log("jobPostingData2", jobPostingData);
 
-          const response = await postJobPostings(jobPostingData);
+          const sendData = jobPostingData as JobPosting;
+          const response = get().id
+            ? await putJobPostings(get().id!, sendData)
+            : await postJobPostings(sendData);
           if (response.data) {
             // set({ ...defaultJobPostingEditState });
             alert("인턴 구인 공고 등록이 완료되었습니다.");
@@ -624,7 +773,12 @@ export const useJobPostingEditStore = create(
           .filter((item) => !item.value.includes("전체")) // "전체"가 포함되지 않은 항목만 필터링
           .map((item) => item.key)
           .join(",");
-
+        console.log("[setPostingRegions] postingRegions", postingRegions);
+        console.log(
+          "[setPostingRegions] postingRegionSiNames",
+          postingRegionSiNames
+        );
+        console.log("[setPostingRegions] _postingRegions", selectedRightItems);
         set({
           _postingRegions: selectedRightItems,
           postingRegions,
