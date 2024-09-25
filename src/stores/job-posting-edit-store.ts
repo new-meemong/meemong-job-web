@@ -43,7 +43,7 @@ import {
   StoreTypesKey,
   SubwayAccessibilityKey,
   WorkTypeKey,
-  WorkCycleTypeKey
+  WorkCycleTypesKey
 } from "@/types/job-posting-keys";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -88,7 +88,7 @@ type JobPostingEditState = {
   isExistedInternSystem: isExistedInternSystemKey | null;
   storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null;
   workType: WorkTypeKey | null;
-  workCycleType: WorkCycleTypeKey[];
+  workCycleTypes: WorkCycleTypesKey[];
   isExistedEducationSupport: IsExistedEducationSupportKey | null;
   isExistedMealSupport: IsExistedMealSupportKey | null;
   mealTime: MealTimeKey | null;
@@ -131,6 +131,7 @@ type JobPostingEditState = {
   // 에러 표시
   hasDesignerOptionNull: boolean;
   hasInternOptionNull: boolean;
+  isEdit: boolean;
 };
 
 type JobPostingEditActions = {
@@ -159,7 +160,7 @@ type JobPostingEditActions = {
     storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null
   ) => void;
   setWorkType: (workType: WorkTypeKey) => void;
-  setWorkCycle: (workCycle: WorkCycleTypeKey) => void;
+  setWorkCycles: (workCycle: WorkCycleTypesKey) => void;
   setIsExistedEducationSupport: (
     isExistedEducationSupport: IsExistedEducationSupportKey | null
   ) => void;
@@ -227,6 +228,7 @@ type JobPostingEditActions = {
   submitInternJobPosting: () => Promise<boolean>;
   resetStore: () => void;
   setFromJobPosting: (jobPosting: JobPostingType) => void;
+  setIsEdit: (isEdit: boolean) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -251,7 +253,7 @@ const defaultJobPostingEditState: JobPostingEditState = {
   isExistedInternSystem: null,
   storeInteriorRenovationAgo: null,
   workType: null,
-  workCycleType: [],
+  workCycleTypes: [],
   isExistedEducationSupport: null,
   isExistedMealSupport: null,
   mealTime: null,
@@ -285,7 +287,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   _postingRegions: [],
   postingRegions: null,
   postingRegionSiNames: null,
-  jobPostingsStoreImages: []
+  jobPostingsStoreImages: [],
+  isEdit: false
 };
 
 export const useJobPostingEditStore = create(
@@ -294,28 +297,7 @@ export const useJobPostingEditStore = create(
       ...defaultJobPostingEditState,
       resetStore: () => set({ ...defaultJobPostingEditState }),
       setFromJobPosting: (jobPosting: JobPostingType) => {
-        console.log("[setFromJobPosting] jobPosting", jobPosting);
-
-        console.log(
-          "[setFromJobPosting] jobPosting.postingRegions",
-          jobPosting.postingRegions
-        );
-        console.log(
-          "[setFromJobPosting] jobPosting.postingRegionSiNames",
-          jobPosting.postingRegionSiNames
-        );
-        console.log(
-          "[setFromJobPosting] get()._postingRegions",
-          get()._postingRegions
-        );
-        console.log(
-          "[setFromJobPosting] get().postingRegion",
-          get().postingRegions
-        );
-        console.log(
-          "[setFromJobPosting] get().postingRegionSiNames",
-          get().postingRegionSiNames
-        );
+        console.log("moonsae jobPosting", jobPosting);
         let parsedPostingRegions = [];
 
         parsedPostingRegions = jobPosting.postingRegions
@@ -345,11 +327,18 @@ export const useJobPostingEditStore = create(
           parsedPostingRegions = [...parsedPostingRegions, ...parsedSi];
         }
 
-        // if(jobPosting.role === "디자이너") {
-        //   set({monthlyEducationDesignerCount: jobPosting.monthlyEducationCount});
-        // } else if(jobPosting.role === "인턴") {
-        //   set({monthlyEducationInternCount: jobPosting.monthlyEducationCount});
-        // }
+        if (jobPosting.role === "디자이너") {
+          set({
+            monthlyEducationDesignerCount:
+              jobPosting.monthlyEducationCount as MonthlyEducationDesignerCountKey
+          });
+        } else if (jobPosting.role === "인턴") {
+          set({
+            monthlyEducationInternCount:
+              jobPosting.monthlyEducationCount as MonthlyEducationInternCountKey
+          });
+        }
+
         set({
           postingTitle: jobPosting.postingTitle,
           storeName: jobPosting.storeName,
@@ -375,8 +364,8 @@ export const useJobPostingEditStore = create(
           isExistedInternSystem: jobPosting.isExistedInternSystem,
           storeInteriorRenovationAgo: jobPosting.storeInteriorRenovationAgo,
           workType: jobPosting.workType,
-          workCycleType: jobPosting.workCycleTypes
-            ? (jobPosting.workCycleTypes.split(",") as WorkCycleTypeKey[])
+          workCycleTypes: jobPosting.workCycleTypes
+            ? (jobPosting.workCycleTypes.split(",") as WorkCycleTypesKey[])
             : [],
           isExistedEducationSupport: jobPosting.isExistedEducationSupport,
           isExistedMealSupport: jobPosting.isExistedMealSupport,
@@ -477,9 +466,11 @@ export const useJobPostingEditStore = create(
         storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null
       ) => set({ storeInteriorRenovationAgo }),
       setWorkType: (workType: WorkTypeKey) => set({ workType }),
-      setWorkCycle: (selectedWorkCycle: WorkCycleTypeKey) => {
-        const { workCycleType } = get();
-        set({ workCycleType: toggleSelect(workCycleType, selectedWorkCycle) });
+      setWorkCycles: (selectedWorkCycle: WorkCycleTypesKey) => {
+        const { workCycleTypes } = get();
+        set({
+          workCycleTypes: toggleSelect(workCycleTypes, selectedWorkCycle)
+        });
       },
       setIsExistedEducationSupport: (
         isExistedEducationSupport: IsExistedEducationSupportKey | null
@@ -578,7 +569,7 @@ export const useJobPostingEditStore = create(
             isExistedInternSystem: get().isExistedInternSystem, // 인턴 시스템
             storeInteriorRenovationAgo: get().storeInteriorRenovationAgo, // 매장 리모델링
             workType: get().workType, // 근무 형태
-            workCycleType: get().workCycleType.join(), // 근무 주기
+            workCycleTypes: get().workCycleTypes.join(), // 근무 주기
             isExistedEducationSupport: get().isExistedEducationSupport, // 교육 지원
             isExistedMealSupport: get().isExistedMealSupport, // 식대 지원
             mealTime: get().mealTime, // 식사 시간
@@ -686,7 +677,7 @@ export const useJobPostingEditStore = create(
             designerPromotionPeriod: get().designerPromotionPeriod, // 디자이너 승습 기간
             storeInteriorRenovationAgo: get().storeInteriorRenovationAgo, // 매장 리모델링
             workType: get().workType, // 근무 형태
-            workCycleType: get().workCycleType.join(), // 근무 주기
+            workCycleTypes: get().workCycleTypes.join(), // 근무 주기
             isExistedMealSupport: get().isExistedMealSupport, // 식대 지원
             mealTime: get().mealTime, // 식사 시간
             isExistedProductSupport: get().isExistedProductSupport, // 제품 지원
@@ -700,8 +691,8 @@ export const useJobPostingEditStore = create(
             parkingSpotCount: get().parkingSpotCount, // 주차장
             isExistedCleaningSupplier: get().isExistedCleaningSupplier, // 청소 업체
             isExistedTowelSupplier: get().isExistedTowelSupplier, // 수건 업체
-            isOnsiteManger: get().isOnsiteManager, // 샵 매니저 상주
-            isExistedFourInsurance: get().isExistedFourInsurances, // 4대 보험
+            isOnsiteManager: get().isOnsiteManager, // 샵 매니저 상주
+            isExistedFourInsurances: get().isExistedFourInsurances, // 4대 보험
             isExistedRetirementPay: get().isExistedRetirementPay, // 퇴직금
 
             JobPostingsStoreImages: get().jobPostingsStoreImages // 매장 이미지
@@ -722,13 +713,13 @@ export const useJobPostingEditStore = create(
           );
 
           if (hasNullField) {
-            set({ hasDesignerOptionNull: true });
+            set({ hasInternOptionNull: true });
             alert(
               "필수 항목 중 일부가 누락되었습니다. 모든 항목을 입력해주세요."
             );
             return false;
           } else {
-            set({ hasDesignerOptionNull: false });
+            set({ hasInternOptionNull: false });
           }
 
           jobPostingData = {
@@ -745,6 +736,7 @@ export const useJobPostingEditStore = create(
           console.log("jobPostingData2", jobPostingData);
 
           const sendData = jobPostingData as JobPostingType;
+          console.log("moonsae get().id", get().id, get().id!);
           const response = get().id
             ? await putJobPostings(get().id!, sendData)
             : await postJobPostings(sendData);
@@ -815,7 +807,8 @@ export const useJobPostingEditStore = create(
             storeAddress: address
           });
         }
-      }
+      },
+      setIsEdit: (isEdit: boolean) => set({ isEdit })
     }),
 
     {

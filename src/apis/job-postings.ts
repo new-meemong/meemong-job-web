@@ -31,11 +31,7 @@ export const putJobPostings = async (
   jobPosting: JobPostingType
 ) => {
   try {
-    return await apiFetch(
-      `/api/v1/job-postings/${jobPosting.id}`,
-      "PUT",
-      jobPosting
-    );
+    return await apiFetch(`/api/v1/job-postings/${id}`, "PUT", jobPosting);
   } catch (e) {
     console.error("[putJobPosting] failed", e);
   }

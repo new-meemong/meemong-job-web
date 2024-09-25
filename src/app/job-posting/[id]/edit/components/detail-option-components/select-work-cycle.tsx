@@ -2,7 +2,7 @@ import BaseMultiSelect from "@/components/selects/base-multi-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
-import { WorkCycleTypeKey } from "@/types/job-posting-keys";
+import { WorkCycleTypesKey } from "@/types/job-posting-keys";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -11,14 +11,14 @@ const Container = styled.div`
 
 const SelectWorkCycle = () => {
   const {
-    workCycleType,
-    setWorkCycle,
+    workCycleTypes,
+    setWorkCycles,
     hasDesignerOptionNull,
     hasInternOptionNull,
     role
   } = useJobPostingEditStore((state) => ({
-    workCycleType: state.workCycleType,
-    setWorkCycle: state.setWorkCycle,
+    workCycleTypes: state.workCycleTypes,
+    setWorkCycles: state.setWorkCycles,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
     role: state.role
@@ -30,24 +30,24 @@ const SelectWorkCycle = () => {
   if (role === "디자이너") {
     // workCycleType이 null이거나 undefined인 경우를 처리
     hasError =
-      (workCycleType?.length === 0 || workCycleType == null) &&
+      (workCycleTypes?.length === 0 || workCycleTypes == null) &&
       hasDesignerOptionNull;
   } else if (role === "인턴") {
     // workCycleType이 null이거나 undefined인 경우를 처리
     hasError =
-      (workCycleType?.length === 0 || workCycleType == null) &&
+      (workCycleTypes?.length === 0 || workCycleTypes == null) &&
       hasInternOptionNull;
   }
 
   const handleSelect = (selectedOption: string) => {
-    setWorkCycle(selectedOption as WorkCycleTypeKey);
+    setWorkCycles(selectedOption as WorkCycleTypesKey);
   };
   return (
     <Container>
       <BaseMultiSelect
         label="근무 주기"
         options={options}
-        selectedOptions={workCycleType}
+        selectedOptions={workCycleTypes}
         errorMessage="근무 주기를 선택해주세요."
         onSelect={handleSelect}
         isError={hasError}

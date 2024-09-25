@@ -94,7 +94,7 @@ export type StoreInteriorRenovationAgoKey =
 export type WorkTypeKey = "정규직" | "스페어(알바)";
 
 // 근무 주기
-export type WorkCycleTypeKey = "주 4일" | "주 5일" | "주 6일" | "격주 5일";
+export type WorkCycleTypesKey = "주 4일" | "주 5일" | "주 6일" | "격주 5일";
 
 // 교육비 지원-디자이너
 export type IsExistedEducationSupportKey = boolean;

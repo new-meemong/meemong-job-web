@@ -35,7 +35,7 @@ import {
   StoreInteriorRenovationAgoKey,
   StoreTypesKey,
   SubwayAccessibilityKey,
-  WorkCycleTypeKey,
+  WorkCycleTypesKey,
   WorkTypeKey
 } from "./job-posting-keys";
 
@@ -60,7 +60,7 @@ type EmployeeCountOption = Option<EmployeeCountKey>;
 type IsExistedInternSystemOption = Option<isExistedInternSystemKey>;
 type StoreInteriorRenovationAgoOption = Option<StoreInteriorRenovationAgoKey>;
 type WorkTypeOption = Option<WorkTypeKey>;
-type WorkCycleOption = Option<WorkCycleTypeKey>;
+type WorkCycleOption = Option<WorkCycleTypesKey>;
 type IsExistedEducationSupportOption = Option<IsExistedEducationSupportKey>;
 type IsExistedMealSupportOption = Option<IsExistedMealSupportKey>;
 type MealTimeOption = Option<MealTimeKey>;

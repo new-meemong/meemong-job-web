@@ -23,7 +23,7 @@ import {
   StoreInteriorRenovationAgoKey,
   StoreTypesKey,
   SubwayAccessibilityKey,
-  WorkCycleTypeKey,
+  WorkCycleTypesKey,
   WorkTypeKey
 } from "./job-posting-keys";
 
@@ -50,7 +50,7 @@ export interface JobPostingType {
 
   // 근무 관련
   workType: WorkTypeKey; // 근무 형태
-  workCycleTypes: WorkCycleTypeKey; // 근무 주기 (콤마로 구분된 문자열)
+  workCycleTypes: WorkCycleTypesKey; // 근무 주기 (콤마로 구분된 문자열)
   startWorkTime: string; // 근무 시작 시간 (HH:MM:SS)
   endWorkTime: string; // 근무 종료 시간 (HH:MM:SS)
   availableOffDays: AvailableOffDaysKey; // 휴무 가능일 (콤마로 구분된 문자열)

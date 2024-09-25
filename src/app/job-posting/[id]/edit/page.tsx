@@ -38,7 +38,7 @@ export default function JobPostingEditPage() {
   }));
 
   useEffect(() => {
-    if (postingId == "new") {
+    if (postingId !== "new") {
       setId(postingId);
     }
   }, [postingId, setId]);
