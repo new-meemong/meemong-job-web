@@ -1,7 +1,7 @@
+import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { Content } from "next/font/google";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -90,7 +90,7 @@ const ViewCount = styled.span`
   margin-top: ${pxToVw(6)};
 `;
 
-const ProfileImage = styled(Image)`
+const StoreImage = styled(Image)`
   width: ${pxToVw(91)};
   height: ${pxToVw(91)};
   object-fit: cover;
@@ -104,8 +104,13 @@ interface JobPostingItemProps {
 }
 
 const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
-  const [imgSrc, setImgSrc] = useState("/images/default_profile_image.jpg");
   const router = useRouter();
+
+  const initialImage = jobPosting.JobPostingsStoreImages[0]?.thumbnailUri
+    ? `${IMAGE_STORAGE_URL}${jobPosting.JobPostingsStoreImages[0].thumbnailUri}`
+    : "/images/default_profile_image.jpg";
+
+  const [imgSrc, setImgSrc] = useState<string>(initialImage);
 
   const handleImageError = () => {
     setImgSrc("/images/default_profile_image.jpg"); // 이미지 로드 실패 시 대체 이미지 경로
@@ -137,7 +142,7 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
           {/* <ViewCount>{`조회 0`}</ViewCount> */}
         </ContentLeftContainer>
 
-        <ProfileImage
+        <StoreImage
           src={imgSrc}
           alt="profile Image"
           width={91}

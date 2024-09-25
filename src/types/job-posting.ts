@@ -79,4 +79,6 @@ interface JobPosting {
 
   // 기타 옵션
   isRestrictedAge: string | null; // 연령 제한 여부
+
+  JobPostingsStoreImages: Image[];
 }

@@ -452,7 +452,7 @@ export const useJobPostingEditStore = create(
             isExistedCleaningSupplier: get().isExistedCleaningSupplier, // 청소 업체
             isExistedTowelSupplier: get().isExistedTowelSupplier, // 수건 업체
             basicCutPrice: get().basicCutPrice, // 기본 컷 가격
-            jobPostingStoreImages: get().jobPostingsStoreImages
+            JobPostingsStoreImages: get().jobPostingsStoreImages
           };
 
           if (jobPostingData.role !== "디자이너") {
@@ -461,11 +461,12 @@ export const useJobPostingEditStore = create(
 
           console.log("jobPostingData", jobPostingData);
 
-          const hasNullField = Object.values(jobPostingData).some(
-            (value) =>
-              value === null ||
-              value === "" ||
-              (Array.isArray(value) && value.length === 0)
+          const hasNullField = Object.entries(jobPostingData).some(
+            ([key, value]) =>
+              key !== "postingRegions" &&
+              (value === null ||
+                value === "" ||
+                (Array.isArray(value) && value.length === 0))
           );
 
           if (hasNullField) {
