@@ -24,23 +24,28 @@ interface JobPosting {
   workCycleTypes: string; // 근무 주기 (콤마로 구분된 문자열)
   startWorkTime: string; // 근무 시작 시간 (HH:MM:SS)
   endWorkTime: string; // 근무 종료 시간 (HH:MM:SS)
-  availableOffDays: string | null; // 휴무 가능일 (콤마로 구분된 문자열 또는 null)
+  availableOffDays: string; // 휴무 가능일 (콤마로 구분된 문자열)
   mealTime: string; // 식사 시간
   settlementAllowance: string; // 정착 지원금
   incentive: string; // 인센티브
+  internSalary: string; // 인턴 월급
+  sex: string; // 성별
 
   // 직원 및 관리
   employeeCount: string; // 직원 수
-  isOnsiteManager: boolean; // 현장 관리자 여부
+  isOnsiteManager: boolean; // 샵 매니저 상주 여부
   isExistedInternSystem: string; // 인턴 시스템 존재 여부 (예: "0", "1")
   isPossibleMiddleAge: boolean | null; // 중년 가능 여부
   adminAge: string; // 관리자 연령
   adminSex: string; // 관리자 성별
+  storeTypes: string; // 매장 유형 (콤마로 구분된 문자열)
+  storeInteriorRenovationAgo: string; // 매장 내부 리모델링 이후
 
   // 라이센스 및 자격
   designerLicenses: string; // 디자이너 라이센스 (콤마로 구분된 문자열)
   designerExperienceYearNumber: string; // 디자이너 경력
-  designerPromitionPeriod: string; // 디자이너 승진 기간
+  designerPromotionPeriod: string; // 디자이너 승진 기간
+  internExperienceYearNumber: string; // 인턴 경력
 
   // 지원 및 혜택
   isExistedEducationSupport: boolean; // 교육 지원 여부
@@ -62,9 +67,11 @@ interface JobPosting {
   salesLast3MonthsAvg: string; // 최근 3개월 매출 평균
 
   // 기타
-  basicCutPrice: number; // 기본 컷 가격
-  mainHairDie: string; // 주요 염모제 이름
+  basicCutPrice: number | null; // 기본 컷 가격
+  mainHairDye: string; // 주요 염모제 이름
   description: string; // 공고 설명
+  storeUrl: string; // 매장 URL 또는 링크
+  isExposure: boolean; // 노출 여부
 
   // 이미지
   jobPostingsStoreImages: Image[]; // 매장 이미지 리스트
@@ -78,7 +85,7 @@ interface JobPosting {
   userId: number; // 사용자 ID
 
   // 기타 옵션
-  isRestrictedAge: string | null; // 연령 제한 여부
+  isRestrictedAge: string | boolean; // 연령 제한 여부
 
   JobPostingsStoreImages: Image[];
 }

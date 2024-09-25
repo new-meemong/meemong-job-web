@@ -1,5 +1,6 @@
 import { ErrorMessage } from "@/components/error-message";
 import pxToVw from "@/lib/dpi-converter";
+import { formatPriceWithCommas } from "@/lib/price-comma";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { fonts } from "@/styles/fonts";
 import { ChangeEvent } from "react";
@@ -50,11 +51,6 @@ const InputBasicCutPrice = () => {
   if (basicCutPrice === null && hasDesignerOptionNull) {
     hasError = true;
   }
-
-  const formatPriceWithCommas = (value: number | null): string => {
-    if (value === null) return "";
-    return new Intl.NumberFormat().format(value);
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const inputValue = e.target.value.replace(/[^\d]/g, ""); // 숫자만 유지

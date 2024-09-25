@@ -39,11 +39,11 @@ const InputField = styled.input`
   }
 `;
 
-const InputMainHairDie = () => {
-  const { mainHairDie, setMainHairDie } = useJobPostingEditStore();
+const InputMainHairDye = () => {
+  const { mainHairDye, setMainHairDye } = useJobPostingEditStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setMainHairDie(e.target.value === "" ? null : e.target.value);
+    setMainHairDye(e.target.value === "" ? null : e.target.value);
   };
 
   return (
@@ -52,11 +52,11 @@ const InputMainHairDie = () => {
       <InputField
         placeholder="입력 가능"
         type="text"
-        value={mainHairDie || ""}
+        value={mainHairDye || ""}
         onChange={handleChange}
       />
     </Container>
   );
 };
 
-export default InputMainHairDie;
+export default InputMainHairDye;

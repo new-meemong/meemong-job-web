@@ -112,6 +112,11 @@ export const fonts = {
   `,
 
   // greyText
+  greyTextBold20: css`
+    font-size: ${pxToVw(20)};
+    font-weight: 700;
+    color: ${colors.greyText};
+  `,
   greyTextBold18: css`
     font-size: ${pxToVw(18)};
     font-weight: 700;
@@ -132,7 +137,16 @@ export const fonts = {
     font-weight: 500;
     color: ${colors.greyText};
   `,
-
+  greyTextNormal16: css`
+    font-size: ${pxToVw(16)};
+    font-weight: 400;
+    color: ${colors.greyText};
+  `,
+  greyTextNormal12: css`
+    font-size: ${pxToVw(12)};
+    font-weight: 400;
+    color: ${colors.greyText};
+  `,
   // greyText2
   greyText2Normal10: css`
     font-size: ${pxToVw(10)};

@@ -111,7 +111,7 @@ type JobPostingEditState = {
   startWorkTime: StartWorkTimeKey | null;
   endWorkTime: EndWorkTimeKey | null;
   storeUrl: StoreUrlKey | null;
-  mainHairDie: MainHairDyeKey | null;
+  mainHairDye: MainHairDyeKey | null;
   description: DescriptionKey | null;
 
   // intern
@@ -187,7 +187,7 @@ type JobPostingEditActions = {
   setStartWorkTime: (startWorkTime: string | null) => void;
   setEndWorkTime: (endWorkTime: string | null) => void;
   setStoreUrl: (storeUrl: StoreUrlKey | null) => void;
-  setMainHairDie: (mainHaireDie: MainHairDyeKey | null) => void;
+  setMainHairDye: (mainHaireDie: MainHairDyeKey | null) => void;
   setDescription: (description: DescriptionKey | null) => void;
   setEducationCost: (educationCost: EducationCostKey | null) => void;
   setInternSalary: (internSalary: InternSalaryKey | null) => void;
@@ -261,7 +261,7 @@ const defaultJobPostingEditState: JobPostingEditState = {
   startWorkTime: null,
   endWorkTime: null,
   storeUrl: null,
-  mainHairDie: null,
+  mainHairDye: null,
   description: null,
   educationCost: null,
   internSalary: null,
@@ -382,8 +382,8 @@ export const useJobPostingEditStore = create(
         set({
           storeUrl
         }),
-      setMainHairDie: (mainHairDie: MainHairDyeKey | null) =>
-        set({ mainHairDie }),
+      setMainHairDye: (mainHairDye: MainHairDyeKey | null) =>
+        set({ mainHairDye }),
       setDescription: (description: DescriptionKey | null) =>
         set({ description }),
       setEducationCost: (educationCost: EducationCostKey | null) =>

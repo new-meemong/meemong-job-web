@@ -2,7 +2,7 @@ import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 import InputWorkTime from "./etc-option-components/input-work-time";
 import InputStoreInstagramUrl from "./etc-option-components/input-store-url";
-import InputMainHairDie from "./etc-option-components/input-main-haire-die";
+import InputMainHairDye from "./etc-option-components/input-main-haire-dye";
 
 const Container = styled.div``;
 
@@ -22,7 +22,7 @@ const JobPostingEditEtcOption = () => {
       </HeaderLabel>
       <InputWorkTime />
       <InputStoreInstagramUrl />
-      <InputMainHairDie />
+      <InputMainHairDye />
     </Container>
   );
 };

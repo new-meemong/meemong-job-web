@@ -39,8 +39,11 @@ const JobPostingEditConfirmButton = () => {
       if (submit) {
         router.back();
       }
-    } else {
-      submitInternJobPosting();
+    } else if (role === "인턴") {
+      const submit = await submitInternJobPosting();
+      if (submit) {
+        router.back();
+      }
     }
   };
 

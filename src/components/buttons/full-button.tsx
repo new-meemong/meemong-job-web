@@ -7,10 +7,11 @@ const Container = styled.div`
   ${fonts.whiteBold16}
   background-color: ${colors.purplePrimary};
   height: ${pxToVw(48)};
-  border-radius: ${pxToVw(5)};
+  border-radius: ${pxToVw(4)};
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
 
 interface TitleProps {
