@@ -1,5 +1,5 @@
 import TooltipIcon from "@/components/icons/tooltip";
-import ConfirmModal from "@/components/modals/confirm-modal";
+import NoticeModal from "@/components/modals/notice-modal";
 import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
 import { useState } from "react";
@@ -52,7 +52,7 @@ const SingleInfoTooltipItem = ({ label, content, tooltip }: InfoItemProps) => {
       </Label>
 
       <Content>{content}</Content>
-      <ConfirmModal
+      <NoticeModal
         isOpen={isTooltipModalOpen}
         onClose={handleTooltipModalClose}
         message={tooltip}

@@ -9,6 +9,7 @@ import SingleSelectBottomModal from "../modals/single-select-bottom-modal";
 import { useState } from "react";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import ConfirmModal from "../modals/confirm-modal";
 
 const Container = styled.div`
   display: flex;
@@ -44,6 +45,9 @@ interface ResumeHeaderProps {
 const JobPostingHeader = ({ title, jobPostingId }: ResumeHeaderProps) => {
   const router = useRouter();
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
+  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
+    useState(false);
+
   const { resetStore, setFromJobPosting } = useJobPostingEditStore((state) => ({
     resetStore: state.resetStore,
     setFromJobPosting: state.setFromJobPosting
@@ -74,7 +78,7 @@ const JobPostingHeader = ({ title, jobPostingId }: ResumeHeaderProps) => {
 
       router.push(`/job-posting/${jobPostingId}/edit`);
     } else if (option === "삭제") {
-      // 삭제 로직
+      setIsDeleteConfirmModalOpen(true);
     }
 
     setIsOptionModalOpen(false);
@@ -94,6 +98,17 @@ const JobPostingHeader = ({ title, jobPostingId }: ResumeHeaderProps) => {
         onClose={() => setIsOptionModalOpen(false)}
         options={options}
         onSelect={handleOptionSelect}
+      />
+      <ConfirmModal
+        isOpen={isDeleteConfirmModalOpen}
+        onClose={() => setIsDeleteConfirmModalOpen(false)}
+        message="삭제하시겠습니까?"
+        confirmText="삭제하기"
+        onConfirm={() => {
+          setIsDeleteConfirmModalOpen(false);
+        }}
+        cancelText="취소"
+        isWarning
       />
     </Container>
   );

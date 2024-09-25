@@ -5,7 +5,7 @@ import { useState } from "react";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import TooltipIcon from "../icons/tooltip";
-import ConfirmModal from "../modals/confirm-modal";
+import NoticeModal from "../modals/notice-modal";
 
 const Container = styled.div``;
 
@@ -102,7 +102,7 @@ const DropdownSingleSelectItem = ({
         options={options}
         onSelect={handleOptionSelect}
       />
-      <ConfirmModal
+      <NoticeModal
         isOpen={isTooltipModalOpen}
         onClose={handleTooltipModalClose}
         message={tooltip || ""}
