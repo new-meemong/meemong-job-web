@@ -23,6 +23,7 @@ import StoreLocation from "../components/store-location";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
 import DetailInfoIntern from "../components/detail-info-intern";
 import { ImageType } from "@/types/image-type";
+import { useAuthStore } from "@/stores/auth-store";
 
 const Container = styled.div`
   flex-direction: column;
@@ -45,10 +46,15 @@ export default function JobPostingPage() {
   const { jobPostingList } = useJobPostingListStore((state) => ({
     jobPostingList: state.jobPostingList
   }));
+  const { userId } = useAuthStore((state) => ({
+    userId: state.userId
+  }));
 
   const jobPosting = jobPostingList.find(
     (posting) => posting.id.toString() === id
   );
+
+  const isMine = jobPosting?.userId.toString() === userId;
 
   if (!jobPosting) {
     return <div>존재하지 않는 구인공고입니다.</div>;
@@ -153,7 +159,11 @@ export default function JobPostingPage() {
 
   return (
     <Container>
-      <JobPostingHeader title={"구인공고"} jobPostingId={jobPostingId} />
+      <JobPostingHeader
+        title={"구인공고"}
+        jobPostingId={jobPostingId}
+        isMine={isMine}
+      />
       <ImageSlider
         images={JobPostingsStoreImages.map((image) =>
           image?.uri

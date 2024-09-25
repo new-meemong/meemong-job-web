@@ -41,6 +41,14 @@ export const putJobPostings = async (
   }
 };
 
+export const deleteJobPostings = async (id: string) => {
+  try {
+    return await apiFetch(`/api/v1/job-postings/${id}`, "DELETE");
+  } catch (e) {
+    console.error("[deleteJobPostings] failed", e);
+  }
+};
+
 export const uploadJobPostingImage = async (image: File) => {
   try {
     const jwt = useAuthStore.getState().jwt;

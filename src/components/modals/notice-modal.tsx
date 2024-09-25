@@ -47,15 +47,18 @@ interface NoticeModalProps {
   onClose: () => void;
   message: string;
   confirmText?: string;
+  onConfirm?: () => void;
 }
 
 const NoticeModal = ({
   isOpen,
   onClose,
   message,
-  confirmText = "확인"
+  confirmText = "확인",
+  onConfirm = () => {}
 }: NoticeModalProps) => {
   const handleConfirmClick = () => {
+    onConfirm();
     onClose();
   };
   return (

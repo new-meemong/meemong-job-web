@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import ConfirmModal from "../modals/confirm-modal";
+import NoticeModal from "../modals/notice-modal";
 
 const Container = styled.div`
   display: flex;
@@ -40,30 +41,39 @@ const Title = styled.span`
 interface ResumeHeaderProps {
   title: string;
   jobPostingId: string;
+  isMine: boolean;
 }
 
-const JobPostingHeader = ({ title, jobPostingId }: ResumeHeaderProps) => {
+const JobPostingHeader = ({
+  title,
+  jobPostingId,
+  isMine
+}: ResumeHeaderProps) => {
   const router = useRouter();
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
     useState(false);
+  const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
 
   const { resetStore, setFromJobPosting } = useJobPostingEditStore((state) => ({
     resetStore: state.resetStore,
     setFromJobPosting: state.setFromJobPosting
   }));
-  const { jobPostingList } = useJobPostingListStore((state) => ({
-    jobPostingList: state.jobPostingList
-  }));
+  const { jobPostingList, deleteJobPosting } = useJobPostingListStore(
+    (state) => ({
+      jobPostingList: state.jobPostingList,
+      deleteJobPosting: state.deleteJobPosting
+    })
+  );
 
-  const options = ["수정", "삭제"];
+  const options = isMine ? ["수정", "삭제"] : [];
 
   const handleBackClick = () => {
     router.back();
   };
 
   const handleOptionClick = () => {
-    setIsOptionModalOpen(true);
+    options.length > 0 && setIsOptionModalOpen(true);
   };
 
   const handleOptionSelect = (option: string) => {
@@ -84,6 +94,22 @@ const JobPostingHeader = ({ title, jobPostingId }: ResumeHeaderProps) => {
     setIsOptionModalOpen(false);
   };
 
+  const handleDeleteConfirm = async () => {
+    setIsDeleteConfirmModalOpen(false);
+    const result = await deleteJobPosting(jobPostingId);
+    console.log("result", result);
+    if (result.status) {
+      setIsNoticeModalOpen(true);
+    } else {
+      alert("삭제에 실패했습니다.");
+    }
+  };
+
+  const handleNoticeConfirmOk = () => {
+    setIsNoticeModalOpen(false);
+    router.back();
+  };
+
   return (
     <Container>
       <LeftContainer onClick={handleBackClick}>
@@ -91,7 +117,7 @@ const JobPostingHeader = ({ title, jobPostingId }: ResumeHeaderProps) => {
       </LeftContainer>
       <Title>{title}</Title>
       <RightContainer onClick={handleOptionClick}>
-        <OptionIcon />
+        {options.length > 0 && <OptionIcon />}
       </RightContainer>
       <SingleSelectBottomModal
         isOpen={isOptionModalOpen}
@@ -104,11 +130,15 @@ const JobPostingHeader = ({ title, jobPostingId }: ResumeHeaderProps) => {
         onClose={() => setIsDeleteConfirmModalOpen(false)}
         message="삭제하시겠습니까?"
         confirmText="삭제하기"
-        onConfirm={() => {
-          setIsDeleteConfirmModalOpen(false);
-        }}
+        onConfirm={handleDeleteConfirm}
         cancelText="취소"
         isWarning
+      />
+      <NoticeModal
+        isOpen={isNoticeModalOpen}
+        onClose={() => setIsNoticeModalOpen(false)}
+        onConfirm={handleNoticeConfirmOk}
+        message="해당 게시글이 삭제되었습니다."
       />
     </Container>
   );

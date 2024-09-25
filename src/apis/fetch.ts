@@ -30,6 +30,9 @@ export const apiFetch = async (url: string, method: string, body?: any) => {
       body: JSON.stringify(body)
     });
 
+    if (!response.ok) {
+      throw new Error("API fetch failed");
+    }
     const responseData = await response.json();
     console.log("=== API Response ===");
     console.log(response.status, response.statusText, fullUrl);

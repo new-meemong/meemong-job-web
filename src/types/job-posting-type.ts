@@ -29,7 +29,7 @@ import {
 
 export interface JobPostingType {
   // 고유 식별자
-  id: number;
+  id: string;
 
   // 기본 정보
   postingTitle: string; // 게시글 제목
