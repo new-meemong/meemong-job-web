@@ -486,10 +486,10 @@ export const useJobPostingEditStore = create(
           const response = await postJobPostings(jobPostingData);
           if (response.data) {
             // set({ ...defaultJobPostingEditState });
-            alert("채용 공고 등록이 완료되었습니다.");
+            alert("디자이너 구인 공고 등록이 완료되었습니다.");
             return true;
           } else {
-            alert("채용 공고 등록에 실패했습니다. 다시 시도해주세요.");
+            alert("디자이너 구인 공고 등록에 실패했습니다. 다시 시도해주세요.");
             return false;
           }
         } catch (e) {
@@ -499,56 +499,95 @@ export const useJobPostingEditStore = create(
         }
       },
       submitInternJobPosting: async () => {
-        const {
-          postingTitle,
-          storeName,
-          storeRegion,
-          storeRegionSiName,
-          storeAddress,
-          // 기본 정보
-          role,
-          postingRegions,
-          postingRegionSiNames,
-          monthlyEducationInternCount,
-          availableOffDays,
-          internSalary
-        } = get();
-
         try {
-          const jobPostingData = {
-            postingTitle, //게시글 제목
-            storeName, // 매장명
-            storeAddress, // 매장 주소
-            storeRegion,
-            storeRegionSiName,
+          let jobPostingData: Record<string, any> = {
+            postingTitle: get().postingTitle, // 게시글 제목
+            storeName: get().storeName, // 매장명
+            storeAddress: get().storeAddress, // 매장 주소
+            storeRegion: get().storeRegion,
+            storeRegionSiName: get().storeRegionSiName,
             // 기본 정보
-            role,
-            postingRegions,
-            postingRegionSiNames,
-            monthlyEducationInternCount,
+            role: get().role,
+            postingRegions: get().postingRegions, // 노출 지역
+            postingRegionSiNames: get().postingRegionSiNames, // 노출 지역의 시
+            monthlyEducationCount: get().monthlyEducationInternCount, // 교육
+            educationCost: get().educationCost, // 교육비
+            // 휴무 가능일
             availableOffDays:
-              availableOffDays.length > 0 ? availableOffDays : null,
-            internSalary
-          };
-          console.log("postingRegions", postingRegions);
+              get().availableOffDays.length > 0
+                ? get().availableOffDays.join()
+                : null,
+            internSalary: get().internSalary, // 인턴 급여
 
-          if (role !== "인턴") {
+            // 상세 정보
+            sex: get().sex, // 성별
+            isRestrictedAge: get().isRestrictedAge, // 연령 제한
+            isPossibleMiddleAge: get().isPossibleMiddleAge || false, // 중년 가능
+            designerLicenses: get().designerLicenses.join(), // 미용 라이센스
+            storeTypes: get().storeTypes.join(), // 매장 형태
+            employeeCount: get().employeeCount, // 직원 수
+            isExistedInternSystem: get().isExistedInternSystem, // 인턴 시스템
+            designerPromitionPeriod: get().designerPromitionPeriod, // 디자이너 승습 기간
+            storeInteriorRenovationAgo: get().storeInteriorRenovationAgo, // 매장 리모델링
+            workType: get().workType, // 근무 형태
+            workCycleType: get().workCycleType.join(), // 근무 주기
+            isExistedMealSupport: get().isExistedMealSupport, // 식대 지원
+            mealTime: get().mealTime, // 식사 시간
+            isExistedProductSupport: get().isExistedProductSupport, // 제품 지원
+            isExistedDormitorySupport: get().isExistedDormitorySupport, // 기숙사 지원
+            salesCommission: get().salesCommission, // 매출 수수료
+            internExperienceYearNumber: get().internExperienceYearNumber, // 경력
+            subwayAccessibility: get().subwayAccessibility, // 지하철 접근성
+            adminAge: get().adminAge, // 관리자 연령
+            adminSex: get().adminSex, // 관리자 성별
+            leaveDayCount: get().leaveDayCount, // 휴가일수
+            parkingSpotCount: get().parkingSpotCount, // 주차장
+            isExistedCleaningSupplier: get().isExistedCleaningSupplier, // 청소 업체
+            isExistedTowelSupplier: get().isExistedTowelSupplier, // 수건 업체
+            isOnsiteManger: get().isOnsiteManager, // 샵 매니저 상주
+            isExistedFourInsurance: get().isExistedFourInsurances, // 4대 보험
+            isExistedRetirementPay: get().isExistedRetirementPay, // 퇴직금
+
+            JobPostingsStoreImages: get().jobPostingsStoreImages
+          };
+
+          if (jobPostingData.role !== "인턴") {
             return false;
           }
 
-          const hasNullField = Object.values(jobPostingData).some(
-            (value) => value === null
+          console.log("jobPostingData", jobPostingData);
+
+          const hasNullField = Object.entries(jobPostingData).some(
+            ([key, value]) =>
+              key !== "postingRegions" &&
+              (value === null ||
+                value === "" ||
+                (Array.isArray(value) && value.length === 0))
           );
 
           if (hasNullField) {
-            set({ hasInternOptionNull: true });
+            set({ hasDesignerOptionNull: true });
             alert(
               "필수 항목 중 일부가 누락되었습니다. 모든 항목을 입력해주세요."
             );
             return false;
+          } else {
+            set({ hasDesignerOptionNull: false });
           }
 
-          return true;
+          jobPostingData = convertToNullJobPostingData(jobPostingData);
+
+          console.log("jobPostingData2", jobPostingData);
+
+          const response = await postJobPostings(jobPostingData);
+          if (response.data) {
+            // set({ ...defaultJobPostingEditState });
+            alert("인턴 구인 공고 등록이 완료되었습니다.");
+            return true;
+          } else {
+            alert("인턴 구인 공고 등록에 실패했습니다. 다시 시도해주세요.");
+            return false;
+          }
         } catch (e) {
           console.error("인턴 구인 공고 등록 중 오류 발생:", e);
           alert("인턴 구인 공고 등록 중 오류가 발생했습니다.");
