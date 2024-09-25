@@ -47,7 +47,7 @@ import {
 } from "@/types/job-posting-keys";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { JobPosting } from "@/types/job-posting";
+import { JobPostingType } from "@/types/job-posting-type";
 import { siSggList } from "@/types/location-type";
 
 type StoreInfoType = {
@@ -226,7 +226,7 @@ type JobPostingEditActions = {
   submitDesignerJobPosting: () => Promise<boolean>;
   submitInternJobPosting: () => Promise<boolean>;
   resetStore: () => void;
-  setFromJobPosting: (jobPosting: JobPosting) => void;
+  setFromJobPosting: (jobPosting: JobPostingType) => void;
 };
 
 const defaultJobPostingEditState: JobPostingEditState = {
@@ -293,7 +293,7 @@ export const useJobPostingEditStore = create(
     (set, get) => ({
       ...defaultJobPostingEditState,
       resetStore: () => set({ ...defaultJobPostingEditState }),
-      setFromJobPosting: (jobPosting: JobPosting) => {
+      setFromJobPosting: (jobPosting: JobPostingType) => {
         console.log("[setFromJobPosting] jobPosting", jobPosting);
 
         console.log(
@@ -636,7 +636,7 @@ export const useJobPostingEditStore = create(
 
           console.log("jobPostingData2", jobPostingData);
 
-          const sendData = jobPostingData as JobPosting;
+          const sendData = jobPostingData as JobPostingType;
           const response = get().id
             ? await putJobPostings(get().id!, sendData)
             : await postJobPostings(sendData);
@@ -744,7 +744,7 @@ export const useJobPostingEditStore = create(
 
           console.log("jobPostingData2", jobPostingData);
 
-          const sendData = jobPostingData as JobPosting;
+          const sendData = jobPostingData as JobPostingType;
           const response = get().id
             ? await putJobPostings(get().id!, sendData)
             : await postJobPostings(sendData);

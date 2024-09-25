@@ -16,7 +16,7 @@ import {
   SettlementAllowanceKeyResume,
   WorkCycleTypesKeyResume,
   WorkTypeKeyResume
-} from "@/types/resume-types";
+} from "@/types/resume-keys";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 

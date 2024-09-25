@@ -1,3 +1,4 @@
+import { ImageType } from "./image-type";
 import {
   AdminAgeKey,
   AdminSexKey,
@@ -26,7 +27,7 @@ import {
   WorkTypeKey
 } from "./job-posting-keys";
 
-export interface JobPosting {
+export interface JobPostingType {
   // 고유 식별자
   id: number;
 

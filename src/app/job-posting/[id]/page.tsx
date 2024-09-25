@@ -22,6 +22,7 @@ import EtcInfo from "../components/etc-info";
 import StoreLocation from "../components/store-location";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
 import DetailInfoIntern from "../components/detail-info-intern";
+import { ImageType } from "@/types/image-type";
 
 const Container = styled.div`
   flex-direction: column;
