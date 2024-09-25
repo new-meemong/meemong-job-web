@@ -4,6 +4,7 @@ import InfoTitle from "./info-title";
 import SingleInfoItem from "./single-info-item";
 import MultiInfoItem from "./multi-info-item";
 import { formatPriceWithCommas } from "@/lib/price-comma";
+import { JobPostingType } from "@/types/job-posting-type";
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const Container = styled.div`
 `;
 
 type DetailInfoDesignerProps = Pick<
-  JobPosting,
+  JobPostingType,
   | "sex"
   | "isRestrictedAge"
   | "designerLicenses"

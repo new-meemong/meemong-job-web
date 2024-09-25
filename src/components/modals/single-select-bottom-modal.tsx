@@ -1,6 +1,5 @@
 import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
-import { useState } from "react";
 import { Sheet } from "react-modal-sheet";
 import styled from "styled-components";
 

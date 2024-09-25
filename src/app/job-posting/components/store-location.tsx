@@ -2,6 +2,7 @@ import styled from "styled-components";
 import InfoTitle from "./info-title";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import { JobPostingType } from "@/types/job-posting-type";
 
 const Container = styled.div``;
 const Address = styled.div`
@@ -10,7 +11,7 @@ const Address = styled.div`
   padding-bottom: ${pxToVw(8)};
 `;
 
-type StoreLocationProps = Pick<JobPosting, "storeAddress">;
+type StoreLocationProps = Pick<JobPostingType, "storeAddress">;
 
 const StoreLocation = ({ storeAddress }: StoreLocationProps) => {
   return (
