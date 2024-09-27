@@ -33,37 +33,43 @@ const Input = styled.input<{ $hasError: boolean }>`
   }
 `;
 
-const ShortDescription = () => {
+const UserNameInput = () => {
   const {
-    shortDescription,
-    setShortDescription,
+    userName,
+    setUserName,
     hasDesignerOptionNull,
     hasInternOptionNull,
     appliedRole
-  } = useResumeEditStore();
+  } = useResumeEditStore((state) => ({
+    userName: state.userName,
+    setUserName: state.setUserName,
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
+    hasInternOptionNull: state.hasInternOptionNull,
+    appliedRole: state.appliedRole
+  }));
 
   let hasError = false;
 
   if (appliedRole === "디자이너") {
-    hasError = !shortDescription && hasDesignerOptionNull;
+    hasError = !userName && hasDesignerOptionNull;
   }
   if (appliedRole === "인턴") {
-    hasError = !shortDescription && hasInternOptionNull;
+    hasError = !userName && hasInternOptionNull;
   }
 
   return (
     <Container>
-      <EditLabel label={"한 줄 소개*"} />
+      <EditLabel label={"이름*"} />
       <Input
         type="text"
-        value={shortDescription || ""}
-        onChange={(e) => setShortDescription(e.target.value)}
-        placeholder="나를 소개할 수 있는 문구를 작성해 주세요 (최대 22자)"
+        value={userName || ""}
+        onChange={(e) => setUserName(e.target.value)}
+        placeholder="이름을 입력해주세요."
         $hasError={hasError}
       />
-      {hasError && <ErrorMessage>한 줄 소개는 필수입니다.</ErrorMessage>}
+      {hasError && <ErrorMessage>회원 이름은 필수입니다.</ErrorMessage>}
     </Container>
   );
 };
 
-export default ShortDescription;
+export default UserNameInput;

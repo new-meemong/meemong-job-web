@@ -5,12 +5,14 @@ import styled from "styled-components";
 import BottomArea from "./components/bottom-area";
 import { colors } from "@/styles/colors";
 import LocationHeader from "@/components/headers/location-header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";
 import CheckboxUnselectIcon from "@/components/icons/checkbox-unselect-icon";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { siNmShort, siSggList } from "@/types/location-type";
+import { useRouter, useSearchParams } from "next/navigation";
+import { TargetType } from "./types/target-type";
 
 const ContentContainer = styled.div`
   display: flex;
@@ -66,6 +68,10 @@ interface SiNmShort {
 }
 
 export default function SelectLocationPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const target = searchParams.get("target");
+
   const [selectedLeftItem, setSelectedLeftItem] = useState<SiNmShort>(
     siNmShort[0]
   );
@@ -73,6 +79,15 @@ export default function SelectLocationPage() {
     { key: string; value: string }[]
   >([]);
   const subList = siSggList[selectedLeftItem.key];
+
+  useEffect(() => {
+    const validTargets: TargetType[] = ["jobPostingEdit", "resumeEdit"];
+
+    if (!validTargets.includes(target as TargetType)) {
+      alert("유효하지 않은 target 값입니다.");
+      router.back();
+    }
+  }, [target]);
 
   const handleLeftItemClick = (item: SiNmShort) => {
     console.log(item);
@@ -187,6 +202,7 @@ export default function SelectLocationPage() {
       <BottomArea
         selectedLeftItem={selectedLeftItem}
         selectedRightItems={selectedRightItems}
+        target={target as TargetType}
       />
     </PageContainer>
   );

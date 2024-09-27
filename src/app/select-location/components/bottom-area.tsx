@@ -1,9 +1,11 @@
 import FullButton from "@/components/buttons/full-button";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { fonts } from "@/styles/fonts";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
+import { TargetType } from "../types/target-type";
 
 const Container = styled.div`
   display: flex;
@@ -33,14 +35,26 @@ const Label = styled.span`
 interface BottomAreaProps {
   selectedLeftItem: { key: string; value: string };
   selectedRightItems: { key: string; value: string }[];
+  target: TargetType;
 }
 
 const BottomArea = ({
   selectedLeftItem,
-  selectedRightItems
+  selectedRightItems,
+  target
 }: BottomAreaProps) => {
-  const { setPostingRegions } = useJobPostingEditStore();
   const router = useRouter();
+  const { setPostingRegions } = useJobPostingEditStore();
+  const { setPreferredStoreRegions } = useResumeEditStore();
+
+  const handleConfirm = () => {
+    if (target === "jobPostingEdit") {
+      setPostingRegions(selectedRightItems);
+    } else if (target === "resumeEdit") {
+      setPreferredStoreRegions(selectedRightItems);
+    }
+    router.back();
+  };
 
   return (
     <Container>
@@ -48,13 +62,7 @@ const BottomArea = ({
         <SelectedCount>{`선택한 지역 ${selectedRightItems.length}`}</SelectedCount>
         <Label>최대 3개</Label>
       </CountContainer>
-      <FullButton
-        title="필터 적용하기"
-        onClick={() => {
-          setPostingRegions(selectedRightItems);
-          router.back();
-        }}
-      />
+      <FullButton title="필터 적용하기" onClick={handleConfirm} />
     </Container>
   );
 };

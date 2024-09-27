@@ -2,6 +2,7 @@ import { ErrorMessage } from "@/components/error-message";
 import ArrowRightGreyIcon from "@/components/icons/arrow-right-grey-icon";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { siNmShort } from "@/types/location-type";
@@ -80,16 +81,20 @@ const CancelText = styled.span`
   ${fonts.purplePrimarySemi14}
 `;
 
-const SelectJobPostingRegions = () => {
-  const { _postingRegions, hasDesignerOptionNull, hasInternOptionNull, role } =
-    useJobPostingEditStore((state) => ({
-      _postingRegions: state._postingRegions,
-      hasDesignerOptionNull: state.hasDesignerOptionNull,
-      hasInternOptionNull: state.hasInternOptionNull,
-      role: state.role
-    }));
+const RegionsSelect = () => {
+  const {
+    _preferredStoreRegions,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    appliedRole
+  } = useResumeEditStore((state) => ({
+    _preferredStoreRegions: state._preferredStoreRegions,
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
+    hasInternOptionNull: state.hasInternOptionNull,
+    appliedRole: state.appliedRole
+  }));
 
-  const convertRegions = _postingRegions?.map((item) => {
+  const convertRegions = _preferredStoreRegions?.map((item) => {
     if (item && item.key) {
       const siKey = item.key.split(" ")[0]; // 시/도를 추출
       const siName = siNmShort.find((si) => si.key === siKey)?.value;
@@ -103,9 +108,9 @@ const SelectJobPostingRegions = () => {
   });
 
   let hasError = false;
-  if (role === "디자이너") {
+  if (appliedRole === "디자이너") {
     hasError = !convertRegions.length && hasDesignerOptionNull;
-  } else if (role === "인턴") {
+  } else if (appliedRole === "인턴") {
     hasError = !convertRegions.length && hasInternOptionNull;
   }
 
@@ -127,7 +132,7 @@ const SelectJobPostingRegions = () => {
           )}
         </Location>
         <LocationButton
-          href="/select-location?target=jobPostingEdit"
+          href="/select-location?target=resumeEdit"
           $hasError={hasError}
         >
           지역선택하기
@@ -139,4 +144,4 @@ const SelectJobPostingRegions = () => {
   );
 };
 
-export default SelectJobPostingRegions;
+export default RegionsSelect;
