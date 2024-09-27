@@ -126,7 +126,7 @@ const JobPostingItem = ({
 }: JobPostingItemProps) => {
   const router = useRouter();
 
-  const initialImage = JobPostingsStoreImages[0]?.thumbnailUri
+  const initialImage = JobPostingsStoreImages?.[0]?.thumbnailUri
     ? `${IMAGE_STORAGE_URL}${JobPostingsStoreImages[0].thumbnailUri}`
     : "/images/default_profile_image.jpg";
 
