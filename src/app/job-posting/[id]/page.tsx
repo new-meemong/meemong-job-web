@@ -60,7 +60,6 @@ export default function JobPostingPage() {
     return <div>존재하지 않는 구인공고입니다.</div>;
   }
 
-  console.log("moonsae", jobPosting);
   const { JobPostingsStoreImages }: { JobPostingsStoreImages: ImageType[] } =
     jobPosting;
 

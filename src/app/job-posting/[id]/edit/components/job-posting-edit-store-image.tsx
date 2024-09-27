@@ -134,9 +134,8 @@ const JobPostingEditStoreImage = () => {
       const { data } = await uploadJobPostingImage(selectedFile);
 
       const uri = `${data?.imageFile?.fileuri}`;
-
       const thumbnailUri = `${data?.imageThumbnailFile?.fileuri}`;
-      // console.log("Image uploaded:", uri, thumbnailUri);
+
       if (uri && thumbnailUri) {
         const newImage = { uri, thumbnailUri };
         const updatedImages = [...jobPostingsStoreImages, newImage];
@@ -190,7 +189,7 @@ const JobPostingEditStoreImage = () => {
         <HiddenFileInput
           id="image-upload"
           type="file"
-          accept=".jpg,.png,.gif"
+          accept="image/*"
           onChange={handleFileChange}
         />
         {jobPostingsStoreImages.map((image, index) => {

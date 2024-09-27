@@ -17,6 +17,7 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: white;
+  z-index: 1;
 `;
 
 const LeftContainer = styled.div`

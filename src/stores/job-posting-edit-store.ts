@@ -297,7 +297,6 @@ export const useJobPostingEditStore = create(
       ...defaultJobPostingEditState,
       resetStore: () => set({ ...defaultJobPostingEditState }),
       setFromJobPosting: (jobPosting: JobPostingType) => {
-        console.log("moonsae jobPosting", jobPosting);
         let parsedPostingRegions = [];
 
         parsedPostingRegions = jobPosting.postingRegions
@@ -733,10 +732,8 @@ export const useJobPostingEditStore = create(
 
           jobPostingData = convertToNullJobPostingData(jobPostingData);
 
-          console.log("jobPostingData2", jobPostingData);
-
           const sendData = jobPostingData as JobPostingType;
-          console.log("moonsae get().id", get().id, get().id!);
+
           const response = get().id
             ? await putJobPostings(get().id!, sendData)
             : await postJobPostings(sendData);

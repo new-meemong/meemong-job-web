@@ -89,10 +89,6 @@ const SelectJobPostingRegions = () => {
       role: state.role
     }));
 
-  console.log(
-    "[SelectJobPostingRegions] moonsae _postingRegions",
-    _postingRegions
-  );
   const convertRegions = _postingRegions?.map((item) => {
     if (item && item.key) {
       const siKey = item.key.split(" ")[0]; // 시/도를 추출
