@@ -57,17 +57,16 @@ export type InternExperienceYearNumberKeyResume =
   | "5년 이하"
   | "6년 이상";
 
-// // 업체명 - 디자이너
-// export type DesignerExperiencesKeyResume = string
+// // 주요 경력 회사명
+// export type DesignerMajorExperienceCompanyNameKeyResume = string;
 
-// 근무기간 - 디자이너
-// export type DesignerExperienceDurationKeyResume = string
+// // 주요 경력 기간
+// export type DesignerMajorExperienceDurationKeyResume = string;
 
-// // 업체명 - 인턴
-// export type InternExperiencesKeyResume = string
+// // 주요 경력 역할
+// export type DesignerMajorExperienceRoleKeyResume = string;
 
-// 근무기간 - 인턴
-// export type InternExperienceDurationKeyResume = string
+// // 희망 교육 - 인턴
 
 // 이전 3개월 평균 매출
 export type SalesLast3MonthsAvgKeyResume =
@@ -134,5 +133,8 @@ export type IsPreferredMealSupportKeyResume = boolean;
 // 주차 희망 여부
 export type IsPreferredParkingKeyResume = boolean;
 
-// 자기소개서 최대 300자
-export type DescriptionKeyResume = string;
+// // MBTI
+// export type MbtiKeyResume = string;
+
+// // 자기소개서 최대 300자
+// export type DescriptionKeyResume = string;

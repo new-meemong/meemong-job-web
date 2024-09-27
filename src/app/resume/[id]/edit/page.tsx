@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import styled from "styled-components";
 import ProfileImageSection from "./components/profile-image-section";
 import pxToVw from "@/lib/dpi-converter";
+import RequiredFieldSection from "./components/required-field-section";
 
 const Container = styled.div`
   display: flex;
@@ -19,6 +20,7 @@ const ContentContainer = styled.div`
   padding-top: ${pxToVw(32)};
   padding-left: ${pxToVw(24)};
   padding-right: ${pxToVw(24)};
+  width: 100%;
 `;
 
 export default function ResumeEditPage() {
@@ -29,6 +31,7 @@ export default function ResumeEditPage() {
       <ResumeEditHeader />
       <ContentContainer>
         <ProfileImageSection />
+        <RequiredFieldSection />
       </ContentContainer>
     </Container>
   );

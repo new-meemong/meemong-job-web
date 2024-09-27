@@ -59,6 +59,9 @@ type ResumeEditState = {
   isPreferredParking: IsPreferredParkingKeyResume | null;
   mbti: string | null;
   description: string | null;
+
+  hasDesignerOptionNull: boolean;
+  hasInternOptionNull: boolean;
 };
 
 type ResumeEditActions = {
@@ -150,7 +153,9 @@ const defaultResumeEditState: ResumeEditState = {
   isPreferredMealSupport: null,
   isPreferredParking: null,
   mbti: null,
-  description: null
+  description: null,
+  hasDesignerOptionNull: false,
+  hasInternOptionNull: false
 };
 
 export const useResumeEditStore = create(
@@ -160,8 +165,13 @@ export const useResumeEditStore = create(
       setProfileImageUri: (uri) => set({ profileImageUri: uri }),
       setProfileImageThumbnailUri: (uri) =>
         set({ profileImageThumbnailUri: uri }),
-      setShortDescription: (description) =>
-        set({ shortDescription: description }),
+      setShortDescription: (description) => {
+        if (description !== null && description.length > 22) {
+          return;
+        }
+
+        set({ shortDescription: description });
+      },
       setUserName: (name) => set({ userName: name }),
       setPreferredStoreRegions: (regions) =>
         set({
