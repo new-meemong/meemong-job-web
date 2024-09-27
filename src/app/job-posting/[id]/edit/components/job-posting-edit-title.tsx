@@ -34,9 +34,22 @@ const Input = styled.input<{ $hasError: boolean }>`
 `;
 
 const JobPostingEditTitle = () => {
-  const { postingTitle, setPostingTitle, hasDesignerOptionNull } =
-    useJobPostingEditStore();
-  const hasError = !postingTitle && hasDesignerOptionNull;
+  const {
+    postingTitle,
+    setPostingTitle,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore();
+  let hasError = false;
+
+  if (role === "디자이너") {
+    hasError = !postingTitle && hasDesignerOptionNull;
+  }
+  if (role === "인턴") {
+    hasError = !postingTitle && hasInternOptionNull;
+  }
+
   return (
     <Container>
       <Label>게시글 제목*</Label>
