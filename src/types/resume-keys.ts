@@ -27,7 +27,7 @@ export type SettlementAllowanceKeyResume =
   | "상관없음";
 
 // 라이센스
-export type DesignerLicencesKeyResume = "자격증" | "면허증" | "상관없음";
+export type DesignerLicensesKeyResume = "자격증" | "면허증" | "상관없음";
 
 // 디자이너 경력 - 디자이너
 export type DesignerExperienceYearNumberKeyResume =

@@ -3,7 +3,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
-import EditResumeLabel from "./edit-resume-label";
+import EditResumeLabel from "../edit-resume-label";
 
 const Container = styled.div``;
 
@@ -52,35 +52,29 @@ interface Option<T> {
 }
 
 type ButtonSize = "small" | "large";
-interface EditResumeOptonSingleSelectProps<T> {
+interface EditResumeOptonMultiSelectProps<T> {
   label: string;
   description?: string;
   options: Option<T>[];
-  selectedOption: T | null;
+  selectedOptions: T[];
   errorMessage: string;
   isError: boolean;
-  onSelect: (optionKey: T | null) => void;
+  onSelect: (optionKey: T) => void;
   buttonSize?: ButtonSize;
 }
 
-const EditResumeOptonSingleSelect = <T extends string | boolean>({
+const EditResumeOptonMultiSelect = <T extends string | boolean>({
   label,
   description,
   options,
-  selectedOption,
+  selectedOptions,
   errorMessage,
   onSelect,
   isError,
-  buttonSize = "large"
-}: EditResumeOptonSingleSelectProps<T>) => {
-  const handleSelect = (optionKey: T) => {
-    if (selectedOption === optionKey) {
-      onSelect(null);
-    } else {
-      onSelect(optionKey);
-    }
-  };
-
+  buttonSize = "small"
+}: EditResumeOptonMultiSelectProps<T>) => {
+  const safeSelectedOptions = selectedOptions || [];
+  console.log("safeSelectedOptions", safeSelectedOptions);
   return (
     <Container>
       <EditResumeLabel label={label} />
@@ -89,10 +83,10 @@ const EditResumeOptonSingleSelect = <T extends string | boolean>({
         {options.map((option) => (
           <Button
             key={String(option.key)}
-            $isSelected={selectedOption === option.key}
+            $isSelected={safeSelectedOptions.includes(option.key)}
             $size={buttonSize}
             $hasError={isError}
-            onClick={() => handleSelect(option.key)}
+            onClick={() => onSelect(option.key)}
           >
             {option.value}
           </Button>
@@ -103,4 +97,4 @@ const EditResumeOptonSingleSelect = <T extends string | boolean>({
   );
 };
 
-export default EditResumeOptonSingleSelect;
+export default EditResumeOptonMultiSelect;

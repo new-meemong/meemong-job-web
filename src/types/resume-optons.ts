@@ -2,7 +2,7 @@ import {
   RoleKeyResume,
   WorkTypeKeyResume,
   SettlementAllowanceKeyResume,
-  DesignerLicencesKeyResume,
+  DesignerLicensesKeyResume,
   DesignerExperienceYearNumberKeyResume,
   InternExpectedSalaryKeyResume,
   InternExperienceYearNumberKeyResume,
@@ -27,7 +27,7 @@ interface Option<KeyType> {
 type RoleOption = Option<RoleKeyResume>;
 type WorkTypeOption = Option<WorkTypeKeyResume>;
 type SettlementAllowanceOption = Option<SettlementAllowanceKeyResume>;
-type DesignerLicensesOption = Option<DesignerLicencesKeyResume>;
+type DesignerLicensesOption = Option<DesignerLicensesKeyResume>;
 type DesignerExperienceYearNumberOption =
   Option<DesignerExperienceYearNumberKeyResume>;
 type InternExpectedSalaryOption = Option<InternExpectedSalaryKeyResume>;

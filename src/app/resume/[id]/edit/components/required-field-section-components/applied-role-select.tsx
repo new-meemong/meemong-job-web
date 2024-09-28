@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import EditResumeOptonSelect from "../edit-resume-option-single-select";
+import EditResumeOptonSelect from "./edit-resume-option-single-select";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";

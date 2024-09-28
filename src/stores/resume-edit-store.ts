@@ -1,7 +1,7 @@
 import {
   CompletedEducationLevelKeyResume,
   DesignerExperienceYearNumberKeyResume,
-  DesignerLicencesKeyResume,
+  DesignerLicensesKeyResume,
   DesignerPromotionPeriodKeyResume,
   InternExpectedSalaryKeyResume,
   InternExperienceYearNumberKeyResume,
@@ -36,7 +36,7 @@ type ResumeEditState = {
   workType: WorkTypeKeyResume | null;
   settlementAllowance: SettlementAllowanceKeyResume | null;
   internExpectedSalary: InternExpectedSalaryKeyResume | null;
-  designerLicences: DesignerLicencesKeyResume | null;
+  designerLicenses: DesignerLicensesKeyResume[];
   designerExperienceYearNumber: DesignerExperienceYearNumberKeyResume | null;
   internExperienceYearNumber: InternExperienceYearNumberKeyResume | null;
 
@@ -79,7 +79,7 @@ type ResumeEditActions = {
   setInternExpectedSalary: (
     salary: InternExpectedSalaryKeyResume | null
   ) => void;
-  setDesignerLicences: (licences: DesignerLicencesKeyResume | null) => void;
+  setDesignerLicenses: (licences: DesignerLicensesKeyResume) => void;
   setDesignerExperienceYearNumber: (
     yearNumber: DesignerExperienceYearNumberKeyResume | null
   ) => void;
@@ -133,7 +133,7 @@ const defaultResumeEditState: ResumeEditState = {
   workType: null,
   settlementAllowance: null,
   internExpectedSalary: null,
-  designerLicences: null,
+  designerLicenses: [],
   designerExperienceYearNumber: null,
   internExperienceYearNumber: null,
   designerMajorExperienceCompanyName: null,
@@ -192,8 +192,11 @@ export const useResumeEditStore = create(
       ) => set({ settlementAllowance: allowance }),
       setInternExpectedSalary: (salary: InternExpectedSalaryKeyResume | null) =>
         set({ internExpectedSalary: salary }),
-      setDesignerLicences: (licences: DesignerLicencesKeyResume | null) =>
-        set({ designerLicences: licences }),
+      setDesignerLicenses: (license: DesignerLicensesKeyResume) => {
+        const { designerLicenses } = get();
+
+        set({ designerLicenses: toggleSelect(designerLicenses, license) });
+      },
       setDesignerExperienceYearNumber: (
         yearNumber: DesignerExperienceYearNumberKeyResume | null
       ) => set({ designerExperienceYearNumber: yearNumber }),
@@ -246,7 +249,22 @@ export const useResumeEditStore = create(
 );
 
 // 중복 선택 가능 항목 처리를 위한 함수
-const toggleSelect = <T>(selectedItems: T[], item: T): T[] => {
+const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
+  // "상관없음"이라는 항목이 선택된 경우 처리
+  const indifferentOption = "상관없음" as T; // "상관없음" 값을 직접 비교하기 위해 저장
+
+  if (item === indifferentOption) {
+    // "상관없음"이 선택되면 다른 항목들은 모두 해제하고 "상관없음"만 선택
+    return [indifferentOption];
+  }
+
+  // 이미 "상관없음"이 선택된 상태에서 다른 항목을 선택하려는 경우, "상관없음" 해제
+  if (selectedItems.includes(indifferentOption)) {
+    selectedItems = selectedItems.filter(
+      (selectedItem) => selectedItem !== indifferentOption
+    );
+  }
+
   if (selectedItems.includes(item)) {
     // 이미 선택된 경우, 제거
     return selectedItems.filter((selectedItem) => selectedItem !== item);
@@ -254,4 +272,17 @@ const toggleSelect = <T>(selectedItems: T[], item: T): T[] => {
     // 선택되지 않은 경우, 추가
     return [...selectedItems, item];
   }
+};
+
+const convertToNullJobPostingData = (
+  data: Record<string, any>
+): Record<string, any> => {
+  const nullifyValues = ["상관없음", "해당없음"];
+
+  return Object.fromEntries(
+    Object.entries(data).map(([key, value]) => [
+      key,
+      nullifyValues.includes(value) ? null : value
+    ])
+  );
 };

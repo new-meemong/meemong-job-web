@@ -1,7 +1,7 @@
 import {
   CompletedEducationLevelKeyResume,
   DesignerExperienceYearNumberKeyResume,
-  DesignerLicencesKeyResume,
+  DesignerLicensesKeyResume,
   DesignerPromotionPeriodKeyResume,
   InternExpectedSalaryKeyResume,
   InternExperienceYearNumberKeyResume,
@@ -30,7 +30,7 @@ export interface ResumeType {
   workType: string;
   settlementAllowance: SettlementAllowanceKeyResume;
   internExpectedSalary: InternExpectedSalaryKeyResume;
-  designerLicenses: DesignerLicencesKeyResume;
+  designerLicenses: DesignerLicensesKeyResume;
   designerExperienceYearNumber: DesignerExperienceYearNumberKeyResume;
   internExperienceYearNumber: InternExperienceYearNumberKeyResume;
   designerMajorExperienceCompanyName: string;
