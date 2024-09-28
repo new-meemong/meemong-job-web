@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@/components/error-message";
-import EditLabel from "@/components/texts/edit-label";
+import EditResumeLabel from "@/app/resume/[id]/edit/components/edit-resume-label";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
@@ -15,8 +15,8 @@ const Container = styled.div`
 
 const Input = styled.input<{ $hasError: boolean }>`
   ${fonts.blackSemi12}
-  margin-top: ${pxToVw(8)};
-  margin-bottom: ${pxToVw(8)};
+  margin-top: ${pxToVw(12)};
+
   padding: ${pxToVw(12)};
   width: 100%;
   height: ${pxToVw(40)};
@@ -59,7 +59,7 @@ const UserNameInput = () => {
 
   return (
     <Container>
-      <EditLabel label={"이름*"} />
+      <EditResumeLabel label={"이름*"} />
       <Input
         type="text"
         value={userName || ""}

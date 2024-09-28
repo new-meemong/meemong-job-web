@@ -3,6 +3,9 @@ import ShortDescriptionInput from "./required-field-section-components/short-des
 import UserNameInput from "./required-field-section-components/user-name-input";
 import pxToVw from "@/lib/dpi-converter";
 import RegionsSelect from "./required-field-section-components/regions-select";
+import AgeInput from "./required-field-section-components/age-input";
+import AppliedRoleSelect from "./required-field-section-components/applied-role-select";
+import WorkTypeSelect from "./required-field-section-components/work-type-select";
 
 const Contianer = styled.div`
   display: flex;
@@ -17,6 +20,9 @@ const RequiredFieldSection = () => {
       <ShortDescriptionInput />
       <UserNameInput />
       <RegionsSelect />
+      <AgeInput />
+      <AppliedRoleSelect />
+      <WorkTypeSelect />
     </Contianer>
   );
 };

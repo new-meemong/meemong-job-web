@@ -16,7 +16,7 @@ import {
   WorkCycleTypesKeyResume
 } from "./resume-keys";
 
-export interface ProfileData {
+export interface ResumeType {
   id: string;
 
   profileImageUri: string;

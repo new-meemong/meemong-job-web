@@ -1,5 +1,6 @@
 import { ErrorMessage } from "@/components/error-message";
 import ArrowRightGreyIcon from "@/components/icons/arrow-right-grey-icon";
+import EditResumeLabel from "@/app/resume/[id]/edit/components/edit-resume-label";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
@@ -13,24 +14,12 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: ${pxToVw(12)};
-  padding: ${pxToVw(8)};
-`;
-
-const HeaderLabel = styled.span`
-  ${fonts.purplePrimarySemi14}
-  padding: ${pxToVw(8)} 0;
-`;
-
-const HeaderSubLabel = styled.span`
-  ${fonts.purplePrimarySemi12}
-  padding-left: ${pxToVw(4)};
 `;
 
 const ContentContainer = styled.div`
   display: flex;
-  padding-top: ${pxToVw(8)};
-  padding-bottom: ${pxToVw(8)};
+  padding-top: ${pxToVw(12)};
+
   gap: ${pxToVw(5)};
 `;
 
@@ -39,7 +28,7 @@ const Location = styled.div<{ $hasError: boolean }>`
   display: flex;
   /* justify-content: center; */
   align-items: center;
-  width: ${pxToVw(206)};
+  width: ${pxToVw(220)};
   height: ${pxToVw(40)};
   border: ${pxToVw(1)} solid
     ${({ $hasError }) => ($hasError ? `${colors.red}` : `${colors.grey}`)};
@@ -62,23 +51,6 @@ const LocationButton = styled(Link)<{ $hasError: boolean }>`
     ${({ $hasError }) => ($hasError ? `${colors.red}` : `${colors.grey}`)};
   border-radius: ${pxToVw(5)};
   padding: ${pxToVw(12)} ${pxToVw(6)};
-`;
-
-const CancelContainer = styled.div`
-  display: flex;
-  padding-top: ${pxToVw(4)};
-  gap: ${pxToVw(12)};
-  flex-wrap: wrap;
-`;
-
-const CancelButton = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${pxToVw(2)};
-`;
-
-const CancelText = styled.span`
-  ${fonts.purplePrimarySemi14}
 `;
 
 const RegionsSelect = () => {
@@ -116,8 +88,7 @@ const RegionsSelect = () => {
 
   return (
     <Container>
-      <HeaderLabel>공고 노출 지역</HeaderLabel>
-      <HeaderSubLabel>다른 지역도 모집 및 선택 가능합니다.</HeaderSubLabel>
+      <EditResumeLabel label={"지역*"} />
       <ContentContainer>
         <Location $hasError={hasError}>
           {convertRegions.length === 0 ? (
