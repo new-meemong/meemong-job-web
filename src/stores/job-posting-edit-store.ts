@@ -762,12 +762,7 @@ export const useJobPostingEditStore = create(
           .filter((item) => !item.value.includes("전체")) // "전체"가 포함되지 않은 항목만 필터링
           .map((item) => item.key)
           .join(",");
-        console.log("[setPostingRegions] postingRegions", postingRegions);
-        console.log(
-          "[setPostingRegions] postingRegionSiNames",
-          postingRegionSiNames
-        );
-        console.log("[setPostingRegions] _postingRegions", selectedRightItems);
+
         set({
           _postingRegions: selectedRightItems,
           postingRegions,
