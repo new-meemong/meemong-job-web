@@ -36,10 +36,9 @@ const DesignerLicensesSelect = () => {
   }
 
   const handleSelect = (selectedOption: string) => {
-    console.log("moonsae selectedOption", selectedOption);
     setDesignerLicenses(selectedOption as DesignerLicensesKeyResume);
   };
-  console.log("designerLicenses", designerLicenses);
+
   return (
     <Container>
       <EditResumeOptonMultiSelect

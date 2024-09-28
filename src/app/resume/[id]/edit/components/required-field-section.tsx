@@ -8,6 +8,7 @@ import AppliedRoleSelect from "./required-field-section-components/applied-role-
 import WorkTypeSelect from "./required-field-section-components/work-type-select";
 import SettlementAllowanceSelect from "./required-field-section-components/settlement-allowance-select";
 import DesignerLicensesSelect from "./required-field-section-components/designer-licenses-select";
+import DesignerExperienceYearNumberSelect from "./required-field-section-components/designer-experience-year-number-select";
 
 const Contianer = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const RequiredFieldSection = () => {
       <WorkTypeSelect />
       <SettlementAllowanceSelect />
       <DesignerLicensesSelect />
+      <DesignerExperienceYearNumberSelect />
     </Contianer>
   );
 };
