@@ -3,7 +3,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
-import EditResumeLabel from "../edit-resume-label";
+import ResumeEditLabel from "../../base/resume-edit-label";
 
 const Container = styled.div``;
 
@@ -83,7 +83,7 @@ const EditResumeOptonSingleSelect = <T extends string | boolean>({
 
   return (
     <Container>
-      <EditResumeLabel label={label} />
+      <ResumeEditLabel label={label} />
       {description && <Description>{description}</Description>}
       <ButtonContainer>
         {options.map((option) => (

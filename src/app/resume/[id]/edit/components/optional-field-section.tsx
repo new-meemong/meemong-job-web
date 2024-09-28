@@ -5,6 +5,7 @@ import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { useState } from "react";
 import styled from "styled-components";
+import MajorExperience from "./optional-field-section/major-experience";
 
 const Contianer = styled.div`
   display: flex;
@@ -41,6 +42,12 @@ const ExpandDescription = styled.div`
   margin-bottom: ${pxToVw(12)};
 `;
 
+const ItemContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${pxToVw(24)};
+`;
+
 const OptionalFieldSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
@@ -53,6 +60,11 @@ const OptionalFieldSection = () => {
         <ExpandDescription>{`이력서 작성 꿀팁!\n선택 항목을 많이 입력할 수록 제안 받을 확률이 올라갑니다.
         `}</ExpandDescription>
       </ExpandHeaderContainer>
+      {isExpanded && (
+        <ItemContainer>
+          <MajorExperience />
+        </ItemContainer>
+      )}
     </Contianer>
   );
 };

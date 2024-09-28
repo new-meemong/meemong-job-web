@@ -188,6 +188,11 @@ export const fonts = {
     font-weight: 700;
     color: ${colors.greyTextEditLabel};
   `,
+  greyTextEditLabelBold14: css`
+    font-size: ${pxToVw(14)};
+    font-weight: 700;
+    color: ${colors.greyTextEditLabel};
+  `,
   greyTextEditLabelSemi12: css`
     font-size: ${pxToVw(12)};
     font-weight: 500;

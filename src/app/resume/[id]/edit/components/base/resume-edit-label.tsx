@@ -5,12 +5,12 @@ const Label = styled.span`
   ${fonts.greyTextEditLabelBold16}
 `;
 
-interface EditResumeLabelProps {
+interface ResumeEditLabelProps {
   label: string;
 }
 
-const EditResumeLabel = ({ label }: EditResumeLabelProps) => {
+const ResumeEditLabel = ({ label }: ResumeEditLabelProps) => {
   return <Label>{label}</Label>;
 };
 
-export default EditResumeLabel;
+export default ResumeEditLabel;

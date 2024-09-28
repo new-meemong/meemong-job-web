@@ -1,36 +1,17 @@
 import { ErrorMessage } from "@/components/error-message";
-import EditResumeLabel from "@/app/resume/[id]/edit/components/edit-resume-label";
+import ResumeEditLabel from "@/app/resume/[id]/edit/components/base/resume-edit-label";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
+import ResumeEditInput from "../base/resume-edit-input";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
-
-const Input = styled.input<{ $hasError: boolean }>`
-  ${fonts.blackSemi12}
-  margin-top: ${pxToVw(12)};
-
-  padding: ${pxToVw(12)};
-  width: 100%;
-  height: ${pxToVw(40)};
-  outline: none;
-  /* background-color: ${colors.greyBackground}; */
-  border: ${({ $hasError }) =>
-    $hasError
-      ? `${pxToVw(1)} solid ${colors.red}`
-      : `${pxToVw(1)} solid ${colors.grey}`};
-  border-radius: ${pxToVw(4)};
-
-  &::placeholder {
-    ${fonts.greySemi12};
-  }
 `;
 
 const UserNameInput = () => {
@@ -59,8 +40,8 @@ const UserNameInput = () => {
 
   return (
     <Container>
-      <EditResumeLabel label={"이름*"} />
-      <Input
+      <ResumeEditLabel label={"이름*"} />
+      <ResumeEditInput
         type="text"
         value={userName || ""}
         onChange={(e) => setUserName(e.target.value)}

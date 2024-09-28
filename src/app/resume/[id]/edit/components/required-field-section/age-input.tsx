@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import EditResumeLabel from "../edit-resume-label";
+import ResumeEditLabel from "../base/resume-edit-label";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
@@ -81,7 +81,7 @@ const AgeInput = () => {
 
   return (
     <Container>
-      <EditResumeLabel label={"나이*"} />
+      <ResumeEditLabel label={"나이*"} />
       <InputWrapper $hasError={hasError}>
         <Input
           type="number"

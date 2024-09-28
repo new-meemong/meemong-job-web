@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import EditResumeOptonSingleSelect from "./edit-resume-option-single-select";
+import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { resumeOptions } from "@/types/resume-optons";
 import { DesignerExperienceYearNumberKeyResume } from "@/types/resume-keys";

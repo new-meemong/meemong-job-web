@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import EditResumeOptonSelect from "./edit-resume-option-single-select";
+import EditResumeOptonSelect from "./base/edit-resume-option-single-select";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { resumeOptions } from "@/types/resume-optons";
 import { RoleKeyResume } from "@/types/resume-keys";
-import EditResumeLabel from "../edit-resume-label";
+import ResumeEditLabel from "../base/resume-edit-label";
 
 type SizeType = "small" | "large";
 
@@ -57,7 +57,7 @@ const AppliedRoleSelect = () => {
   };
   return (
     <Container>
-      <EditResumeLabel label={"지원 분야*"} />
+      <ResumeEditLabel label={"지원 분야*"} />
       <ButtonContainer>
         {options.map((option) => (
           <Button

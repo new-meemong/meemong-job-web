@@ -1,7 +1,7 @@
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import EditResumeOptonMultiSelect from "./edit-resume-option-multi-select";
+import EditResumeOptonMultiSelect from "./base/edit-resume-option-multi-select";
 import { DesignerLicensesKeyResume } from "@/types/resume-keys";
 
 const Container = styled.div`

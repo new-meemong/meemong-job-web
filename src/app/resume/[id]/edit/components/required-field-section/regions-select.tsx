@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@/components/error-message";
 import ArrowRightGreyIcon from "@/components/icons/arrow-right-grey-icon";
-import EditResumeLabel from "@/app/resume/[id]/edit/components/edit-resume-label";
+import ResumeEditLabel from "@/app/resume/[id]/edit/components/base/resume-edit-label";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
@@ -88,7 +88,7 @@ const RegionsSelect = () => {
 
   return (
     <Container>
-      <EditResumeLabel label={"지역*"} />
+      <ResumeEditLabel label={"지역*"} />
       <ContentContainer>
         <Location $hasError={hasError}>
           {convertRegions.length === 0 ? (

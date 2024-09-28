@@ -1,8 +1,8 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { SettlementAllowanceKeyResume } from "@/types/resume-keys";
-import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import EditResumeOptonSingleSelect from "./edit-resume-option-single-select";
+import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { resumeOptions } from "@/types/resume-optons";
+import { WorkTypeKeyResume } from "@/types/resume-keys";
 
 const Container = styled.div`
   display: flex;
@@ -10,47 +10,46 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const SettlementAllowanceSelect = () => {
+const WorkTypeSelect = () => {
   const {
-    settlementAllowance,
-    setSettlementAllowance,
+    workType,
+    setWorkType,
     appliedRole,
     hasDesignerOptionNull,
     hasInternOptionNull
   } = useResumeEditStore((state) => ({
-    settlementAllowance: state.settlementAllowance,
-    setSettlementAllowance: state.setSettlementAllowance,
+    workType: state.workType,
+    setWorkType: state.setWorkType,
     appliedRole: state.appliedRole,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull
   }));
 
-  const options = resumeOptions.settlementAllowance;
+  const options = resumeOptions.workType;
   let hasError = false;
 
   if (appliedRole === "디자이너") {
-    hasError = !settlementAllowance && hasDesignerOptionNull;
+    hasError = !workType && hasDesignerOptionNull;
   } else if (appliedRole === "인턴") {
-    hasError = !settlementAllowance && hasInternOptionNull;
+    hasError = !workType && hasInternOptionNull;
   }
 
   const handleSelect = (selectedOption: string | null) => {
-    setSettlementAllowance(selectedOption as SettlementAllowanceKeyResume);
+    setWorkType(selectedOption as WorkTypeKeyResume);
   };
 
   return (
     <Container>
       <EditResumeOptonSingleSelect
-        label={"정착지원금*"}
+        label={"근무 형태*"}
         options={options}
-        selectedOption={settlementAllowance}
+        selectedOption={workType}
         onSelect={handleSelect}
         errorMessage="근무 형태를 선택해주세요."
         isError={hasError}
-        buttonSize="small"
       />
     </Container>
   );
 };
 
-export default SettlementAllowanceSelect;
+export default WorkTypeSelect;
