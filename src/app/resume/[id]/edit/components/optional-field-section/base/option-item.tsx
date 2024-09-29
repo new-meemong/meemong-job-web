@@ -15,7 +15,7 @@ const OptionItem = styled.div<{
   height: ${pxToVw(34)};
   width: ${(props) =>
     props.$size === "large"
-      ? pxToVw(102)
+      ? pxToVw(105)
       : props.$size === "small"
       ? pxToVw(77)
       : pxToVw(86)};

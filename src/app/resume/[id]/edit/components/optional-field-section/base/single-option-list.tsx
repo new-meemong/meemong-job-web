@@ -23,6 +23,14 @@ const SingleOptionList = ({
   onSelect,
   buttonSize
 }: SingleOptionListProps) => {
+  const handleSelect = (optionKey: string) => {
+    if (selectedOption === optionKey) {
+      onSelect(null);
+    } else {
+      onSelect(optionKey);
+    }
+  };
+
   return (
     <Container>
       {options.map((option, index) => {
@@ -30,7 +38,7 @@ const SingleOptionList = ({
           <OptionItem
             key={index}
             $isSelected={selectedOption === option.key}
-            onClick={() => onSelect(option.key)}
+            onClick={() => handleSelect(option.key)}
             $size={buttonSize}
           >
             {option.value}

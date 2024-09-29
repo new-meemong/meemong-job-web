@@ -10,6 +10,8 @@ import SalesLast3Month from "./optional-field-section/sales-last-3month";
 import CompletedEducationLevel from "./optional-field-section/completed-education-level";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import PreferredOffDays from "./optional-field-section/preferred-off-days";
+import WorkCycleTypes from "./optional-field-section/work-cycle-types";
+import DesignerPromotionPeriod from "./optional-field-section/designer-promition-period";
 
 const Contianer = styled.div`
   display: flex;
@@ -72,6 +74,8 @@ const OptionalFieldSection = () => {
           {appliedRole === "디자이너" && <SalesLast3Month />}
           <CompletedEducationLevel />
           <PreferredOffDays />
+          <WorkCycleTypes />
+          {appliedRole === "인턴" && <DesignerPromotionPeriod />}
         </ItemContainer>
       )}
     </Contianer>

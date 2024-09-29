@@ -137,11 +137,8 @@ export const resumeOptions = {
 
   designerPromotionPeriod: [
     { key: "1년 이하", value: "1년 이하" },
-    { key: "1년 6개월 이하", value: "1년 6개월 이하" },
     { key: "2년 이하", value: "2년 이하" },
-    { key: "3년 미만", value: "3년 미만" },
-    { key: "3년 이상", value: "3년 이상" },
-    { key: "상관없음", value: "상관없음" }
+    { key: "3년 이하", value: "3년 이하" }
   ] as DesignerPromotionPeriodOption[],
 
   isPreferredDormitorySupport: [
