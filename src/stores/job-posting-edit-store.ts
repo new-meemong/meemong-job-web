@@ -593,8 +593,6 @@ export const useJobPostingEditStore = create(
             return false;
           }
 
-          console.log("jobPostingData", jobPostingData);
-
           const hasNullField = Object.entries(jobPostingData).some(
             ([key, value]) =>
               key !== "postingRegions" &&
