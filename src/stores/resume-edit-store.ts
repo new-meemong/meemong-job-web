@@ -277,7 +277,7 @@ const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
 const convertToNullJobPostingData = (
   data: Record<string, any>
 ): Record<string, any> => {
-  const nullifyValues = ["상관없음", "해당없음"];
+  const nullifyValues = ["상관없음", "해당없음", "필요없음"];
 
   return Object.fromEntries(
     Object.entries(data).map(([key, value]) => [

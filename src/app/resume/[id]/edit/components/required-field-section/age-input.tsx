@@ -31,7 +31,7 @@ const InputWrapper = styled.div<{ $hasError: boolean }>`
 const Input = styled.input`
   ${fonts.blackSemi12}
 
-  width: ${pxToVw(60)}; /* 너비 설정 */
+  width: ${pxToVw(70)}; /* 너비 설정 */
   border: none; /* 테두리 제거 */
   outline: none; /* active 상태에서의 테두리 제거 */
   background-color: transparent; /* 배경을 투명하게 설정 */
@@ -44,7 +44,7 @@ const Input = styled.input`
 
 const Caption = styled.span`
   margin-left: ${pxToVw(8)};
-  ${fonts.blackSemi12}
+  ${fonts.greyText4Semi12}
 `;
 
 const AgeInput = () => {

@@ -142,8 +142,8 @@ export const resumeOptions = {
   ] as DesignerPromotionPeriodOption[],
 
   isPreferredDormitorySupport: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "필요함" },
+    { key: false, value: "필요없음" }
   ] as IsPreferredDormitorySupportOption[],
 
   preferredMonthlyEducationDesignerCount: [
@@ -161,12 +161,12 @@ export const resumeOptions = {
   ] as PreferredMonthlyEducationInternCountOption[],
 
   isPreferredMealSupport: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "희망" },
+    { key: false, value: "상관없음" }
   ] as IsPreferredMealSupportOption[],
 
   isPreferredParking: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "희망" },
+    { key: false, value: "필요없음" }
   ] as IsPreferredParkingOption[]
 };

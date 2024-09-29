@@ -8,14 +8,13 @@ import pxToVw from "@/lib/dpi-converter";
 const Container = styled.div``;
 
 const ItemContainer = styled.div`
-  padding-top: ${pxToVw(12)};
   display: flex;
   flex-direction: column;
-  gap: ${pxToVw(12)};
 `;
 
 const SmallLabel = styled.div`
   ${fonts.greyTextEditLabelBold14}
+  margin-top: ${pxToVw(12)};
 `;
 
 const MajorExperience = () => {

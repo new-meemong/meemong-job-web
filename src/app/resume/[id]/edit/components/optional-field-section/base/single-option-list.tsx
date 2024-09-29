@@ -10,20 +10,24 @@ const Container = styled.div`
   padding-top: ${pxToVw(12)};
 `;
 
-interface SingleOptionListProps {
-  options: { key: string; value: string }[];
-  selectedOption: string | null;
-  onSelect: (selectedOption: string | null) => void;
+interface Option<T> {
+  key: T;
+  value: string;
+}
+interface SingleOptionListProps<T> {
+  options: Option<T>[];
+  selectedOption: T | null;
+  onSelect: (selectedOption: T | null) => void;
   buttonSize: "small" | "large";
 }
 
-const SingleOptionList = ({
+const SingleOptionList = <T extends string | boolean>({
   options,
   selectedOption,
   onSelect,
   buttonSize
-}: SingleOptionListProps) => {
-  const handleSelect = (optionKey: string) => {
+}: SingleOptionListProps<T>) => {
+  const handleSelect = (optionKey: T) => {
     if (selectedOption === optionKey) {
       onSelect(null);
     } else {

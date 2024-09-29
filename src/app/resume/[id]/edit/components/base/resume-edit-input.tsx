@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 const Input = styled.input<{ $hasError: boolean }>`
   ${fonts.blackSemi12}
+  margin-top: ${pxToVw(12)};
   padding: ${pxToVw(12)};
   width: 100%;
   height: ${pxToVw(40)};
@@ -26,7 +27,7 @@ interface ResumeEditInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  $hasError: boolean;
+  $hasError?: boolean;
 }
 
 const ResumeEditInput = ({
@@ -34,7 +35,7 @@ const ResumeEditInput = ({
   value,
   onChange,
   placeholder,
-  $hasError
+  $hasError = false
 }: ResumeEditInputProps) => {
   return (
     <Input

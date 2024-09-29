@@ -12,6 +12,13 @@ import { useResumeEditStore } from "@/stores/resume-edit-store";
 import PreferredOffDays from "./optional-field-section/preferred-off-days";
 import WorkCycleTypes from "./optional-field-section/work-cycle-types";
 import DesignerPromotionPeriod from "./optional-field-section/designer-promition-period";
+import IsPreferredDormitorySupport from "./optional-field-section/is-preferred-dormitory-support";
+import PreferredMonthlyEducationDesignerCount from "./optional-field-section/preferred-monthly-education-designer-count";
+import PreferredMonthlyEducationInternCount from "./optional-field-section/preferred-monthly-education-intern-count";
+import IsPreferredMealSupport from "./optional-field-section/is-preferred-meal-support";
+import IsPreferredParking from "./optional-field-section/is-preferred-parking";
+import Mbti from "./optional-field-section/mbti";
+import Description from "./optional-field-section/description";
 
 const Contianer = styled.div`
   display: flex;
@@ -76,6 +83,16 @@ const OptionalFieldSection = () => {
           <PreferredOffDays />
           <WorkCycleTypes />
           {appliedRole === "인턴" && <DesignerPromotionPeriod />}
+          <IsPreferredDormitorySupport />
+          {appliedRole === "디자이너" ? (
+            <PreferredMonthlyEducationDesignerCount />
+          ) : (
+            <PreferredMonthlyEducationInternCount />
+          )}
+          <IsPreferredMealSupport />
+          <IsPreferredParking />
+          <Mbti />
+          <Description />
         </ItemContainer>
       )}
     </Contianer>

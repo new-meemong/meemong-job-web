@@ -17,7 +17,7 @@ interface Option<T> {
 
 interface MultiOptionListProps<T> {
   options: Option<T>[];
-  selectedOptions: string[];
+  selectedOptions: T[];
   onSelect: (selectedOption: T) => void;
   buttonSize: "small" | "large";
 }
