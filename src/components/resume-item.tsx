@@ -5,6 +5,7 @@ import { useState } from "react";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { useRouter } from "next/navigation";
+import { ResumeType } from "@/types/resume-type";
 
 const Container = styled.div`
   width: 100%;
@@ -79,16 +80,7 @@ const ViewCount = styled.span`
 `;
 
 interface ResumeItemProps {
-  resume: {
-    id: number;
-    location: string;
-    title: string;
-    type: string;
-    gender: string;
-    age: string;
-    certificate: boolean;
-    workExperience: string;
-  };
+  resume: ResumeType;
   viewCount: number;
 }
 
@@ -106,22 +98,26 @@ const ResumeItem = ({ resume, viewCount }: ResumeItemProps) => {
 
   return (
     <Container onClick={handleClick}>
-      <Location>{resume.location}</Location>
+      <Location>{resume.preferredStoreRegions}</Location>
       <ContentContainer>
         <ProfileInfoContainer>
-          <Title>{resume.title}</Title>
+          <Title>{resume.shortDescription}</Title>
           <InfoTextContainer>
-            <ProfileInfo>{resume.type}</ProfileInfo>
+            <ProfileInfo>{resume.appliedRole}</ProfileInfo>
             <Divider />
-            <ProfileInfo>{`${resume.gender}`}</ProfileInfo>
-            <Divider />
-            <ProfileInfo>{`${resume.age}세`}</ProfileInfo>
+            {/* <ProfileInfo>{`${resume.sex}`}</ProfileInfo> */}
+            {/* <Divider /> */}
+            <ProfileInfo>{`${resume.birthday}세`}</ProfileInfo>
             <Divider />
             <ProfileInfo>
-              {resume.certificate ? "자격증 보유" : "자격증 미보유"}
+              {resume.designerLicenses ? "자격증 보유" : "자격증 미보유"}
             </ProfileInfo>
             <Divider />
-            <ProfileInfo>{resume.workExperience}</ProfileInfo>
+            <ProfileInfo>
+              {resume.appliedRole === "디자이너"
+                ? resume.designerExperienceYearNumber
+                : resume.internExperienceYearNumber}
+            </ProfileInfo>
           </InfoTextContainer>
           <ViewCount>{`조회 ${viewCount}`}</ViewCount>
         </ProfileInfoContainer>
