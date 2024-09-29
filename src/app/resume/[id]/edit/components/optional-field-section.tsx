@@ -6,6 +6,10 @@ import { fonts } from "@/styles/fonts";
 import { useState } from "react";
 import styled from "styled-components";
 import MajorExperience from "./optional-field-section/major-experience";
+import SalesLast3Month from "./optional-field-section/sales-last-3month";
+import CompletedEducationLevel from "./optional-field-section/completed-education-level";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import PreferredOffDays from "./optional-field-section/preferred-off-days";
 
 const Contianer = styled.div`
   display: flex;
@@ -45,11 +49,13 @@ const ExpandDescription = styled.div`
 const ItemContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${pxToVw(24)};
 `;
 
 const OptionalFieldSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { appliedRole } = useResumeEditStore((state) => ({
+    appliedRole: state.appliedRole
+  }));
   return (
     <Contianer>
       <ExpandHeaderContainer>
@@ -63,6 +69,9 @@ const OptionalFieldSection = () => {
       {isExpanded && (
         <ItemContainer>
           <MajorExperience />
+          {appliedRole === "디자이너" && <SalesLast3Month />}
+          <CompletedEducationLevel />
+          <PreferredOffDays />
         </ItemContainer>
       )}
     </Contianer>

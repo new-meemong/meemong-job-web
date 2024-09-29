@@ -10,6 +10,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid ${colors.greyDivider};
+  padding-top: ${pxToVw(12)};
+  padding-bottom: ${pxToVw(12)};
 `;
 
 const HeaderContainer = styled.div`
@@ -17,7 +19,6 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${pxToVw(12)} 0;
 `;
 
 interface DropDownItemProps {

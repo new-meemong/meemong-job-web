@@ -1,0 +1,52 @@
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { PreferredOffDaysKeyResume } from "@/types/resume-keys";
+import { resumeOptions } from "@/types/resume-optons";
+import styled from "styled-components";
+import DropDownItem from "./base/drop-down-item";
+import MultiOptionList from "./base/multi-option-list";
+
+const Container = styled.div``;
+
+const PreferredOffDays = () => {
+  const {
+    preferredOffDays,
+    setPreferredOffDays,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    appliedRole
+  } = useResumeEditStore((state) => ({
+    preferredOffDays: state.preferredOffDays,
+    setPreferredOffDays: state.setPreferredOffDays,
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
+    hasInternOptionNull: state.hasInternOptionNull,
+    appliedRole: state.appliedRole
+  }));
+
+  const options = resumeOptions.preferredOffDays;
+  let hasError = false;
+
+  if (appliedRole === "디자이너") {
+    hasError = !preferredOffDays && hasDesignerOptionNull;
+  } else if (appliedRole === "인턴") {
+    hasError = !preferredOffDays && hasInternOptionNull;
+  }
+
+  const handleSelect = (selectedOption: string) => {
+    setPreferredOffDays(selectedOption as PreferredOffDaysKeyResume);
+  };
+
+  return (
+    <Container>
+      <DropDownItem label={"희망 휴무 요일"}>
+        <MultiOptionList
+          options={options}
+          selectedOptions={preferredOffDays}
+          onSelect={handleSelect}
+          buttonSize="small"
+        />
+      </DropDownItem>
+    </Container>
+  );
+};
+
+export default PreferredOffDays;
