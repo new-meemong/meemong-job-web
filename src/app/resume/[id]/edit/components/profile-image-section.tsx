@@ -84,8 +84,7 @@ const ProfileImageSection = () => {
         setProfileImageUri(uri);
         setProfileImageThumbnailUri(thumbnailUri);
       }
-      console.log("moonsae uri", uri);
-      console.log("moonsae thumbnailUri", thumbnailUri);
+
       const imageUri = `${IMAGE_STORAGE_URL}${thumbnailUri}`;
       setImgSrc(imageUri);
       setIsUploading(false);
@@ -104,7 +103,13 @@ const ProfileImageSection = () => {
   return (
     <Container>
       <ProfileImageContainer onClick={handleImageClick}>
-        <ProfileImage src={imgSrc} alt="Profile Image" width={80} height={80} />
+        <ProfileImage
+          src={imgSrc}
+          alt="Profile Image"
+          width={80}
+          height={80}
+          priority
+        />
         {isUploading && (
           <SpinnerWrapper>
             <ClipLoader color={colors.purplePrimary} size={30} />

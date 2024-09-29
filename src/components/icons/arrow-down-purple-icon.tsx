@@ -11,12 +11,7 @@ const IconWrapper = styled.div`
 
 const ArrowDownPurpleIcon = () => (
   <IconWrapper>
-    <Image
-      src="/icons/arrow_down_purple.svg"
-      alt="Arrow Down"
-      fill
-      objectFit="contain"
-    />
+    <Image src="/icons/arrow_down_purple.svg" alt="Arrow Down" fill />
   </IconWrapper>
 );
 
