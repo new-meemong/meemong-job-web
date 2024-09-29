@@ -38,8 +38,8 @@ const IconContainer = styled.div`
   right: 0;
 `;
 
-const InfoText = styled.div`
-  ${fonts.blackBold12}
+const InfoText = styled.div<{ $hasError: boolean }>`
+  ${({ $hasError }) => ($hasError ? fonts.redNormal12 : fonts.blackBold12)}
 `;
 
 const HiddenFileInput = styled.input`
@@ -62,9 +62,28 @@ const ProfileImageSection = () => {
   const {
     profileImageThumbnailUri,
     setProfileImageThumbnailUri,
-    setProfileImageUri
-  } = useResumeEditStore();
-  const profileImage = "/images/default_profile_image.jpg";
+    setProfileImageUri,
+    appliedRole,
+    hasDesignerOptionNull,
+    hasInternOptionNull
+  } = useResumeEditStore((state) => ({
+    setProfileImageThumbnailUri: state.setProfileImageThumbnailUri,
+    setProfileImageUri: state.setProfileImageUri,
+    appliedRole: state.appliedRole,
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
+    hasInternOptionNull: state.hasInternOptionNull,
+    profileImageThumbnailUri: state.profileImageThumbnailUri
+  }));
+  let hasError = false;
+
+  if (appliedRole === "디자이너") {
+    hasError = hasDesignerOptionNull;
+  } else if (appliedRole === "인턴") {
+    hasError = hasInternOptionNull;
+  }
+  const profileImage =
+    `${IMAGE_STORAGE_URL}${profileImageThumbnailUri}` ||
+    "/images/default_profile_image.jpg";
   const [imgSrc, setImgSrc] = useState<string>(profileImage);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -125,7 +144,9 @@ const ProfileImageSection = () => {
         onChange={handleFileChange}
         ref={fileInputRef}
       />
-      <InfoText>이력서 사진을 추가해 주세요.</InfoText>
+      {!profileImageThumbnailUri && (
+        <InfoText $hasError={hasError}>이력서 사진을 추가해 주세요.</InfoText>
+      )}
     </Container>
   );
 };

@@ -1,3 +1,5 @@
+import { postResume, putResume } from "@/apis/resumes";
+import { ResponseResultType } from "@/types/response-result-type";
 import {
   CompletedEducationLevelKeyResume,
   DesignerExperienceYearNumberKeyResume,
@@ -17,10 +19,12 @@ import {
   WorkCycleTypesKeyResume,
   WorkTypeKeyResume
 } from "@/types/resume-keys";
+import { ResumeType } from "@/types/resume-type";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 type ResumeEditState = {
+  id: string | null;
   profileImageUri: string | null;
   profileImageThumbnailUri: string | null;
   shortDescription: string | null;
@@ -62,9 +66,12 @@ type ResumeEditState = {
 
   hasDesignerOptionNull: boolean;
   hasInternOptionNull: boolean;
+
+  isExposure: boolean;
 };
 
 type ResumeEditActions = {
+  setId: (id: string) => void;
   setProfileImageUri: (uri: string | null) => void;
   setProfileImageThumbnailUri: (uri: string | null) => void;
   setShortDescription: (description: string | null) => void;
@@ -118,9 +125,15 @@ type ResumeEditActions = {
   ) => void;
   setMbti: (mbti: string | null) => void;
   setDescription: (description: string | null) => void;
+  setIsExposure: (isExposure: boolean) => void;
+
+  // 임시저장 및 이력서 등록
+  saveDraft: () => Promise<ResponseResultType>;
+  submitResume: () => Promise<ResponseResultType>;
 };
 
 const defaultResumeEditState: ResumeEditState = {
+  id: null,
   profileImageUri: null,
   profileImageThumbnailUri: null,
   shortDescription: null,
@@ -155,13 +168,16 @@ const defaultResumeEditState: ResumeEditState = {
   mbti: null,
   description: null,
   hasDesignerOptionNull: false,
-  hasInternOptionNull: false
+  hasInternOptionNull: false,
+  isExposure: false
 };
 
 export const useResumeEditStore = create(
   persist<ResumeEditState & ResumeEditActions>(
     (set, get) => ({
       ...defaultResumeEditState,
+
+      setId: (id: string) => set({ id }),
       setProfileImageUri: (uri) => set({ profileImageUri: uri }),
       setProfileImageThumbnailUri: (uri) =>
         set({ profileImageThumbnailUri: uri }),
@@ -239,31 +255,242 @@ export const useResumeEditStore = create(
       setIsPreferredParking: (isPreferred) =>
         set({ isPreferredParking: isPreferred }),
       setMbti: (mbti) => set({ mbti }),
-      setDescription: (description) => set({ description })
+      setDescription: (description) => set({ description }),
+      setIsExposure: (isExposure) => set({ isExposure }),
+
+      // 임시저장 및 이력서 등록
+      saveDraft: async () => {
+        try {
+          const state = get();
+          const { appliedRole, id } = state;
+
+          const resumeRequiredStates = getResumeRequiredData(state);
+          const missingFields = hasMissingRequiredFields(resumeRequiredStates);
+
+          if (missingFields) {
+            setOptionNullFlag(appliedRole, true, set);
+            return {
+              status: false,
+              message: `모든 항목을 입력해야\n이력서를 등록할 수 있습니다.`
+            };
+          } else {
+            setOptionNullFlag(appliedRole, false, set);
+          }
+
+          const resumeData = prepareResumeData(state);
+
+          const response = id
+            ? await putResume(id, resumeData)
+            : await postResume(resumeData);
+
+          if (response.data) {
+            return {
+              status: true,
+              message: "이력서가 성공적으로 저장되었습니다."
+            };
+          } else {
+            return {
+              status: false,
+              message: "이력서 저장중 오류가 발생했습니다."
+            };
+          }
+        } catch (e) {
+          console.error("이력서 저장중 오류 발생: ", e);
+
+          return {
+            status: false,
+            message: "이력서 저장중 오류가 발생했습니다."
+          };
+        }
+      },
+      submitResume: async () => {
+        try {
+          const state = get();
+          const { appliedRole, id } = state;
+
+          const resumeRequiredStates = getResumeRequiredData(state);
+          const missingFields = hasMissingRequiredFields(resumeRequiredStates);
+
+          if (missingFields) {
+            setOptionNullFlag(appliedRole, true, set);
+            return {
+              status: false,
+              message: `모든 항목을 입력해야\n이력서를 등록할 수 있습니다.`
+            };
+          } else {
+            setOptionNullFlag(appliedRole, false, set);
+          }
+
+          let resumeData = prepareResumeData(state);
+          resumeData.isExposure = true;
+
+          const response = id
+            ? await putResume(id, resumeData)
+            : await postResume(resumeData);
+
+          if (response.data) {
+            return {
+              status: true,
+              message: "이력서가 성공적으로 등록되었습니다."
+            };
+          } else {
+            return {
+              status: false,
+              message: "이력서 등록중 오류가 발생했습니다."
+            };
+          }
+        } catch (e) {
+          console.error("이력서 등록중 오류 발생: ", e);
+          alert("이력서 등록중 오류가 발생했습니다. 다시 시도해주세요.");
+          return {
+            status: false,
+            message: "이력서 등록중 오류가 발생했습니다."
+          };
+        }
+      }
     }),
     {
       name: "resume-edit-store",
-      storage: createJSONStorage(() => sessionStorage)
+      storage: createJSONStorage(() => localStorage)
     }
   )
 );
 
+const prepareResumeData = (state: ResumeEditState): ResumeType => {
+  const resumeRequiredStates = getResumeRequiredData(state);
+  const resumeOptionalStates = getResumeOptionalData(state);
+
+  return convertToNullJobPostingData({
+    ...resumeRequiredStates,
+    ...resumeOptionalStates
+  }) as ResumeType;
+};
+
+const setOptionNullFlag = (
+  appliedRole: RoleKeyResume,
+  flag: boolean,
+  set: (partialState: Partial<ResumeEditState>) => void
+) => {
+  const flagKey =
+    appliedRole === "디자이너"
+      ? "hasDesignerOptionNull"
+      : appliedRole === "인턴"
+      ? "hasInternOptionNull"
+      : null;
+  if (flagKey) {
+    set({ [flagKey]: flag });
+  }
+};
+
+const hasMissingRequiredFields = (
+  requiredStates: Record<string, any>
+): boolean => {
+  return Object.entries(requiredStates).some(
+    ([key, value]) =>
+      key !== "postingRegions" &&
+      (value === null ||
+        value === "" ||
+        (Array.isArray(value) && value.length === 0))
+  );
+};
+
+const getResumeRequiredData = (state: ResumeEditState) => {
+  const { appliedRole } = state;
+  let requiredStates = {};
+
+  if (appliedRole === "디자이너") {
+    requiredStates = {
+      profileImageUri: state.profileImageUri,
+      profileImageThumbnailUri: state.profileImageThumbnailUri,
+      shortDescription: state.shortDescription,
+      userName: state.userName,
+      preferredStoreRegions: state.preferredStoreRegions,
+      preferredStoreRegionSiNames: state.preferredStoreRegionSiNames,
+      birthday: state.birthday,
+      appliedRole: state.appliedRole,
+      workType: state.workType,
+      settlementAllowance: state.settlementAllowance,
+      designerLicenses: state.designerLicenses.join(","),
+      designerExperienceYearNumber: state.designerExperienceYearNumber
+    };
+  } else if (appliedRole === "인턴") {
+    requiredStates = {
+      profileImageUri: state.profileImageUri,
+      profileImageThumbnailUri: state.profileImageThumbnailUri,
+      shortDescription: state.shortDescription,
+      userName: state.userName,
+      preferredStoreRegions: state.preferredStoreRegions,
+      preferredStoreRegionSiNames: state.preferredStoreRegionSiNames,
+      birthday: state.birthday,
+      appliedRole: state.appliedRole,
+      workType: state.workType,
+      internExpectedSalary: state.internExpectedSalary,
+      designerLicenses: state.designerLicenses.join(","),
+      internExperienceYearNumber: state.internExperienceYearNumber
+    };
+  }
+
+  return requiredStates;
+};
+
+const getResumeOptionalData = (state: ResumeEditState) => {
+  const { appliedRole } = state;
+  let optionalStates = {};
+
+  if (appliedRole === "디자이너") {
+    optionalStates = {
+      designerMajorExperienceCompanyName:
+        state.designerMajorExperienceCompanyName,
+      designerMajorExperienceDuration: state.designerMajorExperienceDuration,
+      designerMajorExperienceRole: state.designerMajorExperienceRole,
+      salesLast3MonthsAvg: state.salesLast3MonthsAvg,
+      completedEducationLevel: state.completedEducationLevel,
+      preferredOffDays: state.preferredOffDays.join(","),
+      workCycleTypes: state.workCycleTypes.join(","),
+      isPreferredDormitorySupport: state.isPreferredDormitorySupport,
+      preferredMonthlyEducationDesignerCount:
+        state.preferredMonthlyEducationDesignerCount,
+      isPreferredMealSupport: state.isPreferredMealSupport,
+      isPreferredParking: state.isPreferredParking,
+      mbti: state.mbti,
+      description: state.description
+    };
+  } else if (appliedRole === "인턴") {
+    optionalStates = {
+      internMajorExperienceCompanyName: state.internMajorExperienceCompanyName,
+      internMajorExperienceDuration: state.internMajorExperienceDuration,
+      internMajorExperienceRole: state.internMajorExperienceRole,
+      completedEducationLevel: state.completedEducationLevel,
+      preferredOffDays: state.preferredOffDays.join(","),
+      workCycleTypes: state.workCycleTypes.join(","),
+      designerPromotionPeriod: state.designerPromotionPeriod,
+      isPreferredDormitorySupport: state.isPreferredDormitorySupport,
+      preferredMonthlyEducationInternCount:
+        state.preferredMonthlyEducationInternCount,
+      isPreferredMealSupport: state.isPreferredMealSupport,
+      isPreferredParking: state.isPreferredParking,
+      mbti: state.mbti,
+      description: state.description
+    };
+  }
+
+  return optionalStates;
+};
+
 // 중복 선택 가능 항목 처리를 위한 함수
 const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
   // "상관없음"이라는 항목이 선택된 경우 처리
-  const indifferentOption = "상관없음" as T; // "상관없음" 값을 직접 비교하기 위해 저장
+  const indifferentOptions = ["상관없음", "없음"] as T[];
 
-  if (item === indifferentOption) {
-    // "상관없음"이 선택되면 다른 항목들은 모두 해제하고 "상관없음"만 선택
-    return [indifferentOption];
+  if (indifferentOptions.includes(item)) {
+    // "상관없음"이나 "없음"이 선택되면 다른 항목들은 모두 해제하고 해당 값만 선택
+    return [item];
   }
 
-  // 이미 "상관없음"이 선택된 상태에서 다른 항목을 선택하려는 경우, "상관없음" 해제
-  if (selectedItems.includes(indifferentOption)) {
-    selectedItems = selectedItems.filter(
-      (selectedItem) => selectedItem !== indifferentOption
-    );
-  }
+  // 이미 "상관없음" 또는 "없음"이 선택된 상태에서 다른 항목을 선택하려는 경우, 해제
+  selectedItems = selectedItems.filter(
+    (selectedItem) => !indifferentOptions.includes(selectedItem)
+  );
 
   if (selectedItems.includes(item)) {
     // 이미 선택된 경우, 제거
@@ -277,7 +504,7 @@ const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
 const convertToNullJobPostingData = (
   data: Record<string, any>
 ): Record<string, any> => {
-  const nullifyValues = ["상관없음", "해당없음", "필요없음"];
+  const nullifyValues = ["상관없음", "해당없음", "필요없음", "없음"];
 
   return Object.fromEntries(
     Object.entries(data).map(([key, value]) => [

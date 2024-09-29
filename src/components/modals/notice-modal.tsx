@@ -62,7 +62,12 @@ const NoticeModal = ({
     onClose();
   };
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles}>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      style={customStyles}
+      ariaHideApp={false}
+    >
       <Container>
         <Content>{message}</Content>
         <ConfirmButton onClick={handleConfirmClick}>

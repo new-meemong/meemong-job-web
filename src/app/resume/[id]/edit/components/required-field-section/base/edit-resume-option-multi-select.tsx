@@ -16,6 +16,7 @@ const ButtonContainer = styled.div`
   flex-wrap: wrap;
   gap: ${pxToVw(4)};
   padding-top: ${pxToVw(12)};
+  padding-bottom: ${pxToVw(12)};
 `;
 
 const Button = styled.div<{

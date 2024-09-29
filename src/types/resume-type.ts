@@ -5,6 +5,7 @@ import {
   DesignerPromotionPeriodKeyResume,
   InternExpectedSalaryKeyResume,
   InternExperienceYearNumberKeyResume,
+  IsExposureKeyResume,
   IsPreferredDormitorySupportKeyResume,
   IsPreferredMealSupportKeyResume,
   IsPreferredParkingKeyResume,
@@ -50,6 +51,7 @@ export interface ResumeType {
   isPreferredParking: IsPreferredParkingKeyResume;
   mbti: string;
   description: string;
+  isExposure: IsExposureKeyResume;
 
   // 타임스탬프
   createdAt: string; // 생성 일시 (ISO 8601 형식)

@@ -138,3 +138,6 @@ export type IsPreferredParkingKeyResume = boolean;
 
 // // 자기소개서 최대 300자
 // export type DescriptionKeyResume = string;
+
+// 이력서 임시저장 / 공개 온오프
+export type IsExposureKeyResume = boolean;

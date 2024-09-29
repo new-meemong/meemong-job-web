@@ -71,7 +71,7 @@ export const resumeOptions = {
   designerLicenses: [
     { key: "자격증", value: "자격증" },
     { key: "면허증", value: "면허증" },
-    { key: "상관없음", value: "상관없음" }
+    { key: "없음", value: "없음" }
   ] as DesignerLicensesOption[],
 
   designerExperienceYearNumber: [

@@ -1,4 +1,4 @@
-import { postJobPostings, putJobPostings } from "@/apis/job-postings";
+import { postJobPosting, putJobPosting } from "@/apis/job-postings";
 import {
   AdminAgeKey,
   AdminSexKey,
@@ -622,12 +622,10 @@ export const useJobPostingEditStore = create(
 
           jobPostingData = convertToNullJobPostingData(jobPostingData);
 
-          console.log("jobPostingData2", jobPostingData);
-
           const sendData = jobPostingData as JobPostingType;
           const response = get().id
-            ? await putJobPostings(get().id!, sendData)
-            : await postJobPostings(sendData);
+            ? await putJobPosting(get().id!, sendData)
+            : await postJobPosting(sendData);
           if (response.data) {
             // set({ ...defaultJobPostingEditState });
             alert("디자이너 구인 공고 등록이 완료되었습니다.");
@@ -733,8 +731,8 @@ export const useJobPostingEditStore = create(
           const sendData = jobPostingData as JobPostingType;
 
           const response = get().id
-            ? await putJobPostings(get().id!, sendData)
-            : await postJobPostings(sendData);
+            ? await putJobPosting(get().id!, sendData)
+            : await postJobPosting(sendData);
           if (response.data) {
             // set({ ...defaultJobPostingEditState });
             alert("인턴 구인 공고 등록이 완료되었습니다.");

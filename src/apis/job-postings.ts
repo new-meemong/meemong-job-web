@@ -18,18 +18,15 @@ export const getJobPostings = async (queryParams?: Record<string, string>) => {
   }
 };
 
-export const postJobPostings = async (jobPosting: JobPostingType) => {
+export const postJobPosting = async (jobPosting: JobPostingType) => {
   try {
     return await apiFetch("/api/v1/job-postings", "POST", jobPosting);
   } catch (e) {
-    console.error("[postJobPostings] failed", e);
+    console.error("[postJobPosting] failed", e);
   }
 };
 
-export const putJobPostings = async (
-  id: string,
-  jobPosting: JobPostingType
-) => {
+export const putJobPosting = async (id: string, jobPosting: JobPostingType) => {
   try {
     return await apiFetch(`/api/v1/job-postings/${id}`, "PUT", jobPosting);
   } catch (e) {
@@ -37,11 +34,11 @@ export const putJobPostings = async (
   }
 };
 
-export const deleteJobPostings = async (id: string) => {
+export const deleteJobPosting = async (id: string) => {
   try {
     return await apiFetch(`/api/v1/job-postings/${id}`, "DELETE");
   } catch (e) {
-    console.error("[deleteJobPostings] failed", e);
+    console.error("[deleteJobPosting] failed", e);
   }
 };
 

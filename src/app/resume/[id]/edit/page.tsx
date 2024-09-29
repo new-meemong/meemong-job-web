@@ -7,6 +7,7 @@ import ProfileImageSection from "./components/profile-image-section";
 import pxToVw from "@/lib/dpi-converter";
 import RequiredFieldSection from "./components/required-field-section";
 import OptionalFieldSection from "./components/optional-field-section";
+import BottomButtonSection from "./components/bottom-button-section";
 
 const Container = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ export default function ResumeEditPage() {
         <RequiredFieldSection />
         <OptionalFieldSection />
       </ContentContainer>
+      <BottomButtonSection />
     </Container>
   );
 }

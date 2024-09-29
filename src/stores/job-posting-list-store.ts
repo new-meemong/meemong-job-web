@@ -1,4 +1,4 @@
-import { deleteJobPostings, getJobPostings } from "@/apis/job-postings";
+import { deleteJobPosting, getJobPostings } from "@/apis/job-postings";
 import { JobPostingType } from "@/types/job-posting-type";
 import { ResponseResultType } from "@/types/response-result-type";
 import { create } from "zustand";
@@ -35,7 +35,7 @@ export const useJobPostingListStore = create(
       },
       deleteJobPosting: async (id: string) => {
         try {
-          const res = await deleteJobPostings(id);
+          const res = await deleteJobPosting(id);
 
           if (res) {
             set((state) => {
