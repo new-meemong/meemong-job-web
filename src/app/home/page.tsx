@@ -9,6 +9,7 @@ import FindDesignerSection from "./components/sections/find-designer/find-design
 import FindJobSection from "./components/sections/find-job/find-job-section";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -24,7 +25,12 @@ interface SearchParams {
 }
 
 export default function HomePage({ searchParams }: SearchParams) {
-  const { getJobPostingList } = useJobPostingListStore();
+  const { getJobPostingList } = useJobPostingListStore((state) => ({
+    getJobPostingList: state.getJobPostingList
+  }));
+  const { getResumeList } = useResumeListStore((state) => ({
+    getResumeList: state.getResumeList
+  }));
   const [activeTab, setActiveTab] = useState(0);
   const userId = searchParams.userId;
 
@@ -42,6 +48,8 @@ export default function HomePage({ searchParams }: SearchParams) {
   useEffect(() => {
     if (activeTab === 0) {
       getJobPostingList();
+    } else if (activeTab === 1) {
+      getResumeList();
     }
   }, [activeTab, getJobPostingList]);
 

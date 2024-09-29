@@ -1,4 +1,44 @@
 import { useAuthStore } from "@/stores/auth-store";
+import { apiFetch } from "./fetch";
+import { ResumeType } from "@/types/resume-type";
+
+export const getResumes = async (queryParams?: Record<string, string>) => {
+  try {
+    const defaultParams: Record<string, string> = {};
+
+    const combinedParams = { ...defaultParams, ...(queryParams || {}) };
+    const queryString = new URLSearchParams(combinedParams).toString();
+    const url = `/api/v1/resumes?${queryString}`;
+
+    return await apiFetch(url, "GET");
+  } catch (e) {
+    console.error("[getResumes] failed", e);
+  }
+};
+
+export const postResume = async (resume: ResumeType) => {
+  try {
+    return await apiFetch("/api/v1/resumes", "POST", resume);
+  } catch (e) {
+    console.error("[postResume] failed", e);
+  }
+};
+
+export const putResume = async (id: string, resume: ResumeType) => {
+  try {
+    return await apiFetch(`/api/v1/resumes/${id}`, "PUT", resume);
+  } catch (e) {
+    console.error("[putResume] failed", e);
+  }
+};
+
+export const deleteResume = async (id: string) => {
+  try {
+    return await apiFetch(`/api/v1/resumes/${id}`, "DELETE");
+  } catch (e) {
+    console.error("[deleteResume] failed", e);
+  }
+};
 
 export const uploadResumeProfileImage = async (image: File) => {
   try {
