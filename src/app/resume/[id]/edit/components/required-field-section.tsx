@@ -9,6 +9,8 @@ import WorkTypeSelect from "./required-field-section/work-type-select";
 import SettlementAllowanceSelect from "./required-field-section/settlement-allowance-select";
 import DesignerLicensesSelect from "./required-field-section/designer-licenses-select";
 import DesignerExperienceYearNumberSelect from "./required-field-section/designer-experience-year-number-select";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import InternExpectedSalarySelect from "./required-field-section/intern-expected-salary-select";
 
 const Contianer = styled.div`
   display: flex;
@@ -18,6 +20,10 @@ const Contianer = styled.div`
 `;
 
 const RequiredFieldSection = () => {
+  const { appliedRole } = useResumeEditStore((state) => ({
+    appliedRole: state.appliedRole
+  }));
+
   return (
     <Contianer>
       <ShortDescriptionInput />
@@ -26,7 +32,8 @@ const RequiredFieldSection = () => {
       <AgeInput />
       <AppliedRoleSelect />
       <WorkTypeSelect />
-      <SettlementAllowanceSelect />
+      {appliedRole === "디자이너" && <SettlementAllowanceSelect />}
+      {appliedRole === "인턴" && <InternExpectedSalarySelect />}
       <DesignerLicensesSelect />
       <DesignerExperienceYearNumberSelect />
     </Contianer>

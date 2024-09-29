@@ -15,14 +15,12 @@ const SettlementAllowanceSelect = () => {
     settlementAllowance,
     setSettlementAllowance,
     appliedRole,
-    hasDesignerOptionNull,
-    hasInternOptionNull
+    hasDesignerOptionNull
   } = useResumeEditStore((state) => ({
     settlementAllowance: state.settlementAllowance,
     setSettlementAllowance: state.setSettlementAllowance,
     appliedRole: state.appliedRole,
-    hasDesignerOptionNull: state.hasDesignerOptionNull,
-    hasInternOptionNull: state.hasInternOptionNull
+    hasDesignerOptionNull: state.hasDesignerOptionNull
   }));
 
   const options = resumeOptions.settlementAllowance;
@@ -30,8 +28,6 @@ const SettlementAllowanceSelect = () => {
 
   if (appliedRole === "디자이너") {
     hasError = !settlementAllowance && hasDesignerOptionNull;
-  } else if (appliedRole === "인턴") {
-    hasError = !settlementAllowance && hasInternOptionNull;
   }
 
   const handleSelect = (selectedOption: string | null) => {
