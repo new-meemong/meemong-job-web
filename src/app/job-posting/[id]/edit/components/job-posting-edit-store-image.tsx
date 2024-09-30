@@ -28,7 +28,7 @@ const UploadedImageWrapper = styled.div`
   position: relative;
   width: ${pxToVw(72)};
   height: ${pxToVw(72)};
-  border-radius: ${pxToVw(5)};
+  border-radius: ${pxToVw(4)};
   overflow: hidden;
 `;
 
@@ -54,7 +54,9 @@ const ImageUploadButton = styled.label<{ $hasError: boolean }>`
   border: ${(props) =>
     props.$hasError
       ? `1px solid ${colors.red}`
-      : `1px solid ${colors.greyText4}`};
+      : `1px solid ${colors.greyBacground4}`};
+  border-radius: ${pxToVw(4)};
+  overflow: hidden;
 `;
 
 const HiddenFileInput = styled.input`
@@ -87,6 +89,7 @@ const InfoDot = styled.div`
 
 const StyledImage = styled(Image)`
   object-fit: cover;
+  position: absolute;
 `;
 
 const JobPostingEditStoreImage = () => {

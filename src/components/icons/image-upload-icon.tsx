@@ -7,6 +7,7 @@ const IconWrapper = styled.div`
   width: ${pxToVw(72)};
   height: ${pxToVw(72)};
   position: relative;
+  object-fit: contain;
 `;
 
 const ImageUploadIcon = () => (
