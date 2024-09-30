@@ -10,6 +10,7 @@ import FindJobSection from "./components/sections/find-job/find-job-section";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { useAppStateStore } from "@/stores/app-state-store";
 
 const Container = styled.div`
   display: flex;
@@ -31,8 +32,13 @@ export default function HomePage({ searchParams }: SearchParams) {
   const { getResumeList } = useResumeListStore((state) => ({
     getResumeList: state.getResumeList
   }));
-  const [activeTab, setActiveTab] = useState(0);
+  const { activeTab, setActiveTab } = useAppStateStore((state) => ({
+    activeTab: state.activeTab,
+    setActiveTab: state.setActiveTab
+  }));
+
   const userId = searchParams.userId;
+  const [loading, setLoading] = useState(true);
 
   const { login, jwt } = useAuthStore((state) => ({
     login: state.login,
@@ -40,10 +46,19 @@ export default function HomePage({ searchParams }: SearchParams) {
   }));
 
   useEffect(() => {
+    // localStorage에서 activeTab 값을 불러오기
+    const storedTab = localStorage.getItem("activeTab");
+    if (storedTab) {
+      setActiveTab(Number(storedTab)); // localStorage 값으로 activeTab 설정
+    }
+    setLoading(false); // 로딩 종료
+  }, [setActiveTab]);
+
+  useEffect(() => {
     if (userId && !jwt) {
       login(userId);
     }
-  }, [userId, login]);
+  }, [userId, login, jwt]);
 
   useEffect(() => {
     if (activeTab === 0) {
@@ -51,7 +66,11 @@ export default function HomePage({ searchParams }: SearchParams) {
     } else if (activeTab === 1) {
       getResumeList();
     }
-  }, [activeTab, getJobPostingList]);
+  }, [activeTab, getJobPostingList, getResumeList]);
+
+  if (loading) {
+    return <div>로딩 중...</div>; // 로딩 중일 때 보여줄 화면
+  }
 
   return (
     <Container>
