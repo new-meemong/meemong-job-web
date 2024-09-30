@@ -81,13 +81,12 @@ const ProfileImageSection = () => {
   } else if (appliedRole === "인턴") {
     hasError = hasInternOptionNull;
   }
-  const profileImage =
-    `${IMAGE_STORAGE_URL}${profileImageThumbnailUri}` ||
-    "/images/default_profile_image.jpg";
+  const profileImage = profileImageThumbnailUri
+    ? `${IMAGE_STORAGE_URL}${profileImageThumbnailUri}`
+    : "/images/default_profile_image.jpg";
   const [imgSrc, setImgSrc] = useState<string>(profileImage);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
