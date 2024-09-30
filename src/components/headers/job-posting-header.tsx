@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
 import { useRouter } from "next/navigation";
-import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import OptionIcon from "./header-icons/option-icon";
@@ -74,7 +73,9 @@ const JobPostingHeader = ({
   };
 
   const handleOptionClick = () => {
-    options.length > 0 && setIsOptionModalOpen(true);
+    if (options.length > 0) {
+      setIsOptionModalOpen(true);
+    }
   };
 
   const handleOptionSelect = (option: string) => {

@@ -10,11 +10,13 @@ import {
   IsPreferredMealSupportKeyResume,
   IsPreferredParkingKeyResume,
   PreferredMonthlyEducationDesignerCountKeyResume,
+  PreferredMonthlyEducationInternCountKeyResume,
   PreferredOffDaysKeyResume,
   RoleKeyResume,
   SalesLast3MonthsAvgKeyResume,
   SettlementAllowanceKeyResume,
-  WorkCycleTypesKeyResume
+  WorkCycleTypesKeyResume,
+  WorkTypeKeyResume
 } from "./resume-keys";
 
 export interface ResumeType {
@@ -28,7 +30,7 @@ export interface ResumeType {
   preferredStoreRegionSiNames: string;
   birthday: string;
   appliedRole: RoleKeyResume;
-  workType: string;
+  workType: WorkTypeKeyResume;
   settlementAllowance: SettlementAllowanceKeyResume;
   internExpectedSalary: InternExpectedSalaryKeyResume;
   designerLicenses: DesignerLicensesKeyResume;
@@ -46,7 +48,9 @@ export interface ResumeType {
   workCycleTypes: WorkCycleTypesKeyResume;
   designerPromotionPeriod: DesignerPromotionPeriodKeyResume;
   isPreferredDormitorySupport: IsPreferredDormitorySupportKeyResume;
-  preferredMonthlyEducationCount: PreferredMonthlyEducationDesignerCountKeyResume;
+  preferredMonthlyEducationCount:
+    | PreferredMonthlyEducationDesignerCountKeyResume
+    | PreferredMonthlyEducationInternCountKeyResume;
   isPreferredMealSupport: IsPreferredMealSupportKeyResume;
   isPreferredParking: IsPreferredParkingKeyResume;
   mbti: string;

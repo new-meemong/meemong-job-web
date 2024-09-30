@@ -297,6 +297,7 @@ export const useJobPostingEditStore = create(
       ...defaultJobPostingEditState,
       resetStore: () => set({ ...defaultJobPostingEditState }),
       setFromJobPosting: (jobPosting: JobPostingType) => {
+        console.log("mooonsae jobPosting", jobPosting);
         let parsedPostingRegions = [];
 
         parsedPostingRegions = jobPosting.postingRegions

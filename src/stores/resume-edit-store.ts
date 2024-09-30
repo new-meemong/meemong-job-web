@@ -1,4 +1,5 @@
 import { postResume, putResume } from "@/apis/resumes";
+import { siSggList } from "@/types/location-type";
 import { ResponseResultType } from "@/types/response-result-type";
 import {
   CompletedEducationLevelKeyResume,
@@ -29,7 +30,7 @@ type ResumeEditState = {
   profileImageThumbnailUri: string | null;
   shortDescription: string | null;
   userName: string | null;
-  birthday: number | null;
+  birthday: string | null;
 
   // 선호 지역
   _preferredStoreRegions: { key: string; value: string }[];
@@ -77,7 +78,7 @@ type ResumeEditActions = {
   setShortDescription: (description: string | null) => void;
   setUserName: (name: string | null) => void;
   setPreferredStoreRegions: (regions: { key: string; value: string }[]) => void;
-  setBirthday: (birthday: number | null) => void;
+  setBirthday: (birthday: string | null) => void;
   setAppliedRole: (role: RoleKeyResume) => void;
   setWorkType: (workType: WorkTypeKeyResume | null) => void;
   setSettlementAllowance: (
@@ -130,6 +131,8 @@ type ResumeEditActions = {
   // 임시저장 및 이력서 등록
   saveDraft: () => Promise<ResponseResultType>;
   submitResume: () => Promise<ResponseResultType>;
+  resetStore: () => void;
+  setFromResume: (resume: ResumeType) => void;
 };
 
 const defaultResumeEditState: ResumeEditState = {
@@ -176,7 +179,76 @@ export const useResumeEditStore = create(
   persist<ResumeEditState & ResumeEditActions>(
     (set, get) => ({
       ...defaultResumeEditState,
+      resetStore: () => set({ ...defaultResumeEditState }),
+      setFromResume: (resume: ResumeType) => {
+        const parsedRegions = parsePostingRegions(resume);
 
+        if (resume.appliedRole === "디자이너") {
+          set({
+            preferredMonthlyEducationDesignerCount:
+              resume.preferredMonthlyEducationCount as PreferredMonthlyEducationDesignerCountKeyResume,
+            preferredMonthlyEducationInternCount: null
+          });
+        } else if (resume.appliedRole === "인턴") {
+          set({
+            preferredMonthlyEducationDesignerCount: null,
+            preferredMonthlyEducationInternCount:
+              resume.preferredMonthlyEducationCount as PreferredMonthlyEducationInternCountKeyResume
+          });
+        }
+
+        set({
+          // id: resume.id,
+          profileImageUri: resume.profileImageUri,
+          profileImageThumbnailUri: resume.profileImageThumbnailUri,
+          shortDescription: resume.shortDescription,
+          userName: resume.userName,
+          _preferredStoreRegions:
+            get()._preferredStoreRegions.length !== 0
+              ? get()._preferredStoreRegions
+              : parsedRegions,
+          preferredStoreRegions: get().preferredStoreRegions
+            ? get().preferredStoreRegions
+            : resume.preferredStoreRegions,
+          preferredStoreRegionSiNames: get().preferredStoreRegionSiNames
+            ? get().preferredStoreRegionSiNames
+            : resume.preferredStoreRegionSiNames,
+          birthday: resume.birthday,
+          appliedRole: resume.appliedRole,
+          workType: resume.workType,
+          settlementAllowance: resume.settlementAllowance,
+          internExpectedSalary: resume.internExpectedSalary,
+          designerLicenses: resume.designerLicenses.split(
+            ","
+          ) as DesignerLicensesKeyResume[],
+          designerExperienceYearNumber: resume.designerExperienceYearNumber,
+          internExperienceYearNumber: resume.internExperienceYearNumber,
+          designerMajorExperienceCompanyName:
+            resume.designerMajorExperienceCompanyName,
+          designerMajorExperienceDuration:
+            resume.designerMajorExperienceDuration,
+          designerMajorExperienceRole: resume.designerMajorExperienceRole,
+          internMajorExperienceCompanyName:
+            resume.internMajorExperienceCompanyName,
+          internMajorExperienceDuration: resume.internMajorExperienceDuration,
+          internMajorExperienceRole: resume.internMajorExperienceRole,
+          salesLast3MonthsAvg: resume.salesLast3MonthsAvg,
+          completedEducationLevel: resume.completedEducationLevel,
+          preferredOffDays: resume.preferredOffDays.split(
+            ","
+          ) as PreferredOffDaysKeyResume[],
+          workCycleTypes: resume.workCycleTypes.split(
+            ","
+          ) as WorkCycleTypesKeyResume[],
+          designerPromotionPeriod: resume.designerPromotionPeriod,
+          isPreferredDormitorySupport: resume.isPreferredDormitorySupport,
+          isPreferredMealSupport: resume.isPreferredMealSupport,
+          isPreferredParking: resume.isPreferredParking,
+          mbti: resume.mbti,
+          description: resume.description,
+          isExposure: resume.isExposure
+        });
+      },
       setId: (id: string) => set({ id }),
       setProfileImageUri: (uri) => set({ profileImageUri: uri }),
       setProfileImageThumbnailUri: (uri) =>
@@ -321,7 +393,7 @@ export const useResumeEditStore = create(
             setOptionNullFlag(appliedRole, false, set);
           }
 
-          let resumeData = prepareResumeData(state);
+          const resumeData = prepareResumeData(state);
           resumeData.isExposure = true;
 
           const response = id
@@ -356,6 +428,39 @@ export const useResumeEditStore = create(
   )
 );
 
+const parsePostingRegions = (resume: ResumeType) => {
+  console.log("moonsae resume", resume);
+  let parsedRegions = [];
+  parsedRegions = resume.preferredStoreRegions
+    ? resume.preferredStoreRegions.split(",").map((region) => {
+        const [, district] = region.split(" "); // '서울특별시 성북구'를 '서울특별시'와 '성북구'로 분리
+        return { key: region, value: district }; // key는 전체 주소, value는 구 이름만 설정
+      })
+    : [];
+
+  // 시만 있고 구는 없는 경우
+  if (!resume.preferredStoreRegions) {
+    parsedRegions = resume.preferredStoreRegionSiNames
+      .split(",")
+      .map((region) => {
+        return siSggList[region][0];
+      });
+  }
+
+  // 구가 없는 시만 추출하기
+  const onlySi = resume.preferredStoreRegionSiNames
+    .split(",") // 콤마로 구분하여 배열로 변환
+    .filter((si) => si !== resume.preferredStoreRegions.split(" ")[0]);
+  if (onlySi.length > 0) {
+    const parsedSi = onlySi.map((si) => {
+      return siSggList[si][0];
+    });
+    parsedRegions = [...parsedRegions, ...parsedSi];
+  }
+  console.log("moonsae parsedRegions", parsedRegions);
+  return parsedRegions;
+};
+
 const prepareResumeData = (state: ResumeEditState): ResumeType => {
   const resumeRequiredStates = getResumeRequiredData(state);
   const resumeOptionalStates = getResumeOptionalData(state);
@@ -383,6 +488,7 @@ const setOptionNullFlag = (
 };
 
 const hasMissingRequiredFields = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   requiredStates: Record<string, any>
 ): boolean => {
   return Object.entries(requiredStates).some(
@@ -448,7 +554,7 @@ const getResumeOptionalData = (state: ResumeEditState) => {
       preferredOffDays: state.preferredOffDays.join(","),
       workCycleTypes: state.workCycleTypes.join(","),
       isPreferredDormitorySupport: state.isPreferredDormitorySupport,
-      preferredMonthlyEducationDesignerCount:
+      preferredMonthlyEducationCount:
         state.preferredMonthlyEducationDesignerCount,
       isPreferredMealSupport: state.isPreferredMealSupport,
       isPreferredParking: state.isPreferredParking,
@@ -465,7 +571,7 @@ const getResumeOptionalData = (state: ResumeEditState) => {
       workCycleTypes: state.workCycleTypes.join(","),
       designerPromotionPeriod: state.designerPromotionPeriod,
       isPreferredDormitorySupport: state.isPreferredDormitorySupport,
-      preferredMonthlyEducationInternCount:
+      preferredMonthlyEducationCount:
         state.preferredMonthlyEducationInternCount,
       isPreferredMealSupport: state.isPreferredMealSupport,
       isPreferredParking: state.isPreferredParking,
@@ -502,7 +608,9 @@ const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
 };
 
 const convertToNullJobPostingData = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Record<string, any> => {
   const nullifyValues = ["상관없음", "해당없음", "필요없음", "없음"];
 
