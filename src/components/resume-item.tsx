@@ -31,6 +31,7 @@ const ProfileInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: ${pxToVw(12)};
+  width: ${pxToVw(212)};
 `;
 
 const Title = styled.span`
