@@ -19,7 +19,9 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "noUnusedLocals": true,    // 사용되지 않는 로컬 변수를 경고
+    "noUnusedParameters": true // 사용되지 않는 파라미터를 경고
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
