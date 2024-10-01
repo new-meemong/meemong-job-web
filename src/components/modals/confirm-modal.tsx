@@ -94,7 +94,12 @@ const ConfirmModal = ({
   };
   console.log("ConfirmModal");
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} style={customStyles}>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      style={customStyles}
+      ariaHideApp={false}
+    >
       <Container>
         <ContentContainer>
           <Content>{message}</Content>

@@ -74,7 +74,7 @@ const AgeInput = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value.length <= 2) {
-      const numericValue = value ? Number(value) : null;
+      const numericValue = value ? value : null;
       setBirthday(numericValue);
     }
   };

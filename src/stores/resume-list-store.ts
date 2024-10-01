@@ -1,4 +1,5 @@
 import { deleteResume, getResumes } from "@/apis/resumes";
+import { ResponseResultType } from "@/types/response-result-type";
 import { ResumeType } from "@/types/resume-type";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -10,7 +11,7 @@ export type ResumeListState = {
 
 export type ResumeListActions = {
   getResumeList: () => Promise<void>;
-  deleteResume: (id: string) => Promise<void>;
+  deleteResume: (id: string) => Promise<ResponseResultType>;
 };
 
 export type ResumeListStore = ResumeListState & ResumeListActions;
@@ -34,16 +35,22 @@ export const useResumeListStore = create(
       },
       deleteResume: async (id: string) => {
         try {
-          await deleteResume(id);
-          set((state) => {
-            const resumeList = state.resumeList.filter(
-              (resume) => resume.id !== id
-            );
+          const res = await deleteResume(id);
 
-            return { ...state, resumeList };
-          });
+          if (res) {
+            set((state) => {
+              const resumeList = state.resumeList.filter(
+                (resume) => resume.id !== id
+              );
+
+              return { ...state, resumeList };
+            });
+            return { status: true, message: "해당 이려서가 삭제되었습니다." };
+          }
+          return { status: false, message: "삭제에 실패했습니다." };
         } catch (e) {
           console.error("[deleteResume] failed", e);
+          return { status: false, message: "삭제에 실패했습니다." };
         }
       }
     }),

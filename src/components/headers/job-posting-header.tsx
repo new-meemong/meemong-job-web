@@ -54,6 +54,7 @@ const JobPostingHeader = ({
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
     useState(false);
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
+  const [noticeModalMessage, setNoticeModalMessage] = useState("");
 
   const { resetStore, setFromJobPosting } = useJobPostingEditStore((state) => ({
     resetStore: state.resetStore,
@@ -98,12 +99,14 @@ const JobPostingHeader = ({
 
   const handleDeleteConfirm = async () => {
     setIsDeleteConfirmModalOpen(false);
-    const result = await deleteJobPosting(jobPostingId);
-    console.log("result", result);
-    if (result.status) {
+    const { status, message } = await deleteJobPosting(jobPostingId);
+
+    if (status) {
+      setNoticeModalMessage(message);
       setIsNoticeModalOpen(true);
     } else {
-      alert("삭제에 실패했습니다.");
+      setNoticeModalMessage(message);
+      setIsNoticeModalOpen(true);
     }
   };
 
@@ -140,7 +143,7 @@ const JobPostingHeader = ({
         isOpen={isNoticeModalOpen}
         onClose={() => setIsNoticeModalOpen(false)}
         onConfirm={handleNoticeConfirmOk}
-        message="해당 게시글이 삭제되었습니다."
+        message={noticeModalMessage}
       />
     </Container>
   );

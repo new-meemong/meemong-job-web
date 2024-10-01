@@ -261,17 +261,21 @@ export const useResumeEditStore = create(
         set({ shortDescription: description });
       },
       setUserName: (name) => set({ userName: name }),
-      setPreferredStoreRegions: (regions) =>
+      setPreferredStoreRegions: (regions) => {
+        const preferredStoreRegionSiNames = Array.from(
+          new Set(regions.map((item) => item.key.split(" ")[0]))
+        ).join(",");
+        const preferredStoreRegions = regions
+          .filter((item) => !item.value.includes("전체"))
+          .map((item) => item.key)
+          .join(",");
+
         set({
           _preferredStoreRegions: regions,
-          preferredStoreRegions: Array.from(
-            new Set(regions.map((item) => item.key.split(" ")[0]))
-          ).join(","),
-          preferredStoreRegionSiNames: regions
-            .filter((item) => !item.value.includes("전체"))
-            .map((item) => item.key)
-            .join(",")
-        }),
+          preferredStoreRegionSiNames,
+          preferredStoreRegions: preferredStoreRegions
+        });
+      },
       setBirthday: (birthday) => set({ birthday }),
       setAppliedRole: (role: RoleKeyResume) => set({ appliedRole: role }),
       setWorkType: (workType: WorkTypeKeyResume | null) => set({ workType }),
@@ -433,8 +437,8 @@ const parsePostingRegions = (resume: ResumeType) => {
   let parsedRegions = [];
   parsedRegions = resume.preferredStoreRegions
     ? resume.preferredStoreRegions.split(",").map((region) => {
-        const [, district] = region.split(" "); // '서울특별시 성북구'를 '서울특별시'와 '성북구'로 분리
-        return { key: region, value: district }; // key는 전체 주소, value는 구 이름만 설정
+        const [, district] = region.split(" ");
+        return { key: region, value: district };
       })
     : [];
 
@@ -451,13 +455,14 @@ const parsePostingRegions = (resume: ResumeType) => {
   const onlySi = resume.preferredStoreRegionSiNames
     .split(",") // 콤마로 구분하여 배열로 변환
     .filter((si) => si !== resume.preferredStoreRegions.split(" ")[0]);
+
   if (onlySi.length > 0) {
     const parsedSi = onlySi.map((si) => {
       return siSggList[si][0];
     });
     parsedRegions = [...parsedRegions, ...parsedSi];
   }
-  console.log("moonsae parsedRegions", parsedRegions);
+
   return parsedRegions;
 };
 

@@ -45,7 +45,7 @@ export const useJobPostingListStore = create(
 
               return { ...state, jobPostingList };
             });
-            return { status: true, message: "해당 게시글이 삭제되었습니다." };
+            return { status: true, message: "해당 공고가 삭제되었습니다." };
           }
           return { status: false, message: "삭제에 실패했습니다." };
         } catch (e) {

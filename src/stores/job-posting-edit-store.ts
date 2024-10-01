@@ -297,12 +297,11 @@ export const useJobPostingEditStore = create(
       ...defaultJobPostingEditState,
       resetStore: () => set({ ...defaultJobPostingEditState }),
       setFromJobPosting: (jobPosting: JobPostingType) => {
-        console.log("mooonsae jobPosting", jobPosting);
         let parsedPostingRegions = [];
 
         parsedPostingRegions = jobPosting.postingRegions
           ? jobPosting.postingRegions.split(",").map((region) => {
-              const [city, district] = region.split(" "); // '서울특별시 성북구'를 '서울특별시'와 '성북구'로 분리
+              const [, district] = region.split(" "); // '서울특별시 성북구'를 '서울특별시'와 '성북구'로 분리
               return { key: region, value: district }; // key는 전체 주소, value는 구 이름만 설정
             })
           : [];
@@ -320,6 +319,7 @@ export const useJobPostingEditStore = create(
         const onlySi = jobPosting.postingRegionSiNames
           .split(",") // 콤마로 구분하여 배열로 변환
           .filter((si) => si !== jobPosting.postingRegions.split(" ")[0]);
+
         if (onlySi.length > 0) {
           const parsedSi = onlySi.map((si) => {
             return siSggList[si][0];

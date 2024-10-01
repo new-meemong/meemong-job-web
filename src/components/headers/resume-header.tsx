@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
 import { useRouter } from "next/navigation";
-import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { useState } from "react";
@@ -51,13 +50,15 @@ const ResumeHeader = ({ title, resumeId, isMine }: ResumeHeaderProps) => {
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
     useState(false);
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
+  const [noticeModalMessage, setNoticeModalMessage] = useState("");
 
   const { resetStore, setFromResume } = useResumeEditStore((state) => ({
     resetStore: state.resetStore,
     setFromResume: state.setFromResume
   }));
-  const { resumeList } = useResumeListStore((state) => ({
-    resumeList: state.resumeList
+  const { resumeList, deleteResume } = useResumeListStore((state) => ({
+    resumeList: state.resumeList,
+    deleteResume: state.deleteResume
   }));
 
   const options = isMine ? ["수정", "삭제"] : [];
@@ -90,8 +91,17 @@ const ResumeHeader = ({ title, resumeId, isMine }: ResumeHeaderProps) => {
     setIsOptionModalOpen(false);
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     setIsDeleteConfirmModalOpen(false);
+    const { status, message } = await deleteResume(resumeId);
+
+    if (status) {
+      setNoticeModalMessage(message);
+      setIsNoticeModalOpen(true);
+    } else {
+      setNoticeModalMessage(message);
+      setIsNoticeModalOpen(true);
+    }
   };
 
   const handleNoticeConfirmOk = () => {
@@ -127,7 +137,7 @@ const ResumeHeader = ({ title, resumeId, isMine }: ResumeHeaderProps) => {
         isOpen={isNoticeModalOpen}
         onClose={() => setIsNoticeModalOpen(false)}
         onConfirm={handleNoticeConfirmOk}
-        message="해당 게시글이 삭제되었습니다."
+        message={noticeModalMessage}
       />
     </Container>
   );
