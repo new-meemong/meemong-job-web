@@ -8,6 +8,8 @@ import pxToVw from "@/lib/dpi-converter";
 import RequiredFieldSection from "./components/required-field-section";
 import OptionalFieldSection from "./components/optional-field-section";
 import BottomButtonSection from "./components/bottom-button-section";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { useEffect } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +30,16 @@ const ContentContainer = styled.div`
 
 export default function ResumeEditPage() {
   const { id } = useParams();
+  const resumeId = Array.isArray(id) ? id[0] : id;
+  const { setId } = useResumeEditStore((state) => ({
+    setId: state.setId
+  }));
+
+  useEffect(() => {
+    if (resumeId !== "new") {
+      setId(resumeId);
+    }
+  }, [resumeId, setId]);
 
   return (
     <Container>

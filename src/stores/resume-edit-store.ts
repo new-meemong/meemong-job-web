@@ -215,12 +215,14 @@ export const useResumeEditStore = create(
             : resume.preferredStoreRegionSiNames,
           birthday: resume.birthday,
           appliedRole: resume.appliedRole,
-          workType: resume.workType,
-          settlementAllowance: resume.settlementAllowance,
+          workType: resume.workType || "상관없음",
+          settlementAllowance: resume.settlementAllowance || "상관없음",
           internExpectedSalary: resume.internExpectedSalary,
-          designerLicenses: resume.designerLicenses.split(
-            ","
-          ) as DesignerLicensesKeyResume[],
+          designerLicenses: resume.designerLicenses
+            ? (resume.designerLicenses.split(
+                ","
+              ) as DesignerLicensesKeyResume[])
+            : ["없음"],
           designerExperienceYearNumber: resume.designerExperienceYearNumber,
           internExperienceYearNumber: resume.internExperienceYearNumber,
           designerMajorExperienceCompanyName:
@@ -233,13 +235,15 @@ export const useResumeEditStore = create(
           internMajorExperienceDuration: resume.internMajorExperienceDuration,
           internMajorExperienceRole: resume.internMajorExperienceRole,
           salesLast3MonthsAvg: resume.salesLast3MonthsAvg,
-          completedEducationLevel: resume.completedEducationLevel,
-          preferredOffDays: resume.preferredOffDays.split(
-            ","
-          ) as PreferredOffDaysKeyResume[],
-          workCycleTypes: resume.workCycleTypes.split(
-            ","
-          ) as WorkCycleTypesKeyResume[],
+          completedEducationLevel: resume.completedEducationLevel || "해당없음",
+          preferredOffDays: resume.preferredOffDays
+            ? (resume.preferredOffDays.split(
+                ","
+              ) as PreferredOffDaysKeyResume[])
+            : ["상관없음"],
+          workCycleTypes: resume.workCycleTypes
+            ? (resume.workCycleTypes.split(",") as WorkCycleTypesKeyResume[])
+            : [],
           designerPromotionPeriod: resume.designerPromotionPeriod,
           isPreferredDormitorySupport: resume.isPreferredDormitorySupport,
           isPreferredMealSupport: resume.isPreferredMealSupport,

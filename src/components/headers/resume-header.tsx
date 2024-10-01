@@ -83,7 +83,7 @@ const ResumeHeader = ({ title, resumeId, isMine }: ResumeHeaderProps) => {
         setFromResume(resume);
       }
 
-      router.push(`/job-posting/${resumeId}/edit`);
+      router.push(`/resume/${resumeId}/edit`);
     } else if (option === "삭제") {
       setIsDeleteConfirmModalOpen(true);
     }
