@@ -6,11 +6,6 @@ const Container = styled.div`
   display: flex;
 `;
 
-interface InfoItemProps {
-  label: string;
-  content: string | null;
-}
-
 const Label = styled.div`
   ${fonts.purplePrimaryBold16};
   width: ${pxToVw(140)};
@@ -23,8 +18,18 @@ const Content = styled.div`
   height: ${pxToVw(24)};
 `;
 
-const MultiInfoItem = ({ label, content }: InfoItemProps) => {
-  const displayContent = content === null ? ["상관없음"] : content.split(",");
+interface InfoItemProps {
+  label: string;
+  content: string | null;
+  nullString?: string;
+}
+
+const MultiInfoItem = ({
+  label,
+  content,
+  nullString = "상관없음"
+}: InfoItemProps) => {
+  const displayContent = content === null ? [nullString] : content.split(",");
 
   return (
     <Container>

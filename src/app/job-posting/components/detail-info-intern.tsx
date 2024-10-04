@@ -1,9 +1,8 @@
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import InfoTitle from "./info-title";
-import SingleInfoItem from "./single-info-item";
-import MultiInfoItem from "./multi-info-item";
-import { formatPriceWithCommas } from "@/lib/price-comma";
+import SingleInfoItem from "../../../components/details/single-info-item";
+import MultiInfoItem from "../../../components/details/multi-info-item";
 import { JobPostingType } from "@/types/job-posting-type";
 
 const Container = styled.div`
@@ -86,7 +85,7 @@ const DetailInfoIntern = ({
         content={isRestrictedAge ? "연령제한" : "연령무관"}
       />
       <SingleInfoItem label={"자격증"} content={designerLicenses} />
-      <MultiInfoItem label={"매장 유형"} content={storeTypes} />
+      <MultiInfoItem label={"매장 형태"} content={storeTypes} />
       <SingleInfoItem label={"현재 직원수"} content={employeeCount} />
       <SingleInfoItem label={"인턴 시스템"} content={isExistedInternSystem} />
       <SingleInfoItem

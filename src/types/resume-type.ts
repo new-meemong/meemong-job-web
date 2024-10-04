@@ -26,6 +26,7 @@ export interface ResumeType {
   profileImageThumbnailUri: string;
   shortDescription: string;
   userName: string;
+  _preferredStoreRegions: string[];
   preferredStoreRegions: string;
   preferredStoreRegionSiNames: string;
   birthday: string;

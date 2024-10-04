@@ -1,8 +1,8 @@
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import InfoTitle from "./info-title";
-import SingleInfoItem from "./single-info-item";
-import MultiInfoItem from "./multi-info-item";
+import SingleInfoItem from "../../../components/details/single-info-item";
+import MultiInfoItem from "../../../components/details/multi-info-item";
 import { formatPriceWithCommas } from "@/lib/price-comma";
 import { JobPostingType } from "@/types/job-posting-type";
 

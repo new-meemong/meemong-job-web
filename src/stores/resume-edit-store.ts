@@ -390,7 +390,6 @@ export const useResumeEditStore = create(
 
           const resumeRequiredStates = getResumeRequiredData(state);
           const missingFields = hasMissingRequiredFields(resumeRequiredStates);
-
           if (missingFields) {
             setOptionNullFlag(appliedRole, true, set);
             return {
@@ -500,13 +499,22 @@ const hasMissingRequiredFields = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   requiredStates: Record<string, any>
 ): boolean => {
-  return Object.entries(requiredStates).some(
-    ([key, value]) =>
+  return Object.entries(requiredStates).some(([key, value]) => {
+    if (
+      key === "preferredStoreRegions" &&
+      (value === "" || (Array.isArray(value) && value.length === 0))
+    ) {
+      return false;
+    }
+
+    // 다른 필드에 대한 기본 null/빈 값 검사
+    return (
       key !== "postingRegions" &&
       (value === null ||
         value === "" ||
         (Array.isArray(value) && value.length === 0))
-  );
+    );
+  });
 };
 
 const getResumeRequiredData = (state: ResumeEditState) => {

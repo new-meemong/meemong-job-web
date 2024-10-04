@@ -6,26 +6,35 @@ const Container = styled.div`
   display: flex;
 `;
 
-interface InfoItemProps {
-  label: string;
-  content: string | boolean | null;
-}
-
 const Label = styled.div`
   ${fonts.purplePrimaryBold16};
   width: ${pxToVw(140)};
   height: ${pxToVw(24)};
+  flex-shrink: 0;
 `;
 
 const Content = styled.div`
   ${fonts.greyTextSemi16};
-  height: ${pxToVw(24)};
+  min-height: ${pxToVw(24)};
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  flex-grow: 1;
 `;
 
-const SingleInfoItem = ({ label, content }: InfoItemProps) => {
+interface InfoItemProps {
+  label: string;
+  content: string | boolean | null;
+  nullString?: string;
+}
+
+const SingleInfoItem = ({
+  label,
+  content,
+  nullString = "상관없음"
+}: InfoItemProps) => {
   const displayContent =
     content === null
-      ? "상관없음"
+      ? nullString
       : typeof content === "boolean"
       ? content
         ? "유"

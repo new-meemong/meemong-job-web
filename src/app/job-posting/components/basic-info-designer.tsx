@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import InfoTitle from "./info-title";
-import SingleInfoItem from "./single-info-item";
+import SingleInfoItem from "../../../components/details/single-info-item";
 import pxToVw from "@/lib/dpi-converter";
 import SingleInfoTooltipItem from "./single-info-tooltip-item";
 import { JobPostingType } from "@/types/job-posting-type";
