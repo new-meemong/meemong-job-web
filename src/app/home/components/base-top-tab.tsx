@@ -1,4 +1,5 @@
 import pxToVw from "@/lib/dpi-converter";
+import { TabType } from "@/stores/app-state-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
@@ -25,16 +26,22 @@ const Tab = styled.div<{ $active: boolean }>`
 `;
 
 interface TabsProps {
-  activeTab: number;
-  setActiveTab: (index: number) => void;
+  activeTab: TabType;
+  setActiveTab: (index: TabType) => void;
 }
 const BaseTopTabs = ({ activeTab, setActiveTab }: TabsProps) => {
   return (
     <TabContainer>
-      <Tab $active={activeTab === 0} onClick={() => setActiveTab(0)}>
+      <Tab
+        $active={activeTab === "jobPosting"}
+        onClick={() => setActiveTab("jobPosting")}
+      >
         매장 취업하기
       </Tab>
-      <Tab $active={activeTab === 1} onClick={() => setActiveTab(1)}>
+      <Tab
+        $active={activeTab === "resume"}
+        onClick={() => setActiveTab("resume")}
+      >
         인재 찾아보기
       </Tab>
     </TabContainer>

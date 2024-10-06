@@ -1,25 +1,27 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+export type TabType = "resume" | "jobPosting";
+
 export type AppState = {
-  activeTab: number;
+  activeTab: TabType;
 };
 
 export type AppActions = {
-  setActiveTab: (activeTab: number) => void;
+  setActiveTab: (activeTab: TabType) => void;
 };
 
 export type AppStateStore = AppState & AppActions;
 
 export const defaultAppState: AppState = {
-  activeTab: 0
+  activeTab: "resume"
 };
 
 export const useAppStateStore = create(
   persist<AppStateStore>(
     (set) => ({
       ...defaultAppState,
-      setActiveTab: (activeTab: number) => {
+      setActiveTab: (activeTab: TabType) => {
         set({ activeTab });
       }
     }),

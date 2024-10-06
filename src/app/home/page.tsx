@@ -5,12 +5,12 @@ import styled from "styled-components";
 import BaseTopTabs from "./components/base-top-tab";
 import FloatingButton from "./components/floating-button";
 import HomeTitle from "./components/home-title";
-import FindDesignerSection from "./components/sections/find-designer/find-designer-section";
-import FindJobSection from "./components/sections/find-job/find-job-section";
+import FindDesignerSection from "./components/sections/find-resume/find-designer-section";
+import FindJobSection from "./components/sections/find-job-posting/find-job-section";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { useAppStateStore } from "@/stores/app-state-store";
+import { TabType, useAppStateStore } from "@/stores/app-state-store";
 
 const Container = styled.div`
   display: flex;
@@ -49,7 +49,7 @@ export default function HomePage({ searchParams }: SearchParams) {
     // localStorage에서 activeTab 값을 불러오기
     const storedTab = localStorage.getItem("activeTab");
     if (storedTab) {
-      setActiveTab(Number(storedTab)); // localStorage 값으로 activeTab 설정
+      setActiveTab(storedTab as TabType); // localStorage 값으로 activeTab 설정
     }
     setLoading(false); // 로딩 종료
   }, [setActiveTab]);
@@ -62,9 +62,9 @@ export default function HomePage({ searchParams }: SearchParams) {
 
   useEffect(() => {
     if (jwt) {
-      if (activeTab === 0) {
+      if (activeTab === "jobPosting") {
         getJobPostingList();
-      } else if (activeTab === 1) {
+      } else if (activeTab === "resume") {
         getResumeList();
       }
     }
@@ -78,7 +78,11 @@ export default function HomePage({ searchParams }: SearchParams) {
     <Container>
       <BaseTopTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <HomeTitle />
-      {activeTab === 0 ? <FindJobSection /> : <FindDesignerSection />}
+      {activeTab === "jobPosting" ? (
+        <FindJobSection />
+      ) : (
+        <FindDesignerSection />
+      )}
       <FloatingButton />
     </Container>
   );
