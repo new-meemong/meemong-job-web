@@ -81,7 +81,12 @@ export default function SelectLocationPage() {
   const subList = siSggList[selectedLeftItem.key];
 
   useEffect(() => {
-    const validTargets: TargetType[] = ["jobPostingEdit", "resumeEdit"];
+    const validTargets: TargetType[] = [
+      "jobPostingEdit",
+      "resumeEdit",
+      "jobPostingList",
+      "resumeList"
+    ];
 
     if (!validTargets.includes(target as TargetType)) {
       alert("유효하지 않은 target 값입니다.");

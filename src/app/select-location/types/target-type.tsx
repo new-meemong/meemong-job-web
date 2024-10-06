@@ -1,1 +1,5 @@
-export type TargetType = "jobPostingEdit" | "resumeEdit";
+export type TargetType =
+  | "jobPostingEdit"
+  | "resumeEdit"
+  | "jobPostingList"
+  | "resumeList";

@@ -7,24 +7,29 @@ import { persist } from "zustand/middleware";
 export type ResumeListState = {
   resumeList: ResumeType[];
   resumeListLoading: boolean;
+  resumeFilterQueries: string;
 };
 
 export type ResumeListActions = {
   getResumeList: () => Promise<void>;
   updateResume: (updatedResume: ResumeType) => void;
   deleteResume: (id: string) => Promise<ResponseResultType>;
+  getResumeFilterQuery: (key: string) => string | null;
+  addResumeFilterQuery: (query: string) => void;
+  removeResumeFilterQuery: (key: string) => void;
 };
 
 export type ResumeListStore = ResumeListState & ResumeListActions;
 
 export const defaultResumeListState: ResumeListState = {
   resumeList: [],
-  resumeListLoading: false
+  resumeListLoading: false,
+  resumeFilterQueries: "?"
 };
 
 export const useResumeListStore = create(
   persist<ResumeListStore>(
-    (set) => ({
+    (set, get) => ({
       ...defaultResumeListState,
       getResumeList: async () => {
         set({ resumeListLoading: true });
@@ -60,6 +65,31 @@ export const useResumeListStore = create(
           console.error("[deleteResume] failed", e);
           return { status: false, message: "삭제에 실패했습니다." };
         }
+      },
+      getResumeFilterQuery: (key: string) => {
+        const state = get();
+        const currentQueries = new URLSearchParams(state.resumeFilterQueries);
+
+        return currentQueries.get(key);
+      },
+      addResumeFilterQuery: (query) => {
+        set((state) => {
+          const currentQueries = new URLSearchParams(state.resumeFilterQueries);
+          const [key, value] = query.split("=");
+
+          currentQueries.set(key, value);
+
+          return { resumeFilterQueries: `?${currentQueries.toString()}` };
+        });
+      },
+      removeResumeFilterQuery: (key) => {
+        set((state) => {
+          const currentQueries = new URLSearchParams(state.resumeFilterQueries);
+
+          currentQueries.delete(key);
+
+          return { resumeFilterQueries: `?${currentQueries.toString()}` };
+        });
       }
     }),
     {

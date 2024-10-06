@@ -1,6 +1,12 @@
 import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
 import CloseCircleGreyIcon from "@/components/icons/close-circle-grey-icon";
+import {
+  convertToShortRegion,
+  convertToShortRegionHome
+} from "@/lib/convert-region";
 import pxToVw from "@/lib/dpi-converter";
+import { useAppStateStore } from "@/stores/app-state-store";
+import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import Link from "next/link";
@@ -66,7 +72,28 @@ const CancelText = styled.span`
 `;
 
 const SelectLocation = () => {
-  const selectedLocationList = ["서울 강남구", "서울 양천구"];
+  // 매장 취업하기, 인재 찾아보기
+  const { homeTopTab } = useAppStateStore((state) => ({
+    homeTopTab: state.homeTopTab
+  }));
+  const { getResumeFilterQuery } = useResumeListStore((state) => ({
+    getResumeFilterQuery: state.getResumeFilterQuery
+  }));
+  let selectedLocationList: string[] = [];
+  let href =
+    homeTopTab === "jobPosting"
+      ? "/select-location?target=jobPostingList"
+      : "/select-location?target=resumeList";
+
+  if (homeTopTab === "resume") {
+    console.log(
+      "moonsae getResumeFilterQuery",
+      getResumeFilterQuery("preferredStoreRegions")
+    );
+    convertToShortRegionHome(
+      getResumeFilterQuery("preferredStoreRegions") || ""
+    );
+  }
 
   return (
     <Container>
@@ -80,7 +107,7 @@ const SelectLocation = () => {
             </React.Fragment>
           ))}
         </Location>
-        <LocationButton href={`/home/select-location`}>
+        <LocationButton href={href}>
           지역선택하기
           <ArrowRightPurpleIcon />
         </LocationButton>

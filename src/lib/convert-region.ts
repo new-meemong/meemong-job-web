@@ -62,3 +62,44 @@ export const convertToShortRegion = (
   // 마지막에 붙은 ", "를 제거하고 반환
   return result.slice(0, -2);
 };
+
+export const convertToShortRegionHome = (selectedRegion: string) => {
+  const regions = selectedRegion.split(",");
+  console.log("reg ions", regions);
+};
+
+interface ParsePostingRegionsProps {
+  guList: string;
+  siList: string;
+}
+//서버에서 받아오는 시, 구 정보를 클라에서 뿌리는 list 형태로 변환
+const parsePostingRegions = ({ guList, siList }: ParsePostingRegionsProps) => {
+  let parsedRegions = [];
+  parsedRegions = guList
+    ? guList.split(",").map((gu) => {
+        const [, district] = gu.split(" ");
+        return { key: gu, value: district };
+      })
+    : [];
+
+  // 시만 있고 구는 없는 경우
+  if (!guList) {
+    parsedRegions = siList.split(",").map((region) => {
+      return siSggList[region][0];
+    });
+  }
+
+  // 구가 없는 시만 추출하기
+  const onlySi = resume.preferredStoreRegionSiNames
+    .split(",") // 콤마로 구분하여 배열로 변환
+    .filter((si) => si !== resume.preferredStoreRegions.split(" ")[0]);
+
+  if (onlySi.length > 0) {
+    const parsedSi = onlySi.map((si) => {
+      return siSggList[si][0];
+    });
+    parsedRegions = [...parsedRegions, ...parsedSi];
+  }
+
+  return parsedRegions;
+};
