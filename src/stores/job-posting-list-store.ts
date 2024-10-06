@@ -12,6 +12,7 @@ export type JobPostingListState = {
 export type JobPostingListActions = {
   getJobPostingList: () => Promise<void>;
   deleteJobPosting: (id: string) => Promise<ResponseResultType>;
+  updateJobPosting: (updatedJobPosting: JobPostingType) => void;
 };
 
 export type JobPostingListStore = JobPostingListState & JobPostingListActions;
@@ -32,6 +33,15 @@ export const useJobPostingListStore = create(
 
         set({ jobPostingList: dataList as JobPostingType[] });
         set({ jobPostingListLoading: false });
+      },
+      updateJobPosting: (updatedJobPosting) => {
+        set((state) => ({
+          jobPostingList: state.jobPostingList.map((jobPosting) =>
+            jobPosting.id === updatedJobPosting.id
+              ? updatedJobPosting
+              : jobPosting
+          )
+        }));
       },
       deleteJobPosting: async (id: string) => {
         try {

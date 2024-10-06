@@ -49,6 +49,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { JobPostingType } from "@/types/job-posting-type";
 import { siSggList } from "@/types/location-type";
+import { ResponseResultType } from "@/types/response-result-type";
 
 type StoreInfoType = {
   title: string;
@@ -224,8 +225,8 @@ type JobPostingEditActions = {
 
   // 내부 함수들
   // 공고 제출
-  submitDesignerJobPosting: () => Promise<boolean>;
-  submitInternJobPosting: () => Promise<boolean>;
+  submitDesignerJobPosting: () => Promise<ResponseResultType>;
+  submitInternJobPosting: () => Promise<ResponseResultType>;
   resetStore: () => void;
   setFromJobPosting: (jobPosting: JobPostingType) => void;
   setIsEdit: (isEdit: boolean) => void;
@@ -356,7 +357,7 @@ export const useJobPostingEditStore = create(
           isPossibleMiddleAge: jobPosting.isPossibleMiddleAge,
           designerLicenses: jobPosting.designerLicenses
             ? (jobPosting.designerLicenses.split(",") as DesignerLicensesKey[])
-            : [],
+            : ["상관없음"],
           storeTypes: jobPosting.storeTypes
             ? (jobPosting.storeTypes.split(",") as StoreTypesKey[])
             : [],
@@ -374,7 +375,7 @@ export const useJobPostingEditStore = create(
           isExistedDormitorySupport: jobPosting.isExistedDormitorySupport,
           salesCommission: jobPosting.salesCommission,
           designerExperienceYearNumber: jobPosting.designerExperienceYearNumber,
-          salesLast3MonthsAvg: jobPosting.salesLast3MonthsAvg,
+          salesLast3MonthsAvg: jobPosting.salesLast3MonthsAvg || "상관없음",
           subwayAccessibility: jobPosting.subwayAccessibility,
           adminAge: jobPosting.adminAge,
           adminSex: jobPosting.adminSex,
@@ -591,9 +592,12 @@ export const useJobPostingEditStore = create(
           };
 
           if (jobPostingData.role !== "디자이너") {
-            return false;
+            return {
+              status: false,
+              message: "디자이너 구인 공고만 등록 가능합니다."
+            };
           }
-
+          console.log("jobPostingData", jobPostingData);
           const hasNullField = Object.entries(jobPostingData).some(
             ([key, value]) =>
               key !== "postingRegions" &&
@@ -604,10 +608,11 @@ export const useJobPostingEditStore = create(
 
           if (hasNullField) {
             set({ hasDesignerOptionNull: true });
-            alert(
-              "필수 항목 중 일부가 누락되었습니다. 모든 항목을 입력해주세요."
-            );
-            return false;
+
+            return {
+              status: false,
+              message: "필수 항목을 입력해야\n구인공고를 등록할 수 있습니다."
+            };
           } else {
             set({ hasDesignerOptionNull: false });
           }
@@ -629,16 +634,24 @@ export const useJobPostingEditStore = create(
             : await postJobPosting(sendData);
           if (response.data) {
             // set({ ...defaultJobPostingEditState });
-            alert("디자이너 구인 공고 등록이 완료되었습니다.");
-            return true;
+            return {
+              status: true,
+              message: "구인공고가 성공적으로 등록되었습니다.",
+              data: response.data
+            };
           } else {
-            alert("디자이너 구인 공고 등록에 실패했습니다. 다시 시도해주세요.");
-            return false;
+            return {
+              status: false,
+              message: "구인공고 등록중 오류가 발생했습니다."
+            };
           }
         } catch (e) {
           console.error("디자이너 구인 공고 등록 중 오류 발생:", e);
-          alert("디자이너 구인 공고 등록 중 오류가 발생했습니다.");
-          return false;
+
+          return {
+            status: false,
+            message: "구인공고 등록중 오류가 발생했습니다."
+          };
         }
       },
       submitInternJobPosting: async () => {
@@ -695,10 +708,11 @@ export const useJobPostingEditStore = create(
           };
 
           if (jobPostingData.role !== "인턴") {
-            return false;
+            return {
+              status: false,
+              message: "인턴 구인 공고를 등록해야 합니다."
+            };
           }
-
-          console.log("jobPostingData", jobPostingData);
 
           const hasNullField = Object.entries(jobPostingData).some(
             ([key, value]) =>
@@ -710,10 +724,10 @@ export const useJobPostingEditStore = create(
 
           if (hasNullField) {
             set({ hasInternOptionNull: true });
-            alert(
-              "필수 항목 중 일부가 누락되었습니다. 모든 항목을 입력해주세요."
-            );
-            return false;
+            return {
+              status: false,
+              message: "필수 항목을 입력해야\n구인공고를 등록할 수 있습니다."
+            };
           } else {
             set({ hasInternOptionNull: false });
           }
@@ -736,16 +750,23 @@ export const useJobPostingEditStore = create(
             : await postJobPosting(sendData);
           if (response.data) {
             // set({ ...defaultJobPostingEditState });
-            alert("인턴 구인 공고 등록이 완료되었습니다.");
-            return true;
+            return {
+              status: true,
+              message: "구인공고가 성공적으로 등록되었습니다.",
+              data: response.data
+            };
           } else {
-            alert("인턴 구인 공고 등록에 실패했습니다. 다시 시도해주세요.");
-            return false;
+            return {
+              status: false,
+              message: "구인공고 등록중 오류가 발생했습니다."
+            };
           }
         } catch (e) {
           console.error("인턴 구인 공고 등록 중 오류 발생:", e);
-          alert("인턴 구인 공고 등록 중 오류가 발생했습니다.");
-          return false;
+          return {
+            status: false,
+            message: "구인공고 등록중 오류가 발생했습니다."
+          };
         }
       },
       setPostingRegions: (

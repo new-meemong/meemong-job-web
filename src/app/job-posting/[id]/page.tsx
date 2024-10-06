@@ -159,17 +159,19 @@ export default function JobPostingPage() {
         isMine={isMine}
       />
       <ImageSlider
-        images={JobPostingsStoreImages.map((image) =>
-          image?.uri
-            ? `${IMAGE_STORAGE_URL}${image?.uri}`
-            : "/images/default_profile_image.jpg"
-        )}
+        images={
+          JobPostingsStoreImages?.map((image) =>
+            image?.uri
+              ? `${IMAGE_STORAGE_URL}${image?.uri}`
+              : "/images/default_profile_image.jpg"
+          ) || []
+        }
       />
       <ContentContainer>
         <StoreInfo
           storeImage={
-            JobPostingsStoreImages[1]?.uri
-              ? IMAGE_STORAGE_URL + JobPostingsStoreImages[1]?.uri
+            JobPostingsStoreImages && JobPostingsStoreImages.length !== 0
+              ? IMAGE_STORAGE_URL + JobPostingsStoreImages[0]?.uri
               : "/images/default_profile_image.jpg"
           }
           storeName={jobPosting.storeName}
