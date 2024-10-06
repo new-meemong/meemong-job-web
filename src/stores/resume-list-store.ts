@@ -11,6 +11,7 @@ export type ResumeListState = {
 
 export type ResumeListActions = {
   getResumeList: () => Promise<void>;
+  updateResume: (updatedResume: ResumeType) => void;
   deleteResume: (id: string) => Promise<ResponseResultType>;
 };
 
@@ -32,6 +33,13 @@ export const useResumeListStore = create(
 
         set({ resumeList: dataList as ResumeType[] });
         set({ resumeListLoading: false });
+      },
+      updateResume: (updatedResume) => {
+        set((state) => ({
+          resumeList: state.resumeList.map((resume) =>
+            resume.id === updatedResume.id ? updatedResume : resume
+          )
+        }));
       },
       deleteResume: async (id: string) => {
         try {

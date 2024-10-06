@@ -1,9 +1,11 @@
 import NoticeModal from "@/components/modals/notice-modal";
 import pxToVw from "@/lib/dpi-converter";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { ResponseResultType } from "@/types/response-result-type";
+import { ResumeType } from "@/types/resume-type";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styled from "styled-components";
@@ -61,6 +63,9 @@ const BottomButtonSection = () => {
     saveDraft: state.saveDraft,
     submitResume: state.submitResume
   }));
+  const { updateResume } = useResumeListStore((state) => ({
+    updateResume: state.updateResume
+  }));
 
   let hasError = false;
 
@@ -71,8 +76,9 @@ const BottomButtonSection = () => {
   }
 
   const handleSaveDraft = async () => {
-    const { status, message } = await saveDraft();
+    const { status, message, data } = await saveDraft();
     if (status) {
+      updateResume(data as ResumeType);
       setModalMessage(message);
     } else {
       setModalMessage(message);
@@ -85,13 +91,11 @@ const BottomButtonSection = () => {
     // if (hasError) {
     //   return;
     // }
-    const { status, message } = await submitResume();
+    const { status, message, data } = await submitResume();
     if (status) {
-      setModalMessage(message);
-    } else {
-      setModalMessage(message);
+      updateResume(data as ResumeType);
     }
-
+    setModalMessage(message);
     setIsModalOpen(true);
   };
   return (

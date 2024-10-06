@@ -21,6 +21,7 @@ import {
   WorkTypeKeyResume
 } from "@/types/resume-keys";
 import { ResumeType } from "@/types/resume-type";
+import moment from "moment";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -217,7 +218,7 @@ export const useResumeEditStore = create(
           appliedRole: resume.appliedRole,
           workType: resume.workType || "상관없음",
           settlementAllowance: resume.settlementAllowance || "상관없음",
-          internExpectedSalary: resume.internExpectedSalary,
+          internExpectedSalary: resume.internExpectedSalary || "상관없음",
           designerLicenses: resume.designerLicenses
             ? (resume.designerLicenses.split(
                 ","
@@ -366,7 +367,8 @@ export const useResumeEditStore = create(
           if (response.data) {
             return {
               status: true,
-              message: "이력서가 성공적으로 저장되었습니다."
+              message: "이력서가 성공적으로 저장되었습니다.",
+              data: response.data
             };
           } else {
             return {
@@ -394,7 +396,7 @@ export const useResumeEditStore = create(
             setOptionNullFlag(appliedRole, true, set);
             return {
               status: false,
-              message: `모든 항목을 입력해야\n이력서를 등록할 수 있습니다.`
+              message: `필수 항목을 입력해야\n이력서를 등록할 수 있습니다.`
             };
           } else {
             setOptionNullFlag(appliedRole, false, set);
@@ -410,7 +412,8 @@ export const useResumeEditStore = create(
           if (response.data) {
             return {
               status: true,
-              message: "이력서가 성공적으로 등록되었습니다."
+              message: "이력서가 성공적으로 등록되었습니다.",
+              data: response.data
             };
           } else {
             return {
@@ -436,7 +439,6 @@ export const useResumeEditStore = create(
 );
 
 const parsePostingRegions = (resume: ResumeType) => {
-  console.log("moonsae resume", resume);
   let parsedRegions = [];
   parsedRegions = resume.preferredStoreRegions
     ? resume.preferredStoreRegions.split(",").map((region) => {
@@ -529,7 +531,7 @@ const getResumeRequiredData = (state: ResumeEditState) => {
       userName: state.userName,
       preferredStoreRegions: state.preferredStoreRegions,
       preferredStoreRegionSiNames: state.preferredStoreRegionSiNames,
-      birthday: state.birthday,
+      birthday: moment(state.birthday, "YYYYMMDD").format("YYYY-MM-DD"),
       appliedRole: state.appliedRole,
       workType: state.workType,
       settlementAllowance: state.settlementAllowance,
@@ -544,7 +546,7 @@ const getResumeRequiredData = (state: ResumeEditState) => {
       userName: state.userName,
       preferredStoreRegions: state.preferredStoreRegions,
       preferredStoreRegionSiNames: state.preferredStoreRegionSiNames,
-      birthday: state.birthday,
+      birthday: moment(state.birthday, "YYYYMMDD").format("YYYY-MM-DD"),
       appliedRole: state.appliedRole,
       workType: state.workType,
       internExpectedSalary: state.internExpectedSalary,

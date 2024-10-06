@@ -31,11 +31,11 @@ const InputWrapper = styled.div<{ $hasError: boolean }>`
 const Input = styled.input`
   ${fonts.blackSemi12}
 
-  width: ${pxToVw(70)}; /* 너비 설정 */
+  /* width: ${pxToVw(70)}; 너비 설정 */
   border: none; /* 테두리 제거 */
   outline: none; /* active 상태에서의 테두리 제거 */
   background-color: transparent; /* 배경을 투명하게 설정 */
-  text-align: right; /* 숫자를 오른쪽에 맞추기 (필요시) */
+  text-align: left; /* 숫자를 오른쪽에 맞추기 (필요시) */
 
   &::placeholder {
     ${fonts.greySemi12};
@@ -47,7 +47,7 @@ const Caption = styled.span`
   ${fonts.greyText4Semi12}
 `;
 
-const AgeInput = () => {
+const BirthdayInput = () => {
   const {
     birthday,
     setBirthday,
@@ -73,7 +73,7 @@ const AgeInput = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value.length <= 2) {
+    if (value.length <= 8) {
       const numericValue = value ? value : null;
       setBirthday(numericValue);
     }
@@ -81,18 +81,17 @@ const AgeInput = () => {
 
   return (
     <Container>
-      <ResumeEditLabel label={"나이*"} />
+      <ResumeEditLabel label={"생년월일*"} />
       <InputWrapper $hasError={hasError}>
         <Input
           type="number"
-          placeholder="숫자로 입력"
+          placeholder="6자리 입력"
           value={birthday || ""}
           onChange={handleChange}
         />
-        <Caption>세</Caption>
       </InputWrapper>
     </Container>
   );
 };
 
-export default AgeInput;
+export default BirthdayInput;
