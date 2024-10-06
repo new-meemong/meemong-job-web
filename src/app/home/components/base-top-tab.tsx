@@ -1,5 +1,5 @@
 import pxToVw from "@/lib/dpi-converter";
-import { TabType } from "@/stores/app-state-store";
+import { HomeTopTabType } from "@/stores/app-state-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
@@ -26,8 +26,8 @@ const Tab = styled.div<{ $active: boolean }>`
 `;
 
 interface TabsProps {
-  activeTab: TabType;
-  setActiveTab: (index: TabType) => void;
+  activeTab: HomeTopTabType;
+  setActiveTab: (index: HomeTopTabType) => void;
 }
 const BaseTopTabs = ({ activeTab, setActiveTab }: TabsProps) => {
   return (

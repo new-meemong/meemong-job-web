@@ -10,7 +10,7 @@ import FindJobSection from "./components/sections/find-job-posting/find-job-sect
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { TabType, useAppStateStore } from "@/stores/app-state-store";
+import { HomeTopTabType, useAppStateStore } from "@/stores/app-state-store";
 
 const Container = styled.div`
   display: flex;
@@ -32,9 +32,9 @@ export default function HomePage({ searchParams }: SearchParams) {
   const { getResumeList } = useResumeListStore((state) => ({
     getResumeList: state.getResumeList
   }));
-  const { activeTab, setActiveTab } = useAppStateStore((state) => ({
-    activeTab: state.activeTab,
-    setActiveTab: state.setActiveTab
+  const { homeTopTab, setHomeTopTab } = useAppStateStore((state) => ({
+    homeTopTab: state.homeTopTab,
+    setHomeTopTab: state.setHomeTopTab
   }));
 
   const userId = searchParams.userId;
@@ -49,10 +49,10 @@ export default function HomePage({ searchParams }: SearchParams) {
     // localStorage에서 activeTab 값을 불러오기
     const storedTab = localStorage.getItem("activeTab");
     if (storedTab) {
-      setActiveTab(storedTab as TabType); // localStorage 값으로 activeTab 설정
+      setHomeTopTab(storedTab as HomeTopTabType); // localStorage 값으로 activeTab 설정
     }
     setLoading(false); // 로딩 종료
-  }, [setActiveTab]);
+  }, [setHomeTopTab]);
 
   useEffect(() => {
     if (userId && !jwt) {
@@ -62,13 +62,13 @@ export default function HomePage({ searchParams }: SearchParams) {
 
   useEffect(() => {
     if (jwt) {
-      if (activeTab === "jobPosting") {
+      if (homeTopTab === "jobPosting") {
         getJobPostingList();
-      } else if (activeTab === "resume") {
+      } else if (homeTopTab === "resume") {
         getResumeList();
       }
     }
-  }, [activeTab, getJobPostingList, getResumeList, jwt]);
+  }, [homeTopTab, getJobPostingList, getResumeList, jwt]);
 
   if (loading) {
     return <div>로딩 중...</div>; // 로딩 중일 때 보여줄 화면
@@ -76,9 +76,9 @@ export default function HomePage({ searchParams }: SearchParams) {
 
   return (
     <Container>
-      <BaseTopTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      <BaseTopTabs activeTab={homeTopTab} setActiveTab={setHomeTopTab} />
       <HomeTitle />
-      {activeTab === "jobPosting" ? (
+      {homeTopTab === "jobPosting" ? (
         <FindJobSection />
       ) : (
         <FindDesignerSection />
