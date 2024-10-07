@@ -69,7 +69,7 @@ const SearchResultContainer = styled.div`
 `;
 
 export default function SearchNaver() {
-  const { searchQuery, searchResults, setSearchQuery, search, clear } =
+  const { searchQuery, searchResults, setSearchQuery, search } =
     useSearchNaverStore();
   const [isSearching, setIsSearching] = useState(false);
 
@@ -81,8 +81,9 @@ export default function SearchNaver() {
     setIsSearching(true);
     try {
       await search(searchQuery || "");
-    } catch (error) {
+    } catch (e) {
       // 에러 처리 로직 (예: 사용자에게 알림)
+      console.error(e);
     } finally {
       setIsSearching(false);
     }

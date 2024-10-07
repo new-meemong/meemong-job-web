@@ -541,6 +541,7 @@ export const useJobPostingEditStore = create(
       ) => set({ isExistedRetirementPay }),
       submitDesignerJobPosting: async () => {
         try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           let jobPostingData: Record<string, any> = {
             postingTitle: get().postingTitle, // 게시글 제목
             storeName: get().storeName, // 매장명
@@ -656,6 +657,7 @@ export const useJobPostingEditStore = create(
       },
       submitInternJobPosting: async () => {
         try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           let jobPostingData: Record<string, any> = {
             postingTitle: get().postingTitle, // 게시글 제목
             storeName: get().storeName, // 매장명
@@ -855,7 +857,9 @@ const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
 };
 
 const convertToNullJobPostingData = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Record<string, any> => {
   const nullifyValues = ["상관없음", "해당없음"];
 
