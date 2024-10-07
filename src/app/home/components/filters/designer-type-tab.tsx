@@ -1,6 +1,7 @@
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import { RoleKey } from "@/types/job-posting-keys";
 import styled from "styled-components";
 
 const TabContainer = styled.div`
@@ -27,17 +28,20 @@ const Tab = styled.div<{ $active: boolean }>`
 `;
 
 interface TabsProps {
-  activeTab: number;
-  setActiveTab: (index: number) => void;
+  activeTab: RoleKey;
+  setActiveTab: (role: RoleKey) => void;
 }
 
 const DesignerTypeTab = ({ activeTab, setActiveTab }: TabsProps) => {
   return (
     <TabContainer>
-      <Tab $active={activeTab === 0} onClick={() => setActiveTab(0)}>
+      <Tab
+        $active={activeTab === "디자이너"}
+        onClick={() => setActiveTab("디자이너")}
+      >
         디자이너
       </Tab>
-      <Tab $active={activeTab === 1} onClick={() => setActiveTab(1)}>
+      <Tab $active={activeTab === "인턴"} onClick={() => setActiveTab("인턴")}>
         인턴
       </Tab>
     </TabContainer>

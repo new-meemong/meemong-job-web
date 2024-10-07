@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import pxToVw from "@/lib/dpi-converter";
-import Banner from "../../banner";
-import FindJobRequiredFilter from "./find-job-required-filter";
-import JobSearchButton from "./job-search-button";
-import NearJobSearchButton from "./near-job-search-button";
-import PremiumJobPosting from "./premium-job-posting";
-import JobPostingList from "./job-posting-list";
+import Banner from "./banner";
+import JobSearchButton from "./job-posting/job-search-button";
+import NearJobSearchButton from "./job-posting/near-job-search-button";
+// import PremiumJobPosting from "./sections/find-job-posting/premium-job-posting";
+import JobPostingList from "./job-posting/job-posting-list";
+import JobPostingFilter from "./job-posting/job-posting-filter";
 
 const Container = styled.div`
   width: 100%;
@@ -18,10 +18,10 @@ const SearchButtonWrapper = styled.div`
   padding-right: ${pxToVw(24)};
 `;
 
-const FindJobSection = () => {
+const JobPostingSection = () => {
   return (
     <Container>
-      <FindJobRequiredFilter />
+      <JobPostingFilter />
       <SearchButtonWrapper>
         <JobSearchButton />
       </SearchButtonWrapper>
@@ -35,4 +35,4 @@ const FindJobSection = () => {
   );
 };
 
-export default FindJobSection;
+export default JobPostingSection;

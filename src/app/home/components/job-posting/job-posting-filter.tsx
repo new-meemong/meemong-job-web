@@ -1,9 +1,9 @@
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import styled from "styled-components";
-import DesignerTypeTab from "../../filters/designer-type-tab";
+import DesignerTypeTab from "../filters/designer-type-tab";
 import { useState } from "react";
-import SelectLocation from "../../filters/select-location";
+import SelectLocation from "../filters/select-location";
 import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
 import DropdownMultiSelectItem from "@/components/drop-downs/dropdown-multi-select-item";
 
@@ -15,7 +15,7 @@ const Container = styled.div`
   border-radius: ${pxToVw(5)};
 `;
 
-const FindJobRequiredFilter = () => {
+const JobPostingFilter = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -63,4 +63,4 @@ const FindJobRequiredFilter = () => {
   );
 };
 
-export default FindJobRequiredFilter;
+export default JobPostingFilter;

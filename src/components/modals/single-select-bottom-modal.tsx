@@ -29,7 +29,7 @@ const OptionItem = styled.div`
 interface SingleSelectBottomModalProps {
   isOpen: boolean;
   onClose: () => void;
-  options: any[];
+  options: string[];
   onSelect: (option: string) => void;
 }
 

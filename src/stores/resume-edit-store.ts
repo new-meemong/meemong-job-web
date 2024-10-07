@@ -274,7 +274,7 @@ export const useResumeEditStore = create(
           .filter((item) => !item.value.includes("전체"))
           .map((item) => item.key)
           .join(",");
-        console.log("moonsae regions", regions);
+
         set({
           _preferredStoreRegions: regions,
           preferredStoreRegionSiNames,

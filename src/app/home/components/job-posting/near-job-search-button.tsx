@@ -16,7 +16,7 @@ const Button = styled.div`
 `;
 
 const NearJobSearchButton = () => {
-  const [text, setText] = useState("내 주변 구인 매장보기");
+  const [text] = useState("내 주변 구인 매장보기");
   return <Button>{text}</Button>;
 };
 

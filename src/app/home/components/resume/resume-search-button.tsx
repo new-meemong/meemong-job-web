@@ -13,11 +13,12 @@ const Button = styled.div`
   height: ${pxToVw(48)};
   background-color: ${colors.purplePrimary};
   border-radius: ${pxToVw(5)};
+  margin-bottom: ${pxToVw(28)};
 `;
 
-const JobSearchButton = () => {
-  const [text, setText] = useState("매장 탐색하기");
+const ResumeSearchButton = () => {
+  const [text] = useState("인재 탐색하기");
   return <Button>{text}</Button>;
 };
 
-export default JobSearchButton;
+export default ResumeSearchButton;

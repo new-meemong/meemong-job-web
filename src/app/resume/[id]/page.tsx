@@ -12,7 +12,7 @@ import UserProfile from "./components/user-profile-section";
 import TitleSection from "./components/title-section";
 import RequiredInfoSection from "./components/required-info-section";
 import OptionalInfoSection from "./components/optional-info-section";
-import SelfIntroductionSection from "./components/self-introduction.section";
+import SelfIntroductionSection from "./components/self-introduction-section";
 import BottomButtonSection from "./components/bottom-button-section";
 
 const Container = styled.div`

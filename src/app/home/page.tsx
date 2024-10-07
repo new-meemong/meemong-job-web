@@ -5,12 +5,12 @@ import styled from "styled-components";
 import BaseTopTabs from "./components/base-top-tab";
 import FloatingButton from "./components/floating-button";
 import HomeTitle from "./components/home-title";
-import FindDesignerSection from "./components/sections/find-resume/find-designer-section";
-import FindJobSection from "./components/sections/find-job-posting/find-job-section";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { HomeTopTabType, useAppStateStore } from "@/stores/app-state-store";
+import JobPostingSection from "./components/job-posting-section";
+import ResumeSection from "./components/resume-section";
 
 const Container = styled.div`
   display: flex;
@@ -78,11 +78,7 @@ export default function HomePage({ searchParams }: SearchParams) {
     <Container>
       <BaseTopTabs activeTab={homeTopTab} setActiveTab={setHomeTopTab} />
       <HomeTitle />
-      {homeTopTab === "jobPosting" ? (
-        <FindJobSection />
-      ) : (
-        <FindDesignerSection />
-      )}
+      {homeTopTab === "jobPosting" ? <JobPostingSection /> : <ResumeSection />}
       <FloatingButton />
     </Container>
   );

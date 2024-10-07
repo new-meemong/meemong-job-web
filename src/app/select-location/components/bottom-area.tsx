@@ -41,46 +41,26 @@ interface BottomAreaProps {
 
 const BottomArea = ({ selectedRightItems, target }: BottomAreaProps) => {
   const router = useRouter();
-  const { setPostingRegions } = useJobPostingEditStore();
-  const { setPreferredStoreRegions } = useResumeEditStore();
-  const { addResumeFilterQuery } = useResumeListStore((state) => ({
-    addResumeFilterQuery: state.addResumeFilterQuery
+  const { setPostingRegions } = useJobPostingEditStore((state) => ({
+    setPostingRegions: state.setPostingRegions
+  }));
+  const { setPreferredStoreRegionsEdit } = useResumeEditStore((state) => ({
+    setPreferredStoreRegionsEdit: state.setPreferredStoreRegions
+  }));
+  const { setPreferredStoreRegionsList } = useResumeListStore((state) => ({
+    addResumeFilterQuery: state.addResumeFilterQuery,
+    setPreferredStoreRegionsList: state.setPreferredStoreRegions
   }));
 
   const handleConfirm = () => {
     if (target === "jobPostingEdit") {
       setPostingRegions(selectedRightItems);
     } else if (target === "resumeEdit") {
-      setPreferredStoreRegions(selectedRightItems);
+      setPreferredStoreRegionsEdit(selectedRightItems);
     } else if (target === "jobPostingList") {
       // addResumeFilterQuery();
     } else if (target === "resumeList") {
-      let preferredStoreRegionSiNames = "";
-      let preferredStoreRegions = "";
-
-      selectedRightItems.forEach((item) => {
-        if (item.key.includes("전체")) {
-          preferredStoreRegionSiNames = item.key.replace(" 전체", ""); // " 전체"를 제거하여 시 이름만 저장
-        } else {
-          preferredStoreRegions += preferredStoreRegions
-            ? `,${item.key}`
-            : `${item.key}`; // 구 이름을 추가
-        }
-      });
-      console.log(
-        "moonsae - preferredStoreRegionSiNames:",
-        preferredStoreRegionSiNames
-      );
-      console.log("moonsae - preferredStoreRegions:", preferredStoreRegions);
-      if (preferredStoreRegionSiNames !== "") {
-        addResumeFilterQuery(
-          `preferredStoreRegionSiNames=${preferredStoreRegionSiNames}`
-        );
-      }
-      // preferredStoreRegions가 존재할 경우에만 추가
-      if (preferredStoreRegions !== "") {
-        addResumeFilterQuery(`preferredStoreRegions=${preferredStoreRegions}`);
-      }
+      setPreferredStoreRegionsList(selectedRightItems);
     }
     router.back();
   };

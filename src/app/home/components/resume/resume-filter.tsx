@@ -1,12 +1,11 @@
 import { colors } from "@/styles/colors";
-import { useState } from "react";
 import styled from "styled-components";
-import DesignerTypeTab from "../../filters/designer-type-tab";
-import SelectLocation from "../../filters/select-location";
-import OptionalFilterList from "../../filters/optional-filter-list";
+import OptionalFilterList from "../filters/optional-filter-list";
 import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
 import DropdownMultiSelectItem from "@/components/drop-downs/dropdown-multi-select-item";
 import pxToVw from "@/lib/dpi-converter";
+import AppliedRole from "./base/applied-role";
+import ResumeLocation from "./base/resume-location";
 
 const Container = styled.div`
   margin: ${pxToVw(0)} ${pxToVw(24)};
@@ -16,13 +15,11 @@ const Container = styled.div`
   border-radius: ${pxToVw(5)};
 `;
 
-const FindDesignerRequiredFilter = () => {
-  const [activeTab, setActiveTab] = useState(0);
-
+const ResumeFilter = () => {
   return (
     <Container>
-      <DesignerTypeTab activeTab={activeTab} setActiveTab={setActiveTab} />
-      <SelectLocation />
+      <AppliedRole />
+      <ResumeLocation />
       <DropdownSingleSelectItem
         label="근무형태"
         options={["정규직", "스페어(알바)", "무관"]}
@@ -41,4 +38,4 @@ const FindDesignerRequiredFilter = () => {
   );
 };
 
-export default FindDesignerRequiredFilter;
+export default ResumeFilter;

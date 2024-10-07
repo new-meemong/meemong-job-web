@@ -67,7 +67,7 @@ const CancelText = styled.span`
   ${fonts.purplePrimarySemi14}
 `;
 
-const SelectLocation = () => {
+const ResumeLocation = () => {
   const { _preferredStoreRegions } = useResumeListStore((state) => ({
     _preferredStoreRegions: state._preferredStoreRegions
   }));
@@ -116,4 +116,4 @@ const SelectLocation = () => {
   );
 };
 
-export default SelectLocation;
+export default ResumeLocation;

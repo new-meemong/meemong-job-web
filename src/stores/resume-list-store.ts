@@ -8,6 +8,11 @@ export type ResumeListState = {
   resumeList: ResumeType[];
   resumeListLoading: boolean;
   resumeFilterQueries: string;
+
+  // 선호 지역
+  _preferredStoreRegions: { key: string; value: string }[];
+  preferredStoreRegions: string | null;
+  preferredStoreRegionSiNames: string | null;
 };
 
 export type ResumeListActions = {
@@ -17,6 +22,7 @@ export type ResumeListActions = {
   getResumeFilterQuery: (key: string) => string | null;
   addResumeFilterQuery: (query: string) => void;
   removeResumeFilterQuery: (key: string) => void;
+  setPreferredStoreRegions: (regions: { key: string; value: string }[]) => void;
 };
 
 export type ResumeListStore = ResumeListState & ResumeListActions;
@@ -24,7 +30,10 @@ export type ResumeListStore = ResumeListState & ResumeListActions;
 export const defaultResumeListState: ResumeListState = {
   resumeList: [],
   resumeListLoading: false,
-  resumeFilterQueries: "?"
+  resumeFilterQueries: "?",
+  _preferredStoreRegions: [],
+  preferredStoreRegions: null,
+  preferredStoreRegionSiNames: null
 };
 
 export const useResumeListStore = create(
@@ -89,6 +98,42 @@ export const useResumeListStore = create(
           currentQueries.delete(key);
 
           return { resumeFilterQueries: `?${currentQueries.toString()}` };
+        });
+      },
+      setPreferredStoreRegions: (regions) => {
+        const preferredStoreRegionSiNames = Array.from(
+          new Set(regions.map((item) => item.key.split(" ")[0]))
+        ).join(",");
+        const preferredStoreRegions = regions
+          .filter((item) => !item.value.includes("전체"))
+          .map((item) => item.key)
+          .join(",");
+
+        set((state) => {
+          // 현재의 resumeFilterQueries를 가져와 URLSearchParams로 처리
+          const currentQueries = new URLSearchParams(state.resumeFilterQueries);
+
+          // 쿼리에 preferredStoreRegions와 preferredStoreRegionSiNames를 추가
+          if (preferredStoreRegionSiNames) {
+            currentQueries.set(
+              "preferredStoreRegionSiNames",
+              preferredStoreRegionSiNames
+            );
+          } else {
+            currentQueries.delete("preferredStoreRegionSiNames");
+          }
+          if (preferredStoreRegions) {
+            currentQueries.set("preferredStoreRegions", preferredStoreRegions);
+          } else {
+            currentQueries.delete("preferredStoreRegions");
+          }
+
+          return {
+            _preferredStoreRegions: regions,
+            preferredStoreRegionSiNames,
+            preferredStoreRegions: preferredStoreRegions,
+            resumeFilterQueries: `?${currentQueries.toString()}` // 변경된 쿼리 문자열 업데이트
+          };
         });
       }
     }),

@@ -2,7 +2,6 @@ import { ErrorMessage } from "@/components/error-message";
 import ArrowRightGreyIcon from "@/components/icons/arrow-right-grey-icon";
 import ResumeEditLabel from "@/app/resume/[id]/edit/components/base/resume-edit-label";
 import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
