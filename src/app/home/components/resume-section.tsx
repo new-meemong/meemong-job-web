@@ -27,7 +27,7 @@ const ResumeSection = () => {
   const queryParams = new URLSearchParams(
     decodeURIComponent(resumeFilterQueries.replace(/\+/g, " "))
   );
-  const structuredQueries = {};
+  const structuredQueries: Record<string, string> = {};
 
   // 각 키-값 쌍을 객체로 변환하여 저장
   queryParams.forEach((value, key) => {

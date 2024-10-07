@@ -61,7 +61,12 @@ const ResumeHeader = ({ title, resumeId, isMine }: ResumeHeaderProps) => {
     deleteResume: state.deleteResume
   }));
 
-  const options = isMine ? ["수정", "삭제"] : [];
+  const options = isMine
+    ? [
+        { key: "수정", value: "수정" },
+        { key: "삭제", value: "삭제" }
+      ]
+    : [];
 
   const handleBackClick = () => {
     router.back();
@@ -73,7 +78,7 @@ const ResumeHeader = ({ title, resumeId, isMine }: ResumeHeaderProps) => {
     }
   };
 
-  const handleOptionSelect = (option: string) => {
+  const handleOptionSelect = (option: string | null) => {
     if (option === "수정") {
       const resume = resumeList.find(
         (resume) => resume.id.toString() === resumeId

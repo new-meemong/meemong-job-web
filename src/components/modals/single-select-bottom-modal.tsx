@@ -26,21 +26,25 @@ const OptionItem = styled.div`
   border-bottom: ${pxToVw(1)} solid #f0f0f0;
 `;
 
-interface SingleSelectBottomModalProps {
+interface Option<T> {
+  key: T;
+  value: string;
+}
+interface SingleSelectBottomModalProps<T> {
   isOpen: boolean;
   onClose: () => void;
-  options: string[];
-  onSelect: (option: string) => void;
+  options: Option<T>[];
+  onSelect: (optionKey: T | null) => void;
 }
 
-const SingleSelectBottomModal = ({
+const SingleSelectBottomModal = <T extends string | boolean>({
   isOpen,
   onClose,
   options,
   onSelect
-}: SingleSelectBottomModalProps) => {
-  const itemHeight = 48; // OptionItem의 높이
-  const contentHeight = options.length * itemHeight;
+}: SingleSelectBottomModalProps<T>) => {
+  // const itemHeight = 48; // OptionItem의 높이
+  // const contentHeight = options.length * itemHeight;
 
   return (
     <Sheet isOpen={isOpen} onClose={onClose} detent="content-height">
@@ -50,8 +54,8 @@ const SingleSelectBottomModal = ({
         <SheetContent>
           <SheetScroller>
             {options.map((option, index) => (
-              <OptionItem key={index} onClick={() => onSelect(option)}>
-                {option}
+              <OptionItem key={index} onClick={() => onSelect(option.key)}>
+                {option.value}
               </OptionItem>
             ))}
           </SheetScroller>

@@ -42,22 +42,27 @@ const TooltipButton = styled.div`
   padding: ${pxToVw(4)};
 `;
 
-interface DropdownItemProps {
+interface Option<T> {
+  key: T;
+  value: string;
+}
+interface DropdownItemProps<T> {
   label: string;
-  options: string[];
+  options: Option<T>[];
+  selectedOption: T | null;
   tooltip?: string;
+  onSelect: (optionKey: T | null) => void;
 }
 
-const DropdownSingleSelectItem = ({
+const DropdownSingleSelectItem = <T extends string | boolean>({
   label,
   options,
-  tooltip
-}: DropdownItemProps) => {
+  tooltip,
+  selectedOption,
+  onSelect
+}: DropdownItemProps<T>) => {
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
   const [isTooltipModalOpen, setIsTooltipModalOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string>(
-    options[options.length - 1]
-  );
 
   const handleOptionModalClose = () => {
     setIsOptionModalOpen(false);
@@ -66,8 +71,12 @@ const DropdownSingleSelectItem = ({
     setIsOptionModalOpen(true);
   };
 
-  const handleOptionSelect = (option: string) => {
-    setSelectedOption(option);
+  const handleOptionSelect = (optionKey: T | null) => {
+    if (selectedOption === optionKey) {
+      onSelect(null);
+    } else {
+      onSelect(optionKey);
+    }
     handleOptionModalClose();
   };
 
