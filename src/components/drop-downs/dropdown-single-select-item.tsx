@@ -54,7 +54,7 @@ interface DropdownItemProps<T> {
   onSelect: (optionKey: T | null) => void;
 }
 
-const DropdownSingleSelectItem = <T extends string | boolean>({
+const DropdownSingleSelectItem = <T extends string | boolean | null>({
   label,
   options,
   tooltip,

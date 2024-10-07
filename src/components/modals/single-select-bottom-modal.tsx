@@ -37,7 +37,7 @@ interface SingleSelectBottomModalProps<T> {
   onSelect: (optionKey: T | null) => void;
 }
 
-const SingleSelectBottomModal = <T extends string | boolean>({
+const SingleSelectBottomModal = <T extends string | boolean | null>({
   isOpen,
   onClose,
   options,

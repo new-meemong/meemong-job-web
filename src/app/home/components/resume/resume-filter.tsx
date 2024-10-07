@@ -6,6 +6,9 @@ import DropdownMultiSelectItem from "@/components/drop-downs/dropdown-multi-sele
 import pxToVw from "@/lib/dpi-converter";
 import AppliedRole from "./base/applied-role";
 import ResumeLocation from "./base/resume-location";
+import WorkType from "./base/work-type";
+import Sex from "./base/sex";
+import DesignerExperienceYearNumber from "./base/designer-experience-year-number";
 
 const Container = styled.div`
   margin: ${pxToVw(0)} ${pxToVw(24)};
@@ -20,15 +23,9 @@ const ResumeFilter = () => {
     <Container>
       <AppliedRole />
       <ResumeLocation />
-      <DropdownSingleSelectItem
-        label="근무형태"
-        options={["정규직", "스페어(알바)", "무관"]}
-      />
-      <DropdownSingleSelectItem label="성별" options={["남", "여", "무관"]} />
-      <DropdownSingleSelectItem
-        label="경력"
-        options={["1년 이상", "3년 이상", "5년 이상", "상관없음"]}
-      />
+      <WorkType />
+      <Sex />
+      <DesignerExperienceYearNumber />
       <DropdownMultiSelectItem
         label="미용 라이센스"
         options={["자격증", "면허증", "없음", "상관 없음"]}
