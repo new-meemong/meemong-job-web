@@ -13,7 +13,7 @@ export const convertRegion = ({
   storeRegions,
   storeRegionsSiNames
 }: convertRegionProps): result[] => {
-  let result: result[] = [];
+  const result: result[] = [];
   const regions = storeRegions.split(",").filter(Boolean); // 빈값 제거
   const siNames = storeRegionsSiNames.split(",").filter(Boolean);
 
@@ -63,43 +63,35 @@ export const convertToShortRegion = (
   return result.slice(0, -2);
 };
 
-export const convertToShortRegionHome = (selectedRegion: string) => {
-  const regions = selectedRegion.split(",");
-  console.log("reg ions", regions);
-};
+// 서버의 gu, si 데이터 기준 화면에 뿌려지는 짧은 데
+export const convertToShortRegionFromQuery = (
+  gu: string | null,
+  si: string | null
+) => {
+  const siNmShortMap = Object.fromEntries(
+    siNmShort.map(({ key, value }) => [key, value])
+  );
+  let result: string[] = [];
 
-interface ParsePostingRegionsProps {
-  guList: string;
-  siList: string;
-}
-//서버에서 받아오는 시, 구 정보를 클라에서 뿌리는 list 형태로 변환
-const parsePostingRegions = ({ guList, siList }: ParsePostingRegionsProps) => {
-  let parsedRegions = [];
-  parsedRegions = guList
-    ? guList.split(",").map((gu) => {
-        const [, district] = gu.split(" ");
-        return { key: gu, value: district };
-      })
-    : [];
-
-  // 시만 있고 구는 없는 경우
-  if (!guList) {
-    parsedRegions = siList.split(",").map((region) => {
-      return siSggList[region][0];
+  // 구 데이터를 처리 (부산광역시 중구 -> 부산 중구)
+  if (gu && gu.length !== 0) {
+    const guList = gu.split(",");
+    const shortGuList = guList.map((guItem) => {
+      const [siKey, guKey] = guItem.split(" "); // "부산광역시 중구" -> ["부산광역시", "중구"]
+      const shortSiName = siNmShortMap[siKey]; // "부산광역시" -> "부산"
+      return `${shortSiName} ${guKey}`; // "부산 중구"
     });
+    result = result.concat(shortGuList);
   }
 
-  // 구가 없는 시만 추출하기
-  const onlySi = resume.preferredStoreRegionSiNames
-    .split(",") // 콤마로 구분하여 배열로 변환
-    .filter((si) => si !== resume.preferredStoreRegions.split(" ")[0]);
-
-  if (onlySi.length > 0) {
-    const parsedSi = onlySi.map((si) => {
-      return siSggList[si][0];
+  // 시 데이터를 처리 (서울특별시 -> 서울 전체)
+  if (si && si.length !== 0) {
+    const siList = si.split(",");
+    const shortSiList = siList.map((siItem) => {
+      return `${siNmShortMap[siItem]} 전체`; // "서울특별시" -> "서울 전체"
     });
-    parsedRegions = [...parsedRegions, ...parsedSi];
+    result = result.concat(shortSiList);
   }
 
-  return parsedRegions;
+  return result;
 };

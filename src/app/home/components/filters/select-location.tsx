@@ -1,14 +1,12 @@
 import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
 import CloseCircleGreyIcon from "@/components/icons/close-circle-grey-icon";
-import {
-  convertToShortRegion,
-  convertToShortRegionHome
-} from "@/lib/convert-region";
+import { convertToShortRegionFromQuery } from "@/lib/convert-region";
 import pxToVw from "@/lib/dpi-converter";
 import { useAppStateStore } from "@/stores/app-state-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import { locationKeysAndShorts } from "@/types/location-type";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -77,35 +75,98 @@ const SelectLocation = () => {
     homeTopTab: state.homeTopTab
   }));
   const { getResumeFilterQuery } = useResumeListStore((state) => ({
-    getResumeFilterQuery: state.getResumeFilterQuery
+    getResumeFilterQuery: state.getResumeFilterQuery,
+    resumeFilterQueries: state.resumeFilterQueries
   }));
   let selectedLocationList: string[] = [];
-  let href =
+  const href =
     homeTopTab === "jobPosting"
       ? "/select-location?target=jobPostingList"
       : "/select-location?target=resumeList";
 
   if (homeTopTab === "resume") {
-    console.log(
-      "moonsae getResumeFilterQuery",
-      getResumeFilterQuery("preferredStoreRegions")
-    );
-    convertToShortRegionHome(
-      getResumeFilterQuery("preferredStoreRegions") || ""
+    selectedLocationList = convertToShortRegionFromQuery(
+      getResumeFilterQuery("preferredStoreRegions"),
+      getResumeFilterQuery("preferredStoreRegionSiNames")
     );
   }
+
+  const handleCancelClick = (label: string) => {
+    if (homeTopTab === "resume") {
+      const {
+        removeResumeFilterQuery,
+        getResumeFilterQuery,
+        addResumeFilterQuery
+      } = useResumeListStore.getState();
+
+      // 시를 삭제하는 경우
+      if (label.includes("전체")) {
+        const siQuery = getResumeFilterQuery("preferredStoreRegionSiNames");
+
+        if (siQuery) {
+          const siKeyList = siQuery.split(",");
+
+          if (siKeyList.length === 1) {
+            // siList가 1이면 preferredStoreRegionSiNames query 삭제
+            removeResumeFilterQuery("preferredStoreRegionSiNames");
+          } else {
+            // siList가 1보다 크면 viewString이 label과 같은 항목을 제거하고 나머지 siKeyList를 다시 추가
+            const updatedSiKeyList = siKeyList.filter(
+              (siKey) =>
+                !locationKeysAndShorts.find(
+                  (location) =>
+                    location.viewString === label && location.key === siKey
+                )
+            );
+
+            addResumeFilterQuery(
+              `preferredStoreRegionSiNames=${updatedSiKeyList.join(",")}`
+            );
+          }
+        }
+      }
+      // 구를 삭제하는 경우
+      else {
+        const guQuery = getResumeFilterQuery("preferredStoreRegions");
+
+        if (guQuery) {
+          const guKeyList = guQuery.split(",");
+
+          if (guKeyList.length === 1) {
+            // guList가 1이면 preferredStoreRegions query 삭제
+            removeResumeFilterQuery("preferredStoreRegions");
+          } else {
+            // guList가 1보다 크면 viewString이 label과 같은 항목을 제거하고 나머지 guKeyList를 다시 추가
+            const updatedGuKeyList = guKeyList.filter(
+              (guKey) =>
+                !locationKeysAndShorts.find(
+                  (location) =>
+                    location.viewString === label && location.key === guKey
+                )
+            );
+
+            addResumeFilterQuery(
+              `preferredStoreRegions=${updatedGuKeyList.join(",")}`
+            );
+          }
+        }
+      }
+    }
+  };
 
   return (
     <Container>
       <Label>지역</Label>
       <ButtonContainer>
         <Location>
-          {selectedLocationList.map((label, index) => (
-            <React.Fragment key={label}>
-              {label}
-              {index < selectedLocationList.length - 1 && ",\u00A0"}
-            </React.Fragment>
-          ))}
+          {selectedLocationList.length === 0
+            ? "전체"
+            : selectedLocationList.map((label, index) => (
+                <React.Fragment key={label}>
+                  {label}
+                  {index < selectedLocationList.length - 1 && ",\u00A0"}
+                </React.Fragment>
+              ))}
         </Location>
         <LocationButton href={href}>
           지역선택하기
@@ -114,7 +175,7 @@ const SelectLocation = () => {
       </ButtonContainer>
       <CancelContainer>
         {selectedLocationList.map((label, index) => (
-          <CancelButton key={index}>
+          <CancelButton key={index} onClick={() => handleCancelClick(label)}>
             <CancelText>{label}</CancelText>
             <CloseCircleGreyIcon />
           </CancelButton>
