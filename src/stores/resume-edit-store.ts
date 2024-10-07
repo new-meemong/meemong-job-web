@@ -631,7 +631,7 @@ const convertToNullJobPostingData = (
   data: Record<string, any>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Record<string, any> => {
-  const nullifyValues = ["상관없음", "해당없음", "필요없음", "없음"];
+  const nullifyValues = ["상관없음", "해당없음", "필요없음"];
 
   return Object.fromEntries(
     Object.entries(data).map(([key, value]) => [
