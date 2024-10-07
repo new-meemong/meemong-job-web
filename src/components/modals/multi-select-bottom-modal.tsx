@@ -32,21 +32,27 @@ const OptionItem = styled.div`
   border-bottom: ${pxToVw(1)} solid #f0f0f0;
 `;
 
-interface SingleSelectBottomModalProps {
-  selectedOptions: string[];
-  isOpen: boolean;
-  onClose: () => void;
-  options: any[];
-  onSelect: (option: string) => void;
+interface Option<T> {
+  key: T;
+  value: string;
 }
 
-const MultiSelectBottomModal = ({
+interface MultiSelectBottomModalProps<T> {
+  // 제네릭 T 추가
+  selectedOptions: T[];
+  isOpen: boolean;
+  onClose: () => void;
+  options: Option<T>[];
+  onSelect: (option: T) => void;
+}
+
+const MultiSelectBottomModal = <T,>({
   selectedOptions,
   isOpen,
   onClose,
   options,
   onSelect
-}: SingleSelectBottomModalProps) => {
+}: MultiSelectBottomModalProps<T>) => {
   return (
     <Sheet isOpen={isOpen} onClose={onClose} detent="content-height">
       <Sheet.Backdrop onTap={onClose} />
@@ -55,10 +61,10 @@ const MultiSelectBottomModal = ({
         <SheetContent>
           <SheetScroller>
             {options.map((option, index) => {
-              const isSelected = selectedOptions.includes(option);
+              const isSelected = selectedOptions.includes(option.key);
               return (
-                <OptionItem key={index} onClick={() => onSelect(option)}>
-                  {option}
+                <OptionItem key={index} onClick={() => onSelect(option.key)}>
+                  {option.value}
                   {isSelected ? (
                     <CheckboxSelectIcon /> // 선택된 경우 아이콘
                   ) : (

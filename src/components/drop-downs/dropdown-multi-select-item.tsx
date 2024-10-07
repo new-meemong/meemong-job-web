@@ -34,39 +34,30 @@ const Content = styled.span`
   ${fonts.purplePrimaryBold14}
 `;
 
-interface DropdownItemProps {
+interface Option<T> {
+  key: T;
+  value: string;
+}
+interface DropdownItemProps<T> {
   label: string;
-  options: string[];
+  options: Option<T>[];
+  selectedOptions: T[];
+  onSelect: (optionKey: T) => void;
 }
 
-const DropdownMultiSelectItem = ({ label, options }: DropdownItemProps) => {
+const DropdownMultiSelectItem = <T extends string | boolean>({
+  label,
+  options,
+  selectedOptions,
+  onSelect
+}: DropdownItemProps<T>) => {
   const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([
-    options[options.length - 1]
-  ]);
 
   const handleModalClose = () => {
     setIsBottomModalOpen(false);
   };
   const handleModalOpen = () => {
     setIsBottomModalOpen(true);
-  };
-
-  const handleOptionSelect = (option: string) => {
-    setSelectedOptions((prevSelectedOptions) => {
-      if (option === options[options.length - 1]) {
-        return [option];
-      } else {
-        prevSelectedOptions = prevSelectedOptions.filter(
-          (selected) => selected !== options[options.length - 1]
-        );
-        if (prevSelectedOptions.includes(option)) {
-          return prevSelectedOptions.filter((selected) => selected !== option);
-        } else {
-          return [...prevSelectedOptions, option];
-        }
-      }
-    });
   };
 
   return (
@@ -89,7 +80,7 @@ const DropdownMultiSelectItem = ({ label, options }: DropdownItemProps) => {
         isOpen={isBottomModalOpen}
         onClose={handleModalClose}
         options={options}
-        onSelect={handleOptionSelect}
+        onSelect={onSelect}
       />
     </Container>
   );
