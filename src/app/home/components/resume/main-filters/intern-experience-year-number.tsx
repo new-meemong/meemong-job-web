@@ -1,11 +1,10 @@
+import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
 
 const Container = styled.div``;
 
-const CompletedEducationLevel = () => {
+const InternExperienceYearNumber = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
@@ -16,31 +15,34 @@ const CompletedEducationLevel = () => {
     removeResumeFilterQuery: state.removeResumeFilterQuery
   }));
   const options = [
-    ...resumeOptions.completedEducationLevel,
+    { key: "신입", value: "신입" },
+    { key: "6개월 이상", value: "6개월 이상" },
+    { key: "1년 이상", value: "1년 이상" },
+    { key: "2년 이상", value: "2년 이상" },
+    { key: "3년 이상", value: "3년 이상" },
     { key: "상관없음", value: "상관없음" }
   ];
-  const selectedOption =
-    getResumeFilterQuery("completedEducationLevel") || "상관없음";
 
   const handleSelect = (selectedOption: string | null) => {
     selectedOption = selectedOption === "상관없음" ? null : selectedOption;
     if (selectedOption) {
-      addResumeFilterQuery(`completedEducationLevel=${selectedOption}`);
+      addResumeFilterQuery(`internExperienceYearNumber=${selectedOption}`);
     } else {
-      removeResumeFilterQuery("completedEducationLevel");
+      removeResumeFilterQuery("internExperienceYearNumber");
     }
   };
-
   return (
     <Container>
-      <OptionalSingleDropdownFilter
-        label="학력"
+      <DropdownSingleSelectItem
+        label="경력"
         options={options}
         onSelect={handleSelect}
-        selectedOption={selectedOption}
+        selectedOption={
+          getResumeFilterQuery("internExperienceYearNumber") || "상관없음"
+        }
       />
     </Container>
   );
 };
 
-export default CompletedEducationLevel;
+export default InternExperienceYearNumber;

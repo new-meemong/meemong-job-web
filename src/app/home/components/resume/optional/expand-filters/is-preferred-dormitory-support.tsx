@@ -5,7 +5,7 @@ import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-
 
 const Container = styled.div``;
 
-const CompletedEducationLevel = () => {
+const IsPreferredDormitorySupport = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
@@ -16,25 +16,25 @@ const CompletedEducationLevel = () => {
     removeResumeFilterQuery: state.removeResumeFilterQuery
   }));
   const options = [
-    ...resumeOptions.completedEducationLevel,
+    { key: "유", value: "유" },
+    { key: "무", value: "무" },
     { key: "상관없음", value: "상관없음" }
   ];
   const selectedOption =
-    getResumeFilterQuery("completedEducationLevel") || "상관없음";
+    getResumeFilterQuery("isPreferredDormitorySupport") || "상관없음";
 
   const handleSelect = (selectedOption: string | null) => {
     selectedOption = selectedOption === "상관없음" ? null : selectedOption;
     if (selectedOption) {
-      addResumeFilterQuery(`completedEducationLevel=${selectedOption}`);
+      addResumeFilterQuery(`isPreferredDormitorySupport=${selectedOption}`);
     } else {
-      removeResumeFilterQuery("completedEducationLevel");
+      removeResumeFilterQuery("isPreferredDormitorySupport");
     }
   };
-
   return (
     <Container>
       <OptionalSingleDropdownFilter
-        label="학력"
+        label="기숙사"
         options={options}
         onSelect={handleSelect}
         selectedOption={selectedOption}
@@ -43,4 +43,4 @@ const CompletedEducationLevel = () => {
   );
 };
 
-export default CompletedEducationLevel;
+export default IsPreferredDormitorySupport;

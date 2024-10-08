@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import OptionalDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { resumeOptions } from "@/types/resume-optons";
+import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
 
 const Container = styled.div``;
 
@@ -33,7 +33,7 @@ const SalesLast3MonthsAvg = () => {
 
   return (
     <Container>
-      <OptionalDropdownFilter
+      <OptionalSingleDropdownFilter
         label="이전 3개월 평균 매출"
         options={options}
         onSelect={handleSelect}

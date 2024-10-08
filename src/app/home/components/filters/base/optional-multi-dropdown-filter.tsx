@@ -99,7 +99,7 @@ const OptionalMultiDropdownFilter = <T,>({
   const handleOptionClick = (optionKey: T) => {
     onSelect(optionKey);
   };
-  console.log("moonsae selectedOptions", selectedOptions);
+
   return (
     <Container>
       {isExpanded ? (

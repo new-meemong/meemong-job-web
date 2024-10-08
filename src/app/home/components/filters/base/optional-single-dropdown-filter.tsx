@@ -79,7 +79,7 @@ interface OptionalSingleDropdownFilterProps<T> {
   onSelect: (option: T | null) => void;
 }
 
-const OptionalSingleDropdownFilter = <T,>({
+const OptionalSingleDropdownFilter = <T extends string | boolean>({
   label,
   options,
   selectedOption,

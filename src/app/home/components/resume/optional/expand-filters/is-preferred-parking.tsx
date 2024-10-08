@@ -1,11 +1,10 @@
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
 import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
 
 const Container = styled.div``;
 
-const CompletedEducationLevel = () => {
+const IsPreferredParking = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
@@ -16,25 +15,25 @@ const CompletedEducationLevel = () => {
     removeResumeFilterQuery: state.removeResumeFilterQuery
   }));
   const options = [
-    ...resumeOptions.completedEducationLevel,
+    { key: "유", value: "유" },
+    { key: "무", value: "무" },
     { key: "상관없음", value: "상관없음" }
   ];
   const selectedOption =
-    getResumeFilterQuery("completedEducationLevel") || "상관없음";
+    getResumeFilterQuery("isPreferredParking") || "상관없음";
 
   const handleSelect = (selectedOption: string | null) => {
     selectedOption = selectedOption === "상관없음" ? null : selectedOption;
     if (selectedOption) {
-      addResumeFilterQuery(`completedEducationLevel=${selectedOption}`);
+      addResumeFilterQuery(`isPreferredParking=${selectedOption}`);
     } else {
-      removeResumeFilterQuery("completedEducationLevel");
+      removeResumeFilterQuery("isPreferredParking");
     }
   };
-
   return (
     <Container>
       <OptionalSingleDropdownFilter
-        label="학력"
+        label="주차 희망 여부"
         options={options}
         onSelect={handleSelect}
         selectedOption={selectedOption}
@@ -43,4 +42,4 @@ const CompletedEducationLevel = () => {
   );
 };
 
-export default CompletedEducationLevel;
+export default IsPreferredParking;

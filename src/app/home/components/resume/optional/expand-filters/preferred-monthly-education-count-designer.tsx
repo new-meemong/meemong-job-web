@@ -5,7 +5,7 @@ import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-
 
 const Container = styled.div``;
 
-const CompletedEducationLevel = () => {
+const PreferredMonthlyEducationCountDesigner = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
@@ -15,26 +15,23 @@ const CompletedEducationLevel = () => {
     addResumeFilterQuery: state.addResumeFilterQuery,
     removeResumeFilterQuery: state.removeResumeFilterQuery
   }));
-  const options = [
-    ...resumeOptions.completedEducationLevel,
-    { key: "상관없음", value: "상관없음" }
-  ];
+  const options = resumeOptions.preferredMonthlyEducationDesignerCount;
   const selectedOption =
-    getResumeFilterQuery("completedEducationLevel") || "상관없음";
+    getResumeFilterQuery("preferredMonthlyEducationCount") || "상관없음";
 
   const handleSelect = (selectedOption: string | null) => {
     selectedOption = selectedOption === "상관없음" ? null : selectedOption;
     if (selectedOption) {
-      addResumeFilterQuery(`completedEducationLevel=${selectedOption}`);
+      addResumeFilterQuery(`preferredMonthlyEducationCount=${selectedOption}`);
     } else {
-      removeResumeFilterQuery("completedEducationLevel");
+      removeResumeFilterQuery("preferredMonthlyEducationCount");
     }
   };
 
   return (
     <Container>
       <OptionalSingleDropdownFilter
-        label="학력"
+        label="희망 교육"
         options={options}
         onSelect={handleSelect}
         selectedOption={selectedOption}
@@ -43,4 +40,4 @@ const CompletedEducationLevel = () => {
   );
 };
 
-export default CompletedEducationLevel;
+export default PreferredMonthlyEducationCountDesigner;

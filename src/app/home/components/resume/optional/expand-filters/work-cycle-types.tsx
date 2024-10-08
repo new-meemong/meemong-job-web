@@ -5,7 +5,7 @@ import OptionalMultiDropdownFilter from "../../../filters/base/optional-multi-dr
 
 const Container = styled.div``;
 
-const PreferredOffDays = () => {
+const WorkCycleTypes = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
@@ -15,13 +15,16 @@ const PreferredOffDays = () => {
     addResumeFilterQuery: state.addResumeFilterQuery,
     removeResumeFilterQuery: state.removeResumeFilterQuery
   }));
-  const options = resumeOptions.preferredOffDays;
+  const options = [
+    ...resumeOptions.workCycleTypes,
+    { key: "상관없음", value: "상관없음" }
+  ];
   const selectedOptions =
-    getResumeFilterQuery("preferredOffDays")?.split(",") || [];
+    getResumeFilterQuery("workCycleTypes")?.split(",") || [];
 
   const handleSelect = (selectedOption: string) => {
     if (selectedOption === "상관없음") {
-      removeResumeFilterQuery("preferredOffDays");
+      removeResumeFilterQuery("workCycleTypes");
     } else {
       let updatedOptions;
 
@@ -34,25 +37,25 @@ const PreferredOffDays = () => {
       }
 
       if (updatedOptions.length > 0) {
-        addResumeFilterQuery(`preferredOffDays=${updatedOptions.join(",")}`);
+        addResumeFilterQuery(`workCycleTypes=${updatedOptions.join(",")}`);
       } else {
-        removeResumeFilterQuery("preferredOffDays");
+        removeResumeFilterQuery("workCycleTypes");
       }
     }
   };
 
   return (
     <Container>
-      <OptionalMultiDropdownFilter
-        label="희망 휴무일"
+      <OptionalMultiDropdownFilter<string>
+        label="근무 주기"
         options={options}
+        onSelect={handleSelect}
         selectedOptions={
           selectedOptions.length > 0 ? selectedOptions : ["상관없음"]
         }
-        onSelect={handleSelect}
       />
     </Container>
   );
 };
 
-export default PreferredOffDays;
+export default WorkCycleTypes;

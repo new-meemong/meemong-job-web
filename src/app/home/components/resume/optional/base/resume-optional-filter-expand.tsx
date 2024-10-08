@@ -6,6 +6,13 @@ import pxToVw from "@/lib/dpi-converter";
 import SalesLast3MonthsAvg from "../expand-filters/sales-last-3months-avg";
 import CompletedEducationLevel from "../expand-filters/completed-education-level";
 import PreferredOffDays from "../expand-filters/preferred-off-days";
+import WorkCycleTypes from "../expand-filters/work-cycle-types";
+import IsPreferredDormitorySupport from "../expand-filters/is-preferred-dormitory-support";
+import { useResumeListStore } from "@/stores/resume-list-store";
+import PreferredMonthlyEducationCountDesigner from "../expand-filters/preferred-monthly-education-count-designer";
+import PreferredMonthlyEducationCountIntern from "../expand-filters/preferred-monthly-education-count-intern";
+import IsPreferredMealSupport from "../expand-filters/is-preferred-meal-support";
+import IsPreferredParking from "../expand-filters/is-preferred-parking";
 
 const Container = styled.div`
   padding: ${pxToVw(12)} ${pxToVw(8)};
@@ -66,6 +73,10 @@ const ResumeOptionalFilterExpand = ({
   resetFilters,
   toggleExpanded
 }: OptionalFilterUnexpandButtonProps) => {
+  const { getResumeFilterQuery } = useResumeListStore((state) => ({
+    getResumeFilterQuery: state.getResumeFilterQuery
+  }));
+  const appliedRole = getResumeFilterQuery("appliedRole");
   return (
     <Container>
       <ButtonContainer>
@@ -78,6 +89,12 @@ const ResumeOptionalFilterExpand = ({
       <SalesLast3MonthsAvg />
       <CompletedEducationLevel />
       <PreferredOffDays />
+      <WorkCycleTypes />
+      <IsPreferredDormitorySupport />
+      {appliedRole === "디자이너" && <PreferredMonthlyEducationCountDesigner />}
+      {appliedRole === "인턴" && <PreferredMonthlyEducationCountIntern />}
+      <IsPreferredMealSupport />
+      <IsPreferredParking />
     </Container>
   );
 };
