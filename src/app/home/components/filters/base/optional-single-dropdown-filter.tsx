@@ -67,6 +67,11 @@ const UnexpandContent = styled.div`
   ${fonts.purplePrimaryBold14}
 `;
 
+const Caption = styled.div`
+  ${fonts.purplePrimarySemi12}
+  margin-bottom: ${pxToVw(8)};
+`;
+
 interface Option<T> {
   key: T;
   value: string;
@@ -77,13 +82,15 @@ interface OptionalSingleDropdownFilterProps<T> {
   options: Option<T>[];
   selectedOption: T | null;
   onSelect: (option: T | null) => void;
+  caption?: string;
 }
 
 const OptionalSingleDropdownFilter = <T extends string | boolean>({
   label,
   options,
   selectedOption,
-  onSelect
+  onSelect,
+  caption
 }: OptionalSingleDropdownFilterProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -107,6 +114,7 @@ const OptionalSingleDropdownFilter = <T extends string | boolean>({
             <HeaderLabelContainer>{label}</HeaderLabelContainer>
             <ArrowUpGreyIcon />
           </HeaderContainer>
+          {caption && <Caption>{caption}</Caption>}
           <OptionContainer>
             {options.map((option, index) => (
               <OptionItem

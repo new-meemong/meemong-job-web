@@ -22,9 +22,11 @@ const AppliedRole = () => {
     if (role === "디자이너") {
       removeResumeFilterQuery("internExperienceYearNumber");
       removeResumeFilterQuery("preferredMonthlyEducationCount");
+      removeResumeFilterQuery("designerPromotionPeriod");
     } else if (role === "인턴") {
-      removeResumeFilterQuery("DesignerExperienceYearNumber");
+      removeResumeFilterQuery("designerExperienceYearNumber");
       removeResumeFilterQuery("preferredMonthlyEducationCount");
+      removeResumeFilterQuery("salesLast3MonthsAvg");
     }
   };
 

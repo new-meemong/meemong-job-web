@@ -13,6 +13,7 @@ import PreferredMonthlyEducationCountDesigner from "../expand-filters/preferred-
 import PreferredMonthlyEducationCountIntern from "../expand-filters/preferred-monthly-education-count-intern";
 import IsPreferredMealSupport from "../expand-filters/is-preferred-meal-support";
 import IsPreferredParking from "../expand-filters/is-preferred-parking";
+import DesignerPromotionPeriod from "../expand-filters/designer-promotion-period";
 
 const Container = styled.div`
   padding: ${pxToVw(12)} ${pxToVw(8)};
@@ -86,10 +87,12 @@ const ResumeOptionalFilterExpand = ({
           <ArrowDownPurpleIcon />
         </FilterExpandButton>
       </ButtonContainer>
-      <SalesLast3MonthsAvg />
+      {appliedRole === "디자이너" && <SalesLast3MonthsAvg />}
+
       <CompletedEducationLevel />
       <PreferredOffDays />
       <WorkCycleTypes />
+      {appliedRole === "인턴" && <DesignerPromotionPeriod />}
       <IsPreferredDormitorySupport />
       {appliedRole === "디자이너" && <PreferredMonthlyEducationCountDesigner />}
       {appliedRole === "인턴" && <PreferredMonthlyEducationCountIntern />}
