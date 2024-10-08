@@ -34,7 +34,7 @@ const ResumeSection = () => {
     structuredQueries[key] = value;
   });
 
-  console.log("Structured structuredQueries:", structuredQueries);
+  console.log("resume queries:", structuredQueries);
 
   return (
     <Container>

@@ -16,10 +16,10 @@ const DesignerLicenses = () => {
     removeResumeFilterQuery: state.removeResumeFilterQuery
   }));
   const options = [
-    ...resumeOptions.designerLicenses,
+    ...resumeOptions.designerLicenses.filter((option) => option.key !== "없음"),
     { key: "상관없음", value: "상관없음" }
   ];
-  console.log("moonsae options", options);
+
   const selectedOptions =
     getResumeFilterQuery("designerLicenses")?.split(",") || [];
 

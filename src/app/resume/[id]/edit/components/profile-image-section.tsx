@@ -117,7 +117,7 @@ const ProfileImageSection = () => {
       fileInputRef.current.click();
     }
   };
-  // console.log("moonsae imageUri", imgSrc);
+
   return (
     <Container>
       <ProfileImageContainer onClick={handleImageClick}>

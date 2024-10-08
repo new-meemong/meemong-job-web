@@ -49,7 +49,6 @@ export default function ResumePage() {
   if (!resume) {
     return <div>존재하지 않는 이력서입니다.</div>;
   }
-  console.log("moonsae resume", resume);
 
   return (
     <Container>

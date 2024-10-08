@@ -1,12 +1,10 @@
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
-import OptionalDropdownItem from "@/components/optional-dropdown-item";
 import { colors } from "@/styles/colors";
 import styled from "styled-components";
-import OptionalFilter1 from "./options-filter-expand-items/optional-filter1";
-import OptionalFilter2 from "./options-filter-expand-items/optional-filter2";
-import OptionalFilter3 from "./options-filter-expand-items/optional-filter3";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import OptionalDropdownFilter from "../../../filters/base/optional-dropdown-filter";
+import SalesLast3MonthsAvg from "../expand-filters/sales-last-3months-avg";
 
 const Container = styled.div`
   padding: ${pxToVw(12)} ${pxToVw(8)};
@@ -63,7 +61,7 @@ interface OptionalFilterUnexpandButtonProps {
   toggleExpanded: () => void;
 }
 
-const OptionalFilterExpand = ({
+const ResumeOptionalFilterExpand = ({
   resetFilters,
   toggleExpanded
 }: OptionalFilterUnexpandButtonProps) => {
@@ -76,16 +74,16 @@ const OptionalFilterExpand = ({
           <ArrowDownPurpleIcon />
         </FilterExpandButton>
       </ButtonContainer>
-      <OptionalFilter1 />
-      <OptionalFilter2 />
+      <SalesLast3MonthsAvg />
+      {/* <OptionalFilter2 />
       <OptionalFilter3 />
       <OptionalDropdownItem label={"근무 주기"} content={"상관없음"} />
       <OptionalDropdownItem label={"기숙사"} content={"상관없음"} />
       <OptionalDropdownItem label={"희망 교육"} content={"상관없음"} />
       <OptionalDropdownItem label={"식대 지원"} content={"상관없음"} />
-      <OptionalDropdownItem label={"주차 가능 여부"} content={"상관없음"} />
+      <OptionalDropdownItem label={"주차 가능 여부"} content={"상관없음"} /> */}
     </Container>
   );
 };
 
-export default OptionalFilterExpand;
+export default ResumeOptionalFilterExpand;

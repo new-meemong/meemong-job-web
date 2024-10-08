@@ -1,29 +1,28 @@
 import styled from "styled-components";
-import OptionalFilterExpand from "./.archive.options-filters/optional-filter-expand";
+import ResumeOptionalFilterExpand from "./resume-optional-filter-expand";
+import ResumeOptionalFilterUnexpand from "./resume-optional-filter-unexpand";
 import { useState } from "react";
-import OptionalFilterUnexpand from "./.archive.options-filters/optional-filter-unexpand";
 
 const Container = styled.div``;
 
-interface OptionalFilterListProps {
-  resetFilters: () => void;
-}
-
-const OptionalFilterList = ({ resetFilters }: OptionalFilterListProps) => {
+const ResumeOptionalFilterList = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const resetFilters = () => {};
+
   return (
     <Container>
       {isExpanded ? (
-        <OptionalFilterExpand
+        <ResumeOptionalFilterExpand
           resetFilters={resetFilters}
           toggleExpanded={toggleExpanded}
         />
       ) : (
-        <OptionalFilterUnexpand
+        <ResumeOptionalFilterUnexpand
           resetFilters={resetFilters}
           toggleExpanded={toggleExpanded}
         />
@@ -32,4 +31,4 @@ const OptionalFilterList = ({ resetFilters }: OptionalFilterListProps) => {
   );
 };
 
-export default OptionalFilterList;
+export default ResumeOptionalFilterList;

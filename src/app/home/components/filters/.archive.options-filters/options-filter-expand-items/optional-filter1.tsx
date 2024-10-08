@@ -1,5 +1,5 @@
-import OptionalDropdownItem from "@/components/optional-dropdown-item";
-import OptionalDropdownItemExpandedHeader from "@/components/optional-dropdown-item-expanded-header";
+import OptionalDropdownItem from "@/app/home/components/filters/options-filters/options-filter-expand-items/optional-dropdown-item";
+import OptionalDropdownItemExpandedHeader from "@/app/home/components/filters/options-filters/options-filter-expand-items/optional-dropdown-item-expanded-header";
 import { fonts } from "@/styles/fonts";
 import { colors } from "@/styles/colors";
 import { useState } from "react";
@@ -30,17 +30,16 @@ const OptionItem = styled.div<{ $isSelected: boolean }>`
     props.$isSelected ? fonts.purplePrimarySemi12 : fonts.greySemi12}
 `;
 
-const OptionalFilter2 = () => {
+const OptionalFilter1 = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedOption, setSelectedOption] = useState("상관없음");
 
-  const label = "학력";
+  const label = "이전 3개월 평균 매출";
   const optionList = [
-    "미용고등학교 졸업",
-    "미용대학교 졸업",
-    "일반고등학교 졸업",
-    "일반대학교 졸업",
-    "해당없음",
+    "500만원 이하",
+    "500만원 이상",
+    "1000만원 이상",
+    "1500만원 이상",
     "상관없음"
   ];
 
@@ -83,4 +82,4 @@ const OptionalFilter2 = () => {
   );
 };
 
-export default OptionalFilter2;
+export default OptionalFilter1;

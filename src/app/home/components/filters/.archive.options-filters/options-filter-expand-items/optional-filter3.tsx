@@ -1,5 +1,5 @@
-import OptionalDropdownItem from "@/components/optional-dropdown-item";
-import OptionalDropdownItemExpandedHeader from "@/components/optional-dropdown-item-expanded-header";
+import OptionalDropdownItem from "@/app/home/components/filters/options-filters/options-filter-expand-items/optional-dropdown-item";
+import OptionalDropdownItemExpandedHeader from "@/app/home/components/filters/options-filters/options-filter-expand-items/optional-dropdown-item-expanded-header";
 import { fonts } from "@/styles/fonts";
 import { colors } from "@/styles/colors";
 import { useState } from "react";
@@ -30,25 +30,38 @@ const OptionItem = styled.div<{ $isSelected: boolean }>`
     props.$isSelected ? fonts.purplePrimarySemi12 : fonts.greySemi12}
 `;
 
-const OptionalFilter1 = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("상관없음");
+const NoticeMultiple = styled.div`
+  padding-bottom: 8px;
+  ${fonts.purplePrimarySemi12}
+`;
 
-  const label = "이전 3개월 평균 매출";
-  const optionList = [
-    "500만원 이하",
-    "500만원 이상",
-    "1000만원 이상",
-    "1500만원 이상",
-    "상관없음"
-  ];
+const OptionalFilter3 = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  const label = "희망 휴무일";
+  const optionList = ["월", "화", "수", "목", "금", "토", "일", "상관없음"];
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
   };
 
   const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
+    if (option === "상관없음") {
+      setSelectedOptions(["상관없음"]);
+    } else {
+      setSelectedOptions((prevOptions) => {
+        if (prevOptions.includes(option)) {
+          // 선택 취소
+          return prevOptions.filter((item) => item !== option);
+        } else {
+          // "상관없음"이 선택되어 있으면 해제하고 새로운 옵션 추가
+          return prevOptions.includes("상관없음")
+            ? [option]
+            : [...prevOptions, option];
+        }
+      });
+    }
   };
 
   return (
@@ -59,11 +72,12 @@ const OptionalFilter1 = () => {
             label={label}
             onClick={toggleExpanded}
           />
+          <NoticeMultiple>복수 선택 가능</NoticeMultiple>
           <OptionContainer>
             {optionList.map((option, index) => (
               <OptionItem
                 key={index}
-                $isSelected={option === selectedOption}
+                $isSelected={selectedOptions.includes(option)}
                 onClick={() => handleOptionClick(option)}
               >
                 {option}
@@ -74,7 +88,7 @@ const OptionalFilter1 = () => {
       ) : (
         <OptionalDropdownItem
           label={label}
-          content={selectedOption}
+          content={selectedOptions.join(", ") || "상관없음"}
           onClick={toggleExpanded}
         />
       )}
@@ -82,4 +96,4 @@ const OptionalFilter1 = () => {
   );
 };
 
-export default OptionalFilter1;
+export default OptionalFilter3;
