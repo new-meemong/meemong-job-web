@@ -3,8 +3,9 @@ import { colors } from "@/styles/colors";
 import styled from "styled-components";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
-import OptionalDropdownFilter from "../../../filters/base/optional-dropdown-filter";
 import SalesLast3MonthsAvg from "../expand-filters/sales-last-3months-avg";
+import CompletedEducationLevel from "../expand-filters/completed-education-level";
+import PreferredOffDays from "../expand-filters/preferred-off-days";
 
 const Container = styled.div`
   padding: ${pxToVw(12)} ${pxToVw(8)};
@@ -75,13 +76,8 @@ const ResumeOptionalFilterExpand = ({
         </FilterExpandButton>
       </ButtonContainer>
       <SalesLast3MonthsAvg />
-      {/* <OptionalFilter2 />
-      <OptionalFilter3 />
-      <OptionalDropdownItem label={"근무 주기"} content={"상관없음"} />
-      <OptionalDropdownItem label={"기숙사"} content={"상관없음"} />
-      <OptionalDropdownItem label={"희망 교육"} content={"상관없음"} />
-      <OptionalDropdownItem label={"식대 지원"} content={"상관없음"} />
-      <OptionalDropdownItem label={"주차 가능 여부"} content={"상관없음"} /> */}
+      <CompletedEducationLevel />
+      <PreferredOffDays />
     </Container>
   );
 };

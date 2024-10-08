@@ -72,19 +72,19 @@ interface Option<T> {
   value: string;
 }
 
-interface OptionalDropdownFilterProps<T> {
+interface OptionalSingleDropdownFilterProps<T> {
   label: string;
   options: Option<T>[];
-  selectedOption: T;
-  onSelect: (option: T) => void;
+  selectedOption: T | null;
+  onSelect: (option: T | null) => void;
 }
 
-const OptionalDropdownFilter = <T,>({
+const OptionalSingleDropdownFilter = <T,>({
   label,
   options,
   selectedOption,
   onSelect
-}: OptionalDropdownFilterProps<T>) => {
+}: OptionalSingleDropdownFilterProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -92,7 +92,11 @@ const OptionalDropdownFilter = <T,>({
   };
 
   const handleOptionClick = (optionKey: T) => {
-    onSelect(optionKey);
+    if (optionKey === selectedOption) {
+      onSelect(null); // 동일한 항목을 클릭하면 선택 해제
+    } else {
+      onSelect(optionKey);
+    }
   };
 
   return (
@@ -130,4 +134,4 @@ const OptionalDropdownFilter = <T,>({
   );
 };
 
-export default OptionalDropdownFilter;
+export default OptionalSingleDropdownFilter;
