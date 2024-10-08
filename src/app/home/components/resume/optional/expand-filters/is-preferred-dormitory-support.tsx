@@ -16,8 +16,8 @@ const IsPreferredDormitorySupport = () => {
     removeResumeFilterQuery: state.removeResumeFilterQuery
   }));
   const options = [
-    { key: "유", value: "유" },
-    { key: "무", value: "무" },
+    { key: "true", value: "유" },
+    { key: "false", value: "무" },
     { key: "상관없음", value: "상관없음" }
   ];
   const selectedOption =

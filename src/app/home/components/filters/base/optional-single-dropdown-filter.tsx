@@ -132,7 +132,11 @@ const OptionalSingleDropdownFilter = <T extends string | boolean>({
           <UnexpandLabelContainer>{label}</UnexpandLabelContainer>
           <UnexpandContentContainer>
             <UnexpandContent>
-              {selectedOption as React.ReactNode}
+              {selectedOption === "true"
+                ? "유"
+                : selectedOption === "false"
+                ? "무"
+                : selectedOption}
             </UnexpandContent>
           </UnexpandContentContainer>
           <ArrowDownGreyIcon />

@@ -17,11 +17,11 @@ const IsPreferredMealSupport = () => {
   }));
   const options = [
     {
-      key: "유",
+      key: "true",
       value: "유"
     },
     {
-      key: "무",
+      key: "false",
       value: "무"
     },
     {
