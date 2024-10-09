@@ -46,6 +46,7 @@ export default function HomePage({ searchParams }: SearchParams) {
   }));
 
   useEffect(() => {
+    console.log("test");
     // localStorage에서 activeTab 값을 불러오기
     const storedTab = localStorage.getItem("activeTab");
     if (storedTab) {
