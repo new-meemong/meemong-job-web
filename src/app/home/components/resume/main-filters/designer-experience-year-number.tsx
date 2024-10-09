@@ -1,5 +1,6 @@
 import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
 
 const Container = styled.div``;
@@ -15,9 +16,7 @@ const DesignerExperienceYearNumber = () => {
     removeResumeFilterQuery: state.removeResumeFilterQuery
   }));
   const options = [
-    { key: "1년 이상", value: "1년 이상" },
-    { key: "3년 이상", value: "3년 이상" },
-    { key: "5년 이상", value: "5년 이상" },
+    ...resumeOptions.designerExperienceYearNumber,
     { key: "상관없음", value: "상관없음" }
   ];
 

@@ -40,9 +40,7 @@ const JobPostingSection = () => {
       <SearchButtonWrapper>
         <JobSearchButton />
       </SearchButtonWrapper>
-      <SearchButtonWrapper>
-        <NearJobSearchButton />
-      </SearchButtonWrapper>
+      <SearchButtonWrapper>{/* <NearJobSearchButton /> */}</SearchButtonWrapper>
       {/* <PremiumJobPosting /> */}
       <Banner />
       <JobPostingList />
