@@ -6,6 +6,7 @@ import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { useRouter } from "next/navigation";
 import { ResumeType } from "@/types/resume-type";
+import moment from "moment";
 
 const Container = styled.div`
   width: 100%;
@@ -108,7 +109,9 @@ const ResumeItem = ({ resume, viewCount }: ResumeItemProps) => {
             <Divider />
             {/* <ProfileInfo>{`${resume.sex}`}</ProfileInfo> */}
             {/* <Divider /> */}
-            <ProfileInfo>{`${resume.birthday}세`}</ProfileInfo>
+            <ProfileInfo>{`${moment()
+              .diff(moment(resume.birthday, "YYYY-MM-DD"), "years")
+              .toString()}세`}</ProfileInfo>
             <Divider />
             <ProfileInfo>
               {resume.designerLicenses ? "자격증 보유" : "자격증 미보유"}
