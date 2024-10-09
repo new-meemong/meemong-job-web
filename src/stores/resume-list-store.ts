@@ -16,7 +16,7 @@ export type ResumeListState = {
 };
 
 export type ResumeListActions = {
-  getResumeList: () => Promise<void>;
+  getResumeList: (queryParams?: Record<string, any>) => Promise<void>;
   updateResume: (updatedResume: ResumeType) => void;
   deleteResume: (id: string) => Promise<ResponseResultType>;
   getResumeFilterQuery: (key: string) => string | null;
@@ -31,7 +31,7 @@ export type ResumeListStore = ResumeListState & ResumeListActions;
 export const defaultResumeListState: ResumeListState = {
   resumeList: [],
   resumeListLoading: false,
-  resumeFilterQueries: "?",
+  resumeFilterQueries: "",
   _preferredStoreRegions: [],
   preferredStoreRegions: null,
   preferredStoreRegionSiNames: null
@@ -41,9 +41,13 @@ export const useResumeListStore = create(
   persist<ResumeListStore>(
     (set, get) => ({
       ...defaultResumeListState,
-      getResumeList: async () => {
+      getResumeList: async (queryParams) => {
         set({ resumeListLoading: true });
-        const res = await getResumes();
+        const _queryParams = {
+          __cursorOrder: "createdAtDesc",
+          ...queryParams
+        };
+        const res = await getResumes(_queryParams);
         const { dataList } = res;
 
         set({ resumeList: dataList as ResumeType[] });
@@ -89,7 +93,7 @@ export const useResumeListStore = create(
 
           currentQueries.set(key, value);
 
-          return { resumeFilterQueries: `?${currentQueries.toString()}` };
+          return { resumeFilterQueries: `${currentQueries.toString()}` };
         });
       },
       removeResumeFilterQuery: (key) => {
@@ -98,48 +102,56 @@ export const useResumeListStore = create(
 
           currentQueries.delete(key);
 
-          return { resumeFilterQueries: `?${currentQueries.toString()}` };
+          return { resumeFilterQueries: `${currentQueries.toString()}` };
         });
       },
       setPreferredStoreRegions: (regions) => {
-        const preferredStoreRegionSiNames = Array.from(
-          new Set(regions.map((item) => item.key.split(" ")[0]))
-        ).join(",");
+        // 모든 '시'만 추출 (state에 들어갈 시 목록)
+        const allSiNames = regions.map((item) => item.key.split(" ")[0]);
+        const uniqueSiNames = Array.from(new Set(allSiNames));
+
+        // '전체'가 포함된 아이템을 제외하고 구/군 정보만 추출
         const preferredStoreRegions = regions
           .filter((item) => !item.value.includes("전체"))
           .map((item) => item.key)
           .join(",");
 
-        set((state) => {
-          // 현재의 resumeFilterQueries를 가져와 URLSearchParams로 처리
-          const currentQueries = new URLSearchParams(state.resumeFilterQueries);
+        // currentQueries에 포함될 preferredStoreRegionSiNames (preferredStoreRegions에 없는 '시'만 필터링)
+        const preferredStoreRegionsSiNamesSet = new Set(
+          preferredStoreRegions.split(",").map((region) => region.split(" ")[0])
+        );
+        const filteredSiNamesForQuery = uniqueSiNames
+          .filter((siName) => !preferredStoreRegionsSiNamesSet.has(siName))
+          .join(",");
 
-          // 쿼리에 preferredStoreRegions와 preferredStoreRegionSiNames를 추가
-          if (preferredStoreRegionSiNames) {
-            currentQueries.set(
-              "preferredStoreRegionSiNames",
-              preferredStoreRegionSiNames
+        set((state) => {
+          // 쿼리에 preferredStoreRegions와 filteredSiNamesForQuery 추가 또는 삭제
+          if (filteredSiNamesForQuery) {
+            get().addResumeFilterQuery(
+              `preferredStoreRegionSiNames=${filteredSiNamesForQuery}`
             );
           } else {
-            currentQueries.delete("preferredStoreRegionSiNames");
+            get().removeResumeFilterQuery("preferredStoreRegionSiNames");
           }
+
           if (preferredStoreRegions) {
-            currentQueries.set("preferredStoreRegions", preferredStoreRegions);
+            get().addResumeFilterQuery(
+              `preferredStoreRegions=${preferredStoreRegions}`
+            );
           } else {
-            currentQueries.delete("preferredStoreRegions");
+            get().removeResumeFilterQuery("preferredStoreRegions");
           }
 
           return {
             _preferredStoreRegions: regions,
-            preferredStoreRegionSiNames,
-            preferredStoreRegions: preferredStoreRegions,
-            resumeFilterQueries: `?${currentQueries.toString()}` // 변경된 쿼리 문자열 업데이트
+            preferredStoreRegionSiNames: uniqueSiNames.join(","), // state에 모든 '시' 저장
+            preferredStoreRegions: preferredStoreRegions // state에 모든 '구/군' 저장
           };
         });
       },
       resetResumeFilterQueries: () => {
         const appliedRole = get().getResumeFilterQuery("appliedRole");
-        set({ resumeFilterQueries: `?appliedRole=${appliedRole}` });
+        set({ resumeFilterQueries: `appliedRole=${appliedRole}` });
       }
     }),
     {

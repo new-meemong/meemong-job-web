@@ -1,4 +1,5 @@
 import { deleteJobPosting, getJobPostings } from "@/apis/job-postings";
+import { parseQueryString } from "@/lib/parse-query-string";
 import { JobPostingType } from "@/types/job-posting-type";
 import { ResponseResultType } from "@/types/response-result-type";
 import { create } from "zustand";
@@ -12,11 +13,11 @@ export type JobPostingListState = {
   // 선호 지역
   _postingRegions: { key: string; value: string }[];
   postingRegions: string | null;
-  postingRegionsSiNames: string | null;
+  postingRegionSiNames: string | null;
 };
 
 export type JobPostingListActions = {
-  getJobPostingList: () => Promise<void>;
+  getJobPostingList: (queryParams?: Record<string, any>) => Promise<void>;
   deleteJobPosting: (id: string) => Promise<ResponseResultType>;
   updateJobPosting: (updatedJobPosting: JobPostingType) => void;
   getJobPostingFilterQuery: (key: string) => string | null;
@@ -31,19 +32,23 @@ export type JobPostingListStore = JobPostingListState & JobPostingListActions;
 export const defaultJobPostingListState: JobPostingListState = {
   jobPostingList: [],
   jobPostingListLoading: false,
-  jobPostingFilterQueries: "?",
+  jobPostingFilterQueries: "",
   _postingRegions: [],
   postingRegions: null,
-  postingRegionsSiNames: null
+  postingRegionSiNames: null
 };
 
 export const useJobPostingListStore = create(
   persist<JobPostingListStore>(
     (set, get) => ({
       ...defaultJobPostingListState,
-      getJobPostingList: async () => {
+      getJobPostingList: async (queryParams) => {
         set({ jobPostingListLoading: true });
-        const res = await getJobPostings();
+        const _queryParams = {
+          __cursorOrder: "createdAtDesc",
+          ...queryParams
+        };
+        const res = await getJobPostings(_queryParams);
         const { dataList } = res;
 
         set({ jobPostingList: dataList as JobPostingType[] });
@@ -95,7 +100,7 @@ export const useJobPostingListStore = create(
 
           currentQueries.set(key, value);
 
-          return { jobPostingFilterQueries: `?${currentQueries.toString()}` };
+          return { jobPostingFilterQueries: `${currentQueries.toString()}` };
         });
       },
       removeJobPostingFilterQuery: (key) => {
@@ -106,47 +111,57 @@ export const useJobPostingListStore = create(
 
           currentQueries.delete(key);
 
-          return { jobPostingFilterQueries: `?${currentQueries.toString()}` };
+          return { jobPostingFilterQueries: `${currentQueries.toString()}` };
         });
       },
       setPostingRegions: (regions) => {
-        const postingRegionSiNames = Array.from(
-          new Set(regions.map((item) => item.key.split(" ")[0]))
-        ).join(",");
+        // 모든 '시'만 추출 (state에 들어갈 시 목록)
+        const allSiNames = regions.map((item) => item.key.split(" ")[0]);
+        const uniqueSiNames = Array.from(new Set(allSiNames));
+
         const postingRegions = regions
           .filter((item) => !item.value.includes("전체"))
           .map((item) => item.key)
           .join(",");
 
-        set((state) => {
-          // 현재의 resumeFilterQueries를 가져와 URLSearchParams로 처리
-          const currentQueries = new URLSearchParams(
-            state.jobPostingFilterQueries
-          );
+        // currentQueries에 포함될 postingRegionSiNames (postingRegions에 없는 '시'만 필터링)
+        const postingRegionsSiNamesSet = new Set(
+          postingRegions.split(",").map((region) => region.split(" ")[0])
+        );
+        const filteredSiNamesForQuery = uniqueSiNames
+          .filter((siName) => !postingRegionsSiNamesSet.has(siName))
+          .join(",");
 
-          // 쿼리에 preferredStoreRegions와 preferredStoreRegionSiNames를 추가
-          if (postingRegionSiNames) {
-            currentQueries.set("postingRegionSiNames", postingRegionSiNames);
+        set((state) => {
+          // currentQueries에 postingRegions와 filteredSiNamesForQuery 추가 또는 삭제
+          if (filteredSiNamesForQuery) {
+            get().addJobPostingFilterQuery(
+              `postingRegionSiNames=${filteredSiNamesForQuery}`
+            );
           } else {
-            currentQueries.delete("postingRegionSiNames");
+            get().removeJobPostingFilterQuery("postingRegionSiNames");
           }
           if (postingRegions) {
-            currentQueries.set("postingRegions", postingRegions);
+            get().addJobPostingFilterQuery(`postingRegions=${postingRegions}`);
           } else {
-            currentQueries.delete("postingRegions");
+            get().removeJobPostingFilterQuery("postingRegions");
           }
 
           return {
             _postingRegions: regions,
-            postingRegionSiNames,
-            postingRegions: postingRegions,
-            jobPostingFilterQueries: `?${currentQueries.toString()}` // 변경된 쿼리 문자열 업데이트
+            postingRegionSiNames: uniqueSiNames.join(","), // state에 모든 '시' 저장
+            postingRegions: postingRegions // state에 모든 '구/군' 저장
           };
         });
       },
       resetJobPostingFilterQueries: () => {
         const role = get().getJobPostingFilterQuery("role");
-        set({ jobPostingFilterQueries: `?role=${role}` });
+        set({
+          postingRegions: null,
+          postingRegionSiNames: null,
+          _postingRegions: [],
+          jobPostingFilterQueries: `role=${role}`
+        });
       }
     }),
     {

@@ -63,7 +63,7 @@ export const convertToShortRegion = (
   return result.slice(0, -2);
 };
 
-// 서버의 gu, si 데이터 기준 화면에 뿌려지는 짧은 데
+// 서버의 gu, si 데이터 기준 화면에 뿌려지는 짧은 지역명으로 변환
 export const convertToShortRegionFromQuery = (
   gu: string | null,
   si: string | null

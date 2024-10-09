@@ -62,13 +62,10 @@ export default function HomePage({ searchParams }: SearchParams) {
 
   useEffect(() => {
     if (jwt) {
-      if (homeTopTab === "jobPosting") {
-        getJobPostingList();
-      } else if (homeTopTab === "resume") {
-        getResumeList();
-      }
+      getJobPostingList();
+      getResumeList();
     }
-  }, [homeTopTab, getJobPostingList, getResumeList, jwt]);
+  }, [getJobPostingList, getResumeList, jwt]);
 
   if (loading) {
     return <div>로딩 중...</div>; // 로딩 중일 때 보여줄 화면
