@@ -6,6 +6,7 @@ import NearJobSearchButton from "./job-posting/near-job-search-button";
 // import PremiumJobPosting from "./sections/find-job-posting/premium-job-posting";
 import JobPostingList from "./job-posting/job-posting-list";
 import JobPostingFilter from "./job-posting/job-posting-filter";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div`
   width: 100%;
@@ -19,6 +20,20 @@ const SearchButtonWrapper = styled.div`
 `;
 
 const JobPostingSection = () => {
+  const { jobPostingFilterQueries } = useJobPostingListStore((state) => ({
+    jobPostingFilterQueries: state.jobPostingFilterQueries
+  }));
+  // 쿼리 문자열을 구조화된 객체로 변환
+  const queryParams = new URLSearchParams(
+    decodeURIComponent(jobPostingFilterQueries.replace(/\+/g, " "))
+  );
+  const structuredQueries: Record<string, string> = {};
+
+  // 각 키-값 쌍을 객체로 변환하여 저장
+  queryParams.forEach((value, key) => {
+    structuredQueries[key] = value;
+  });
+
   return (
     <Container>
       <JobPostingFilter />

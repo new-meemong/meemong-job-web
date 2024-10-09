@@ -24,7 +24,7 @@ const SelectWorkCycle = () => {
     role: state.role
   }));
 
-  const options = jobPostingOptions.workCycle;
+  const options = jobPostingOptions.workCycleTypes;
   let hasError = false;
 
   if (role === "디자이너") {

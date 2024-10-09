@@ -1,6 +1,7 @@
 import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
 import CloseCircleGreyIcon from "@/components/icons/close-circle-grey-icon";
 import pxToVw from "@/lib/dpi-converter";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
@@ -67,12 +68,12 @@ const CancelText = styled.span`
   ${fonts.purplePrimarySemi14}
 `;
 
-const ResumeLocation = () => {
-  const { _preferredStoreRegions } = useResumeListStore((state) => ({
-    _preferredStoreRegions: state._preferredStoreRegions
+const JobPostingLocation = () => {
+  const { _postingRegions } = useJobPostingListStore((state) => ({
+    _postingRegions: state._postingRegions
   }));
 
-  const convertRegions = _preferredStoreRegions?.map((item) => {
+  const convertRegions = _postingRegions?.map((item) => {
     if (item && item.key) {
       const siKey = item.key.split(" ")[0]; // 시/도를 추출
       const siName = siNmShort.find((si) => si.key === siKey)?.value;
@@ -99,7 +100,7 @@ const ResumeLocation = () => {
                 </React.Fragment>
               ))}
         </Location>
-        <LocationButton href={"/select-location?target=resumeList"}>
+        <LocationButton href={"/select-location?target=jobPostingList"}>
           지역선택하기
           <ArrowRightPurpleIcon />
         </LocationButton>
@@ -116,4 +117,4 @@ const ResumeLocation = () => {
   );
 };
 
-export default ResumeLocation;
+export default JobPostingLocation;

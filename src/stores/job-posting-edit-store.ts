@@ -161,7 +161,7 @@ type JobPostingEditActions = {
     storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey | null
   ) => void;
   setWorkType: (workType: WorkTypeKey) => void;
-  setWorkCycles: (workCycle: WorkCycleTypesKey) => void;
+  setWorkCycles: (cycle: WorkCycleTypesKey) => void;
   setIsExistedEducationSupport: (
     isExistedEducationSupport: IsExistedEducationSupportKey | null
   ) => void;

@@ -23,6 +23,7 @@ export type ResumeListActions = {
   addResumeFilterQuery: (query: string) => void;
   removeResumeFilterQuery: (key: string) => void;
   setPreferredStoreRegions: (regions: { key: string; value: string }[]) => void;
+  resetResumeFilterQueries: () => void;
 };
 
 export type ResumeListStore = ResumeListState & ResumeListActions;
@@ -135,6 +136,10 @@ export const useResumeListStore = create(
             resumeFilterQueries: `?${currentQueries.toString()}` // 변경된 쿼리 문자열 업데이트
           };
         });
+      },
+      resetResumeFilterQueries: () => {
+        const appliedRole = get().getResumeFilterQuery("appliedRole");
+        set({ resumeFilterQueries: `?appliedRole=${appliedRole}` });
       }
     }),
     {

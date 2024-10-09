@@ -106,7 +106,7 @@ type ResumeEditActions = {
     level: CompletedEducationLevelKeyResume | null
   ) => void;
   setPreferredOffDays: (days: PreferredOffDaysKeyResume) => void;
-  setWorkCycleTypes: (workCycle: WorkCycleTypesKeyResume) => void;
+  setWorkCycleTypes: (cycle: WorkCycleTypesKeyResume) => void;
   setDesignerPromotionPeriod: (
     period: DesignerPromotionPeriodKeyResume | null
   ) => void;
@@ -319,9 +319,9 @@ export const useResumeEditStore = create(
         const { preferredOffDays } = get();
         set({ preferredOffDays: toggleSelect(preferredOffDays, day) });
       },
-      setWorkCycleTypes: (workCycle: WorkCycleTypesKeyResume) => {
+      setWorkCycleTypes: (cycle: WorkCycleTypesKeyResume) => {
         const { workCycleTypes } = get();
-        set({ workCycleTypes: toggleSelect(workCycleTypes, workCycle) });
+        set({ workCycleTypes: toggleSelect(workCycleTypes, cycle) });
       },
       setDesignerPromotionPeriod: (period) =>
         set({ designerPromotionPeriod: period }),

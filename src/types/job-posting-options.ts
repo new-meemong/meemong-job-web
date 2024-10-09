@@ -103,7 +103,7 @@ export const jobPostingOptions: {
   isExistedInternSystem: IsExistedInternSystemOption[];
   storeInteriorRenovationAgo: StoreInteriorRenovationAgoOption[];
   workType: WorkTypeOption[];
-  workCycle: WorkCycleOption[];
+  workCycleTypes: WorkCycleOption[];
   isExistedEducationSupport: IsExistedEducationSupportOption[];
   isExistedMealSupport: IsExistedMealSupportOption[];
   mealTime: MealTimeOption[];
@@ -177,9 +177,9 @@ export const jobPostingOptions: {
   ],
   // 성별
   sex: [
-    { key: "남", value: "남" },
-    { key: "여", value: "여" },
-    { key: "무관", value: "성별 무관" }
+    { key: "남자", value: "남자" },
+    { key: "여자", value: "여자" },
+    { key: "무관", value: "무관" }
   ],
   // 연령 제한
   isRestrictedAge: [
@@ -229,7 +229,7 @@ export const jobPostingOptions: {
     { key: "스페어(알바)", value: "스페어(알바)" }
   ],
   // 근무 주기
-  workCycle: [
+  workCycleTypes: [
     { key: "주 4일", value: "주 4일" },
     { key: "주 5일", value: "주 5일" },
     { key: "주 6일", value: "주 6일" },
@@ -275,7 +275,7 @@ export const jobPostingOptions: {
     { key: "3년 이하", value: "3년 이하" },
     { key: "5년 이하", value: "5년 이하" },
     { key: "5년 이상", value: "5년 이상" },
-    { key: "상관 없음", value: "상관 없음" }
+    { key: "상관없음", value: "상관없음" }
   ],
   // 이전 3개월 평균 매출-디자이너
   salesLast3MonthsAvg: [
@@ -294,14 +294,14 @@ export const jobPostingOptions: {
   ],
   // 관리자 나이
   adminAge: [
-    { key: "20대 이상", value: "20대 이상" },
-    { key: "30대 이상", value: "30대 이상" },
+    { key: "20대", value: "20대" },
+    { key: "30대", value: "30대" },
     { key: "40대 이상", value: "40대 이상" }
   ],
   // 관리자 나이
   adminSex: [
-    { key: "남", value: "남" },
-    { key: "여", value: "여" }
+    { key: "남자", value: "남자" },
+    { key: "여자", value: "여자" }
   ],
   // 휴가 일수
   leaveDayCount: [
@@ -357,7 +357,7 @@ export const jobPostingOptions: {
     { key: "3년 이하", value: "3년 이하" },
     { key: "5년 이하", value: "5년 이하" },
     { key: "5년 이상", value: "5년 이상" },
-    { key: "상관 없음", value: "상관 없음" }
+    { key: "상관없음", value: "상관없음" }
   ],
   // 샵 매니저 상주
   isOnsiteManager: [

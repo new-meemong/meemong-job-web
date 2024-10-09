@@ -25,28 +25,18 @@ const DesignerLicenses = () => {
 
   const handleSelect = (selectedOption: string) => {
     if (selectedOption === "상관없음") {
-      // "상관없음"을 선택하면 필터를 제거하고 선택을 초기화
       removeResumeFilterQuery("designerLicenses");
+      return;
+    }
+
+    const updatedOptions = selectedOptions.includes(selectedOption)
+      ? selectedOptions.filter((option) => option !== selectedOption)
+      : [...selectedOptions, selectedOption];
+
+    if (updatedOptions.length > 0) {
+      addResumeFilterQuery(`designerLicenses=${updatedOptions.join(",")}`);
     } else {
-      let updatedOptions;
-
-      if (selectedOptions.includes(selectedOption)) {
-        // 이미 선택된 옵션이면 선택 해제
-        updatedOptions = selectedOptions.filter(
-          (option) => option !== selectedOption
-        );
-      } else {
-        // 새로운 옵션이면 추가
-        updatedOptions = [...selectedOptions, selectedOption];
-      }
-
-      if (updatedOptions.length > 0) {
-        // 선택된 옵션이 있으면 쿼리로 추가
-        addResumeFilterQuery(`designerLicenses=${updatedOptions.join(",")}`);
-      } else {
-        // 선택된 옵션이 없으면 필터 제거
-        removeResumeFilterQuery("designerLicenses");
-      }
+      removeResumeFilterQuery("designerLicenses");
     }
   };
 

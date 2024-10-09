@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { TargetType } from "../types/target-type";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -48,8 +49,10 @@ const BottomArea = ({ selectedRightItems, target }: BottomAreaProps) => {
     setPreferredStoreRegionsEdit: state.setPreferredStoreRegions
   }));
   const { setPreferredStoreRegionsList } = useResumeListStore((state) => ({
-    addResumeFilterQuery: state.addResumeFilterQuery,
     setPreferredStoreRegionsList: state.setPreferredStoreRegions
+  }));
+  const { setPostingRegionsList } = useJobPostingListStore((state) => ({
+    setPostingRegionsList: state.setPostingRegions
   }));
 
   const handleConfirm = () => {
@@ -58,10 +61,11 @@ const BottomArea = ({ selectedRightItems, target }: BottomAreaProps) => {
     } else if (target === "resumeEdit") {
       setPreferredStoreRegionsEdit(selectedRightItems);
     } else if (target === "jobPostingList") {
-      // addResumeFilterQuery();
+      setPostingRegionsList(selectedRightItems);
     } else if (target === "resumeList") {
       setPreferredStoreRegionsList(selectedRightItems);
     }
+
     router.back();
   };
 

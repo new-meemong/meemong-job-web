@@ -55,7 +55,7 @@ export type EducationCostKey =
 export type InternSalaryKey = "210만원 이하" | "210만원 이상" | "250만원 이상";
 
 // 성별
-export type SexKey = "남" | "여" | "무관";
+export type SexKey = "남자" | "여자" | "무관";
 
 // 연령 제한
 export type IsRestrictedAgeKey = boolean;
@@ -124,7 +124,7 @@ export type DesignerExperienceYearNumberKey =
   | "3년 이하"
   | "5년 이하"
   | "5년 이상"
-  | "상관 없음";
+  | "상관없음";
 
 // 이전 3개월 평균 매출-디자이너
 export type SalesLast3MonthsAvgKey =
@@ -142,10 +142,10 @@ export type SubwayAccessibilityKey =
   | "해당없음";
 
 // 관리자 나이
-export type AdminAgeKey = "20대 이상" | "30대 이상" | "40대 이상";
+export type AdminAgeKey = "20대" | "30대" | "40대 이상";
 
 // 관리자 성별
-export type AdminSexKey = "남" | "여";
+export type AdminSexKey = "남자" | "여자";
 
 // 휴가 일수
 export type LeaveDayCountKey = "4일 이하" | "5일 이상" | "10일 이상";
@@ -192,7 +192,7 @@ export type InternExperienceYearNumberKey =
   | "3년 이하"
   | "5년 이하"
   | "5년 이상"
-  | "상관 없음";
+  | "상관없음";
 
 // 샵 매니저 상주 - 인턴
 export type IsOnsiteManagerKey = boolean;
