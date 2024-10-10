@@ -2,7 +2,7 @@ import { deleteResume, getResumes } from "@/apis/resumes";
 import { ResponseResultType } from "@/types/response-result-type";
 import { ResumeType } from "@/types/resume-type";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export type ResumeListState = {
   resumeList: ResumeType[];
@@ -157,7 +157,7 @@ export const useResumeListStore = create(
     }),
     {
       name: "resume-list-store",
-      getStorage: () => sessionStorage
+      storage: createJSONStorage(() => localStorage)
     }
   )
 );

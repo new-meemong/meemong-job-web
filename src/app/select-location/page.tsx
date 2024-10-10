@@ -5,7 +5,7 @@ import styled from "styled-components";
 import BottomArea from "./components/bottom-area";
 import { colors } from "@/styles/colors";
 import LocationHeader from "@/components/headers/location-header";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";
 import CheckboxUnselectIcon from "@/components/icons/checkbox-unselect-icon";
 import { fonts } from "@/styles/fonts";
@@ -161,54 +161,56 @@ export default function SelectLocationPage() {
   };
 
   return (
-    <PageContainer>
-      <LocationHeader />
-      <ContentContainer>
-        <LeftScrollContainer>
-          {siNmShort.map((item) => {
-            const isSelected = item.key === selectedLeftItem.key;
+    <Suspense fallback={<div>Loading...</div>}>
+      <PageContainer>
+        <LocationHeader />
+        <ContentContainer>
+          <LeftScrollContainer>
+            {siNmShort.map((item) => {
+              const isSelected = item.key === selectedLeftItem.key;
 
-            return (
-              <LeftListItem
-                key={item.key}
-                $selected={isSelected}
-                onClick={() => handleLeftItemClick(item)}
-              >
-                {item.value}
-              </LeftListItem>
-            );
-          })}
-        </LeftScrollContainer>
-        <RightScrollContainer>
-          {Array.isArray(subList) &&
-            subList.map((item: { key: string; value: string }, index) => {
-              const isSelected = selectedRightItems.some(
-                (selectedItem) =>
-                  selectedItem.key === item.key &&
-                  selectedItem.value === item.value
-              );
               return (
-                <RightListItem
-                  key={index}
+                <LeftListItem
+                  key={item.key}
                   $selected={isSelected}
-                  onClick={() => handleRightItemClick(item)}
+                  onClick={() => handleLeftItemClick(item)}
                 >
                   {item.value}
-                  {isSelected ? (
-                    <CheckboxSelectIcon />
-                  ) : (
-                    <CheckboxUnselectIcon />
-                  )}
-                </RightListItem>
+                </LeftListItem>
               );
             })}
-        </RightScrollContainer>
-      </ContentContainer>
-      <BottomArea
-        selectedLeftItem={selectedLeftItem}
-        selectedRightItems={selectedRightItems}
-        target={target as TargetType}
-      />
-    </PageContainer>
+          </LeftScrollContainer>
+          <RightScrollContainer>
+            {Array.isArray(subList) &&
+              subList.map((item: { key: string; value: string }, index) => {
+                const isSelected = selectedRightItems.some(
+                  (selectedItem) =>
+                    selectedItem.key === item.key &&
+                    selectedItem.value === item.value
+                );
+                return (
+                  <RightListItem
+                    key={index}
+                    $selected={isSelected}
+                    onClick={() => handleRightItemClick(item)}
+                  >
+                    {item.value}
+                    {isSelected ? (
+                      <CheckboxSelectIcon />
+                    ) : (
+                      <CheckboxUnselectIcon />
+                    )}
+                  </RightListItem>
+                );
+              })}
+          </RightScrollContainer>
+        </ContentContainer>
+        <BottomArea
+          selectedLeftItem={selectedLeftItem}
+          selectedRightItems={selectedRightItems}
+          target={target as TargetType}
+        />
+      </PageContainer>
+    </Suspense>
   );
 }

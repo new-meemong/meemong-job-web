@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export type HomeTopTabType = "resume" | "jobPosting";
 
@@ -27,7 +27,7 @@ export const useAppStateStore = create(
     }),
     {
       name: "app-state-store",
-      getStorage: () => localStorage
+      storage: createJSONStorage(() => localStorage)
     }
   )
 );
