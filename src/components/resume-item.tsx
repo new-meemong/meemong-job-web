@@ -7,6 +7,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { useRouter } from "next/navigation";
 import { ResumeType } from "@/types/resume-type";
 import moment from "moment";
+import { IMAGE_STORAGE_URL } from "@/apis/consts";
 
 const Container = styled.div`
   width: 100%;
@@ -76,18 +77,21 @@ const Divider = styled.div`
   background-color: ${colors.greyBacground4};
 `;
 
-const ViewCount = styled.span`
-  ${fonts.greyNormal10}
-  margin-top: ${pxToVw(6)};
-`;
+// const ViewCount = styled.span`
+//   ${fonts.greyNormal10}
+//   margin-top: ${pxToVw(6)};
+// `;
 
 interface ResumeItemProps {
   resume: ResumeType;
-  viewCount: number;
+  // viewCount: number;
 }
 
-const ResumeItem = ({ resume, viewCount }: ResumeItemProps) => {
-  const [imgSrc, setImgSrc] = useState("/images/default_profile_image.jpg");
+const ResumeItem = ({ resume }: ResumeItemProps) => {
+  const imageUri = resume.profileImageThumbnailUri
+    ? `${IMAGE_STORAGE_URL}${resume.profileImageThumbnailUri}`
+    : "/images/default_profile_image.jpg";
+  const [imgSrc, setImgSrc] = useState(imageUri);
   const router = useRouter();
 
   const handleImageError = () => {
@@ -123,7 +127,7 @@ const ResumeItem = ({ resume, viewCount }: ResumeItemProps) => {
                 : resume.internExperienceYearNumber}
             </ProfileInfo>
           </InfoTextContainer>
-          <ViewCount>{`조회 ${viewCount}`}</ViewCount>
+          {/* <ViewCount>{`조회 ${viewCount}`}</ViewCount> */}
         </ProfileInfoContainer>
         <ProfileImage
           src={imgSrc}
