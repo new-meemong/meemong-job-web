@@ -67,7 +67,7 @@ interface SiNmShort {
   value: string;
 }
 
-export default function SelectLocationPage() {
+function SelectLocationContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const target = searchParams.get("target");
@@ -161,56 +161,62 @@ export default function SelectLocationPage() {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PageContainer>
-        <LocationHeader />
-        <ContentContainer>
-          <LeftScrollContainer>
-            {siNmShort.map((item) => {
-              const isSelected = item.key === selectedLeftItem.key;
+    <PageContainer>
+      <LocationHeader />
+      <ContentContainer>
+        <LeftScrollContainer>
+          {siNmShort.map((item) => {
+            const isSelected = item.key === selectedLeftItem.key;
 
+            return (
+              <LeftListItem
+                key={item.key}
+                $selected={isSelected}
+                onClick={() => handleLeftItemClick(item)}
+              >
+                {item.value}
+              </LeftListItem>
+            );
+          })}
+        </LeftScrollContainer>
+        <RightScrollContainer>
+          {Array.isArray(subList) &&
+            subList.map((item: { key: string; value: string }, index) => {
+              const isSelected = selectedRightItems.some(
+                (selectedItem) =>
+                  selectedItem.key === item.key &&
+                  selectedItem.value === item.value
+              );
               return (
-                <LeftListItem
-                  key={item.key}
+                <RightListItem
+                  key={index}
                   $selected={isSelected}
-                  onClick={() => handleLeftItemClick(item)}
+                  onClick={() => handleRightItemClick(item)}
                 >
                   {item.value}
-                </LeftListItem>
+                  {isSelected ? (
+                    <CheckboxSelectIcon />
+                  ) : (
+                    <CheckboxUnselectIcon />
+                  )}
+                </RightListItem>
               );
             })}
-          </LeftScrollContainer>
-          <RightScrollContainer>
-            {Array.isArray(subList) &&
-              subList.map((item: { key: string; value: string }, index) => {
-                const isSelected = selectedRightItems.some(
-                  (selectedItem) =>
-                    selectedItem.key === item.key &&
-                    selectedItem.value === item.value
-                );
-                return (
-                  <RightListItem
-                    key={index}
-                    $selected={isSelected}
-                    onClick={() => handleRightItemClick(item)}
-                  >
-                    {item.value}
-                    {isSelected ? (
-                      <CheckboxSelectIcon />
-                    ) : (
-                      <CheckboxUnselectIcon />
-                    )}
-                  </RightListItem>
-                );
-              })}
-          </RightScrollContainer>
-        </ContentContainer>
-        <BottomArea
-          selectedLeftItem={selectedLeftItem}
-          selectedRightItems={selectedRightItems}
-          target={target as TargetType}
-        />
-      </PageContainer>
+        </RightScrollContainer>
+      </ContentContainer>
+      <BottomArea
+        selectedLeftItem={selectedLeftItem}
+        selectedRightItems={selectedRightItems}
+        target={target as TargetType}
+      />
+    </PageContainer>
+  );
+}
+
+export default function SelectLocationPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SelectLocationContent />
     </Suspense>
   );
 }
