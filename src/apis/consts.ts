@@ -1,4 +1,4 @@
-export const TEST_API = "http://13.125.169.213:80";
+export const TEST_API = "https://job-api-test.meemong.com";
 export const IMAGE_STORAGE_URL =
   "https://meemong-job-storage.s3.ap-northeast-2.amazonaws.com";
 
