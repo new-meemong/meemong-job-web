@@ -8,24 +8,16 @@ import { SalesLast3MonthsAvgKeyResume } from "@/types/resume-keys";
 const Container = styled.div``;
 
 const SalesLast3Month = () => {
-  const {
-    salesLast3MonthsAvg,
-    setSalesLast3MonthsAvg,
-    hasDesignerOptionNull,
-    appliedRole
-  } = useResumeEditStore((state) => ({
-    salesLast3MonthsAvg: state.salesLast3MonthsAvg,
-    setSalesLast3MonthsAvg: state.setSalesLast3MonthsAvg,
-    hasDesignerOptionNull: state.hasDesignerOptionNull,
-    appliedRole: state.appliedRole
-  }));
+  const { salesLast3MonthsAvg, setSalesLast3MonthsAvg } = useResumeEditStore(
+    (state) => ({
+      salesLast3MonthsAvg: state.salesLast3MonthsAvg,
+      setSalesLast3MonthsAvg: state.setSalesLast3MonthsAvg,
+      hasDesignerOptionNull: state.hasDesignerOptionNull,
+      appliedRole: state.appliedRole
+    })
+  );
 
   const options = resumeOptions.salesLast3MonthsAvg;
-  let hasError = false;
-
-  if (appliedRole === "디자이너") {
-    hasError = !salesLast3MonthsAvg && hasDesignerOptionNull;
-  }
 
   const handleSelect = (selectedOption: string | null) => {
     setSalesLast3MonthsAvg(selectedOption as SalesLast3MonthsAvgKeyResume);

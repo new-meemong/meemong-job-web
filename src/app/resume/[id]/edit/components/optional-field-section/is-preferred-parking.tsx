@@ -7,27 +7,16 @@ import SingleOptionList from "./base/single-option-list";
 const Container = styled.div``;
 
 const IsPreferredParking = () => {
-  const {
-    isPreferredParking,
-    setIsPreferredParking,
-    hasDesignerOptionNull,
-    hasInternOptionNull,
-    appliedRole
-  } = useResumeEditStore((state) => ({
-    isPreferredParking: state.isPreferredParking,
-    setIsPreferredParking: state.setIsPreferredParking,
-    hasDesignerOptionNull: state.hasDesignerOptionNull,
-    hasInternOptionNull: state.hasInternOptionNull,
-    appliedRole: state.appliedRole
-  }));
+  const { isPreferredParking, setIsPreferredParking } = useResumeEditStore(
+    (state) => ({
+      isPreferredParking: state.isPreferredParking,
+      setIsPreferredParking: state.setIsPreferredParking,
+      hasDesignerOptionNull: state.hasDesignerOptionNull,
+      hasInternOptionNull: state.hasInternOptionNull,
+      appliedRole: state.appliedRole
+    })
+  );
   const options = resumeOptions.isPreferredParking;
-  let hasError = false;
-
-  if (appliedRole === "디자이너") {
-    hasError = !isPreferredParking && hasDesignerOptionNull;
-  } else if (appliedRole === "인턴") {
-    hasError = !isPreferredParking && hasInternOptionNull;
-  }
 
   return (
     <Container>

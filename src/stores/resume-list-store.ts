@@ -16,6 +16,7 @@ export type ResumeListState = {
 };
 
 export type ResumeListActions = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getResumeList: (queryParams?: Record<string, any>) => Promise<void>;
   updateResume: (updatedResume: ResumeType) => void;
   deleteResume: (id: string) => Promise<ResponseResultType>;
@@ -124,7 +125,7 @@ export const useResumeListStore = create(
           .filter((siName) => !preferredStoreRegionsSiNamesSet.has(siName))
           .join(",");
 
-        set((state) => {
+        set(() => {
           // 쿼리에 preferredStoreRegions와 filteredSiNamesForQuery 추가 또는 삭제
           if (filteredSiNamesForQuery) {
             get().addResumeFilterQuery(

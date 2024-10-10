@@ -1,4 +1,3 @@
-import ArrowRightGreyIcon from "@/components/icons/arrow-right-grey-icon";
 import ArrowRightGreyOutlineIcon from "@/components/icons/arrow-right-grey-outline";
 import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
@@ -33,7 +32,7 @@ interface UserProfileProps {
   userId: string;
 }
 
-const UserProfile = ({ userImage, userName, userId }: UserProfileProps) => {
+const UserProfile = ({ userImage, userName }: UserProfileProps) => {
   return (
     <Container>
       <UserImage src={userImage} alt={userName} width={32} height={32} />

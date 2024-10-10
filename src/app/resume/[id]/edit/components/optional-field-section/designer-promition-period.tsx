@@ -8,27 +8,15 @@ import SingleOptionList from "./base/single-option-list";
 const Container = styled.div``;
 
 const DesignerPromotionPeriod = () => {
-  const {
-    designerPromotionPeriod,
-    setDesignerPromotionPeriod,
-    hasDesignerOptionNull,
-    hasInternOptionNull,
-    appliedRole
-  } = useResumeEditStore((state) => ({
-    designerPromotionPeriod: state.designerPromotionPeriod,
-    setDesignerPromotionPeriod: state.setDesignerPromotionPeriod,
-    hasDesignerOptionNull: state.hasDesignerOptionNull,
-    hasInternOptionNull: state.hasInternOptionNull,
-    appliedRole: state.appliedRole
-  }));
+  const { designerPromotionPeriod, setDesignerPromotionPeriod } =
+    useResumeEditStore((state) => ({
+      designerPromotionPeriod: state.designerPromotionPeriod,
+      setDesignerPromotionPeriod: state.setDesignerPromotionPeriod,
+      hasDesignerOptionNull: state.hasDesignerOptionNull,
+      hasInternOptionNull: state.hasInternOptionNull,
+      appliedRole: state.appliedRole
+    }));
   const options = resumeOptions.designerPromotionPeriod;
-  let hasError = false;
-
-  if (appliedRole === "디자이너") {
-    hasError = !designerPromotionPeriod && hasDesignerOptionNull;
-  } else if (appliedRole === "인턴") {
-    hasError = !designerPromotionPeriod && hasInternOptionNull;
-  }
 
   const handleSelect = (selectedOption: string | null) => {
     setDesignerPromotionPeriod(

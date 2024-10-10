@@ -1,7 +1,6 @@
 import ArrowDownPurpleEditIcon from "@/components/icons/arrow-down-purple-edit-icon";
 import ArrowUpPurpleEditIcon from "@/components/icons/arrow-up-purple-edit-icon";
 import pxToVw from "@/lib/dpi-converter";
-import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { useState } from "react";
 import styled from "styled-components";

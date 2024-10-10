@@ -86,10 +86,10 @@ const ProfileInfo = styled.span`
   ${fonts.greyText2Normal10}
 `;
 
-const ViewCount = styled.span`
-  ${fonts.greyNormal10}
-  margin-top: ${pxToVw(6)};
-`;
+// const ViewCount = styled.span`
+//   ${fonts.greyNormal10}
+//   margin-top: ${pxToVw(6)};
+// `;
 
 const StoreImage = styled(Image)`
   width: ${pxToVw(91)};

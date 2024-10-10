@@ -8,28 +8,17 @@ import MultiOptionList from "./base/multi-option-list";
 const Container = styled.div``;
 
 const PreferredOffDays = () => {
-  const {
-    preferredOffDays,
-    setPreferredOffDays,
-    hasDesignerOptionNull,
-    hasInternOptionNull,
-    appliedRole
-  } = useResumeEditStore((state) => ({
-    preferredOffDays: state.preferredOffDays,
-    setPreferredOffDays: state.setPreferredOffDays,
-    hasDesignerOptionNull: state.hasDesignerOptionNull,
-    hasInternOptionNull: state.hasInternOptionNull,
-    appliedRole: state.appliedRole
-  }));
+  const { preferredOffDays, setPreferredOffDays } = useResumeEditStore(
+    (state) => ({
+      preferredOffDays: state.preferredOffDays,
+      setPreferredOffDays: state.setPreferredOffDays,
+      hasDesignerOptionNull: state.hasDesignerOptionNull,
+      hasInternOptionNull: state.hasInternOptionNull,
+      appliedRole: state.appliedRole
+    })
+  );
 
   const options = resumeOptions.preferredOffDays;
-  let hasError = false;
-
-  if (appliedRole === "디자이너") {
-    hasError = !preferredOffDays && hasDesignerOptionNull;
-  } else if (appliedRole === "인턴") {
-    hasError = !preferredOffDays && hasInternOptionNull;
-  }
 
   const handleSelect = (selectedOption: string) => {
     setPreferredOffDays(selectedOption as PreferredOffDaysKeyResume);

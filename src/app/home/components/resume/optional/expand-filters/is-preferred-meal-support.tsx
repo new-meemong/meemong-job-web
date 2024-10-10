@@ -1,5 +1,4 @@
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
 import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
 

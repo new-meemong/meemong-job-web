@@ -10,9 +10,7 @@ const Container = styled.div``;
 const PreferredMonthlyEducationDesignerCount = () => {
   const {
     preferredMonthlyEducationDesignerCount,
-    setPreferredMonthlyEducationDesignerCount,
-    appliedRole,
-    hasDesignerOptionNull
+    setPreferredMonthlyEducationDesignerCount
   } = useResumeEditStore((state) => ({
     preferredMonthlyEducationDesignerCount:
       state.preferredMonthlyEducationDesignerCount,
@@ -22,11 +20,6 @@ const PreferredMonthlyEducationDesignerCount = () => {
     hasDesignerOptionNull: state.hasDesignerOptionNull
   }));
   const options = resumeOptions.preferredMonthlyEducationDesignerCount;
-  let hasError = false;
-
-  if (appliedRole === "디자이너") {
-    hasError = !preferredMonthlyEducationDesignerCount && hasDesignerOptionNull;
-  }
 
   const handleSelect = (selectedOption: string | null) => {
     setPreferredMonthlyEducationDesignerCount(

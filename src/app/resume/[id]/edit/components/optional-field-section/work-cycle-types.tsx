@@ -1,9 +1,5 @@
 import { useResumeEditStore } from "@/stores/resume-edit-store";
-import {
-  PreferredOffDaysKeyResume,
-  WorkCycleTypesKeyResume,
-  WorkTypeKeyResume
-} from "@/types/resume-keys";
+import { WorkCycleTypesKeyResume } from "@/types/resume-keys";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
 import DropDownItem from "./base/drop-down-item";
@@ -12,13 +8,7 @@ import MultiOptionList from "./base/multi-option-list";
 const Container = styled.div``;
 
 const WorkCycleTypes = () => {
-  const {
-    workCycleTypes,
-    setWorkCycleTypes,
-    hasDesignerOptionNull,
-    hasInternOptionNull,
-    appliedRole
-  } = useResumeEditStore((state) => ({
+  const { workCycleTypes, setWorkCycleTypes } = useResumeEditStore((state) => ({
     workCycleTypes: state.workCycleTypes,
     setWorkCycleTypes: state.setWorkCycleTypes,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
@@ -27,13 +17,6 @@ const WorkCycleTypes = () => {
   }));
 
   const options = resumeOptions.workCycleTypes;
-  let hasError = false;
-
-  if (appliedRole === "디자이너") {
-    hasError = !workCycleTypes && hasDesignerOptionNull;
-  } else if (appliedRole === "인턴") {
-    hasError = !workCycleTypes && hasInternOptionNull;
-  }
 
   const handleSelect = (selectedOption: string) => {
     setWorkCycleTypes(selectedOption as WorkCycleTypesKeyResume);

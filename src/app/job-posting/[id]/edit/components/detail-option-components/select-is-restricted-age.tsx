@@ -23,10 +23,6 @@ const ContentContainer = styled.div`
 
 const ContentContainerWrapper = styled.div``;
 
-const InfoBold = styled.span`
-  ${fonts.blackBold14}
-`;
-
 const InfoNormal = styled.span`
   ${fonts.blackNormal14};
   white-space: pre-line;

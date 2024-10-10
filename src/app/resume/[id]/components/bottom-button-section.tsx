@@ -31,8 +31,6 @@ const SuggestButton = styled.div`
 `;
 
 const BottomButtonSection = () => {
-  const router = useRouter();
-
   const handleSuggestButtonClick = () => {
     // router.push("/suggest");
   };

@@ -32,7 +32,7 @@ const ResumeSearchButton = () => {
   const handleClick = async () => {
     setIsLoading(true);
     const parsedQueries = parseQueryString(resumeFilterQueries);
-    const res = await getResumeList(parsedQueries);
+    await getResumeList(parsedQueries);
     setIsLoading(false);
   };
 

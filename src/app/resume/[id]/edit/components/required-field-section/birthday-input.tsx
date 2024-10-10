@@ -42,10 +42,10 @@ const Input = styled.input`
   }
 `;
 
-const Caption = styled.span`
-  margin-left: ${pxToVw(8)};
-  ${fonts.greyText4Semi12}
-`;
+// const Caption = styled.span`
+//   margin-left: ${pxToVw(8)};
+//   ${fonts.greyText4Semi12}
+// `;
 
 const BirthdayInput = () => {
   const {

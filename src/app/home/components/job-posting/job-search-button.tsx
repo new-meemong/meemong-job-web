@@ -31,7 +31,7 @@ const JobSearchButton = () => {
   const handleClick = async () => {
     setIsLoading(true);
     const parsedQueries = parseQueryString(jobPostingFilterQueries);
-    const res = await getJobPostingList(parsedQueries);
+    await getJobPostingList(parsedQueries);
     setIsLoading(false);
   };
 

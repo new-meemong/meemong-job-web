@@ -1,5 +1,4 @@
 import { fonts } from "@/styles/fonts";
-import { useState } from "react";
 import { Sheet } from "react-modal-sheet";
 import styled from "styled-components";
 import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";

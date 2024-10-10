@@ -1,5 +1,4 @@
 import { deleteJobPosting, getJobPostings } from "@/apis/job-postings";
-import { parseQueryString } from "@/lib/parse-query-string";
 import { JobPostingType } from "@/types/job-posting-type";
 import { ResponseResultType } from "@/types/response-result-type";
 import { create } from "zustand";
@@ -17,6 +16,7 @@ export type JobPostingListState = {
 };
 
 export type JobPostingListActions = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getJobPostingList: (queryParams?: Record<string, any>) => Promise<void>;
   deleteJobPosting: (id: string) => Promise<ResponseResultType>;
   updateJobPosting: (updatedJobPosting: JobPostingType) => void;
@@ -132,7 +132,7 @@ export const useJobPostingListStore = create(
           .filter((siName) => !postingRegionsSiNamesSet.has(siName))
           .join(",");
 
-        set((state) => {
+        set(() => {
           // currentQueries에 postingRegions와 filteredSiNamesForQuery 추가 또는 삭제
           if (filteredSiNamesForQuery) {
             get().addJobPostingFilterQuery(

@@ -63,22 +63,22 @@ const LocationButton = styled(Link)<{ $hasError: boolean }>`
   padding: ${pxToVw(12)} ${pxToVw(6)};
 `;
 
-const CancelContainer = styled.div`
-  display: flex;
-  padding-top: ${pxToVw(4)};
-  gap: ${pxToVw(12)};
-  flex-wrap: wrap;
-`;
+// const CancelContainer = styled.div`
+//   display: flex;
+//   padding-top: ${pxToVw(4)};
+//   gap: ${pxToVw(12)};
+//   flex-wrap: wrap;
+// `;
 
-const CancelButton = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${pxToVw(2)};
-`;
+// const CancelButton = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: ${pxToVw(2)};
+// `;
 
-const CancelText = styled.span`
-  ${fonts.purplePrimarySemi14}
-`;
+// const CancelText = styled.span`
+//   ${fonts.purplePrimarySemi14}
+// `;
 
 const SelectJobPostingRegions = () => {
   const { _postingRegions, hasDesignerOptionNull, hasInternOptionNull, role } =

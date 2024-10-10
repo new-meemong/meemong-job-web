@@ -4,7 +4,6 @@ import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { ResponseResultType } from "@/types/response-result-type";
 import { ResumeType } from "@/types/resume-type";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -66,14 +65,6 @@ const BottomButtonSection = () => {
   const { updateResume } = useResumeListStore((state) => ({
     updateResume: state.updateResume
   }));
-
-  let hasError = false;
-
-  if (appliedRole === "디자이너") {
-    hasError = hasDesignerOptionNull;
-  } else if (appliedRole === "인턴") {
-    hasError = hasInternOptionNull;
-  }
 
   const handleSaveDraft = async () => {
     const { status, message, data } = await saveDraft();

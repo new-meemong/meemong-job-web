@@ -128,7 +128,7 @@ const OptionalSingleDropdownFilterAge = <T extends string | boolean>({
   selectedOption,
   onSelect,
   caption,
-  selectedSubOption,
+
   onSelectSubOption
 }: OptionalSingleDropdownFilterProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);

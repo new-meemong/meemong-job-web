@@ -3,7 +3,6 @@ import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { SearchResultItemType } from "@/stores/search-naver-store";
 import { fonts } from "@/styles/fonts";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
 import styled from "styled-components";
 
 const Container = styled.div``;

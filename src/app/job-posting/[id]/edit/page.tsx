@@ -9,9 +9,7 @@ import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import JobPostingEditSearchLocation from "./components/job-posting-edit-search-location";
 import Divider from "./components/divider";
 import JobPostingEditBaseOption from "./components/job-posting-edit-base-option";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;

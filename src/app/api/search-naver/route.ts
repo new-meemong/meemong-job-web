@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-type SearchResultItem = {
-  title: string;
-  link: string;
-  description: string;
-  // 필요에 따라 추가 필드...
-};
+// type SearchResultItem = {
+//   title: string;
+//   link: string;
+//   description: string;
+//   // 필요에 따라 추가 필드...
+// };
 
 // type NaverResponse = {
 //   lastBuildDate: string;
@@ -61,6 +61,7 @@ export async function GET(request: NextRequest) {
     const data = await response.json();
 
     return NextResponse.json(data, { status: 200 });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Naver API Error:", error.message);
     return NextResponse.json(

@@ -1,5 +1,4 @@
 import WriteIcon from "@/components/icons/write-icon";
-import offsetToVw from "@/lib/dpi-converter";
 import pxToVw from "@/lib/dpi-converter";
 import numberToVw from "@/lib/dpi-number-converter";
 import { colors } from "@/styles/colors";

@@ -2,7 +2,6 @@ import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import styled from "styled-components";
 
 const TabContainer = styled.div`
