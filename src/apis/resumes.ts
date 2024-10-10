@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/stores/auth-store";
 import { apiFetch } from "./fetch";
 import { ResumeType } from "@/types/resume-type";
+import { TEST_API } from "./consts";
 
 export const getResumes = async (queryParams?: Record<string, string>) => {
   try {
@@ -45,7 +46,7 @@ export const uploadResumeProfileImage = async (image: File) => {
     const jwt = useAuthStore.getState().jwt;
 
     const formData = new FormData();
-    const url = `http://13.125.169.213:80/api/v1/uploads/resumes/profiles`;
+    const url = `${TEST_API}/api/v1/uploads/resumes/profiles`;
     formData.append("image", image);
 
     const request = new Request(url, {
