@@ -1,6 +1,8 @@
 import WriteIcon from "@/components/icons/write-icon";
 import pxToVw from "@/lib/dpi-converter";
 import numberToVw from "@/lib/dpi-number-converter";
+import { useAuthStore } from "@/stores/auth-store";
+import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -49,17 +51,31 @@ const AdditionalButtonText = styled(WriteButtonText)`
 const FloatingButton = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
+  const { getResume } = useResumeListStore((state) => ({
+    getResume: state.getResume
+  }));
+  const { userId } = useAuthStore((state) => ({
+    userId: state.userId
+  }));
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleResumeClick = () => {
-    router.push("/resume/new/edit");
+  const handleResumeClick = async () => {
+    if (!userId) {
+      return;
+    }
+    const { status, data } = await getResume(userId);
+    if (status) {
+      router.push(`/resume/${data!.id}/edit`);
+    } else {
+      router.push("/resume/new/edit");
+    }
   };
 
   const handleJobPostingClick = () => {
-    router.push("/job-posting/new/edit");
+    // router.push("/job-posting/new/edit");
   };
 
   return (

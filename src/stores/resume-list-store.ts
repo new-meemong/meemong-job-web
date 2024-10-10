@@ -17,6 +17,8 @@ export type ResumeListState = {
 
 export type ResumeListActions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getResume: (userId: string) => Promise<ResponseResultType>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getResumeList: (queryParams?: Record<string, any>) => Promise<void>;
   updateResume: (updatedResume: ResumeType) => void;
   deleteResume: (id: string) => Promise<ResponseResultType>;
@@ -42,6 +44,21 @@ export const useResumeListStore = create(
   persist<ResumeListStore>(
     (set, get) => ({
       ...defaultResumeListState,
+      getResume: async (userId) => {
+        const _queryParams = {
+          __cursorOrder: "createdAtDesc",
+          userId: userId
+        };
+
+        const res = await getResumes(_queryParams);
+        const { dataList } = res;
+
+        if (dataList.length > 0) {
+          return { status: true, data: dataList[0], message: "" };
+        } else {
+          return { status: false, message: "" };
+        }
+      },
       getResumeList: async (queryParams) => {
         set({ resumeListLoading: true });
         const _queryParams = {

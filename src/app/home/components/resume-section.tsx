@@ -34,8 +34,6 @@ const ResumeSection = () => {
     structuredQueries[key] = value;
   });
 
-  console.log("resume queries:", structuredQueries);
-
   return (
     <Container>
       <ResumeFilter />

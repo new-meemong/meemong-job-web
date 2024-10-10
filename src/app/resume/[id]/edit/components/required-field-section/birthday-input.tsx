@@ -4,6 +4,7 @@ import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
+import moment from "moment";
 
 const Container = styled.div`
   display: flex;
@@ -73,7 +74,7 @@ const BirthdayInput = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value.length <= 8) {
+    if (value.length <= 6) {
       const numericValue = value ? value : null;
       setBirthday(numericValue);
     }
@@ -85,7 +86,7 @@ const BirthdayInput = () => {
       <InputWrapper $hasError={hasError}>
         <Input
           type="number"
-          placeholder="6자리 입력"
+          placeholder="ex) 890516"
           value={birthday || ""}
           onChange={handleChange}
         />

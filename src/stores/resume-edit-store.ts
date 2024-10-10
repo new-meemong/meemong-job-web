@@ -347,7 +347,6 @@ export const useResumeEditStore = create(
 
           const resumeRequiredStates = getResumeRequiredData(state);
           const missingFields = hasMissingRequiredFields(resumeRequiredStates);
-
           if (missingFields) {
             setOptionNullFlag(appliedRole, true, set);
             return {
@@ -522,7 +521,6 @@ const hasMissingRequiredFields = (
 const getResumeRequiredData = (state: ResumeEditState) => {
   const { appliedRole } = state;
   let requiredStates = {};
-
   if (appliedRole === "디자이너") {
     requiredStates = {
       profileImageUri: state.profileImageUri,
@@ -531,7 +529,7 @@ const getResumeRequiredData = (state: ResumeEditState) => {
       userName: state.userName,
       preferredStoreRegions: state.preferredStoreRegions,
       preferredStoreRegionSiNames: state.preferredStoreRegionSiNames,
-      birthday: moment(state.birthday, "YYYYMMDD").format("YYYY-MM-DD"),
+      birthday: moment(state.birthday, "YYMMDD").format("YYYY-MM-DD"),
       appliedRole: state.appliedRole,
       workType: state.workType,
       settlementAllowance: state.settlementAllowance,
