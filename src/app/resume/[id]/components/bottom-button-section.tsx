@@ -1,7 +1,6 @@
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { useRouter } from "next/navigation";
 
 import styled from "styled-components";
 

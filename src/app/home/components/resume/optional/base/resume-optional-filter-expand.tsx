@@ -29,11 +29,11 @@ const ButtonContainer = styled.div`
   border-bottom: ${pxToVw(1)} solid ${colors.white};
 `;
 
-const HeaderLine = styled.div`
-  width: 100%;
-  height: ${pxToVw(1)};
-  background-color: ${colors.white};
-`;
+// const HeaderLine = styled.div`
+//   width: 100%;
+//   height: ${pxToVw(1)};
+//   background-color: ${colors.white};
+// `;
 
 const InitButton = styled.div`
   ${fonts.greyText4Bold14}

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import pxToVw from "@/lib/dpi-converter";
 import Banner from "./banner";
 import JobSearchButton from "./job-posting/job-search-button";
-import NearJobSearchButton from "./job-posting/near-job-search-button";
+// import NearJobSearchButton from "./job-posting/near-job-search-button";
 // import PremiumJobPosting from "./sections/find-job-posting/premium-job-posting";
 import JobPostingList from "./job-posting/job-posting-list";
 import JobPostingFilter from "./job-posting/job-posting-filter";

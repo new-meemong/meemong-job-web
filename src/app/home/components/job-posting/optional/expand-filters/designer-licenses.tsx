@@ -1,4 +1,3 @@
-import DropdownMultiSelectItem from "@/components/drop-downs/dropdown-multi-select-item";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
 import styled from "styled-components";

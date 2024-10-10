@@ -1,5 +1,4 @@
 import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
-import CloseCircleGreyIcon from "@/components/icons/close-circle-grey-icon";
 import pxToVw from "@/lib/dpi-converter";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
@@ -50,22 +49,22 @@ const LocationButton = styled(Link)`
   padding: ${pxToVw(12)} ${pxToVw(6)};
 `;
 
-const CancelContainer = styled.div`
-  display: flex;
-  padding-top: ${pxToVw(4)};
-  gap: ${pxToVw(12)};
-  flex-wrap: wrap;
-`;
+// const CancelContainer = styled.div`
+//   display: flex;
+//   padding-top: ${pxToVw(4)};
+//   gap: ${pxToVw(12)};
+//   flex-wrap: wrap;
+// `;
 
-const CancelButton = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${pxToVw(2)};
-`;
+// const CancelButton = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: ${pxToVw(2)};
+// `;
 
-const CancelText = styled.span`
-  ${fonts.purplePrimarySemi14}
-`;
+// const CancelText = styled.span`
+//   ${fonts.purplePrimarySemi14}
+// `;
 
 const ResumeLocation = () => {
   const { _preferredStoreRegions } = useResumeListStore((state) => ({
