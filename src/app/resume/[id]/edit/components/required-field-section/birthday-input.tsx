@@ -4,7 +4,6 @@ import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
-import moment from "moment";
 
 const Container = styled.div`
   display: flex;
