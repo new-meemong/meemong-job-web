@@ -11,7 +11,6 @@ import { useResumeListStore } from "@/stores/resume-list-store";
 import { HomeTopTabType, useAppStateStore } from "@/stores/app-state-store";
 import JobPostingSection from "./components/job-posting-section";
 import ResumeSection from "./components/resume-section";
-import { WEBVIEW_API_KEY } from "@/apis/consts";
 
 const Container = styled.div`
   display: flex;
@@ -25,14 +24,6 @@ interface SearchParams {
     userId: string;
   };
 }
-
-const JwtSpan = styled.span`
-  width: 100%; /* 화면 너비를 꽉 채움 */
-  word-wrap: break-word; /* 단어가 화면을 넘어갈 때 줄바꿈 */
-  word-break: break-all; /* 단어가 너무 길 경우 줄바꿈 */
-  overflow-wrap: break-word; /* 텍스트가 박스를 넘으면 줄바꿈 */
-  padding: 10px;
-`;
 
 export default function HomePage({ searchParams }: SearchParams) {
   const [isLoginFailed, setIsLoginFailed] = useState(false);
