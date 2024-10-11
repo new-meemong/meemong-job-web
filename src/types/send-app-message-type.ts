@@ -1,6 +1,6 @@
-type messageType = "job-posting" | "resume";
+export type messageType = "job-posting" | "resume";
 
-type sendAppMessageType = {
+export type sendAppMessageType = {
   type: messageType;
   postUrl: string;
   postUserId: string;
