@@ -1,6 +1,7 @@
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import { messageType } from "@/types/send-app-message-type";
 
 import styled from "styled-components";
 
