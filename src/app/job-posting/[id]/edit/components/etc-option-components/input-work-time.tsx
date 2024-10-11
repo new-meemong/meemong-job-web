@@ -60,6 +60,11 @@ const SheetContent = styled(Sheet.Content)`
   padding-right: ${pxToVw(24)};
 `;
 
+const Scroller = styled(Sheet.Scroller)`
+  max-height: 60vh; /* 모달 내 콘텐츠의 최대 높이 설정 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+`;
+
 const TimeOption = styled.div`
   padding: ${pxToVw(10)} 0;
   cursor: pointer;
@@ -141,7 +146,7 @@ const InputWorkTime = () => {
         <SheetContainer>
           <SheetHeader />
           <SheetContent>
-            <Sheet.Scroller>
+            <Scroller>
               {generateTimeOptions().map((time) => (
                 <TimeOption
                   key={time}
@@ -150,7 +155,7 @@ const InputWorkTime = () => {
                   {time}
                 </TimeOption>
               ))}
-            </Sheet.Scroller>
+            </Scroller>
           </SheetContent>
         </SheetContainer>
       </Sheet>
@@ -168,7 +173,7 @@ const InputWorkTime = () => {
         <SheetContainer>
           <SheetHeader />
           <SheetContent>
-            <Sheet.Scroller>
+            <Scroller>
               {generateTimeOptions().map((time) => (
                 <TimeOption
                   key={time}
@@ -177,7 +182,7 @@ const InputWorkTime = () => {
                   {time}
                 </TimeOption>
               ))}
-            </Sheet.Scroller>
+            </Scroller>
           </SheetContent>
         </SheetContainer>
       </Sheet>

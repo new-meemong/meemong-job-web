@@ -31,7 +31,11 @@ const SuggestButton = styled.div`
 
 const BottomButtonSection = () => {
   const handleSuggestButtonClick = () => {
-    // router.push("/suggest");
+    if (typeof window !== "undefined" && window.sendMessageToFlutter) {
+      window.sendMessageToFlutter();
+    } else {
+      console.log("sendMessageToFlutter function is not available.");
+    }
   };
   return (
     <Container>

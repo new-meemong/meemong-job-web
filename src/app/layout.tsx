@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import BaseContainer from "@/components/base-container";
 import StyledComponentsRegistry from "./registry";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "미몽-구인구직",
@@ -33,6 +34,18 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           <BaseContainer>{children}</BaseContainer>
         </StyledComponentsRegistry>
+        <Script id="send-message-to-flutter" strategy="afterInteractive">
+          {`
+            function sendMessageToFlutter() {
+              if (window.Event) {
+                window.Event.postMessage("Hello from Web!");
+              } else {
+                console.log("Event channel is not available.");
+              }
+            }
+            window.sendMessageToFlutter = sendMessageToFlutter;
+          `}
+        </Script>
       </body>
     </html>
   );
