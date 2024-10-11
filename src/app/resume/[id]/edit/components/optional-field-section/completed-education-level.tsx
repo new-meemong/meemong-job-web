@@ -3,7 +3,7 @@ import { CompletedEducationLevelKeyResume } from "@/types/resume-keys";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
 import DropDownItem from "./base/drop-down-item";
-import OptionList from "./base/single-option-list";
+import SingleOptionList from "./base/single-option-list";
 
 const Container = styled.div``;
 
@@ -26,7 +26,7 @@ const CompletedEducationLevel = () => {
   return (
     <Container>
       <DropDownItem label={"학력"}>
-        <OptionList
+        <SingleOptionList
           options={options}
           selectedOption={completedEducationLevel}
           onSelect={handleSelect}

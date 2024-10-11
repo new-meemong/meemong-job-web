@@ -27,7 +27,7 @@ interface DropDownItemProps {
 }
 
 const DropDownItem = ({ label, children }: DropDownItemProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
     <Container>
