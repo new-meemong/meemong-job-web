@@ -37,8 +37,8 @@ export default function RootLayout({
         <Script id="send-message-to-flutter" strategy="afterInteractive">
           {`
             function sendMessageToFlutter(message) {
-              if (window.EventChannel) {
-                window.EventChannel.postMessage(JSON.stringify(message));
+              if (window.Event) {
+                window.Event.postMessage(JSON.stringify(message));
               } else {
                 console.log("Event channel is not available.");
               }
