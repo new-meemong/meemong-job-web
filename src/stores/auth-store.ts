@@ -9,7 +9,7 @@ export type AuthState = {
 };
 
 export type AuthActions = {
-  login: (userId: string) => Promise<void>;
+  login: (userId: string) => Promise<boolean>;
   logout: () => void;
 };
 
@@ -26,18 +26,24 @@ export const useAuthStore = create(
       ...defaultAuthState,
 
       login: async (userId: string) => {
-        if (!userId) {
-          throw new Error("userId is required");
-        }
-        const { data }: { data: UserModel } = await webviewLogin(userId);
+        try {
+          if (!userId) {
+            throw new Error("userId is required");
+          }
+          const { data }: { data: UserModel } = await webviewLogin(userId);
 
-        if (data && data.token) {
-          set({
-            jwt: data.token, // JWT 토큰을 상태에 저장
-            userId: String(data.id) // userId를 상태에 저장
-          });
-        } else {
-          throw new Error("Invalid login data");
+          if (data && data.token) {
+            set({
+              jwt: data.token, // JWT 토큰을 상태에 저장
+              userId: String(data.id) // userId를 상태에 저장
+            });
+            return true;
+          } else {
+            return false;
+          }
+        } catch (e) {
+          console.error("[login] error", e);
+          return false;
         }
       },
       logout: () => {

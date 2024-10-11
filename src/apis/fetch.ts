@@ -30,7 +30,6 @@ export const apiFetch = async (url: string, method: string, body?: any) => {
       },
       body: JSON.stringify(body)
     });
-
     if (!response.ok) {
       throw new Error("API fetch failed");
     }
@@ -45,5 +44,6 @@ export const apiFetch = async (url: string, method: string, body?: any) => {
     return responseData;
   } catch (e) {
     console.error("[apiFetch] failed", e);
+    throw new Error("API fetch failed");
   }
 };

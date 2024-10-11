@@ -35,6 +35,7 @@ const JwtSpan = styled.span`
 `;
 
 export default function HomePage({ searchParams }: SearchParams) {
+  const [isLoginFailed, setIsLoginFailed] = useState(false);
   const { getJobPostingList } = useJobPostingListStore((state) => ({
     getJobPostingList: state.getJobPostingList
   }));
@@ -55,7 +56,6 @@ export default function HomePage({ searchParams }: SearchParams) {
   }));
 
   useEffect(() => {
-    console.log("test");
     // localStorage에서 activeTab 값을 불러오기
     const storedTab = localStorage.getItem("activeTab");
     if (storedTab) {
@@ -65,9 +65,15 @@ export default function HomePage({ searchParams }: SearchParams) {
   }, [setHomeTopTab]);
 
   useEffect(() => {
-    if (userId && !jwt) {
-      login("3");
-    }
+    const _login = async () => {
+      if (userId && !jwt) {
+        const result = await login("3");
+        if (!result) {
+          setIsLoginFailed(true);
+        }
+      }
+    };
+    _login();
   }, [userId, login, jwt]);
 
   useEffect(() => {
@@ -81,10 +87,11 @@ export default function HomePage({ searchParams }: SearchParams) {
     return <div>로딩 중...</div>; // 로딩 중일 때 보여줄 화면
   }
 
+  if (isLoginFailed) {
+    return <div>로그인 실패</div>;
+  }
   return (
     <Container>
-      <JwtSpan>{`jwt: ${jwt}`}</JwtSpan>
-      <JwtSpan>{`WEBVIEW_API_KEY: ${WEBVIEW_API_KEY}`}</JwtSpan>
       <BaseTopTabs activeTab={homeTopTab} setActiveTab={setHomeTopTab} />
       <HomeTitle />
       {homeTopTab === "jobPosting" ? <JobPostingSection /> : <ResumeSection />}
