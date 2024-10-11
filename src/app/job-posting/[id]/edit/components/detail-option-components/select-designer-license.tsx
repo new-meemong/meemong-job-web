@@ -34,7 +34,7 @@ const SelectDesignerLicense = () => {
   return (
     <Container>
       <BaseMultiSelect
-        label="미용 라이센스 (중복 가능)"
+        label="미용 라이센스 소유"
         options={licenses}
         selectedOptions={designerLicenses}
         errorMessage="라이센스을 선택해주세요."

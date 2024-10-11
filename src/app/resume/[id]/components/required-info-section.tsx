@@ -51,7 +51,7 @@ const RequiredInfoSection = ({ resume }: RequiredInfoSectionProps) => {
         />
       )}
       <SingleInfoItem
-        label="미용 라이센스"
+        label="미용 라이센스 소유"
         content={resume.designerLicenses}
         nullString="없음"
       />

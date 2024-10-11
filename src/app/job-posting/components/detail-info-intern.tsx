@@ -84,7 +84,7 @@ const DetailInfoIntern = ({
         label={"연령"}
         content={isRestrictedAge ? "연령제한" : "연령무관"}
       />
-      <SingleInfoItem label={"자격증"} content={designerLicenses} />
+      <SingleInfoItem label={"미용 라이센스 소유"} content={designerLicenses} />
       <MultiInfoItem label={"매장 형태"} content={storeTypes} />
       <SingleInfoItem label={"현재 직원수"} content={employeeCount} />
       <SingleInfoItem label={"인턴 시스템"} content={isExistedInternSystem} />

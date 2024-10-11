@@ -43,7 +43,7 @@ const DesignerLicenses = () => {
   return (
     <Container>
       <DropdownMultiSelectItem
-        label="미용 라이센스"
+        label="미용 라이센스 소유"
         options={options}
         selectedOptions={
           selectedOptions.length > 0 ? selectedOptions : ["상관없음"]

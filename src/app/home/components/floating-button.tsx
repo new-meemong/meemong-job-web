@@ -75,7 +75,7 @@ const FloatingButton = () => {
   };
 
   const handleJobPostingClick = () => {
-    // router.push("/job-posting/new/edit");
+    router.push("/job-posting/new/edit");
   };
 
   return (
