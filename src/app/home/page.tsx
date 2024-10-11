@@ -66,7 +66,7 @@ export default function HomePage({ searchParams }: SearchParams) {
 
   useEffect(() => {
     if (userId && !jwt) {
-      login(userId);
+      login("3");
     }
   }, [userId, login, jwt]);
 
