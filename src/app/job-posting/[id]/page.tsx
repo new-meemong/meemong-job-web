@@ -19,6 +19,7 @@ import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
 import DetailInfoIntern from "../components/detail-info-intern";
 import { ImageType } from "@/types/image-type";
 import { useAuthStore } from "@/stores/auth-store";
+import { messageType } from "@/types/send-app-message-type";
 
 const Container = styled.div`
   flex-direction: column;
@@ -189,7 +190,22 @@ export default function JobPostingPage() {
         <Divider />
         <StoreLocation storeAddress={jobPosting.storeAddress} />
       </ContentContainer>
-      <BottomFloatingButton title="지원하기" onClick={() => {}} />
+      <BottomFloatingButton
+        title="지원하기"
+        onClick={() => {
+          if (typeof window !== "undefined" && window.sendMessageToFlutter) {
+            const postUrl = window.location.href;
+            const message = {
+              type: "job-posting" as messageType,
+              postUrl,
+              postUserId: jobPosting.userId.toString()
+            };
+            window.sendMessageToFlutter(message);
+          } else {
+            console.log("sendMessageToFlutter function is not available.");
+          }
+        }}
+      />
     </Container>
   );
 }
