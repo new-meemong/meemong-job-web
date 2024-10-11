@@ -69,7 +69,7 @@ export default function ResumePage() {
         <Divider />
         <SelfIntroductionSection description={resume.description} />
       </ContentContainer>
-      <BottomButtonSection />
+      <BottomButtonSection postUserId={resume.userId.toString()} />
     </Container>
   );
 }

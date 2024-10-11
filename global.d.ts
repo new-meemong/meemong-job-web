@@ -1,4 +1,7 @@
-// global.d.ts
 interface Window {
-  sendMessageToFlutter: () => void;
+  sendMessageToFlutter: (message: {
+    type: "job-posting" | "resume";
+    postUrl: string;
+    postUserId: string;
+  }) => void;
 }

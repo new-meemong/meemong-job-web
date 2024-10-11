@@ -29,10 +29,20 @@ const SuggestButton = styled.div`
   align-items: center;
 `;
 
-const BottomButtonSection = () => {
+interface BottomButtonSectionProps {
+  postUserId: string;
+}
+
+const BottomButtonSection = ({ postUserId }: BottomButtonSectionProps) => {
   const handleSuggestButtonClick = () => {
     if (typeof window !== "undefined" && window.sendMessageToFlutter) {
-      window.sendMessageToFlutter();
+      const postUrl = window.location.href;
+      const message = {
+        type: "resume" as messageType,
+        postUrl,
+        postUserId
+      };
+      window.sendMessageToFlutter(message);
     } else {
       console.log("sendMessageToFlutter function is not available.");
     }
