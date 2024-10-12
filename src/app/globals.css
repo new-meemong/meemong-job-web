@@ -19,6 +19,11 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+input {
+  transform: scale(1.0);
+}
+
+
 /* * {
   overflow: hidden;
 } */
