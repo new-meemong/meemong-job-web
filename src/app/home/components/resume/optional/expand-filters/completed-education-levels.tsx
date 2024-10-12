@@ -1,7 +1,5 @@
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
 import OptionalMultiDropdownFilter from "../../../filters/base/optional-multi-dropdown-filter";
 
 const Container = styled.div``;
