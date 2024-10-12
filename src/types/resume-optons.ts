@@ -7,7 +7,7 @@ import {
   InternExpectedSalaryKeyResume,
   InternExperienceYearNumberKeyResume,
   SalesLast3MonthsAvgKeyResume,
-  CompletedEducationLevelKeyResume,
+  CompletedEducationLevelsKeyResume,
   PreferredOffDaysKeyResume,
   WorkCycleTypesKeyResume,
   DesignerPromotionPeriodKeyResume,
@@ -34,7 +34,7 @@ type InternExpectedSalaryOption = Option<InternExpectedSalaryKeyResume>;
 type InternExperienceYearNumberOption =
   Option<InternExperienceYearNumberKeyResume>;
 type SalesLast3MonthsAvgOption = Option<SalesLast3MonthsAvgKeyResume>;
-type CompletedEducationLevelOption = Option<CompletedEducationLevelKeyResume>;
+type CompletedEducationLevelsOption = Option<CompletedEducationLevelsKeyResume>;
 type PreferredOffDaysOption = Option<PreferredOffDaysKeyResume>;
 type WorkCycleTypesOption = Option<WorkCycleTypesKeyResume>;
 type DesignerPromotionPeriodOption = Option<DesignerPromotionPeriodKeyResume>;
@@ -109,13 +109,13 @@ export const resumeOptions = {
     { key: "1500만원 이상", value: "1500만원 이상" }
   ] as SalesLast3MonthsAvgOption[],
 
-  completedEducationLevel: [
+  completedEducationLevels: [
     { key: "미용고등학교 졸업", value: "미용고등학교 졸업" },
     { key: "미용대학교 졸업", value: "미용대학교 졸업" },
     { key: "일반고등학교 졸업", value: "일반고등학교 졸업" },
     { key: "일반대학교 졸업", value: "일반대학교 졸업" },
     { key: "해당없음", value: "해당없음" }
-  ] as CompletedEducationLevelOption[],
+  ] as CompletedEducationLevelsOption[],
 
   preferredOffDays: [
     { key: "월", value: "월" },

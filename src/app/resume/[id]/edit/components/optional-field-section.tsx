@@ -6,7 +6,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import MajorExperience from "./optional-field-section/major-experience";
 import SalesLast3Month from "./optional-field-section/sales-last-3month";
-import CompletedEducationLevel from "./optional-field-section/completed-education-level";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import PreferredOffDays from "./optional-field-section/preferred-off-days";
 import WorkCycleTypes from "./optional-field-section/work-cycle-types";
@@ -18,6 +17,7 @@ import IsPreferredMealSupport from "./optional-field-section/is-preferred-meal-s
 import IsPreferredParking from "./optional-field-section/is-preferred-parking";
 import Mbti from "./optional-field-section/mbti";
 import Description from "./optional-field-section/description";
+import CompletedEducationLevels from "./optional-field-section/completed-education-levels";
 
 const Contianer = styled.div`
   display: flex;
@@ -78,7 +78,7 @@ const OptionalFieldSection = () => {
         <ItemContainer>
           <MajorExperience />
           {appliedRole === "디자이너" && <SalesLast3Month />}
-          <CompletedEducationLevel />
+          <CompletedEducationLevels />
           <PreferredOffDays />
           <WorkCycleTypes />
           {appliedRole === "인턴" && <DesignerPromotionPeriod />}

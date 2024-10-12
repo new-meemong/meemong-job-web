@@ -41,7 +41,7 @@ const OptionalInfoSection = ({ resume }: OptionalInfoSectionProps) => {
       )}
       <SingleInfoItem
         label="학력"
-        content={resume.completedEducationLevel}
+        content={resume.completedEducationLevels}
         nullString="없음"
       />
       <SingleInfoItem label="희망 휴무일" content={resume.preferredOffDays} />

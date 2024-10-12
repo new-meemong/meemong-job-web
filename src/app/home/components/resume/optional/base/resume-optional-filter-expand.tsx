@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import SalesLast3MonthsAvg from "../expand-filters/sales-last-3months-avg";
-import CompletedEducationLevel from "../expand-filters/completed-education-level";
+import CompletedEducationLevels from "../expand-filters/completed-education-levels";
 import PreferredOffDays from "../expand-filters/preferred-off-days";
 import WorkCycleTypes from "../expand-filters/work-cycle-types";
 import IsPreferredDormitorySupport from "../expand-filters/is-preferred-dormitory-support";
@@ -89,7 +89,7 @@ const ResumeOptionalFilterExpand = ({
       </ButtonContainer>
       {appliedRole === "디자이너" && <SalesLast3MonthsAvg />}
 
-      <CompletedEducationLevel />
+      <CompletedEducationLevels />
       <PreferredOffDays />
       <WorkCycleTypes />
       {appliedRole === "인턴" && <DesignerPromotionPeriod />}

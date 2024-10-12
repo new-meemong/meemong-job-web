@@ -76,7 +76,7 @@ export type SalesLast3MonthsAvgKeyResume =
   | "1500만원 이상";
 
 // 학력
-export type CompletedEducationLevelKeyResume =
+export type CompletedEducationLevelsKeyResume =
   | "미용고등학교 졸업"
   | "미용대학교 졸업"
   | "일반고등학교 졸업"

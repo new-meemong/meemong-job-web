@@ -2,7 +2,7 @@ import { postResume, putResume } from "@/apis/resumes";
 import { siSggList } from "@/types/location-type";
 import { ResponseResultType } from "@/types/response-result-type";
 import {
-  CompletedEducationLevelKeyResume,
+  CompletedEducationLevelsKeyResume,
   DesignerExperienceYearNumberKeyResume,
   DesignerLicensesKeyResume,
   DesignerPromotionPeriodKeyResume,
@@ -54,7 +54,7 @@ type ResumeEditState = {
   internMajorExperienceDuration: string | null;
   internMajorExperienceRole: string | null;
   salesLast3MonthsAvg: SalesLast3MonthsAvgKeyResume | null;
-  completedEducationLevel: CompletedEducationLevelKeyResume | null;
+  completedEducationLevels: CompletedEducationLevelsKeyResume[];
   preferredOffDays: PreferredOffDaysKeyResume[];
   workCycleTypes: WorkCycleTypesKeyResume[];
   designerPromotionPeriod: DesignerPromotionPeriodKeyResume | null;
@@ -102,8 +102,8 @@ type ResumeEditActions = {
   setInternMajorExperienceDuration: (duration: string | null) => void;
   setInternMajorExperienceRole: (role: string | null) => void;
   setSalesLast3MonthsAvg: (avg: SalesLast3MonthsAvgKeyResume | null) => void;
-  setCompletedEducationLevel: (
-    level: CompletedEducationLevelKeyResume | null
+  setCompletedEducationLevels: (
+    level: CompletedEducationLevelsKeyResume
   ) => void;
   setPreferredOffDays: (days: PreferredOffDaysKeyResume) => void;
   setWorkCycleTypes: (cycle: WorkCycleTypesKeyResume) => void;
@@ -160,7 +160,7 @@ const defaultResumeEditState: ResumeEditState = {
   internMajorExperienceDuration: null,
   internMajorExperienceRole: null,
   salesLast3MonthsAvg: null,
-  completedEducationLevel: null,
+  completedEducationLevels: [],
   preferredOffDays: [],
   workCycleTypes: [],
   designerPromotionPeriod: null,
@@ -236,7 +236,11 @@ export const useResumeEditStore = create(
           internMajorExperienceDuration: resume.internMajorExperienceDuration,
           internMajorExperienceRole: resume.internMajorExperienceRole,
           salesLast3MonthsAvg: resume.salesLast3MonthsAvg,
-          completedEducationLevel: resume.completedEducationLevel || "해당없음",
+          completedEducationLevels: resume.completedEducationLevels
+            ? (resume.completedEducationLevels.split(
+                ","
+              ) as CompletedEducationLevelsKeyResume[])
+            : [],
           preferredOffDays: resume.preferredOffDays
             ? (resume.preferredOffDays.split(
                 ","
@@ -313,8 +317,17 @@ export const useResumeEditStore = create(
       setInternMajorExperienceRole: (role) =>
         set({ internMajorExperienceRole: role }),
       setSalesLast3MonthsAvg: (avg) => set({ salesLast3MonthsAvg: avg }),
-      setCompletedEducationLevel: (level) =>
-        set({ completedEducationLevel: level }),
+      setCompletedEducationLevels: (
+        level: CompletedEducationLevelsKeyResume
+      ) => {
+        const { completedEducationLevels } = get();
+        set({
+          completedEducationLevels: toggleSelect(
+            completedEducationLevels,
+            level
+          )
+        });
+      },
       setPreferredOffDays: (day: PreferredOffDaysKeyResume) => {
         const { preferredOffDays } = get();
         set({ preferredOffDays: toggleSelect(preferredOffDays, day) });
@@ -567,7 +580,7 @@ const getResumeOptionalData = (state: ResumeEditState) => {
       designerMajorExperienceDuration: state.designerMajorExperienceDuration,
       designerMajorExperienceRole: state.designerMajorExperienceRole,
       salesLast3MonthsAvg: state.salesLast3MonthsAvg,
-      completedEducationLevel: state.completedEducationLevel,
+      completedEducationLevels: state.completedEducationLevels,
       preferredOffDays: state.preferredOffDays.join(","),
       workCycleTypes: state.workCycleTypes.join(","),
       isPreferredDormitorySupport: state.isPreferredDormitorySupport,
@@ -583,7 +596,7 @@ const getResumeOptionalData = (state: ResumeEditState) => {
       internMajorExperienceCompanyName: state.internMajorExperienceCompanyName,
       internMajorExperienceDuration: state.internMajorExperienceDuration,
       internMajorExperienceRole: state.internMajorExperienceRole,
-      completedEducationLevel: state.completedEducationLevel,
+      completedEducationLevels: state.completedEducationLevels,
       preferredOffDays: state.preferredOffDays.join(","),
       workCycleTypes: state.workCycleTypes.join(","),
       designerPromotionPeriod: state.designerPromotionPeriod,
@@ -603,7 +616,7 @@ const getResumeOptionalData = (state: ResumeEditState) => {
 // 중복 선택 가능 항목 처리를 위한 함수
 const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
   // "상관없음"이라는 항목이 선택된 경우 처리
-  const indifferentOptions = ["상관없음", "없음"] as T[];
+  const indifferentOptions = ["상관없음", "없음", "해당없음"] as T[];
 
   if (indifferentOptions.includes(item)) {
     // "상관없음"이나 "없음"이 선택되면 다른 항목들은 모두 해제하고 해당 값만 선택

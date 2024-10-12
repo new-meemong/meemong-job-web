@@ -1,5 +1,5 @@
 import {
-  CompletedEducationLevelKeyResume,
+  CompletedEducationLevelsKeyResume,
   DesignerExperienceYearNumberKeyResume,
   DesignerLicensesKeyResume,
   DesignerPromotionPeriodKeyResume,
@@ -44,7 +44,7 @@ export interface ResumeType {
   internMajorExperienceDuration: string;
   internMajorExperienceRole: string;
   salesLast3MonthsAvg: SalesLast3MonthsAvgKeyResume;
-  completedEducationLevel: CompletedEducationLevelKeyResume;
+  completedEducationLevels: CompletedEducationLevelsKeyResume;
   preferredOffDays: PreferredOffDaysKeyResume;
   workCycleTypes: WorkCycleTypesKeyResume;
   designerPromotionPeriod: DesignerPromotionPeriodKeyResume;
