@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import BaseContainer from "@/components/base-container";
 import StyledComponentsRegistry from "./registry";
@@ -7,6 +7,15 @@ import Script from "next/script";
 export const metadata: Metadata = {
   title: "미몽-구인구직",
   description: "헤어 디자이너를 위한 구인구직 서비스"
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  viewportFit: "cover",
+  initialScale: 1,
+  userScalable: false,
+  maximumScale: 1.0,
+  minimumScale: 1.0
 };
 
 export default function RootLayout({
@@ -29,10 +38,6 @@ export default function RootLayout({
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         /> */}
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
       </head>
       <body style={{ margin: 0 }}>
         <StyledComponentsRegistry>
