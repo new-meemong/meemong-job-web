@@ -1,7 +1,7 @@
 interface Window {
   sendMessageToFlutter: (message: {
     type: "job-posting" | "resume";
-    postUrl: string;
+    postId: string;
     postUserId: string;
   }) => void;
 }

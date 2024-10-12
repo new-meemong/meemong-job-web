@@ -38,9 +38,10 @@ const BottomButtonSection = ({ postUserId }: BottomButtonSectionProps) => {
   const handleSuggestButtonClick = () => {
     if (typeof window !== "undefined" && window.sendMessageToFlutter) {
       const postUrl = window.location.href;
+      const postId = postUrl.split("/").pop() as string;
       const message = {
         type: "resume" as messageType,
-        postUrl,
+        postId,
         postUserId
       };
       window.sendMessageToFlutter(message);

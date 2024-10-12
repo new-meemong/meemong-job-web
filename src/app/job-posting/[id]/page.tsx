@@ -195,9 +195,10 @@ export default function JobPostingPage() {
         onClick={() => {
           if (typeof window !== "undefined" && window.sendMessageToFlutter) {
             const postUrl = window.location.href;
+            const postId = postUrl.split("/").pop() as string;
             const message = {
               type: "job-posting" as messageType,
-              postUrl,
+              postId,
               postUserId: jobPosting.userId.toString()
             };
             window.sendMessageToFlutter(message);
