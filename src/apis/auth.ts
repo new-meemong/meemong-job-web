@@ -1,13 +1,13 @@
 import { WEBVIEW_API_KEY } from "./consts";
 import { apiFetch } from "./fetch";
 
-export const webviewLogin = async (userId: string) => {
+export const webviewLogin = async (UserID: string) => {
   try {
-    if (!userId) {
+    if (!UserID) {
       throw new Error("userId is required");
     }
     return await apiFetch("/api/v1/auth/webview-login", "POST", {
-      userId,
+      UserID,
       webviewAPIKey: WEBVIEW_API_KEY
     });
   } catch (error) {

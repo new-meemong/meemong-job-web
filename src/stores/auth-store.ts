@@ -6,6 +6,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 export type AuthState = {
   jwt: string | null;
   userId: string | null;
+  UserID: string | null;
 };
 
 export type AuthActions = {
@@ -17,7 +18,8 @@ export type AuthStore = AuthState & AuthActions;
 
 export const defaultAuthState: AuthState = {
   jwt: null,
-  userId: null
+  userId: null,
+  UserID: null
 };
 
 export const useAuthStore = create(
@@ -31,7 +33,6 @@ export const useAuthStore = create(
             throw new Error("userId is required");
           }
           const { data }: { data: UserModel } = await webviewLogin(userId);
-
           if (data && data.token) {
             set({
               jwt: data.token, // JWT 토큰을 상태에 저장

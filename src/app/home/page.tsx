@@ -58,7 +58,7 @@ export default function HomePage({ searchParams }: SearchParams) {
   useEffect(() => {
     const _login = async () => {
       if (userId && !jwt) {
-        const result = await login("3");
+        const result = await login("u2");
         if (!result) {
           setIsLoginFailed(true);
         }

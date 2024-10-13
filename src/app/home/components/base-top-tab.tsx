@@ -42,7 +42,7 @@ const BaseTopTabs = ({ activeTab, setActiveTab }: TabsProps) => {
         $active={activeTab === "resume"}
         onClick={() => setActiveTab("resume")}
       >
-        인재 찾아보기1
+        인재 찾아보기
       </Tab>
     </TabContainer>
   );
