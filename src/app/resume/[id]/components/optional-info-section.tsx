@@ -11,6 +11,16 @@ const Container = styled.div`
   gap: ${pxToVw(12)};
 `;
 
+const buildExperienceContent = (
+  companyName: string | null | undefined,
+  duration: string | null | undefined,
+  role: string | null | undefined
+): string => {
+  if (!companyName || !duration || !role) {
+    return "";
+  }
+  return `${companyName},${duration} / ${role}`;
+};
 interface OptionalInfoSectionProps {
   resume: ResumeType;
 }
@@ -22,14 +32,22 @@ const OptionalInfoSection = ({ resume }: OptionalInfoSectionProps) => {
       {resume.appliedRole === "디자이너" && (
         <MultiInfoItem
           label="대표 근무 이력"
-          content={`${resume.designerMajorExperienceCompanyName},${resume.designerMajorExperienceDuration} / ${resume.designerMajorExperienceRole}`}
+          content={buildExperienceContent(
+            resume.designerMajorExperienceCompanyName,
+            resume.designerMajorExperienceDuration,
+            resume.designerMajorExperienceRole
+          )}
           nullString="없음"
         />
       )}
       {resume.appliedRole === "인턴" && (
         <MultiInfoItem
           label="대표 근무 이력"
-          content={`${resume.internMajorExperienceCompanyName},${resume.internMajorExperienceDuration} / ${resume.internMajorExperienceRole}`}
+          content={buildExperienceContent(
+            resume.internMajorExperienceCompanyName,
+            resume.internMajorExperienceDuration,
+            resume.internMajorExperienceRole
+          )}
           nullString="없음"
         />
       )}
