@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/stores/auth-store";
 import { apiFetch } from "./fetch";
 import { JobPostingType } from "@/types/job-posting-type";
-import { TEST_API } from "./consts";
+import { PRODUCTION_API } from "./consts";
 
 export const getJobPostings = async (queryParams?: Record<string, string>) => {
   try {
@@ -48,7 +48,7 @@ export const uploadJobPostingImage = async (image: File) => {
     const jwt = useAuthStore.getState().jwt;
 
     const formData = new FormData();
-    const url = `${TEST_API}/api/v1/uploads/job-postings/stores`;
+    const url = `${PRODUCTION_API}/api/v1/uploads/job-postings/stores`;
     formData.append("image", image);
 
     const request = new Request(url, {

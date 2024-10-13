@@ -1,9 +1,9 @@
 import { useAuthStore } from "@/stores/auth-store";
-import { TEST_API } from "./consts";
+import { PRODUCTION_API } from "./consts";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const apiFetch = async (url: string, method: string, body?: any) => {
-  const fullUrl = TEST_API + url;
+  const fullUrl = PRODUCTION_API + url;
   const jwt = useAuthStore.getState().jwt;
 
   console.log("=== API Request ===");

@@ -38,7 +38,7 @@ export default function HomePage({ searchParams }: SearchParams) {
     setHomeTopTab: state.setHomeTopTab
   }));
 
-  const userId = searchParams.userId;
+  const UserID = searchParams.userId;
   const [loading, setLoading] = useState(true);
 
   const { login, jwt } = useAuthStore((state) => ({
@@ -57,15 +57,15 @@ export default function HomePage({ searchParams }: SearchParams) {
 
   useEffect(() => {
     const _login = async () => {
-      if (userId && !jwt) {
-        const result = await login("u2");
+      if (UserID && !jwt) {
+        const result = await login(UserID);
         if (!result) {
           setIsLoginFailed(true);
         }
       }
     };
     _login();
-  }, [userId, login, jwt]);
+  }, [UserID, login, jwt]);
 
   useEffect(() => {
     if (jwt) {
