@@ -22,6 +22,8 @@ const Container = styled.div`
 interface SearchParams {
   searchParams: {
     userId: string;
+    profileImageUri: string;
+    sex: string;
   };
 }
 
@@ -39,11 +41,15 @@ export default function HomePage({ searchParams }: SearchParams) {
   }));
 
   const UserID = searchParams.userId;
+  const profileImageUri = searchParams.profileImageUri;
+  const sex = searchParams.sex;
   const [loading, setLoading] = useState(true);
 
-  const { login, jwt } = useAuthStore((state) => ({
+  const { jwt, login, setProfileImageUri, setSex } = useAuthStore((state) => ({
+    jwt: state.jwt,
     login: state.login,
-    jwt: state.jwt
+    setProfileImageUri: state.setProfileImageUri,
+    setSex: state.setSex
   }));
 
   useEffect(() => {
@@ -61,6 +67,9 @@ export default function HomePage({ searchParams }: SearchParams) {
         const result = await login(UserID);
         if (!result) {
           setIsLoginFailed(true);
+        } else {
+          setProfileImageUri(profileImageUri);
+          setSex(sex);
         }
       }
     };

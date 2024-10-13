@@ -7,11 +7,15 @@ export type AuthState = {
   jwt: string | null;
   userId: string | null;
   UserID: string | null;
+  profileImageUri: string | null;
+  sex: string | null;
 };
 
 export type AuthActions = {
   login: (userId: string) => Promise<boolean>;
   logout: () => void;
+  setProfileImageUri: (profileImageUri: string) => void;
+  setSex: (sex: string) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -19,7 +23,9 @@ export type AuthStore = AuthState & AuthActions;
 export const defaultAuthState: AuthState = {
   jwt: null,
   userId: null,
-  UserID: null
+  UserID: null,
+  profileImageUri: null,
+  sex: null
 };
 
 export const useAuthStore = create(
@@ -49,6 +55,12 @@ export const useAuthStore = create(
       },
       logout: () => {
         set({ jwt: null, userId: null });
+      },
+      setProfileImageUri: (profileImageUri: string) => {
+        set({ profileImageUri });
+      },
+      setSex: (sex: string) => {
+        set({ sex });
       }
     }),
     {
