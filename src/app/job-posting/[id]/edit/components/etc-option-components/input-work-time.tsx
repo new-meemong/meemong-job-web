@@ -145,7 +145,7 @@ const InputWorkTime = () => {
         />
         <SheetContainer>
           <SheetHeader />
-          <SheetContent>
+          <SheetContent disableDrag={true}>
             <Scroller>
               {generateTimeOptions().map((time) => (
                 <TimeOption
@@ -172,7 +172,7 @@ const InputWorkTime = () => {
         />
         <SheetContainer>
           <SheetHeader />
-          <SheetContent>
+          <SheetContent disableDrag={true}>
             <Scroller>
               {generateTimeOptions().map((time) => (
                 <TimeOption
