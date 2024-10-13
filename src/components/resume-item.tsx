@@ -101,7 +101,7 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
   const handleClick = () => {
     router.push(`/resume/${resume.id}`);
   };
-
+  console.log("moonsae resume", resume);
   return (
     <Container onClick={handleClick}>
       <Location>{resume.preferredStoreRegions}</Location>
@@ -118,7 +118,9 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
               .toString()}세`}</ProfileInfo>
             <Divider />
             <ProfileInfo>
-              {resume.designerLicenses ? "자격증 보유" : "자격증 미보유"}
+              {resume.designerLicenses === "없음"
+                ? "자격증 없음"
+                : resume.designerLicenses}
             </ProfileInfo>
             <Divider />
             <ProfileInfo>

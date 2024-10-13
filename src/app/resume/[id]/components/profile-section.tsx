@@ -19,16 +19,18 @@ const ProfileImage = styled(Image)`
 
 const ProfileSection = ({ resume }: ProfileSectionProps) => {
   const { profileImageUri } = resume;
+
   const imgSrc = profileImageUri
     ? `${IMAGE_STORAGE_URL}${profileImageUri}`
     : "/images/default-profile-image.png";
+
   return (
     <Container>
       <ProfileImage
         src={imgSrc}
         alt="Profile Image"
-        width={80}
-        height={80}
+        width={390}
+        height={360}
         priority
       />
     </Container>
