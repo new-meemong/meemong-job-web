@@ -64,4 +64,8 @@ export interface ResumeType {
   deletedAt: string | null; // 삭제 일시 (ISO 8601 형식 또는 null)
 
   userId: number;
+  User: {
+    id: number;
+    UserID: string;
+  };
 }

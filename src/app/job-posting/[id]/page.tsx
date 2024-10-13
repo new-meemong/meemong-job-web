@@ -194,12 +194,13 @@ export default function JobPostingPage() {
         title="지원하기"
         onClick={() => {
           if (typeof window !== "undefined" && window.sendMessageToFlutter) {
+            console.log("mooonsae jobposting", jobPosting);
             const postUrl = window.location.href;
             const postId = postUrl.split("/").pop() as string;
             const message = {
               type: "job-posting" as messageType,
               postId,
-              postUserId: jobPosting.userId.toString()
+              postUserId: jobPosting.User?.UserID.toString()
             };
             window.sendMessageToFlutter(message);
           } else {
