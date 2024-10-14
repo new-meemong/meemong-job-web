@@ -7,7 +7,7 @@ export const webviewLogin = async (UserID: string) => {
       throw new Error("userId is required");
     }
     return await apiFetch("/api/v1/auth/webview-login", "POST", {
-      UserID,
+      userId: UserID,
       webviewAPIKey: WEBVIEW_API_KEY
     });
   } catch (error) {
