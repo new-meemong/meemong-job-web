@@ -22,6 +22,7 @@ export type JobPostingListState = {
 export type JobPostingListActions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getJobPosting: (id: string) => Promise<any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getJobPostingList: (queryParams?: Record<string, any>) => Promise<void>;
   deleteJobPosting: (id: string) => Promise<ResponseResultType>;
   updateJobPosting: (updatedJobPosting: JobPostingType) => void;
