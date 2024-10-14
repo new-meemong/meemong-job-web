@@ -14,6 +14,8 @@ import RequiredInfoSection from "./components/required-info-section";
 import OptionalInfoSection from "./components/optional-info-section";
 import SelfIntroductionSection from "./components/self-introduction-section";
 import BottomButtonSection from "./components/bottom-button-section";
+import { ResumeType } from "@/types/resume-type";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -34,22 +36,33 @@ const ContentContainer = styled.div`
 
 export default function ResumePage() {
   const { id } = useParams();
+  const [resume, setResume] = useState<ResumeType | null>(null);
   const resumeId: string = Array.isArray(id) ? id[0] : id;
-  const { resumeList } = useResumeListStore((state) => ({
-    resumeList: state.resumeList
+  const { getResume } = useResumeListStore((state) => ({
+    getResume: state.getResume
   }));
   const { userId } = useAuthStore((state) => ({
     userId: state.userId
   }));
 
-  const resume = resumeList.find((resume) => resume.id.toString() === id);
-
   const isMine = resume?.userId.toString() === userId;
+
+  useEffect(() => {
+    const fetchResume = async () => {
+      const { status, data } = await getResume(resumeId);
+      if (status) {
+        setResume(data as ResumeType);
+      }
+    };
+    if (resumeId && resumeId !== "new") {
+      fetchResume();
+    }
+  }, [resumeId]);
 
   if (!resume) {
     return <div>존재하지 않는 이력서입니다.</div>;
   }
-  console.log("moonsae", resume);
+
   return (
     <Container>
       <ResumeHeader title={`이력서`} resumeId={resumeId} isMine={isMine} />

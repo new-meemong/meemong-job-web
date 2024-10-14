@@ -1,4 +1,8 @@
-import { deleteJobPosting, getJobPostings } from "@/apis/job-postings";
+import {
+  deleteJobPosting,
+  getJobPosting,
+  getJobPostings
+} from "@/apis/job-postings";
 import { JobPostingType } from "@/types/job-posting-type";
 import { ResponseResultType } from "@/types/response-result-type";
 import { create } from "zustand";
@@ -17,6 +21,7 @@ export type JobPostingListState = {
 
 export type JobPostingListActions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getJobPosting: (id: string) => Promise<any>;
   getJobPostingList: (queryParams?: Record<string, any>) => Promise<void>;
   deleteJobPosting: (id: string) => Promise<ResponseResultType>;
   updateJobPosting: (updatedJobPosting: JobPostingType) => void;
@@ -42,6 +47,12 @@ export const useJobPostingListStore = create(
   persist<JobPostingListStore>(
     (set, get) => ({
       ...defaultJobPostingListState,
+      getJobPosting: async (id: string) => {
+        const res = await getJobPosting(id);
+        const { data } = res;
+
+        return data;
+      },
       getJobPostingList: async (queryParams) => {
         set({ jobPostingListLoading: true });
         const _queryParams = {

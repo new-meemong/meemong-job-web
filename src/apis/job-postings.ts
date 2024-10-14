@@ -3,6 +3,18 @@ import { apiFetch } from "./fetch";
 import { JobPostingType } from "@/types/job-posting-type";
 import { PRODUCTION_API } from "./consts";
 
+export const getJobPosting = async (id: string) => {
+  try {
+    const defaultParams: Record<string, string> = {
+      __include: "JobPostingsStoreImages"
+    };
+    const queryString = new URLSearchParams(defaultParams).toString();
+    return await apiFetch(`/api/v1/job-postings/${id}?${queryString}`, "GET");
+  } catch (e) {
+    console.error("[getJobPosting] failed", e);
+  }
+};
+
 export const getJobPostings = async (queryParams?: Record<string, string>) => {
   try {
     const defaultParams: Record<string, string> = {

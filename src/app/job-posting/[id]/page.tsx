@@ -20,6 +20,8 @@ import DetailInfoIntern from "../components/detail-info-intern";
 import { ImageType } from "@/types/image-type";
 import { useAuthStore } from "@/stores/auth-store";
 import { messageType } from "@/types/send-app-message-type";
+import { useEffect, useState } from "react";
+import { JobPostingType } from "@/types/job-posting-type";
 
 const Container = styled.div`
   flex-direction: column;
@@ -38,19 +40,30 @@ const ContentContainer = styled.div`
 
 export default function JobPostingPage() {
   const { id } = useParams();
+  const [jobPosting, setJobPosting] = useState<JobPostingType | null>(null);
   const jobPostingId: string = Array.isArray(id) ? id[0] : id;
-  const { jobPostingList } = useJobPostingListStore((state) => ({
-    jobPostingList: state.jobPostingList
+  const { getJobPosting } = useJobPostingListStore((state) => ({
+    jobPostingList: state.jobPostingList,
+    getJobPosting: state.getJobPosting
   }));
+
   const { userId } = useAuthStore((state) => ({
     userId: state.userId
   }));
 
-  const jobPosting = jobPostingList.find(
-    (posting) => posting.id.toString() === id
-  );
-
   const isMine = jobPosting?.userId.toString() === userId;
+
+  useEffect(() => {
+    const fetchJobPosting = async () => {
+      const result = await getJobPosting(jobPostingId);
+      if (result) {
+        setJobPosting(result);
+      }
+    };
+    if (jobPostingId && jobPostingId !== "new") {
+      fetchJobPosting();
+    }
+  }, [jobPostingId]);
 
   if (!jobPosting) {
     return <div>존재하지 않는 구인공고입니다.</div>;

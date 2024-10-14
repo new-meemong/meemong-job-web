@@ -3,6 +3,14 @@ import { apiFetch } from "./fetch";
 import { ResumeType } from "@/types/resume-type";
 import { PRODUCTION_API } from "./consts";
 
+export const getResume = async (id: string) => {
+  try {
+    return await apiFetch(`/api/v1/resumes/${id}`, "GET");
+  } catch (e) {
+    console.error("[getResume] failed", e);
+  }
+};
+
 export const getResumes = async (queryParams?: Record<string, string>) => {
   try {
     const defaultParams: Record<string, string> = {};

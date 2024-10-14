@@ -1,4 +1,4 @@
-import { deleteResume, getResumes } from "@/apis/resumes";
+import { deleteResume, getResume, getResumes } from "@/apis/resumes";
 import { ResponseResultType } from "@/types/response-result-type";
 import { ResumeType } from "@/types/resume-type";
 import { create } from "zustand";
@@ -45,16 +45,11 @@ export const useResumeListStore = create(
     (set, get) => ({
       ...defaultResumeListState,
       getResume: async (userId) => {
-        const _queryParams = {
-          __cursorOrder: "createdAtDesc",
-          userId: userId
-        };
+        const res = await getResume(userId);
+        const { data } = res;
 
-        const res = await getResumes(_queryParams);
-        const { dataList } = res;
-
-        if (dataList.length > 0) {
-          return { status: true, data: dataList[0], message: "" };
+        if (data) {
+          return { status: true, data, message: "" };
         } else {
           return { status: false, message: "" };
         }
