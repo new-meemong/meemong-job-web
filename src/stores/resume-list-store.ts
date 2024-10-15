@@ -55,7 +55,7 @@ export const useResumeListStore = create(
           const res = await getResumeById(userId);
           const { dataList } = res;
 
-          if (dataList) {
+          if (dataList.length > 0) {
             return { status: true, data: dataList[0], message: "" };
           } else {
             return { status: false, message: "" };
