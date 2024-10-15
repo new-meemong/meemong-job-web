@@ -3,8 +3,17 @@ import InfoTitle from "./info-title";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { JobPostingType } from "@/types/job-posting-type";
+import CopyBlackIcon from "@/components/icons/copy-black-icon";
 
 const Container = styled.div``;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: ${pxToVw(4)};
+  align-items: center;
+  cursor: pointer;
+`;
 const Address = styled.div`
   ${fonts.greyTextSemi16}
   padding-top: ${pxToVw(8)};
@@ -14,9 +23,23 @@ const Address = styled.div`
 type StoreLocationProps = Pick<JobPostingType, "storeAddress">;
 
 const StoreLocation = ({ storeAddress }: StoreLocationProps) => {
+  const handleCopyAddress = () => {
+    navigator.clipboard
+      .writeText(storeAddress)
+      .then(() => {
+        alert("주소가 복사되었습니다."); // Optional: Show an alert or any other feedback
+      })
+      .catch((err) => {
+        console.error("Failed to copy the address: ", err);
+      });
+  };
+
   return (
     <Container>
-      <InfoTitle title={"매장 위치"} />
+      <HeaderContainer onClick={handleCopyAddress}>
+        <InfoTitle title={"매장 위치"} />
+        <CopyBlackIcon />
+      </HeaderContainer>
       <Address>{storeAddress}</Address>
     </Container>
   );
