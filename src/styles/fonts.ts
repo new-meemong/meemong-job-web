@@ -35,6 +35,12 @@ export const fonts = {
     color: ${colors.purplePrimary};
   `,
 
+  //purpleSecondaryNew
+  purpleSecondaryNewSemi20: css`
+    font-size: ${pxToVw(20)};
+    font-weight: 500;
+    color: ${colors.purpleSecondaryNew};
+  `,
   // purpleSecondary
   purpleSecondaryBold20: css`
     font-size: ${pxToVw(20)};

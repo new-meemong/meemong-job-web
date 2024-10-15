@@ -1,5 +1,6 @@
 export const colors = {
   purplePrimary: "#5D54B7",
+  purpleSecondaryNew: "#8276F5",
   purpleSecondary: "#D1CCFF",
   purpleSecondary2: "#C3EFFB",
   purpleBackground: "#F1F0FF",

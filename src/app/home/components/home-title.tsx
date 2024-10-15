@@ -3,7 +3,7 @@ import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
 const Container = styled.div`
-  ${fonts.purpleSecondaryBold20}
+  ${fonts.purpleSecondaryNewSemi20}
   height: ${pxToVw(88)};
   width: 100%;
   display: flex;
