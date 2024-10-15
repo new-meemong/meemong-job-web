@@ -7,9 +7,10 @@ import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import Image from "next/image";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
+import loadImage from "blueimp-load-image";
 
 const Container = styled.div``;
 
@@ -90,6 +91,8 @@ const InfoDot = styled.div`
 const StyledImage = styled(Image)`
   object-fit: cover;
   position: absolute;
+  user-select: none;
+  pointer-events: none;
 `;
 
 const JobPostingEditStoreImage = () => {
@@ -108,7 +111,7 @@ const JobPostingEditStoreImage = () => {
     hasError = jobPostingsStoreImages.length === 0 && hasInternOptionNull;
   }
   const [isUploading, setIsUploading] = useState(false);
-  const longPressTimer = useRef<NodeJS.Timeout | null>(null); // 롱클릭 타이머
+  // const longPressTimer = useRef<NodeJS.Timeout | null>(null); // 롱클릭 타이머
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -132,9 +135,42 @@ const JobPostingEditStoreImage = () => {
 
     setIsUploading(true);
 
+    const rotatedFile = await new Promise((resolve) => {
+      loadImage(
+        selectedFile,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (img: HTMLCanvasElement | HTMLImageElement | Event, data: any) => {
+          // 2. 이미지 파일 데이터에 imageHead와 exif가 있는지 확인
+          if (data.imageHead && data.exif) {
+            // 3. exif 값이 있다면 orientation 값을 1로 변경
+            loadImage.writeExifData(data.imageHead, data, "Orientation", 1);
+            (img as HTMLCanvasElement).toBlob(async (blob: Blob | null) => {
+              if (blob) {
+                loadImage.replaceHead(
+                  blob,
+                  data.imageHead,
+                  async (newBlob: Blob | null) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    (newBlob as any).name = selectedFile.name; // TypeScript에서는 Blob에 name 속성이 없으므로 any로 캐스팅
+                    // 4. 기존 메서드로 파일 s3에 업로드
+                    resolve(newBlob);
+                  }
+                );
+              }
+            }, "image/jpeg");
+          } else {
+            // exif 값 없으면 바로 s3에 업로드
+            resolve(selectedFile);
+          }
+        },
+        { meta: true, orientation: true, canvas: true }
+      );
+    });
+
     try {
       // 서버에 이미지 업로드
-      const { data } = await uploadJobPostingImage(selectedFile);
+
+      const { data } = await uploadJobPostingImage(rotatedFile as File);
 
       const uri = `${data?.imageFile?.fileuri}`;
       const thumbnailUri = `${data?.imageThumbnailFile?.fileuri}`;
@@ -164,16 +200,20 @@ const JobPostingEditStoreImage = () => {
     }
   };
 
-  const handleMouseDown = (index: number) => {
-    longPressTimer.current = setTimeout(() => {
-      handleImageDelete(index); // 롱클릭시 이미지 삭제
-    }, 800); // 800ms 이상 클릭 시 롱클릭으로 간주
-  };
+  // const handleMouseDown = (index: number) => {
+  //   longPressTimer.current = setTimeout(() => {
+  //     handleImageDelete(index); // 롱클릭시 이미지 삭제
+  //   }, 800); // 800ms 이상 클릭 시 롱클릭으로 간주
+  // };
 
-  const handleMouseUp = () => {
-    if (longPressTimer.current) {
-      clearTimeout(longPressTimer.current); // 클릭을 짧게 했을 경우 타이머 초기화
-    }
+  // const handleMouseUp = () => {
+  //   if (longPressTimer.current) {
+  //     clearTimeout(longPressTimer.current); // 클릭을 짧게 했을 경우 타이머 초기화
+  //   }
+  // };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault(); // 기본 컨텍스트 메뉴 비활성화
   };
 
   return (
@@ -200,10 +240,12 @@ const JobPostingEditStoreImage = () => {
           return (
             <UploadedImageWrapper
               key={index}
-              onMouseDown={() => handleMouseDown(index)} // 마우스 클릭 시작
-              onMouseUp={handleMouseUp} // 마우스 클릭 해제
-              onTouchStart={() => handleMouseDown(index)} // 모바일 터치 시작
-              onTouchEnd={handleMouseUp} // 모바일 터치 종료
+              // onMouseDown={() => handleMouseDown(index)} // 마우스 클릭 시작
+              // onMouseUp={handleMouseUp} // 마우스 클릭 해제
+              // onTouchStart={() => handleMouseDown(index)} // 모바일 터치 시작
+              // onTouchEnd={handleMouseUp} // 모바일 터치 종료
+              onClick={() => handleImageDelete(index)} // 이미지 클릭시 삭제handleImageDelete
+              onContextMenu={handleContextMenu} // 우클릭 방지
             >
               <StyledImage
                 src={imageUri}
