@@ -40,8 +40,10 @@ export const useSearchNaverStore = create<SearchNaverStore>((set) => ({
     if (!searchQuery) {
       throw new Error("searchQuery is required");
     }
-    const { items } = await searchNaver(searchQuery);
 
+    const res = await searchNaver(`${searchQuery}`);
+
+    const { items } = res;
     const cleanedItems = items.map((item: SearchResultItemType) => ({
       ...item,
       title: item.title.replace(/<\/?[^>]+(>|$)/g, "") // 모든 HTML 태그를 제거

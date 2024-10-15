@@ -70,7 +70,12 @@ const SearchResultContainer = styled.div`
 
 export default function SearchNaver() {
   const { searchQuery, searchResults, setSearchQuery, search } =
-    useSearchNaverStore();
+    useSearchNaverStore((state) => ({
+      searchQuery: state.searchQuery,
+      searchResults: state.searchResults,
+      setSearchQuery: state.setSearchQuery,
+      search: state.search
+    }));
   const [isSearching, setIsSearching] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +114,7 @@ export default function SearchNaver() {
       <SearchResultContainer>
         {searchResults.length > 0
           ? searchResults.map((item) => (
-              <SearchResultItem key={item.link} {...item} />
+              <SearchResultItem key={item.title} {...item} />
             ))
           : searchQuery && <p>검색 결과가 없습니다.</p>}
       </SearchResultContainer>
