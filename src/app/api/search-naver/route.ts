@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
 
   const apiUrl = `https://openapi.naver.com/v1/search/local.json?query=${encodeURIComponent(
     query
-  )}`;
+  )}&display=5&sort=random`;
 
   try {
     const response = await fetch(apiUrl, {

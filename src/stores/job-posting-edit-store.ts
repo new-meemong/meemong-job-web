@@ -54,6 +54,8 @@ import { ResponseResultType } from "@/types/response-result-type";
 type StoreInfoType = {
   title: string;
   address: string;
+  mapx: string;
+  mapy: string;
 };
 
 type JobPostingsStoreImageType = {
@@ -67,6 +69,8 @@ type JobPostingEditState = {
   storeRegion: string | null;
   storeRegionSiName: string | null;
   storeAddress: string | null;
+  storeAddressNaverMapx: string | null;
+  storeAddressNaverMapy: string | null;
 
   // 기본 정보
   role: RoleKey;
@@ -239,6 +243,8 @@ const defaultJobPostingEditState: JobPostingEditState = {
   storeRegion: null,
   storeRegionSiName: null,
   storeAddress: null,
+  storeAddressNaverMapx: null,
+  storeAddressNaverMapy: null,
   role: "디자이너",
   monthlyEducationDesignerCount: null,
   monthlyEducationInternCount: null,
@@ -546,6 +552,8 @@ export const useJobPostingEditStore = create(
             postingTitle: get().postingTitle, // 게시글 제목
             storeName: get().storeName, // 매장명
             storeAddress: get().storeAddress, // 매장 주소
+            storeAddressNaverMapx: get().storeAddressNaverMapx, // 매장 주소 네이버 지도 x
+            storeAddressNaverMapy: get().storeAddressNaverMapy, // 매장 주소 네이버 지도 y
             storeRegion: get().storeRegion,
             storeRegionSiName: get().storeRegionSiName,
             // 기본 정보
@@ -662,6 +670,8 @@ export const useJobPostingEditStore = create(
             postingTitle: get().postingTitle, // 게시글 제목
             storeName: get().storeName, // 매장명
             storeAddress: get().storeAddress, // 매장 주소
+            storeAddressNaverMapx: get().storeAddressNaverMapx, // 매장 주소 네이버 지도 x
+            storeAddressNaverMapy: get().storeAddressNaverMapy, // 매장 주소 네이버 지도 y
             storeRegion: get().storeRegion,
             storeRegionSiName: get().storeRegionSiName,
             // 기본 정보
@@ -813,7 +823,9 @@ export const useJobPostingEditStore = create(
           storeName: title,
           storeRegion,
           storeRegionSiName,
-          storeAddress: address
+          storeAddress: address,
+          storeAddressNaverMapx: storeInfo.mapx,
+          storeAddressNaverMapy: storeInfo.mapy
         });
       },
       setIsEdit: (isEdit: boolean) => set({ isEdit })

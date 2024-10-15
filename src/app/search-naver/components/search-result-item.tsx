@@ -21,7 +21,9 @@ export const SearchResultItem = (item: SearchResultItemType) => {
   const handleClick = () => {
     const info = {
       title: item.title,
-      address: item.address
+      address: item.address,
+      mapx: item.mapx,
+      mapy: item.mapy
     };
     setStoreRegion(info);
     router.back();
