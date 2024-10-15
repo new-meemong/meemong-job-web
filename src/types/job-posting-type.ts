@@ -26,6 +26,7 @@ import {
   WorkCycleTypesKey,
   WorkTypeKey
 } from "./job-posting-keys";
+import { UserType } from "./user-type";
 
 export interface JobPostingType {
   // 고유 식별자
@@ -117,8 +118,5 @@ export interface JobPostingType {
   isRestrictedAge: IsRestrictedAgeKey; // 나이 제한 여부
 
   JobPostingsStoreImages: ImageType[];
-  User: {
-    id: number;
-    UserID: string;
-  };
+  User: UserType;
 }

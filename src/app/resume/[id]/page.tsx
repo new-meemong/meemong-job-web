@@ -63,7 +63,6 @@ export default function ResumePage() {
   if (!resume) {
     return <div>존재하지 않는 이력서입니다.</div>;
   }
-
   return (
     <Container>
       <ResumeHeader
@@ -75,9 +74,9 @@ export default function ResumePage() {
       <ProfileSection resume={resume} />
       <ContentContainer>
         <UserProfile
-          userImage={"/images/default_profile_image.jpg"}
-          userName={resume.userName}
-          userId={resume.id}
+          userImage={resume.User.ProfilePictureURL}
+          userName={resume.User.DisplayName || resume.userName}
+          userId={resume.User.id}
         />
         <Divider />
         <TitleSection title={resume.shortDescription} />

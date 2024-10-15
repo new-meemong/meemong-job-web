@@ -5,6 +5,7 @@ import SingleInfoItem from "../../../components/details/single-info-item";
 import MultiInfoItem from "../../../components/details/multi-info-item";
 import { formatPriceWithCommas } from "@/lib/price-comma";
 import { JobPostingType } from "@/types/job-posting-type";
+import SingleInfoLinkItem from "@/components/details/single-info-link-item";
 
 const Container = styled.div`
   display: flex;
@@ -129,7 +130,7 @@ const DetailInfoDesigner = ({
         label={"근무 시간"}
         content={`${startWorkTime || "00:00"} ~ ${endWorkTime || "00:00"}`}
       />
-      <SingleInfoItem label={"매장 링크"} content={storeUrl || ""} />
+      <SingleInfoLinkItem label={"매장 링크"} content={storeUrl || ""} />
       <SingleInfoItem label={"메인 염모제"} content={mainHairDye || ""} />
     </Container>
   );

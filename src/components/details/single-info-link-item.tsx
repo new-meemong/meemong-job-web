@@ -1,5 +1,6 @@
 import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
+import Link from "next/link";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -13,7 +14,7 @@ const Label = styled.div`
   flex-shrink: 0;
 `;
 
-const Content = styled.div`
+const Content = styled(Link)`
   ${fonts.greyTextSemi16};
   min-height: ${pxToVw(24)};
   word-wrap: break-word;
@@ -21,6 +22,8 @@ const Content = styled.div`
   white-space: normal;
   flex-grow: 1;
   overflow: hidden;
+
+  text-decoration: underline;
 `;
 
 interface InfoItemProps {
@@ -29,7 +32,7 @@ interface InfoItemProps {
   nullString?: string;
 }
 
-const SingleInfoItem = ({
+const SingleInfoLinkItem = ({
   label,
   content,
   nullString = "상관없음"
@@ -46,9 +49,11 @@ const SingleInfoItem = ({
   return (
     <Container>
       <Label>{label}</Label>
-      <Content>{displayContent}</Content>
+      <Content href={displayContent} target="_blank" rel="noopener noreferrer">
+        {displayContent}
+      </Content>
     </Container>
   );
 };
 
-export default SingleInfoItem;
+export default SingleInfoLinkItem;
