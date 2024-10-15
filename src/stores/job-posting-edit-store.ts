@@ -803,22 +803,18 @@ export const useJobPostingEditStore = create(
           jobPostingsStoreImages: newImages
         });
       },
-      setStoreRegion: (storeRegion: StoreInfoType) => {
-        const title = storeRegion.title;
-        const address = storeRegion.address;
-        const regionMatch = address.match(/^(.*?[시도])\s(.*?[구군])/);
+      setStoreRegion: (storeInfo: StoreInfoType) => {
+        const title = storeInfo.title;
+        const address = storeInfo.address;
+        const storeRegionSiName = address.split(" ")[0];
+        const storeRegion = `${address.split(" ")[0]} ${address.split(" ")[1]}`;
 
-        if (regionMatch) {
-          const storeRegionSiName = regionMatch[1];
-          const storeRegion = `${regionMatch[1]} ${regionMatch[2]}`;
-
-          set({
-            storeName: title,
-            storeRegion,
-            storeRegionSiName,
-            storeAddress: address
-          });
-        }
+        set({
+          storeName: title,
+          storeRegion,
+          storeRegionSiName,
+          storeAddress: address
+        });
       },
       setIsEdit: (isEdit: boolean) => set({ isEdit })
     }),
