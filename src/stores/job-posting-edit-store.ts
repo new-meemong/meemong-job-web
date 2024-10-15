@@ -563,7 +563,7 @@ export const useJobPostingEditStore = create(
 
             // 상세 정보
             sex: get().sex, // 성별
-            isRestrictedAge: get().isRestrictedAge, // 연령 제한
+            isRestrictedAge: get().isRestrictedAge, // 나이 제한
             isPossibleMiddleAge: get().isPossibleMiddleAge || false, // 중년 가능
             designerLicenses: get().designerLicenses.join(), // 미용 라이센스
             storeTypes: get().storeTypes.join(), // 매장 형태
@@ -581,7 +581,7 @@ export const useJobPostingEditStore = create(
             designerExperienceYearNumber: get().designerExperienceYearNumber, // 경력
             salesLast3MonthsAvg: get().salesLast3MonthsAvg, // 최근 3개월 매출
             subwayAccessibility: get().subwayAccessibility, // 지하철 접근성
-            adminAge: get().adminAge, // 관리자 연령
+            adminAge: get().adminAge, // 관리자 나이
             adminSex: get().adminSex, // 관리자 성별
             leaveDayCount: get().leaveDayCount, // 휴가일수
             parkingSpotCount: get().parkingSpotCount, // 주차장
@@ -679,7 +679,7 @@ export const useJobPostingEditStore = create(
 
             // 상세 정보
             sex: get().sex, // 성별
-            isRestrictedAge: get().isRestrictedAge, // 연령 제한
+            isRestrictedAge: get().isRestrictedAge, // 나이 제한
             isPossibleMiddleAge: get().isPossibleMiddleAge || false, // 중년 가능
             designerLicenses: get().designerLicenses.join(), // 미용 라이센스
             storeTypes: get().storeTypes.join(), // 매장 형태
@@ -696,7 +696,7 @@ export const useJobPostingEditStore = create(
             salesCommission: get().salesCommission, // 매출 수수료
             internExperienceYearNumber: get().internExperienceYearNumber, // 경력
             subwayAccessibility: get().subwayAccessibility, // 지하철 접근성
-            adminAge: get().adminAge, // 관리자 연령
+            adminAge: get().adminAge, // 관리자 나이
             adminSex: get().adminSex, // 관리자 성별
             leaveDayCount: get().leaveDayCount, // 휴가일수
             parkingSpotCount: get().parkingSpotCount, // 주차장

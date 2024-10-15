@@ -142,10 +142,10 @@ const SelectIsRestrictedAge = () => {
   return (
     <Container>
       <BaseSingleInfoSelectAge
-        label="연령"
+        label="나이"
         options={options}
         selectedOption={isRestrictedAge}
-        errorMessage="연령을 선택해주세요."
+        errorMessage="나이를 선택해주세요."
         isError={hasError}
         onSelect={handleSelect}
         infoLabel="연령차별금지법 안내"

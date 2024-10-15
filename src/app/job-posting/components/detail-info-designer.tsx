@@ -79,8 +79,8 @@ const DetailInfoDesigner = ({
       <InfoTitle title={"매장 상세 정보"} />
       <SingleInfoItem label={"성별"} content={sex} />
       <SingleInfoItem
-        label={"연령"}
-        content={isRestrictedAge ? "연령제한" : "연령무관"}
+        label={"나이"}
+        content={isRestrictedAge ? "나이 제한" : "나이 무관"}
       />
       <SingleInfoItem label={"미용 라이센스 소유"} content={designerLicenses} />
       <MultiInfoItem label={"매장 유형"} content={storeTypes} />

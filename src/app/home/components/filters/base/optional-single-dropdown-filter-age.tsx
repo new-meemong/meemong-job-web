@@ -189,9 +189,9 @@ const OptionalSingleDropdownFilterAge = <T extends string | boolean>({
           <UnexpandContentContainer>
             <UnexpandContent>
               {selectedOption === "true"
-                ? "연령 제한"
+                ? "나이 제한"
                 : selectedOption === "false"
-                ? "연령 무관"
+                ? "나이 무관"
                 : selectedOption}
             </UnexpandContent>
           </UnexpandContentContainer>

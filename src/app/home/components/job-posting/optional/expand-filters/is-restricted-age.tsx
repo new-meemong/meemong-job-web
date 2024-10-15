@@ -16,8 +16,8 @@ const IsRestrictedAge = () => {
   }));
 
   const options = [
-    { key: "false", value: "연령 무관" },
-    { key: "true", value: "연령 제한" }
+    { key: "false", value: "나이 무관" },
+    { key: "true", value: "나이 제한" }
   ];
 
   const selectedIsRestrictedAgeOption =

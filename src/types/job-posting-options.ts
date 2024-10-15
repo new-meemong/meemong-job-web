@@ -181,10 +181,10 @@ export const jobPostingOptions: {
     { key: "여자", value: "여자" },
     { key: "무관", value: "무관" }
   ],
-  // 연령 제한
+  // 나이 제한
   isRestrictedAge: [
-    { key: false, value: "연령 무관" },
-    { key: true, value: "연령 제한" }
+    { key: false, value: "나이 무관" },
+    { key: true, value: "나이 제한" }
   ],
   // 40대 이상 가능 여부
   isPossibleMiddleAge: [
