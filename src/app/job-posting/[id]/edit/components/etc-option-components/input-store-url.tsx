@@ -50,7 +50,7 @@ const InputStoreUrl = () => {
     <Container>
       <Label>매장 링크</Label>
       <InputField
-        placeholder="매장 링크를 입력해주세요 ex)인스타"
+        placeholder="ex) 네이버플레이스 or 인스타"
         type="text"
         value={storeUrl || ""}
         onChange={handleChange}

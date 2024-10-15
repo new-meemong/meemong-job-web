@@ -31,6 +31,13 @@ const OptionItem = styled.div`
   border-bottom: ${pxToVw(1)} solid #f0f0f0;
 `;
 
+const Caption = styled.span`
+  ${fonts.greyText4Semi12}
+  padding-left: ${pxToVw(16)};
+  padding-top: ${pxToVw(12)};
+  padding-bottom: ${pxToVw(12)};
+`;
+
 interface Option<T> {
   key: T;
   value: string;
@@ -43,6 +50,7 @@ interface MultiSelectBottomModalProps<T> {
   onClose: () => void;
   options: Option<T>[];
   onSelect: (option: T) => void;
+  caption?: string;
 }
 
 const MultiSelectBottomModal = <T,>({
@@ -50,7 +58,8 @@ const MultiSelectBottomModal = <T,>({
   isOpen,
   onClose,
   options,
-  onSelect
+  onSelect,
+  caption = "중복 선택 가능"
 }: MultiSelectBottomModalProps<T>) => {
   return (
     <Sheet isOpen={isOpen} onClose={onClose} detent="content-height">
@@ -58,6 +67,7 @@ const MultiSelectBottomModal = <T,>({
       <SheetContainer>
         <SheetHeader />
         <SheetContent>
+          <Caption>{caption}</Caption>
           <SheetScroller>
             {options.map((option, index) => {
               const isSelected = selectedOptions.includes(option.key);
