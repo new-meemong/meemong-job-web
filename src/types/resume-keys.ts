@@ -12,6 +12,9 @@
 
 // 나이
 
+// 성별
+export type SexKeyResume = "남자" | "여자";
+
 // 지원분야
 export type RoleKeyResume = "디자이너" | "인턴";
 

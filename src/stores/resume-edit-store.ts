@@ -31,6 +31,7 @@ type ResumeEditState = {
   profileImageThumbnailUri: string | null;
   shortDescription: string | null;
   userName: string | null;
+  sex: string | null;
   birthday: string | null;
 
   // 선호 지역
@@ -78,6 +79,7 @@ type ResumeEditActions = {
   setProfileImageThumbnailUri: (uri: string | null) => void;
   setShortDescription: (description: string | null) => void;
   setUserName: (name: string | null) => void;
+  setSex: (sex: string) => void;
   setPreferredStoreRegions: (regions: { key: string; value: string }[]) => void;
   setBirthday: (birthday: string | null) => void;
   setAppliedRole: (role: RoleKeyResume) => void;
@@ -142,6 +144,7 @@ const defaultResumeEditState: ResumeEditState = {
   profileImageThumbnailUri: null,
   shortDescription: null,
   userName: null,
+  sex: null,
   _preferredStoreRegions: [],
   preferredStoreRegions: null,
   preferredStoreRegionSiNames: null,
@@ -270,6 +273,7 @@ export const useResumeEditStore = create(
         set({ shortDescription: description });
       },
       setUserName: (name) => set({ userName: name }),
+      setSex: (sex) => set({ sex }),
       setPreferredStoreRegions: (regions) => {
         const preferredStoreRegionSiNames = Array.from(
           new Set(regions.map((item) => item.key.split(" ")[0]))

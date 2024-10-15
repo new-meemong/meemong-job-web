@@ -10,6 +10,7 @@ import OptionalFieldSection from "./components/optional-field-section";
 import BottomButtonSection from "./components/bottom-button-section";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { useEffect } from "react";
+import { useAuthStore } from "@/stores/auth-store";
 
 const Container = styled.div`
   display: flex;
@@ -31,15 +32,22 @@ const ContentContainer = styled.div`
 export default function ResumeEditPage() {
   const { id } = useParams();
   const resumeId = Array.isArray(id) ? id[0] : id;
-  const { setId } = useResumeEditStore((state) => ({
-    setId: state.setId
+  const { sex } = useAuthStore((state) => ({
+    sex: state.sex
   }));
-
+  const { setId, setSex } = useResumeEditStore((state) => ({
+    setId: state.setId,
+    setSex: state.setSex
+  }));
   useEffect(() => {
+    if (sex) {
+      setSex(sex);
+    }
+
     if (resumeId !== "new") {
       setId(resumeId);
     }
-  }, [resumeId, setId]);
+  }, [resumeId, setId, sex, setSex]);
 
   return (
     <Container>

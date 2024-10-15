@@ -15,6 +15,7 @@ import {
   RoleKeyResume,
   SalesLast3MonthsAvgKeyResume,
   SettlementAllowanceKeyResume,
+  SexKeyResume,
   WorkCycleTypesKeyResume,
   WorkTypeKeyResume
 } from "./resume-keys";
@@ -26,6 +27,7 @@ export interface ResumeType {
   profileImageThumbnailUri: string;
   shortDescription: string;
   userName: string;
+  sex: SexKeyResume;
   _preferredStoreRegions: string[];
   preferredStoreRegions: string;
   preferredStoreRegionSiNames: string;
