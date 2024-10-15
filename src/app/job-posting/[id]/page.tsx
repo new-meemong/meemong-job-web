@@ -171,6 +171,7 @@ export default function JobPostingPage() {
         title={"구인공고"}
         jobPostingId={jobPostingId}
         isMine={isMine}
+        isEnableButton={userId ? true : false}
       />
       <ImageSlider
         images={
@@ -203,24 +204,25 @@ export default function JobPostingPage() {
         <Divider />
         <StoreLocation storeAddress={jobPosting.storeAddress} />
       </ContentContainer>
-      <BottomFloatingButton
-        title="지원하기"
-        onClick={() => {
-          if (typeof window !== "undefined" && window.sendMessageToFlutter) {
-            console.log("mooonsae jobposting", jobPosting);
-            const postUrl = window.location.href;
-            const postId = postUrl.split("/").pop() as string;
-            const message = {
-              type: "job-posting" as messageType,
-              postId,
-              postUserId: jobPosting.User?.UserID.toString()
-            };
-            window.sendMessageToFlutter(message);
-          } else {
-            console.log("sendMessageToFlutter function is not available.");
-          }
-        }}
-      />
+      {userId && (
+        <BottomFloatingButton
+          title="지원하기"
+          onClick={() => {
+            if (typeof window !== "undefined" && window.sendMessageToFlutter) {
+              const postUrl = window.location.href;
+              const postId = postUrl.split("/").pop() as string;
+              const message = {
+                type: "job-posting" as messageType,
+                postId,
+                postUserId: jobPosting.User?.UserID.toString()
+              };
+              window.sendMessageToFlutter(message);
+            } else {
+              console.log("sendMessageToFlutter function is not available.");
+            }
+          }}
+        />
+      )}
     </Container>
   );
 }

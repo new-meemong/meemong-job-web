@@ -264,6 +264,7 @@ export const jobPostingOptions: {
   ],
   // 점판 수당
   salesCommission: [
+    { key: "29% 이하", value: "29% 이하" },
     { key: "30% 이상", value: "30% 이상" },
     { key: "50% 이상", value: "50% 이상" },
     { key: "70% 이상", value: "70% 이상" },

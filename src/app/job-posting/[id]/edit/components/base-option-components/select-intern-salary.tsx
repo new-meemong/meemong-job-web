@@ -23,11 +23,11 @@ const SelectInternSalary = () => {
   return (
     <Container>
       <BaseSingleSelect
-        label="희망 급여"
+        label="급여"
         options={options}
         selectedOption={internSalary}
         onSelect={handleSelect}
-        errorMessage={"인턴급여를 선택해주세요."}
+        errorMessage={"인턴 급여를 선택해주세요."}
         isError={hasError}
       />
     </Container>

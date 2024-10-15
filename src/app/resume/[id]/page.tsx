@@ -66,7 +66,12 @@ export default function ResumePage() {
 
   return (
     <Container>
-      <ResumeHeader title={`이력서`} resumeId={resumeId} isMine={isMine} />
+      <ResumeHeader
+        title={`이력서`}
+        resumeId={resumeId}
+        isMine={isMine}
+        isEnableButton={userId ? true : false}
+      />
       <ProfileSection resume={resume} />
       <ContentContainer>
         <UserProfile
@@ -83,7 +88,7 @@ export default function ResumePage() {
         <Divider />
         <SelfIntroductionSection description={resume.description} />
       </ContentContainer>
-      <BottomButtonSection postUserId={resume.userId.toString()} />
+      {userId && <BottomButtonSection postUserId={resume.userId.toString()} />}
     </Container>
   );
 }

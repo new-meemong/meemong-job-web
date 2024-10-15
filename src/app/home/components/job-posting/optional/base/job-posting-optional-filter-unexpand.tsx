@@ -55,7 +55,7 @@ const JobPostingOptionalFilterUnexpand = ({
       <InitButton onClick={resetFilters}>초기화</InitButton>
       <FilterExpandButton>
         <ExpandButtonText onClick={toggleExpanded}>
-          매장 탐색하기
+          맞춤형 매장 상세 찾기
         </ExpandButtonText>
         <ArrowDownPurpleIcon />
       </FilterExpandButton>

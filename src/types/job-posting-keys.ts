@@ -116,7 +116,12 @@ export type IsExistedProductSupportKey = boolean;
 export type IsExistedDormitorySupportKey = boolean;
 
 // 점판 수당
-export type SalesCommissionKey = "30% 이상" | "50% 이상" | "70% 이상" | "100%";
+export type SalesCommissionKey =
+  | "29% 이하"
+  | "30% 이상"
+  | "50% 이상"
+  | "70% 이상"
+  | "100%";
 
 //디자이너 경력-디자이너
 export type DesignerExperienceYearNumberKey =
