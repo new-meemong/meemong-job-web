@@ -29,7 +29,7 @@ const RequiredInfoSection = ({ resume }: RequiredInfoSectionProps) => {
     <Container>
       <SectionTitle title="기본 정보" />
       <SingleInfoItem label="이름" content={resume.userName} />
-      <SingleInfoItem label="성별" content={resume.sex} />
+      <SingleInfoItem label="성별" content={resume.sex ? resume.sex : ""} />
       <SingleInfoItem label="근무 희망 지역" content={_convertedShortRegions} />
       <SingleInfoItem
         label="나이"
