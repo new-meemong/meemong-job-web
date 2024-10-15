@@ -26,9 +26,9 @@ const ProfileImageContainer = styled.div`
 const ProfileImage = styled(Image)`
   width: ${pxToVw(80)};
   height: ${pxToVw(80)};
-  background-color: ${colors.greyBacground4};
+  /* background-color: ${colors.greyBacground4}; */
   border-radius: ${pxToVw(40)};
-  border: 1px solid ${colors.greyBacground4};
+  /* border: 1px solid ${colors.greyBacground4}; */
   object-fit: cover;
 `;
 
@@ -83,7 +83,7 @@ const ProfileImageSection = () => {
   }
   const profileImage = profileImageThumbnailUri
     ? `${IMAGE_STORAGE_URL}${profileImageThumbnailUri}`
-    : "/images/default_profile_image.jpg";
+    : "/images/resume_profile_default.svg";
   const [imgSrc, setImgSrc] = useState<string>(profileImage);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
