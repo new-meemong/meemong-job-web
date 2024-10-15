@@ -3,11 +3,26 @@ import { apiFetch } from "./fetch";
 import { ResumeType } from "@/types/resume-type";
 import { PRODUCTION_API } from "./consts";
 
+export const getResumeById = async (userId: string) => {
+  try {
+    const defaultParams: Record<string, string> = {
+      userId
+    };
+
+    const queryString = new URLSearchParams(defaultParams).toString();
+    const url = `/api/v1/resumes?${queryString}`;
+    return await apiFetch(url, "GET");
+  } catch (e) {
+    console.error("[getResumeById] failed", e);
+    return { error: e || "Failed to get my resume" };
+  }
+};
 export const getResume = async (id: string) => {
   try {
     return await apiFetch(`/api/v1/resumes/${id}`, "GET");
   } catch (e) {
     console.error("[getResume] failed", e);
+    return { error: e || "Failed to fetch resume" };
   }
 };
 
@@ -22,6 +37,7 @@ export const getResumes = async (queryParams?: Record<string, string>) => {
     return await apiFetch(url, "GET");
   } catch (e) {
     console.error("[getResumes] failed", e);
+    return { error: e || "Failed to fetch resumes" };
   }
 };
 
@@ -30,6 +46,7 @@ export const postResume = async (resume: ResumeType) => {
     return await apiFetch("/api/v1/resumes", "POST", resume);
   } catch (e) {
     console.error("[postResume] failed", e);
+    return { error: e || "Failed to post resume" };
   }
 };
 
@@ -38,6 +55,7 @@ export const putResume = async (id: string, resume: ResumeType) => {
     return await apiFetch(`/api/v1/resumes/${id}`, "PUT", resume);
   } catch (e) {
     console.error("[putResume] failed", e);
+    return { error: e || "Failed to put resume" };
   }
 };
 
@@ -46,6 +64,7 @@ export const deleteResume = async (id: string) => {
     return await apiFetch(`/api/v1/resumes/${id}`, "DELETE");
   } catch (e) {
     console.error("[deleteResume] failed", e);
+    return { error: e || "Failed to delete resume" };
   }
 };
 
@@ -74,5 +93,6 @@ export const uploadResumeProfileImage = async (image: File) => {
     return response.json();
   } catch (e) {
     console.error("[uploadResumeProfileImage] Image upload failed:", e);
+    return { error: e || "Failed to upload resume profile" };
   }
 };

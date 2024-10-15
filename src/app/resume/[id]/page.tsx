@@ -50,6 +50,7 @@ export default function ResumePage() {
   useEffect(() => {
     const fetchResume = async () => {
       const { status, data } = await getResume(resumeId);
+
       if (status) {
         setResume(data as ResumeType);
       }

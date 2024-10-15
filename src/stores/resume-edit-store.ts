@@ -214,7 +214,7 @@ export const useResumeEditStore = create(
           preferredStoreRegionSiNames: get().preferredStoreRegionSiNames
             ? get().preferredStoreRegionSiNames
             : resume.preferredStoreRegionSiNames,
-          birthday: resume.birthday,
+          birthday: moment(resume.birthday).format("YYMMDD"),
           appliedRole: resume.appliedRole,
           workType: resume.workType || "상관없음",
           settlementAllowance: resume.settlementAllowance || "상관없음",

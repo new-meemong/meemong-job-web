@@ -2,8 +2,10 @@ import WriteIcon from "@/components/icons/write-icon";
 import pxToVw from "@/lib/dpi-converter";
 import numberToVw from "@/lib/dpi-number-converter";
 import { useAuthStore } from "@/stores/auth-store";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
+import { ResumeType } from "@/types/resume-type";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styled from "styled-components";
@@ -51,8 +53,12 @@ const AdditionalButtonText = styled(WriteButtonText)`
 const FloatingButton = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
-  const { getResume } = useResumeListStore((state) => ({
-    getResume: state.getResume
+  const { checkMyResumeExist } = useResumeListStore((state) => ({
+    checkMyResumeExist: state.checkMyResumeExist
+  }));
+  const { resetStore, setFromResume } = useResumeEditStore((state) => ({
+    resetStore: state.resetStore,
+    setFromResume: state.setFromResume
   }));
   const { userId } = useAuthStore((state) => ({
     userId: state.userId
@@ -66,8 +72,11 @@ const FloatingButton = () => {
     if (!userId) {
       return;
     }
-    const { status, data } = await getResume(userId);
+    const { status, data } = await checkMyResumeExist(userId);
+
     if (status) {
+      resetStore();
+      setFromResume(data as ResumeType);
       router.push(`/resume/${data!.id}/edit`);
     } else {
       router.push("/resume/new/edit");

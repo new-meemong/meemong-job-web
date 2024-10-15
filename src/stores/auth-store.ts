@@ -38,7 +38,9 @@ export const useAuthStore = create(
           if (!userId) {
             throw new Error("userId is required");
           }
+
           const { data }: { data: UserModel } = await webviewLogin(userId);
+
           if (data && data.token) {
             set({
               jwt: data.token, // JWT 토큰을 상태에 저장

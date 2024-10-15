@@ -1,4 +1,9 @@
-import { deleteResume, getResume, getResumes } from "@/apis/resumes";
+import {
+  deleteResume,
+  getResume,
+  getResumeById,
+  getResumes
+} from "@/apis/resumes";
 import { ResponseResultType } from "@/types/response-result-type";
 import { ResumeType } from "@/types/resume-type";
 import { create } from "zustand";
@@ -17,6 +22,7 @@ export type ResumeListState = {
 
 export type ResumeListActions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  checkMyResumeExist: (userId: string) => Promise<ResponseResultType>;
   getResume: (userId: string) => Promise<ResponseResultType>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getResumeList: (queryParams?: Record<string, any>) => Promise<void>;
@@ -44,6 +50,21 @@ export const useResumeListStore = create(
   persist<ResumeListStore>(
     (set, get) => ({
       ...defaultResumeListState,
+      checkMyResumeExist: async (userId: string) => {
+        try {
+          const res = await getResumeById(userId);
+          const { dataList } = res;
+
+          if (dataList) {
+            return { status: true, data: dataList[0], message: "" };
+          } else {
+            return { status: false, message: "" };
+          }
+        } catch (e) {
+          console.error("[checkMyResumeExist] failed", e);
+          return { status: false, message: "" };
+        }
+      },
       getResume: async (userId) => {
         const res = await getResume(userId);
         const { data } = res;
