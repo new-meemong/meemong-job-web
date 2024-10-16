@@ -95,6 +95,7 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
     preferredStoreRegionSiNames,
     shortDescription,
     appliedRole,
+    sex,
     birthday,
     designerLicenses,
     designerExperienceYearNumber,
@@ -129,20 +130,28 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
           <InfoTextContainer>
             <ProfileInfo>{appliedRole}</ProfileInfo>
             <Divider />
-            {/* <ProfileInfo>{`${sex}`}</ProfileInfo> */}
-            {/* <Divider /> */}
+            {sex && (
+              <>
+                <ProfileInfo>{`${sex}`}</ProfileInfo>
+                <Divider />
+              </>
+            )}
             <ProfileInfo>{`${moment()
               .diff(moment(birthday, "YYYY-MM-DD"), "years")
               .toString()}세`}</ProfileInfo>
             <Divider />
             <ProfileInfo>
-              {designerLicenses === "없음" ? "자격증 없음" : designerLicenses}
+              {designerLicenses === "없음"
+                ? "라이센스 없음"
+                : `${designerLicenses} 보유`}
             </ProfileInfo>
             <Divider />
             <ProfileInfo>
               {appliedRole === "디자이너"
-                ? designerExperienceYearNumber
-                : internExperienceYearNumber}
+                ? `경력 ${designerExperienceYearNumber}`
+                : internExperienceYearNumber === "신입"
+                ? internExperienceYearNumber
+                : `경력 ${internExperienceYearNumber}`}
             </ProfileInfo>
           </InfoTextContainer>
           {/* <ViewCount>{`조회 ${viewCount}`}</ViewCount> */}
