@@ -4,7 +4,12 @@ export const parseQueryString = (queryString: string): Record<string, any> => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result: Record<string, any> = {};
   params.forEach((value, key) => {
-    result[key] = decodeURIComponent(value);
+    try {
+      result[key] = decodeURIComponent(value);
+    } catch (e) {
+      console.error(`Error decoding value for key "${key}":`, e);
+      result[key] = value; // 디코딩에 실패한 경우 원래 값을 사용
+    }
   });
   return result;
 };

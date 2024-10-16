@@ -30,9 +30,17 @@ const JobSearchButton = () => {
 
   const handleClick = async () => {
     setIsLoading(true);
-    const parsedQueries = parseQueryString(jobPostingFilterQueries);
-    await getJobPostingList(parsedQueries);
-    setIsLoading(false);
+    try {
+      const parsedQueries = parseQueryString(jobPostingFilterQueries);
+      await getJobPostingList(parsedQueries);
+    } catch (error) {
+      console.error(
+        "Error parsing query string or fetching job postings:",
+        error
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
