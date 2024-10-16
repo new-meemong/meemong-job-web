@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { ResumeType } from "@/types/resume-type";
 import moment from "moment";
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
+import { convertToShortRegionFromQuery } from "@/lib/convert-region";
 
 const Container = styled.div`
   width: 100%;
@@ -88,45 +89,60 @@ interface ResumeItemProps {
 }
 
 const ResumeItem = ({ resume }: ResumeItemProps) => {
-  const imageUri = resume.profileImageThumbnailUri
-    ? `${IMAGE_STORAGE_URL}${resume.profileImageThumbnailUri}`
+  const {
+    id,
+    preferredStoreRegions,
+    preferredStoreRegionSiNames,
+    shortDescription,
+    appliedRole,
+    birthday,
+    designerLicenses,
+    designerExperienceYearNumber,
+    internExperienceYearNumber,
+    profileImageThumbnailUri
+  } = resume;
+  const imageUri = profileImageThumbnailUri
+    ? `${IMAGE_STORAGE_URL}${profileImageThumbnailUri}`
     : "/images/default_profile_image.jpg";
   const [imgSrc, setImgSrc] = useState(imageUri);
   const router = useRouter();
+
+  const shortRegion = convertToShortRegionFromQuery(
+    preferredStoreRegions,
+    preferredStoreRegionSiNames
+  ).join(", ");
 
   const handleImageError = () => {
     setImgSrc("/images/default_profile_image.jpg"); // 이미지 로드 실패 시 대체 이미지 경로
   };
 
   const handleClick = () => {
-    router.push(`/resume/${resume.id}`);
+    router.push(`/resume/${id}`);
   };
-  console.log("moonsae resume", resume);
+
   return (
     <Container onClick={handleClick}>
-      <Location>{resume.preferredStoreRegions}</Location>
+      <Location>{shortRegion}</Location>
       <ContentContainer>
         <ProfileInfoContainer>
-          <Title>{resume.shortDescription}</Title>
+          <Title>{shortDescription}</Title>
           <InfoTextContainer>
-            <ProfileInfo>{resume.appliedRole}</ProfileInfo>
+            <ProfileInfo>{appliedRole}</ProfileInfo>
             <Divider />
-            {/* <ProfileInfo>{`${resume.sex}`}</ProfileInfo> */}
+            {/* <ProfileInfo>{`${sex}`}</ProfileInfo> */}
             {/* <Divider /> */}
             <ProfileInfo>{`${moment()
-              .diff(moment(resume.birthday, "YYYY-MM-DD"), "years")
+              .diff(moment(birthday, "YYYY-MM-DD"), "years")
               .toString()}세`}</ProfileInfo>
             <Divider />
             <ProfileInfo>
-              {resume.designerLicenses === "없음"
-                ? "자격증 없음"
-                : resume.designerLicenses}
+              {designerLicenses === "없음" ? "자격증 없음" : designerLicenses}
             </ProfileInfo>
             <Divider />
             <ProfileInfo>
-              {resume.appliedRole === "디자이너"
-                ? resume.designerExperienceYearNumber
-                : resume.internExperienceYearNumber}
+              {appliedRole === "디자이너"
+                ? designerExperienceYearNumber
+                : internExperienceYearNumber}
             </ProfileInfo>
           </InfoTextContainer>
           {/* <ViewCount>{`조회 ${viewCount}`}</ViewCount> */}

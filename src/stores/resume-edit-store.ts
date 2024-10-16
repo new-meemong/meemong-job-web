@@ -544,7 +544,7 @@ const getResumeRequiredData = (state: ResumeEditState) => {
       profileImageThumbnailUri: state.profileImageThumbnailUri,
       shortDescription: state.shortDescription,
       userName: state.userName,
-      sex: state.sex,
+
       preferredStoreRegions: state.preferredStoreRegions,
       preferredStoreRegionSiNames: state.preferredStoreRegionSiNames,
       birthday: moment(state.birthday, "YYMMDD").format("YYYY-MM-DD"),
@@ -560,7 +560,7 @@ const getResumeRequiredData = (state: ResumeEditState) => {
       profileImageThumbnailUri: state.profileImageThumbnailUri,
       shortDescription: state.shortDescription,
       userName: state.userName,
-      sex: state.sex,
+
       preferredStoreRegions: state.preferredStoreRegions,
       preferredStoreRegionSiNames: state.preferredStoreRegionSiNames,
       birthday: moment(state.birthday, "YYMMDD").format("YYYY-MM-DD"),
@@ -595,7 +595,8 @@ const getResumeOptionalData = (state: ResumeEditState) => {
       isPreferredMealSupport: state.isPreferredMealSupport,
       isPreferredParking: state.isPreferredParking,
       mbti: state.mbti,
-      description: state.description
+      description: state.description,
+      sex: state.sex
     };
   } else if (appliedRole === "인턴") {
     optionalStates = {
@@ -612,7 +613,8 @@ const getResumeOptionalData = (state: ResumeEditState) => {
       isPreferredMealSupport: state.isPreferredMealSupport,
       isPreferredParking: state.isPreferredParking,
       mbti: state.mbti,
-      description: state.description
+      description: state.description,
+      sex: state.sex
     };
   }
 
