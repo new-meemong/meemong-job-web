@@ -27,7 +27,7 @@ const HeaderContainer = styled.div`
 `;
 
 const HeaderTitle = styled.span`
-  ${fonts.greyTextBold16}
+  ${fonts.greyTextBold14}
   white-space: nowrap; /* 텍스트 줄바꿈 방지 */
   overflow: hidden; /* 넘치는 텍스트 숨기기 */
   text-overflow: ellipsis; /* 넘치는 텍스트에 생략 부호 표시 */
@@ -116,11 +116,11 @@ const infoByRole = (jobPosting: JobPostingType) => {
       <InfoTextContainer>
         <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
         <Divider />
-        <ProfileInfo>{availableOffDays}</ProfileInfo>
+        <ProfileInfo>{`휴무 ${availableOffDays} 가능`}</ProfileInfo>
         <Divider />
-        <ProfileInfo>{settlementAllowance}</ProfileInfo>
+        <ProfileInfo>{`정착지원금 ${settlementAllowance}`}</ProfileInfo>
         <Divider />
-        <ProfileInfo>{`인센티브 ${incentive}`}</ProfileInfo>
+        <ProfileInfo>{`인센티브 1000/${incentive}`}</ProfileInfo>
       </InfoTextContainer>
     );
   } else if (role === "인턴") {
@@ -130,7 +130,7 @@ const infoByRole = (jobPosting: JobPostingType) => {
         <Divider />
         <ProfileInfo>{`교육비 ${educationCost}`}</ProfileInfo>
         <Divider />
-        <ProfileInfo>{availableOffDays}</ProfileInfo>
+        <ProfileInfo>{`휴무 ${availableOffDays} 가능`}</ProfileInfo>
         <Divider />
         <ProfileInfo>{`급여 ${internSalary}`}</ProfileInfo>
       </InfoTextContainer>
