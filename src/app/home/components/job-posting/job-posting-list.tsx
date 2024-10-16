@@ -21,20 +21,7 @@ const JobPostingList = () => {
     <Container>
       <Title>매장 취업하기</Title>
       {jobPostingList.map((jobPosting, index) => {
-        return (
-          <JobPostingItem
-            key={index}
-            id={jobPosting.id}
-            storeName={jobPosting.storeName}
-            storeRegion={jobPosting.storeRegion}
-            postingTitle={jobPosting.postingTitle}
-            monthlyEducationCount={jobPosting.monthlyEducationCount}
-            availableOffDays={jobPosting.availableOffDays}
-            settlementAllowance={jobPosting.settlementAllowance}
-            incentive={jobPosting.incentive}
-            JobPostingsStoreImages={jobPosting.JobPostingsStoreImages}
-          />
-        );
+        return <JobPostingItem key={index} jobPosting={jobPosting} />;
       })}
     </Container>
   );

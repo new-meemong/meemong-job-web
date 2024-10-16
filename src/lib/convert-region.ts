@@ -73,23 +73,34 @@ export const convertToShortRegionFromQuery = (
   );
   let result: string[] = [];
 
+  // 시 데이터를 배열로 변환
+  const siList = si ? si.split(",") : [];
+
   // 구 데이터를 처리 (부산광역시 중구 -> 부산 중구)
+  const guSiSet = new Set();
   if (gu && gu.length !== 0) {
     const guList = gu.split(",");
     const shortGuList = guList.map((guItem) => {
-      const [siKey, guKey] = guItem.split(" "); // "부산광역시 중구" -> ["부산광역시", "중구"]
-      const shortSiName = siNmShortMap[siKey]; // "부산광역시" -> "부산"
-      return `${shortSiName} ${guKey}`; // "부산 중구"
+      const [siKey, guKey] = guItem.split(" "); // "경기도 성남시" -> ["경기도", "성남시"]
+      const shortSiName = siNmShortMap[siKey]; // "경기도" -> "경기"
+      guSiSet.add(shortSiName); // "경기"를 guSiSet에 추가
+      return `${shortSiName} ${guKey}`; // "경기 성남시"
     });
     result = result.concat(shortGuList);
   }
 
   // 시 데이터를 처리 (서울특별시 -> 서울 전체)
   if (si && si.length !== 0) {
-    const siList = si.split(",");
-    const shortSiList = siList.map((siItem) => {
-      return `${siNmShortMap[siItem]} 전체`; // "서울특별시" -> "서울 전체"
-    });
+    const shortSiList = siList
+      .map((siItem) => {
+        const shortSiName = siNmShortMap[siItem]; // "경기도" -> "경기"
+        if (!guSiSet.has(shortSiName)) {
+          // gu에 포함되지 않은 si만 추가
+          return `${shortSiName} 전체`; // "서울특별시" -> "서울 전체"
+        }
+        return null;
+      })
+      .filter((item) => item !== null); // null 값 제거
     result = result.concat(shortSiList);
   }
 

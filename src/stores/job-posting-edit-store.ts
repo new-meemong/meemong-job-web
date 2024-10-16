@@ -656,7 +656,7 @@ export const useJobPostingEditStore = create(
             // set({ ...defaultJobPostingEditState });
             return {
               status: true,
-              message: "구인공고가 성공적으로 등록되었습니다.",
+              message: "디자이너 구인공고가\n성공적으로 등록되었습니다.",
               data: response.data
             };
           } else {
@@ -785,7 +785,7 @@ export const useJobPostingEditStore = create(
             // set({ ...defaultJobPostingEditState });
             return {
               status: true,
-              message: "구인공고가 성공적으로 등록되었습니다.",
+              message: "인턴 구인공고가\n성공적으로 등록되었습니다.",
               data: response.data
             };
           } else {

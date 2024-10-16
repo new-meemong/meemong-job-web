@@ -1,4 +1,5 @@
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
+import { convertToShortRegionFromQuery } from "@/lib/convert-region";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
@@ -100,37 +101,68 @@ const StoreImage = styled(Image)`
   border: 1px solid ${colors.greyBacground4};
 `;
 
-type JobPostingItemProps = Pick<
-  JobPostingType,
-  | "id"
-  | "storeName"
-  | "storeRegion"
-  | "postingTitle"
-  | "monthlyEducationCount"
-  | "availableOffDays"
-  | "settlementAllowance"
-  | "incentive"
-  | "JobPostingsStoreImages"
->;
+const infoByRole = (jobPosting: JobPostingType) => {
+  const {
+    role,
+    monthlyEducationCount,
+    availableOffDays,
+    settlementAllowance,
+    incentive,
+    educationCost,
+    internSalary
+  } = jobPosting;
+  if (role === "디자이너") {
+    return (
+      <InfoTextContainer>
+        <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
+        <Divider />
+        <ProfileInfo>{availableOffDays}</ProfileInfo>
+        <Divider />
+        <ProfileInfo>{settlementAllowance}</ProfileInfo>
+        <Divider />
+        <ProfileInfo>{`인센티브 ${incentive}`}</ProfileInfo>
+      </InfoTextContainer>
+    );
+  } else if (role === "인턴") {
+    return (
+      <InfoTextContainer>
+        <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
+        <Divider />
+        <ProfileInfo>{`교육비 ${educationCost}`}</ProfileInfo>
+        <Divider />
+        <ProfileInfo>{availableOffDays}</ProfileInfo>
+        <Divider />
+        <ProfileInfo>{`급여 ${internSalary}`}</ProfileInfo>
+      </InfoTextContainer>
+    );
+  }
+};
 
-const JobPostingItem = ({
-  id,
-  storeName,
-  storeRegion,
-  postingTitle,
-  monthlyEducationCount,
-  availableOffDays,
-  settlementAllowance,
-  incentive,
-  JobPostingsStoreImages
-}: JobPostingItemProps) => {
+interface JobPostingItemProps {
+  jobPosting: JobPostingType;
+}
+
+const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   const router = useRouter();
+  const {
+    id,
+    storeName,
+    storeRegion,
+    storeRegionSiName,
+    postingTitle,
+    JobPostingsStoreImages
+  } = jobPosting;
 
   const initialImage = JobPostingsStoreImages?.[0]?.thumbnailUri
     ? `${IMAGE_STORAGE_URL}${JobPostingsStoreImages[0].thumbnailUri}`
     : "/images/default_profile_image.jpg";
 
   const [imgSrc, setImgSrc] = useState<string>(initialImage);
+
+  const shortRegion = convertToShortRegionFromQuery(
+    storeRegion,
+    storeRegionSiName
+  )[0];
 
   const handleImageError = () => {
     setImgSrc("/images/default_profile_image.jpg"); // 이미지 로드 실패 시 대체 이미지 경로
@@ -144,20 +176,12 @@ const JobPostingItem = ({
       <HeaderContainer>
         <HeaderTitle>{storeName}</HeaderTitle>
         <Divider />
-        <HeaderSubTitle>{storeRegion}</HeaderSubTitle>
+        <HeaderSubTitle>{shortRegion}</HeaderSubTitle>
       </HeaderContainer>
       <ContentContainer>
         <ContentLeftContainer>
           <ContentTitle>{postingTitle}</ContentTitle>
-          <InfoTextContainer>
-            <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
-            <Divider />
-            <ProfileInfo>{availableOffDays}</ProfileInfo>
-            <Divider />
-            <ProfileInfo>{settlementAllowance}</ProfileInfo>
-            <Divider />
-            <ProfileInfo>{`인센티브 ${incentive}`}</ProfileInfo>
-          </InfoTextContainer>
+          {infoByRole(jobPosting)}
           {/* <ViewCount>{`조회 0`}</ViewCount> */}
         </ContentLeftContainer>
 

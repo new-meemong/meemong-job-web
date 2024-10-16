@@ -39,6 +39,10 @@ export default function JobPostingEditPage() {
     if (postingId !== "new") {
       setId(postingId);
     }
+
+    if (postingId === "new") {
+      setId(null);
+    }
   }, [postingId, setId]);
 
   return (
