@@ -16,6 +16,7 @@ import SelfIntroductionSection from "./components/self-introduction-section";
 import BottomButtonSection from "./components/bottom-button-section";
 import { ResumeType } from "@/types/resume-type";
 import { useEffect, useState } from "react";
+import CenterSpinner from "@/components/spinners/center-spinner";
 
 const Container = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ const ContentContainer = styled.div`
 
 export default function ResumePage() {
   const { id } = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [resume, setResume] = useState<ResumeType | null>(null);
   const resumeId: string = Array.isArray(id) ? id[0] : id;
   const { getResume } = useResumeListStore((state) => ({
@@ -49,16 +51,22 @@ export default function ResumePage() {
 
   useEffect(() => {
     const fetchResume = async () => {
+      setIsLoading(true);
       const { status, data } = await getResume(resumeId);
 
       if (status) {
         setResume(data as ResumeType);
       }
+      setIsLoading(false);
     };
     if (resumeId && resumeId !== "new") {
       fetchResume();
     }
   }, [resumeId]);
+
+  if (isLoading) {
+    return <CenterSpinner />;
+  }
 
   if (!resume) {
     return <div>존재하지 않는 이력서입니다.</div>;

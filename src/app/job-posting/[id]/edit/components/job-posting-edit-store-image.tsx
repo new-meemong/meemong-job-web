@@ -8,9 +8,9 @@ import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
-import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 import loadImage from "blueimp-load-image";
+import CenterSpinner from "@/components/spinners/center-spinner";
 
 const Container = styled.div``;
 
@@ -31,16 +31,6 @@ const UploadedImageWrapper = styled.div`
   height: ${pxToVw(72)};
   border-radius: ${pxToVw(4)};
   overflow: hidden;
-`;
-
-const SpinnerWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const ImageUploadButton = styled.label<{ $hasError: boolean }>`
@@ -221,13 +211,7 @@ const JobPostingEditStoreImage = () => {
       <Label>매장 이미지 등록*</Label>
       <ImageContainer>
         <ImageUploadButton htmlFor="image-upload" $hasError={hasError}>
-          {isUploading ? (
-            <SpinnerWrapper>
-              <ClipLoader color={colors.purplePrimary} size={30} />
-            </SpinnerWrapper>
-          ) : (
-            <ImageUploadIcon />
-          )}
+          {isUploading ? <CenterSpinner /> : <ImageUploadIcon />}
         </ImageUploadButton>
         <HiddenFileInput
           id="image-upload"

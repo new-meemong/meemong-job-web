@@ -22,6 +22,7 @@ import { useAuthStore } from "@/stores/auth-store";
 import { messageType } from "@/types/send-app-message-type";
 import { useEffect, useState } from "react";
 import { JobPostingType } from "@/types/job-posting-type";
+import CenterSpinner from "@/components/spinners/center-spinner";
 
 const Container = styled.div`
   flex-direction: column;
@@ -40,6 +41,7 @@ const ContentContainer = styled.div`
 
 export default function JobPostingPage() {
   const { id } = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [jobPosting, setJobPosting] = useState<JobPostingType | null>(null);
   const jobPostingId: string = Array.isArray(id) ? id[0] : id;
   const { getJobPosting } = useJobPostingListStore((state) => ({
@@ -55,15 +57,21 @@ export default function JobPostingPage() {
 
   useEffect(() => {
     const fetchJobPosting = async () => {
+      setIsLoading(true);
       const result = await getJobPosting(jobPostingId);
       if (result) {
         setJobPosting(result);
       }
+      setIsLoading(false);
     };
     if (jobPostingId && jobPostingId !== "new") {
       fetchJobPosting();
     }
   }, [jobPostingId]);
+
+  if (isLoading) {
+    return <CenterSpinner />;
+  }
 
   if (!jobPosting) {
     return <div>존재하지 않는 구인공고입니다.</div>;
