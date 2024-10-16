@@ -73,7 +73,7 @@ type JobPostingEditState = {
   storeAddressNaverMapy: string | null;
 
   // 기본 정보
-  role: RoleKey;
+  role: RoleKey | null;
   _postingRegions: { key: string; value: string }[]; // 노출 지역, 내부 관리용
   postingRegions: string | null; // 노출 지역 (콤마로 구분)
   postingRegionSiNames: string | null; // 노출 지역의 시 (콤마로 구분)
@@ -140,7 +140,7 @@ type JobPostingEditState = {
 };
 
 type JobPostingEditActions = {
-  setId: (id: string) => void;
+  setId: (id: string | null) => void;
   setPostingTitle: (title: string) => void;
   setRole: (role: RoleKey) => void;
   setMonthlyEducationDesignerCount: (
@@ -245,7 +245,7 @@ const defaultJobPostingEditState: JobPostingEditState = {
   storeAddress: null,
   storeAddressNaverMapx: null,
   storeAddressNaverMapy: null,
-  role: "디자이너",
+  role: null,
   monthlyEducationDesignerCount: null,
   monthlyEducationInternCount: null,
   availableOffDays: [],
@@ -420,7 +420,7 @@ export const useJobPostingEditStore = create(
           hasInternOptionNull: false
         });
       },
-      setId: (id: string) => set({ id }),
+      setId: (id: string | null) => set({ id }),
       setPostingTitle: (postingTitle: string) => set({ postingTitle }),
       setRole: (role: RoleKey) => {
         set({ role });
@@ -552,8 +552,7 @@ export const useJobPostingEditStore = create(
             postingTitle: get().postingTitle, // 게시글 제목
             storeName: get().storeName, // 매장명
             storeAddress: get().storeAddress, // 매장 주소
-            storeAddressNaverMapx: get().storeAddressNaverMapx, // 매장 주소 네이버 지도 x
-            storeAddressNaverMapy: get().storeAddressNaverMapy, // 매장 주소 네이버 지도 y
+
             storeRegion: get().storeRegion,
             storeRegionSiName: get().storeRegionSiName,
             // 기본 정보
@@ -600,6 +599,16 @@ export const useJobPostingEditStore = create(
             JobPostingsStoreImages: get().jobPostingsStoreImages // 매장 이미지
           };
 
+          if (jobPostingData.role === null) {
+            set({ hasDesignerOptionNull: true });
+
+            return {
+              status: false,
+              message:
+                "디자이너, 인턴 중 선택해야\n구인공고를 등록할 수 있습니다."
+            };
+          }
+
           if (jobPostingData.role !== "디자이너") {
             return {
               status: false,
@@ -628,6 +637,8 @@ export const useJobPostingEditStore = create(
 
           jobPostingData = {
             ...jobPostingData,
+            storeAddressNaverMapx: get().storeAddressNaverMapx, // 매장 주소 네이버 지도 x
+            storeAddressNaverMapy: get().storeAddressNaverMapy, // 매장 주소 네이버 지도 y
             startWorkTime: get().startWorkTime, // 근무 시작 시간
             endWorkTime: get().endWorkTime, // 근무 종료 시간
             storeUrl: get().storeUrl, // 매장 URL
@@ -670,8 +681,6 @@ export const useJobPostingEditStore = create(
             postingTitle: get().postingTitle, // 게시글 제목
             storeName: get().storeName, // 매장명
             storeAddress: get().storeAddress, // 매장 주소
-            storeAddressNaverMapx: get().storeAddressNaverMapx, // 매장 주소 네이버 지도 x
-            storeAddressNaverMapy: get().storeAddressNaverMapy, // 매장 주소 네이버 지도 y
             storeRegion: get().storeRegion,
             storeRegionSiName: get().storeRegionSiName,
             // 기본 정보
@@ -719,6 +728,16 @@ export const useJobPostingEditStore = create(
             JobPostingsStoreImages: get().jobPostingsStoreImages // 매장 이미지
           };
 
+          if (jobPostingData.role === null) {
+            set({ hasInternOptionNull: true });
+
+            return {
+              status: false,
+              message:
+                "디자이너, 인턴중 선택해야\n구인공고를 등록할 수 있습니다."
+            };
+          }
+
           if (jobPostingData.role !== "인턴") {
             return {
               status: false,
@@ -746,6 +765,8 @@ export const useJobPostingEditStore = create(
 
           jobPostingData = {
             ...jobPostingData,
+            storeAddressNaverMapx: get().storeAddressNaverMapx, // 매장 주소 네이버 지도 x
+            storeAddressNaverMapy: get().storeAddressNaverMapy, // 매장 주소 네이버 지도 y
             startWorkTime: get().startWorkTime, // 근무 시작 시간
             endWorkTime: get().endWorkTime, // 근무 종료 시간
             storeUrl: get().storeUrl, // 매장 URL

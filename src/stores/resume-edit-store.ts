@@ -74,7 +74,7 @@ type ResumeEditState = {
 };
 
 type ResumeEditActions = {
-  setId: (id: string) => void;
+  setId: (id: string | null) => void;
   setProfileImageUri: (uri: string | null) => void;
   setProfileImageThumbnailUri: (uri: string | null) => void;
   setShortDescription: (description: string | null) => void;
@@ -261,7 +261,7 @@ export const useResumeEditStore = create(
           isExposure: resume.isExposure
         });
       },
-      setId: (id: string) => set({ id }),
+      setId: (id: string | null) => set({ id }),
       setProfileImageUri: (uri) => set({ profileImageUri: uri }),
       setProfileImageThumbnailUri: (uri) =>
         set({ profileImageThumbnailUri: uri }),

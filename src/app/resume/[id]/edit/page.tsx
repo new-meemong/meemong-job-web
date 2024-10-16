@@ -47,6 +47,9 @@ export default function ResumeEditPage() {
     if (resumeId !== "new") {
       setId(resumeId);
     }
+    if (resumeId === "new") {
+      setId(null);
+    }
   }, [resumeId, setId, sex, setSex]);
 
   return (

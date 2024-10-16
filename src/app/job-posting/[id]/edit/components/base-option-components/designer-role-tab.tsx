@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@/components/error-message";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
@@ -29,7 +30,22 @@ const Tab = styled.div<{ $active: boolean }>`
 `;
 
 const DesignerRoleTab = () => {
-  const { role, setRole } = useJobPostingEditStore();
+  const { role, setRole, hasDesignerOptionNull, hasInternOptionNull } =
+    useJobPostingEditStore((state) => ({
+      role: state.role,
+      setRole: state.setRole,
+      hasDesignerOptionNull: state.hasDesignerOptionNull,
+      hasInternOptionNull: state.hasInternOptionNull
+    }));
+
+  let hasError = false;
+
+  if (role === "디자이너") {
+    hasError = !role && hasDesignerOptionNull;
+  }
+  if (role === "인턴") {
+    hasError = !role && hasInternOptionNull;
+  }
 
   return (
     <TabContainer>
@@ -39,6 +55,7 @@ const DesignerRoleTab = () => {
       <Tab $active={role === "인턴"} onClick={() => setRole("인턴")}>
         {"인턴"}
       </Tab>
+      {hasError && <ErrorMessage>디자이터 타입을 입력해주세요</ErrorMessage>}
     </TabContainer>
   );
 };

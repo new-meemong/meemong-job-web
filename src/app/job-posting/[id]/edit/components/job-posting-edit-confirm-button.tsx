@@ -54,6 +54,11 @@ const JobPostingEditConfirmButton = () => {
   }));
 
   const handleConfirm = async () => {
+    if (!role) {
+      setModalMessage("디자이너, 인턴 중 \n모집하는 타입을 선택해주세요");
+      setIsModalOpen(true);
+      return;
+    }
     if (role === "디자이너") {
       const { status, message, data } = await submitDesignerJobPosting();
 
