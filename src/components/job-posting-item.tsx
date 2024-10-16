@@ -139,7 +139,6 @@ const JobPostingItem = ({
   const handleClick = () => {
     router.push(`/job-posting/${id}`);
   };
-
   return (
     <Container onClick={handleClick}>
       <HeaderContainer>

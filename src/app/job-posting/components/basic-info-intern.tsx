@@ -28,7 +28,7 @@ const BasicInfoIntern = ({
 }: BasicInfoInternProps) => {
   return (
     <Container>
-      <InfoTitle title={"기본정보"} />
+      <InfoTitle title={"인턴 구인 기본정보"} />
       <SingleInfoItem label={"지역"} content={storeRegion} />
       <SingleInfoItem label={"교육"} content={monthlyEducationCount} />
       <SingleInfoItem label={"교육비"} content={educationCost} />

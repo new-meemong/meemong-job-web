@@ -29,7 +29,7 @@ const BasicInfoDesigner = ({
 }: BasicInfoDesignerProps) => {
   return (
     <Container>
-      <InfoTitle title={"기본정보"} />
+      <InfoTitle title={"디자이너 구인 기본정보"} />
       <SingleInfoItem label={"지역"} content={storeRegion} />
       <SingleInfoItem label={"교육"} content={monthlyEducationCount} />
       <SingleInfoItem label={"휴무 가능 요일"} content={availableOffDays} />
