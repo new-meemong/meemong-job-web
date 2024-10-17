@@ -13,7 +13,7 @@ const Container = styled.div`
   padding: ${pxToVw(12)};
   border-radius: ${pxToVw(10)};
   width: ${pxToVw(340)};
-  height: ${pxToVw(145)};
+  min-height: ${pxToVw(145)};
   flex: 0 0 auto;
   background-color: ${colors.white};
   border: 1px solid ${colors.greyBacground4};
@@ -28,6 +28,20 @@ const HeaderContainer = styled.div`
 
 const HeaderTitle = styled.span`
   ${fonts.greyTextBold14}
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden; /* 넘치는 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 넘치는 텍스트에 생략 부호 표시 */
+`;
+
+const DesignerRole = styled.span`
+  ${fonts.purplePrimaryBold10}
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden; /* 넘치는 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 넘치는 텍스트에 생략 부호 표시 */
+`;
+
+const InternRole = styled.span`
+  ${fonts.naverGreenBold10}
   white-space: nowrap; /* 텍스트 줄바꿈 방지 */
   overflow: hidden; /* 넘치는 텍스트 숨기기 */
   text-overflow: ellipsis; /* 넘치는 텍스트에 생략 부호 표시 */
@@ -114,6 +128,8 @@ const infoByRole = (jobPosting: JobPostingType) => {
   if (role === "디자이너") {
     return (
       <InfoTextContainer>
+        {/* <ProfileInfo>{role}</ProfileInfo>
+        <Divider /> */}
         <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
         <Divider />
         <ProfileInfo>{`휴무 ${availableOffDays} 가능`}</ProfileInfo>
@@ -126,6 +142,8 @@ const infoByRole = (jobPosting: JobPostingType) => {
   } else if (role === "인턴") {
     return (
       <InfoTextContainer>
+        {/* <ProfileInfo>{role}</ProfileInfo>
+        <Divider /> */}
         <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
         <Divider />
         <ProfileInfo>{`교육비 ${educationCost}`}</ProfileInfo>
@@ -174,13 +192,20 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   return (
     <Container onClick={handleClick}>
       <HeaderContainer>
-        <HeaderTitle>{storeName}</HeaderTitle>
+        <HeaderTitle>{`${storeName}`}</HeaderTitle>
+        <Divider />
+        {jobPosting.role === "디자이너" && (
+          <DesignerRole>{jobPosting.role}</DesignerRole>
+        )}
+        {jobPosting.role === "인턴" && (
+          <InternRole>{jobPosting.role}</InternRole>
+        )}
         <Divider />
         <HeaderSubTitle>{shortRegion}</HeaderSubTitle>
       </HeaderContainer>
       <ContentContainer>
         <ContentLeftContainer>
-          <ContentTitle>{postingTitle}</ContentTitle>
+          <ContentTitle>{`${postingTitle}`}</ContentTitle>
           {infoByRole(jobPosting)}
           {/* <ViewCount>{`조회 0`}</ViewCount> */}
         </ContentLeftContainer>

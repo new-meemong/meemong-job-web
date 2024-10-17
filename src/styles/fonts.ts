@@ -34,6 +34,11 @@ export const fonts = {
     font-weight: 400;
     color: ${colors.purplePrimary};
   `,
+  purplePrimaryBold10: css`
+    font-size: ${pxToVw(10)};
+    font-weight: 700;
+    color: ${colors.purplePrimary};
+  `,
 
   //purpleSecondaryNew
   purpleSecondaryNewSemi20: css`
@@ -245,5 +250,12 @@ export const fonts = {
     font-size: ${pxToVw(12)};
     font-weight: 400;
     color: ${colors.red};
+  `,
+
+  // naverGreen
+  naverGreenBold10: css`
+    font-size: ${pxToVw(10)};
+    font-weight: 700;
+    color: ${colors.naverGreen};
   `
 };
