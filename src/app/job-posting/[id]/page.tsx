@@ -23,6 +23,7 @@ import { messageType } from "@/types/send-app-message-type";
 import { useEffect, useState } from "react";
 import { JobPostingType } from "@/types/job-posting-type";
 import CenterSpinner from "@/components/spinners/center-spinner";
+import ShareButton from "@/components/buttons/share-button";
 
 const Container = styled.div`
   flex-direction: column;
@@ -190,6 +191,7 @@ export default function JobPostingPage() {
           ) || []
         }
       />
+      <ShareButton />
       <ContentContainer>
         <StoreInfo
           storeImage={

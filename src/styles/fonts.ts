@@ -239,6 +239,11 @@ export const fonts = {
     font-weight: 400;
     color: ${colors.white};
   `,
+  whiteNormal12: css`
+    font-size: ${pxToVw(12)};
+    font-weight: 400;
+    color: ${colors.white};
+  `,
 
   // red
   redBold14: css`

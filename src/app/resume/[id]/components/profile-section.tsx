@@ -1,4 +1,5 @@
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
+import ShareButton from "@/components/buttons/share-button";
 import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { ResumeType } from "@/types/resume-type";
@@ -33,6 +34,7 @@ const ProfileSection = ({ resume }: ProfileSectionProps) => {
         height={360}
         priority
       />
+      <ShareButton />
     </Container>
   );
 };
