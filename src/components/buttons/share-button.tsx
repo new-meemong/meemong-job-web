@@ -1,5 +1,4 @@
 import pxToVw from "@/lib/dpi-converter";
-import { colors } from "@/styles/colors";
 import styled from "styled-components";
 import ShareWhiteIcon from "../icons/share-white-icon";
 import { fonts } from "@/styles/fonts";
