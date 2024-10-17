@@ -70,17 +70,7 @@ const PremiumJobPosting = () => {
       <JobPostingContainer>
         {jobPostings.map((jobPosting, index) => (
           <SnapItem key={index} $isFirst={index === 0}>
-            <JobPostingItem
-              id={jobPosting.id}
-              storeName={jobPosting.storeName}
-              storeRegion={jobPosting.storeRegion}
-              postingTitle={jobPosting.postingTitle}
-              monthlyEducationCount={jobPosting.monthlyEducationCount}
-              availableOffDays={jobPosting.availableOffDays}
-              settlementAllowance={jobPosting.settlementAllowance}
-              incentive={jobPosting.incentive}
-              JobPostingsStoreImages={jobPosting.JobPostingsStoreImages}
-            />
+            <JobPostingItem jobPosting={jobPosting} />
           </SnapItem>
         ))}
       </JobPostingContainer>
