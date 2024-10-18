@@ -11,6 +11,7 @@ import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import loadImage from "blueimp-load-image";
 import CenterSpinner from "@/components/spinners/center-spinner";
+import ConfirmModal from "@/components/modals/confirm-modal";
 
 const Container = styled.div``;
 
@@ -178,18 +179,6 @@ const JobPostingEditStoreImage = () => {
     }
   };
 
-  const handleImageDelete = (index: number) => {
-    // 삭제 여부 확인 팝업
-    const confirmed = confirm("이미지 삭제하시겠습니까?");
-    if (confirmed) {
-      // 이미지를 삭제하고 상태 업데이트
-      const updatedImages = jobPostingsStoreImages.filter(
-        (_, i) => i !== index
-      );
-      setJobPostingsStoreImages(updatedImages);
-    }
-  };
-
   // const handleMouseDown = (index: number) => {
   //   longPressTimer.current = setTimeout(() => {
   //     handleImageDelete(index); // 롱클릭시 이미지 삭제
@@ -204,6 +193,19 @@ const JobPostingEditStoreImage = () => {
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault(); // 기본 컨텍스트 메뉴 비활성화
+  };
+
+  /** delete image modal */
+  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
+    useState(false);
+  const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
+
+  const handleDeleteConfirm = () => {
+    const updatedImages = jobPostingsStoreImages.filter(
+      (_, i) => i !== deleteIndex
+    );
+    setJobPostingsStoreImages(updatedImages);
+    setIsDeleteConfirmModalOpen(false);
   };
 
   return (
@@ -228,7 +230,10 @@ const JobPostingEditStoreImage = () => {
               // onMouseUp={handleMouseUp} // 마우스 클릭 해제
               // onTouchStart={() => handleMouseDown(index)} // 모바일 터치 시작
               // onTouchEnd={handleMouseUp} // 모바일 터치 종료
-              onClick={() => handleImageDelete(index)} // 이미지 클릭시 삭제handleImageDelete
+              onClick={() => {
+                setIsDeleteConfirmModalOpen(true);
+                setDeleteIndex(index);
+              }} // 이미지 클릭시 삭제handleImageDelete
               onContextMenu={handleContextMenu} // 우클릭 방지
             >
               <StyledImage
@@ -257,6 +262,15 @@ const JobPostingEditStoreImage = () => {
       {hasError && (
         <ErrorMessage>매장 이미지를 최소 1장 등록해주세요.</ErrorMessage>
       )}
+      <ConfirmModal
+        isOpen={isDeleteConfirmModalOpen}
+        onClose={() => setIsDeleteConfirmModalOpen(false)}
+        message={`해당 이미지를\n삭제하시겠습니까?`}
+        confirmText="삭제하기"
+        onConfirm={handleDeleteConfirm}
+        cancelText="취소"
+        isWarning
+      />
     </Container>
   );
 };
