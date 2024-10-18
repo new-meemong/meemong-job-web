@@ -75,6 +75,7 @@ type JobPostingEditState = {
 
   // 기본 정보
   role: RoleKey | null;
+  isRoleSelected: boolean;
   _postingRegions: { key: string; value: string }[]; // 노출 지역, 내부 관리용
   postingRegions: string | null; // 노출 지역 (콤마로 구분)
   postingRegionSiNames: string | null; // 노출 지역의 시 (콤마로 구분)
@@ -143,7 +144,7 @@ type JobPostingEditState = {
 type JobPostingEditActions = {
   setId: (id: string | null) => void;
   setPostingTitle: (title: string) => void;
-  setRole: (role: RoleKey) => void;
+  setRole: (role: RoleKey | null) => void;
   setMonthlyEducationDesignerCount: (
     monthlyEducationDesignerCount: MonthlyEducationDesignerCountKey
   ) => void;
@@ -247,6 +248,7 @@ const defaultJobPostingEditState: JobPostingEditState = {
   storeAddressNaverMapx: null,
   storeAddressNaverMapy: null,
   role: null,
+  isRoleSelected: false,
   monthlyEducationDesignerCount: null,
   monthlyEducationInternCount: null,
   availableOffDays: [],
@@ -423,8 +425,8 @@ export const useJobPostingEditStore = create(
       },
       setId: (id: string | null) => set({ id }),
       setPostingTitle: (postingTitle: string) => set({ postingTitle }),
-      setRole: (role: RoleKey) => {
-        set({ role });
+      setRole: (role: RoleKey | null) => {
+        set({ role, isRoleSelected: !!role });
         if (role === "디자이너") {
           set({ hasInternOptionNull: false });
         } else if (role === "인턴") {
@@ -601,7 +603,7 @@ export const useJobPostingEditStore = create(
           };
 
           if (jobPostingData.role === null) {
-            set({ hasDesignerOptionNull: true });
+            set({ hasDesignerOptionNull: true, isRoleSelected: false });
 
             return {
               status: false,
@@ -730,12 +732,12 @@ export const useJobPostingEditStore = create(
           };
 
           if (jobPostingData.role === null) {
-            set({ hasInternOptionNull: true });
+            set({ hasInternOptionNull: true, isRoleSelected: false });
 
             return {
               status: false,
               message:
-                "디자이너, 인턴중 선택해야\n구인공고를 등록할 수 있습니다."
+                "디자이너, 인턴 중 선택해야\n구인공고를 등록할 수 있습니다."
             };
           }
 

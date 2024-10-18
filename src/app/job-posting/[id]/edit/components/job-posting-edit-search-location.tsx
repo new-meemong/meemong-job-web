@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@/components/error-message";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { colors } from "@/styles/colors";
@@ -40,10 +41,33 @@ const LocationInfo = styled.div`
 `;
 
 const JobPostingEditSearchLocation = () => {
-  const { storeName, storeAddress } = useJobPostingEditStore();
+  const {
+    storeName,
+    storeAddress,
+    role,
+    hasDesignerOptionNull,
+    hasInternOptionNull
+  } = useJobPostingEditStore((state) => ({
+    storeName: state.storeName,
+    storeAddress: state.storeAddress,
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
+    hasInternOptionNull: state.hasInternOptionNull,
+    role: state.role
+  }));
+
+  let hasError = false;
+  if (role === "디자이너") {
+    hasError = !storeAddress && hasDesignerOptionNull;
+  } else if (role === "인턴") {
+    hasError = !storeAddress && hasInternOptionNull;
+  }
+
   return (
     <Container>
-      <Label>매장주소 검색*</Label>
+      <Label>
+        매장주소 검색*{" "}
+        {hasError && <ErrorMessage>{`매장 주소를 검색해주세요.`}</ErrorMessage>}
+      </Label>
       <Button href="/search-naver">주소 검색</Button>
       <Label>매장주소*</Label>
       <LocationInfo>

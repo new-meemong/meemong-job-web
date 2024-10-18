@@ -2,6 +2,7 @@ import WriteIcon from "@/components/icons/write-icon";
 import pxToVw from "@/lib/dpi-converter";
 import numberToVw from "@/lib/dpi-number-converter";
 import { useAuthStore } from "@/stores/auth-store";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
@@ -60,6 +61,9 @@ const FloatingButton = () => {
     resetStore: state.resetStore,
     setFromResume: state.setFromResume
   }));
+  const { setRole } = useJobPostingEditStore((state) => ({
+    setRole: state.setRole
+  }));
   const { userId } = useAuthStore((state) => ({
     userId: state.userId
   }));
@@ -84,6 +88,7 @@ const FloatingButton = () => {
   };
 
   const handleJobPostingClick = () => {
+    setRole(null);
     router.push("/job-posting/new/edit");
   };
 

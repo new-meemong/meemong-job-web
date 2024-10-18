@@ -5,6 +5,8 @@ import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
 
+const Container = styled.div``;
+
 const TabContainer = styled.div`
   display: flex;
   width: 100%;
@@ -12,6 +14,7 @@ const TabContainer = styled.div`
   margin-top: ${pxToVw(8)};
   border-radius: ${pxToVw(4)};
   overflow: hidden;
+  margin-bottom: ${pxToVw(8)};
 `;
 
 const Tab = styled.div<{ $active: boolean }>`
@@ -30,33 +33,23 @@ const Tab = styled.div<{ $active: boolean }>`
 `;
 
 const DesignerRoleTab = () => {
-  const { role, setRole, hasDesignerOptionNull, hasInternOptionNull } =
-    useJobPostingEditStore((state) => ({
-      role: state.role,
-      setRole: state.setRole,
-      hasDesignerOptionNull: state.hasDesignerOptionNull,
-      hasInternOptionNull: state.hasInternOptionNull
-    }));
-
-  let hasError = false;
-
-  if (role === "디자이너") {
-    hasError = !role && hasDesignerOptionNull;
-  }
-  if (role === "인턴") {
-    hasError = !role && hasInternOptionNull;
-  }
+  const { role, setRole } = useJobPostingEditStore((state) => ({
+    role: state.role,
+    setRole: state.setRole
+  }));
 
   return (
-    <TabContainer>
-      <Tab $active={role === "디자이너"} onClick={() => setRole("디자이너")}>
-        {"디자이너"}
-      </Tab>
-      <Tab $active={role === "인턴"} onClick={() => setRole("인턴")}>
-        {"인턴"}
-      </Tab>
-      {hasError && <ErrorMessage>디자이터 타입을 입력해주세요</ErrorMessage>}
-    </TabContainer>
+    <Container>
+      <TabContainer>
+        <Tab $active={role === "디자이너"} onClick={() => setRole("디자이너")}>
+          {"디자이너"}
+        </Tab>
+        <Tab $active={role === "인턴"} onClick={() => setRole("인턴")}>
+          {"인턴"}
+        </Tab>
+      </TabContainer>
+      {!role && <ErrorMessage>디자이터 타입을 입력해주세요</ErrorMessage>}
+    </Container>
   );
 };
 

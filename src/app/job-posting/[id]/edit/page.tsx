@@ -31,8 +31,9 @@ const ContentContainer = styled.div`
 export default function JobPostingEditPage() {
   const { id } = useParams();
   const postingId = Array.isArray(id) ? id[0] : id;
-  const { setId } = useJobPostingEditStore((state) => ({
-    setId: state.setId
+  const { setId, setRole } = useJobPostingEditStore((state) => ({
+    setId: state.setId,
+    setRole: state.setRole
   }));
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function JobPostingEditPage() {
     if (postingId === "new") {
       setId(null);
     }
-  }, [postingId, setId]);
+  }, [postingId, setId, setRole]);
 
   return (
     <Container>
