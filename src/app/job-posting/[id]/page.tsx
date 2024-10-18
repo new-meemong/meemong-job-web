@@ -214,7 +214,7 @@ export default function JobPostingPage() {
         <Divider />
         <StoreLocation storeAddress={jobPosting.storeAddress} />
       </ContentContainer>
-      {userId && (
+      {userId && !isMine && (
         <BottomFloatingButton
           title="지원하기"
           onClick={() => {
