@@ -1,6 +1,6 @@
 import { getBanner } from "@/apis/banner";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+// import { createJSONStorage, persist } from "zustand/middleware";
 
 export type BannerType = {
   id: number;
@@ -18,7 +18,7 @@ export type BannerState = {
 };
 
 export type BannerActions = {
-  getBanner: () => Promise<void>;
+  fetchBanner: () => Promise<void>;
 };
 
 export type BannerStateStore = BannerState & BannerActions;
@@ -27,23 +27,17 @@ export const defaultBannerState: BannerState = {
   banner: null
 };
 
-export const useBannerStore = create(
-  persist<BannerStateStore>(
-    (set) => ({
-      ...defaultBannerState,
-      getBanner: async () => {
-        const res = await getBanner();
-
-        if (!res.success) {
-          return;
-        }
-
-        set({ banner: res.data });
-      }
-    }),
-    {
-      name: "banner-store",
-      storage: createJSONStorage(() => sessionStorage)
+export const useBannerStore = create<BannerStateStore>((set) => ({
+  ...defaultBannerState,
+  fetchBanner: async () => {
+    const res = await getBanner();
+    if (!res.success) {
+      return;
     }
-  )
-);
+
+    const banner = res.data.filter(
+      (_banner: BannerType) => _banner.banner_type === "구인구직"
+    )[0];
+    set({ banner: banner });
+  }
+}));

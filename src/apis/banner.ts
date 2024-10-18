@@ -1,5 +1,3 @@
-import { BannerType } from "@/stores/banner-store";
-
 export const getBanner = async () => {
   try {
     const url = "https://meemong.com/auth/member/getBanners";
@@ -14,11 +12,8 @@ export const getBanner = async () => {
       return { success: false, message: "API fetch failed." };
     }
     const data = await res.json();
-    const banner = data.filter(
-      (item: BannerType) => item.banner_type === "구인 구직"
-    )[0];
 
-    return { success: true, data: banner };
+    return { success: true, data: data };
   } catch (error) {
     console.error(error);
     return { success: false, message: error };

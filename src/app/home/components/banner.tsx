@@ -18,20 +18,20 @@ const Container = styled.div`
 `;
 
 const BannerImage = styled(Image)`
-  object-fit: cover;
+  object-fit: contain;
   width: ${pxToVw(390)};
   height: ${pxToVw(80)};
 `;
 
 const Banner = () => {
-  const { banner } = useBannerStore((state) => ({
+  const { banner, fetchBanner } = useBannerStore((state) => ({
     banner: state.banner,
-    getBanner: state.getBanner
+    fetchBanner: state.fetchBanner
   }));
 
   useEffect(() => {
     if (banner === null) {
-      // getBanner();
+      fetchBanner();
     }
   }, [banner]);
 
@@ -43,6 +43,7 @@ const Banner = () => {
           alt="banner"
           width={390}
           height={80}
+          onClick={() => window.open(banner?.redirect_url, "_blank")}
         />
       )}
     </Container>
