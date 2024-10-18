@@ -17,7 +17,8 @@ import BottomButtonSection from "./components/bottom-button-section";
 import { ResumeType } from "@/types/resume-type";
 import { useEffect, useState } from "react";
 import CenterSpinner from "@/components/spinners/center-spinner";
-import Head from "next/head";
+import Metadata from "./components/metadata";
+import { IMAGE_STORAGE_URL } from "@/apis/consts";
 
 const Container = styled.div`
   display: flex;
@@ -74,19 +75,11 @@ export default function ResumePage() {
   }
   return (
     <Container>
-      <Head>
-        <meta
-          property="og:title"
-          content={`이력서 - ${resume.User.DisplayName || resume.userName}`}
-        />
-        <meta property="og:description" content={resume.shortDescription} />
-        <meta property="og:image" content={resume.profileImageUri} />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={typeof window !== "undefined" ? window.location.href : ""}
-        />
-      </Head>
+      <Metadata
+        ogImage={`${IMAGE_STORAGE_URL}${resume.profileImageUri}`}
+        ogTitle={resume.userName}
+        ogDescription={resume.shortDescription}
+      />
       <ResumeHeader
         title={`이력서`}
         resumeId={resumeId}
