@@ -50,6 +50,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { JobPostingType } from "@/types/job-posting-type";
 import { siSggList } from "@/types/location-type";
 import { ResponseResultType } from "@/types/response-result-type";
+import toast from "react-hot-toast";
 
 type StoreInfoType = {
   title: string;
@@ -827,7 +828,7 @@ export const useJobPostingEditStore = create(
       setJobPostingsStoreImages: (newImages: JobPostingsStoreImageType[]) => {
         // 이미지가 5개를 초과할 경우 추가를 막음
         if (newImages.length >= 5) {
-          alert("이미지는 최대 5개까지 추가할 수 있습니다.");
+          toast("이미지는 최대 5개까지 추가할 수 있습니다.");
           return;
         }
         set({

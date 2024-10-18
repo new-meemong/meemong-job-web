@@ -22,6 +22,7 @@ import {
 } from "@/types/resume-keys";
 import { ResumeType } from "@/types/resume-type";
 import moment from "moment";
+import toast from "react-hot-toast";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -439,7 +440,7 @@ export const useResumeEditStore = create(
           }
         } catch (e) {
           console.error("이력서 등록중 오류 발생: ", e);
-          alert("이력서 등록중 오류가 발생했습니다. 다시 시도해주세요.");
+          toast("이력서 등록중 오류가 발생했습니다. 다시 시도해주세요.");
           return {
             status: false,
             message: "이력서 등록중 오류가 발생했습니다."

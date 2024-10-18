@@ -12,6 +12,7 @@ import styled from "styled-components";
 import loadImage from "blueimp-load-image";
 import CenterSpinner from "@/components/spinners/center-spinner";
 import ConfirmModal from "@/components/modals/confirm-modal";
+import toast from "react-hot-toast";
 
 const Container = styled.div``;
 
@@ -112,7 +113,7 @@ const JobPostingEditStoreImage = () => {
     const selectedFile = files[0];
 
     if (jobPostingsStoreImages.length === 5) {
-      alert("이미지는 최대 5장까지 가능합니다.");
+      toast("이미지는 최대 5장까지 가능합니다.");
       return;
     }
 
@@ -120,7 +121,7 @@ const JobPostingEditStoreImage = () => {
     const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024; // 10MB
 
     if (selectedFile.size > MAX_SIZE_BYTES) {
-      alert(`이미지 용량이 너무 큽니다. (최대 ${MAX_SIZE_MB}MB)`);
+      toast(`이미지 용량이 너무 큽니다. (최대 ${MAX_SIZE_MB}MB)`);
       return;
     }
 

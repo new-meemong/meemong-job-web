@@ -13,6 +13,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { siNmShort, siSggList } from "@/types/location-type";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TargetType } from "./types/target-type";
+import toast from "react-hot-toast";
 
 const ContentContainer = styled.div`
   display: flex;
@@ -89,7 +90,7 @@ function SelectLocationContent() {
     ];
 
     if (!validTargets.includes(target as TargetType)) {
-      alert("유효하지 않은 target 값입니다.");
+      toast("유효하지 않은 target 값입니다.");
       router.back();
     }
   }, [target]);

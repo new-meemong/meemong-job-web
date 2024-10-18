@@ -4,6 +4,7 @@ import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { JobPostingType } from "@/types/job-posting-type";
 import CopyBlackIcon from "@/components/icons/copy-black-icon";
+import toast from "react-hot-toast";
 
 const Container = styled.div``;
 
@@ -27,7 +28,8 @@ const StoreLocation = ({ storeAddress }: StoreLocationProps) => {
     navigator.clipboard
       .writeText(storeAddress)
       .then(() => {
-        alert("주소가 복사되었습니다."); // Optional: Show an alert or any other feedback
+        toast.dismiss();
+        toast("주소가 복사되었습니다.");
       })
       .catch((err) => {
         console.error("Failed to copy the address: ", err);
