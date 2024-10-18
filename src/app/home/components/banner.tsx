@@ -4,6 +4,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { useBannerStore } from "@/stores/banner-store";
 import { colors } from "@/styles/colors";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import styled from "styled-components";
 
@@ -38,17 +39,19 @@ const Banner = () => {
   return (
     <Container>
       {banner && (
-        <BannerImage
-          src={banner?.image_url}
-          alt="banner"
-          width={390}
-          height={80}
-          onClick={() => {
-            if (typeof window !== "undefined") {
-              window.location.href = banner?.redirect_url;
-            }
-          }}
-        />
+        <Link href={banner?.redirect_url}>
+          <BannerImage
+            src={banner?.image_url}
+            alt="banner"
+            width={390}
+            height={80}
+            onClick={() => {
+              // if (typeof window !== "undefined") {
+              //   window.open(banner?.redirect_url, "_blank");
+              // }
+            }}
+          />
+        </Link>
       )}
     </Container>
   );
