@@ -43,7 +43,11 @@ const Banner = () => {
           alt="banner"
           width={390}
           height={80}
-          onClick={() => window.open(banner?.redirect_url, "_blank")}
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              window.location.href = banner?.redirect_url;
+            }
+          }}
         />
       )}
     </Container>
