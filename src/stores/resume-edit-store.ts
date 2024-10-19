@@ -40,7 +40,7 @@ type ResumeEditState = {
   preferredStoreRegions: string | null;
   preferredStoreRegionSiNames: string | null;
 
-  appliedRole: RoleKeyResume;
+  appliedRole: RoleKeyResume | null;
   workType: WorkTypeKeyResume | null;
   settlementAllowance: SettlementAllowanceKeyResume | null;
   internExpectedSalary: InternExpectedSalaryKeyResume | null;
@@ -83,7 +83,7 @@ type ResumeEditActions = {
   setSex: (sex: string) => void;
   setPreferredStoreRegions: (regions: { key: string; value: string }[]) => void;
   setBirthday: (birthday: string | null) => void;
-  setAppliedRole: (role: RoleKeyResume) => void;
+  setAppliedRole: (role: RoleKeyResume | null) => void;
   setWorkType: (workType: WorkTypeKeyResume | null) => void;
   setSettlementAllowance: (
     allowance: SettlementAllowanceKeyResume | null
@@ -150,7 +150,7 @@ const defaultResumeEditState: ResumeEditState = {
   preferredStoreRegions: null,
   preferredStoreRegionSiNames: null,
   birthday: null,
-  appliedRole: "디자이너",
+  appliedRole: null,
   workType: null,
   settlementAllowance: null,
   internExpectedSalary: null,
@@ -291,7 +291,8 @@ export const useResumeEditStore = create(
         });
       },
       setBirthday: (birthday) => set({ birthday }),
-      setAppliedRole: (role: RoleKeyResume) => set({ appliedRole: role }),
+      setAppliedRole: (role: RoleKeyResume | null) =>
+        set({ appliedRole: role }),
       setWorkType: (workType: WorkTypeKeyResume | null) => set({ workType }),
       setSettlementAllowance: (
         allowance: SettlementAllowanceKeyResume | null
@@ -365,6 +366,13 @@ export const useResumeEditStore = create(
 
           const resumeRequiredStates = getResumeRequiredData(state);
           const missingFields = hasMissingRequiredFields(resumeRequiredStates);
+
+          if (!appliedRole) {
+            return {
+              status: false,
+              message: "지원 분야를 선택해주세요."
+            };
+          }
           if (missingFields) {
             setOptionNullFlag(appliedRole, true, set);
             return {
@@ -409,6 +417,12 @@ export const useResumeEditStore = create(
 
           const resumeRequiredStates = getResumeRequiredData(state);
           const missingFields = hasMissingRequiredFields(resumeRequiredStates);
+          if (!appliedRole) {
+            return {
+              status: false,
+              message: "지원 분야를 선택해주세요."
+            };
+          }
           if (missingFields) {
             setOptionNullFlag(appliedRole, true, set);
             return {

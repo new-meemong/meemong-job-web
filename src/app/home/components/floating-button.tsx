@@ -57,10 +57,13 @@ const FloatingButton = () => {
   const { checkMyResumeExist } = useResumeListStore((state) => ({
     checkMyResumeExist: state.checkMyResumeExist
   }));
-  const { resetStore, setFromResume } = useResumeEditStore((state) => ({
-    resetStore: state.resetStore,
-    setFromResume: state.setFromResume
-  }));
+  const { resetStore, setFromResume, setAppliedRole } = useResumeEditStore(
+    (state) => ({
+      resetStore: state.resetStore,
+      setFromResume: state.setFromResume,
+      setAppliedRole: state.setAppliedRole
+    })
+  );
   const { setRole } = useJobPostingEditStore((state) => ({
     setRole: state.setRole
   }));
@@ -81,6 +84,8 @@ const FloatingButton = () => {
     if (status) {
       resetStore();
       setFromResume(data as ResumeType);
+      setAppliedRole(null);
+
       router.push(`/resume/${data!.id}/edit`);
     } else {
       router.push("/resume/new/edit");
