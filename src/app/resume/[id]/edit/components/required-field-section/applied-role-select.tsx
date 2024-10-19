@@ -1,11 +1,7 @@
 import styled from "styled-components";
-import { fonts } from "@/styles/fonts";
-import pxToVw from "@/lib/dpi-converter";
-import { colors } from "@/styles/colors";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { resumeOptions } from "@/types/resume-optons";
 import { RoleKeyResume } from "@/types/resume-keys";
-import ResumeEditLabel from "../base/resume-edit-label";
 import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
 
 const Container = styled.div`

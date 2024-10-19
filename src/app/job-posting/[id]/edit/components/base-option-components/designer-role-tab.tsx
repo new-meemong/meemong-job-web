@@ -1,9 +1,6 @@
-import { ErrorMessage } from "@/components/error-message";
 import BaseSingleSelect from "@/components/selects/base-single-select";
 import pxToVw from "@/lib/dpi-converter";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { colors } from "@/styles/colors";
-import { fonts } from "@/styles/fonts";
 import { RoleKey } from "@/types/job-posting-keys";
 import { jobPostingOptions } from "@/types/job-posting-options";
 import styled from "styled-components";
