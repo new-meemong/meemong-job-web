@@ -39,7 +39,7 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         /> */}
       </head>
-      <body style={{ margin: 0 }}>
+      <body style={{ margin: "0 auto", maxWidth: "600px" }}>
         <StyledComponentsRegistry>
           <BaseContainer>{children}</BaseContainer>
         </StyledComponentsRegistry>

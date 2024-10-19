@@ -26,6 +26,10 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   padding-bottom: ${pxToVw(100)};
+
+  @media (min-width: 600px) {
+    border: 1px solid grey;
+  }
 `;
 
 const ContentContainer = styled.div`
