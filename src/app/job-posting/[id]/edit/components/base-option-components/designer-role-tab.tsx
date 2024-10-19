@@ -48,7 +48,7 @@ const DesignerRoleTab = () => {
           {"인턴"}
         </Tab>
       </TabContainer>
-      {!role && <ErrorMessage>디자이터 타입을 입력해주세요</ErrorMessage>}
+      {!role && <ErrorMessage>모집 분야를 선택해주세요.</ErrorMessage>}
     </Container>
   );
 };

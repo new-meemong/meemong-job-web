@@ -67,7 +67,7 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
               src={image}
               alt={`Slide ${index}`}
               width={390}
-              height={390}
+              height={360}
             />
           </div>
         ))}
