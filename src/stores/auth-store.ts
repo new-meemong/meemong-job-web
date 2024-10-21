@@ -16,6 +16,7 @@ export type AuthActions = {
   logout: () => void;
   setProfileImageUri: (profileImageUri: string) => void;
   setSex: (sex: string) => void;
+  setJwt: (jwt: string) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -32,7 +33,6 @@ export const useAuthStore = create(
   persist<AuthStore>(
     (set) => ({
       ...defaultAuthState,
-
       login: async (userId: string) => {
         try {
           if (!userId) {
@@ -63,6 +63,9 @@ export const useAuthStore = create(
       },
       setSex: (sex: string) => {
         set({ sex });
+      },
+      setJwt: (jwt: string) => {
+        set({ jwt });
       }
     }),
     {

@@ -16,6 +16,24 @@ export const getJobPosting = async (id: string) => {
   }
 };
 
+export const getMyJobPostings = async (
+  queryParams?: Record<string, string>
+) => {
+  try {
+    const defaultParams: Record<string, string> = {
+      __include: "JobPostingsStoreImages"
+    };
+
+    const combinedParams = { ...defaultParams, ...(queryParams || {}) };
+    const queryString = new URLSearchParams(combinedParams).toString();
+    console.log("moonsae queryString", queryString);
+    return await apiFetch(`/api/v1/job-postings/me?${queryString}`, "GET");
+  } catch (e) {
+    console.error("[getMyJobPostings] failed", e);
+    return { error: e || "Failed to get my job postings" };
+  }
+};
+
 export const getJobPostings = async (queryParams?: Record<string, string>) => {
   try {
     const defaultParams: Record<string, string> = {
