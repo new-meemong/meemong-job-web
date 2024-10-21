@@ -68,6 +68,13 @@ const SearchResultContainer = styled.div`
   gap: ${pxToVw(12)};
 `;
 
+const InfoText = styled.div`
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
+  padding-top: ${pxToVw(12)};
+  ${fonts.redNormal14}
+`;
+
 export default function SearchNaver() {
   const { searchQuery, searchResults, setSearchQuery, search } =
     useSearchNaverStore((state) => ({
@@ -100,7 +107,7 @@ export default function SearchNaver() {
       <InputContainer>
         <SearchInput
           type="text"
-          placeholder="매장명을 입력해주세요"
+          placeholder="네이버에 등록된 정확한 매장명을 입력해야 검색됩니다."
           value={searchQuery || ""}
           onChange={handleInputChange}
         />
@@ -111,6 +118,10 @@ export default function SearchNaver() {
           {isSearching ? "검색 중..." : "검색하기"}
         </SearchButton>
       </InputContainer>
+      <InfoText>
+        동일 브랜드 매장 검색시 정확한 지점명까지 기입하지 않으면 최대 5개
+        매장까지만 검색됩니다.
+      </InfoText>
       <SearchResultContainer>
         {searchResults.length > 0
           ? searchResults.map((item) => (
