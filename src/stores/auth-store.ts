@@ -31,7 +31,7 @@ export const defaultAuthState: AuthState = {
 
 export const useAuthStore = create(
   persist<AuthStore>(
-    (set, get) => ({
+    (set) => ({
       ...defaultAuthState,
       login: async (userId: string) => {
         try {

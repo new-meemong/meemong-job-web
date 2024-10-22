@@ -53,7 +53,7 @@ export default function MyJobPostingListPage({ searchParams }: SearchParams) {
   return (
     <Container>
       <MyJobPostingListHeader />
-      {myJobPostingList.map((jobPosting, index) => {
+      {myJobPostingList.map((jobPosting) => {
         return <MyJobPostingItem key={jobPosting.id} jobPosting={jobPosting} />;
       })}
     </Container>
