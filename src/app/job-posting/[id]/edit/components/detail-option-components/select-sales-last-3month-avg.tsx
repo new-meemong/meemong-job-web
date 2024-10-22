@@ -25,11 +25,11 @@ const SelectSalesLast3MonthAvg = () => {
   return (
     <Container>
       <BaseSingleSelect
-        label="최근 3개월 평균 매출"
+        label="이전 매장 평균 매출"
         options={options}
         selectedOption={salesLast3MonthsAvg}
         onSelect={handleSelect}
-        errorMessage="최근 3개월 평균 매출을 선택해주세요."
+        errorMessage="이전 매장 평균 매출을 선택해주세요."
         isError={hasError}
       />
     </Container>

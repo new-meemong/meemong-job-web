@@ -94,7 +94,7 @@ export interface JobPostingType {
 
   // 매출 관련
   salesCommission: SalesCommissionKey; // 매출 수수료
-  salesLast3MonthsAvg: SalesLast3MonthsAvgKey; // 최근 3개월 매출 평균
+  salesLast3MonthsAvg: SalesLast3MonthsAvgKey; // 이전 매장 평균 매출
 
   // 기타
   basicCutPrice: number | null; // 기본 컷 가격

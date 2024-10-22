@@ -278,7 +278,7 @@ export const jobPostingOptions: {
     { key: "5년 이상", value: "5년 이상" },
     { key: "상관없음", value: "상관없음" }
   ],
-  // 이전 3개월 평균 매출-디자이너
+  // 이전 매장 평균 매출-디자이너
   salesLast3MonthsAvg: [
     { key: "500만원 이하", value: "500만원 이하" },
     { key: "500만원 이상", value: "500만원 이상" },

@@ -71,7 +71,7 @@ export type InternExperienceYearNumberKeyResume =
 
 // // 희망 교육 - 인턴
 
-// 이전 3개월 평균 매출
+// 이전 매장 평균 매출
 export type SalesLast3MonthsAvgKeyResume =
   | "500만원 이하"
   | "500만원 이상"

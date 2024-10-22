@@ -53,7 +53,7 @@ const OptionalInfoSection = ({ resume }: OptionalInfoSectionProps) => {
       )}
       {resume.appliedRole === "디자이너" && (
         <SingleInfoItem
-          label="이전 3개월 평균 매출"
+          label="이전 매장 평균 매출"
           content={resume.salesLast3MonthsAvg}
         />
       )}

@@ -34,7 +34,7 @@
 //   const [isExpanded, setIsExpanded] = useState(false);
 //   const [selectedOption, setSelectedOption] = useState("상관없음");
 
-//   const label = "이전 3개월 평균 매출";
+//   const label = "이전 매장 평균 매출";
 //   const optionList = [
 //     "500만원 이하",
 //     "500만원 이상",

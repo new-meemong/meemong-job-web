@@ -131,7 +131,7 @@ export type DesignerExperienceYearNumberKey =
   | "5년 이상"
   | "상관없음";
 
-// 이전 3개월 평균 매출-디자이너
+// 이전 매장 평균 매출-디자이너
 export type SalesLast3MonthsAvgKey =
   | "500만원 이하"
   | "500만원 이상"

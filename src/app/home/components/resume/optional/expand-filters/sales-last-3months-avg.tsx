@@ -34,7 +34,7 @@ const SalesLast3MonthsAvg = () => {
   return (
     <Container>
       <OptionalSingleDropdownFilter
-        label="이전 3개월 평균 매출"
+        label="이전 매장 평균 매출"
         options={options}
         onSelect={handleSelect}
         selectedOption={selectedOption}

@@ -589,7 +589,7 @@ export const useJobPostingEditStore = create(
             isExistedDormitorySupport: get().isExistedDormitorySupport, // 기숙사 지원
             salesCommission: get().salesCommission, // 매출 수수료
             designerExperienceYearNumber: get().designerExperienceYearNumber, // 경력
-            salesLast3MonthsAvg: get().salesLast3MonthsAvg, // 최근 3개월 매출
+            salesLast3MonthsAvg: get().salesLast3MonthsAvg, // 이전 매장 평균 매출
             subwayAccessibility: get().subwayAccessibility, // 지하철 접근성
             adminAge: get().adminAge, // 관리자 나이
             adminSex: get().adminSex, // 관리자 성별

@@ -109,7 +109,7 @@ const DetailInfoDesigner = ({
         content={designerExperienceYearNumber}
       />
       <SingleInfoItem
-        label={"이전 3개월 매출 평균"}
+        label={"이전 매장 매출 평균"}
         content={salesLast3MonthsAvg}
       />
       <SingleInfoItem label={"지하철 접근성"} content={subwayAccessibility} />

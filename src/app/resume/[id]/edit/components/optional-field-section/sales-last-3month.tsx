@@ -25,7 +25,7 @@ const SalesLast3Month = () => {
 
   return (
     <Container>
-      <DropDownItem label={"이전 3개월 평균 매출"}>
+      <DropDownItem label={"이전 매장 평균 매출"}>
         <SingleOptionList
           options={options}
           selectedOption={salesLast3MonthsAvg}
