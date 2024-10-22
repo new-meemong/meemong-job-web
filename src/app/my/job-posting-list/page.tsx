@@ -1,6 +1,7 @@
 "use client";
 
 import MyJobPostingListHeader from "@/components/headers/my-job-posting-list-header";
+import MyJobPostingItem from "@/components/my-job-posting-item";
 import pxToVw from "@/lib/dpi-converter";
 import { useAuthStore } from "@/stores/auth-store";
 import { useMyJobPostingListStore } from "@/stores/my-job-posting-list-store";
@@ -21,34 +22,40 @@ const Container = styled.div`
 
 interface SearchParams {
   searchParams: {
-    token: string;
+    userId: string;
   };
 }
 
 export default function MyJobPostingListPage({ searchParams }: SearchParams) {
-  const { getMyJobPostingList } = useMyJobPostingListStore((state) => ({
-    getMyJobPostingList: state.getMyJobPostingList
-  }));
-  const { setJwt } = useAuthStore((state) => ({
-    setJwt: state.setJwt
+  const { myJobPostingList, getMyJobPostingList } = useMyJobPostingListStore(
+    (state) => ({
+      getMyJobPostingList: state.getMyJobPostingList,
+      myJobPostingList: state.myJobPostingList
+    })
+  );
+  const { login } = useAuthStore((state) => ({
+    login: state.login
   }));
 
-  const jwt = searchParams.token;
-  console.log("moonsae screen jwt", jwt);
+  const userId = searchParams.userId;
+
   useEffect(() => {
     const _fetch = async () => {
-      setJwt(jwt);
+      await login(userId);
       await getMyJobPostingList();
     };
 
-    if (jwt) {
+    if (userId) {
       _fetch();
     }
-  }, [getMyJobPostingList, jwt]);
+  }, [getMyJobPostingList, userId]);
+
   return (
     <Container>
       <MyJobPostingListHeader />
-      <div>MyJobPostingListPage</div>
+      {myJobPostingList.map((jobPosting, index) => {
+        return <MyJobPostingItem key={jobPosting.id} jobPosting={jobPosting} />;
+      })}
     </Container>
   );
 }

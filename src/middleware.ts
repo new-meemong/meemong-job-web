@@ -24,16 +24,16 @@ export function middleware(request: NextRequest) {
   }
 
   if (url.pathname === "/my/job-posting-list") {
-    const jwt =
+    const userId =
       request.headers.get("Authorization") ||
-      request.nextUrl.searchParams.get("token");
+      request.nextUrl.searchParams.get("userId");
 
-    if (!jwt) {
-      return NextResponse.json("JWT token is required.", { status: 401 });
+    if (!userId) {
+      return NextResponse.json("userId is required.", { status: 401 });
     }
 
-    url.searchParams.set("token", jwt);
-    console.log("[middleware] JWT set to searchParams", jwt);
+    url.searchParams.set("userId", userId);
+    console.log("[middleware] userId set to searchParams", userId);
 
     // 새로운 URL로 리다이렉트 설정
     return NextResponse.rewrite(url);

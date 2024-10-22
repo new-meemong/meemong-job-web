@@ -46,7 +46,7 @@ const MyJobPostingListHeader = () => {
       <LeftContainer onClick={handleBackClick}>
         <BackIcon />
       </LeftContainer>
-      <Title>내 구인공고</Title>
+      <Title>내가 쓴 구인구직 글</Title>
       <RightContainer />
     </Container>
   );

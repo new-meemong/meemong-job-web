@@ -31,7 +31,7 @@ export const defaultAuthState: AuthState = {
 
 export const useAuthStore = create(
   persist<AuthStore>(
-    (set) => ({
+    (set, get) => ({
       ...defaultAuthState,
       login: async (userId: string) => {
         try {
@@ -40,12 +40,12 @@ export const useAuthStore = create(
           }
 
           const { data }: { data: UserModel } = await webviewLogin(userId);
-
           if (data && data.token) {
             set({
               jwt: data.token, // JWT 토큰을 상태에 저장
               userId: String(data.id) // userId를 상태에 저장
             });
+
             return true;
           } else {
             return false;
@@ -65,7 +65,8 @@ export const useAuthStore = create(
         set({ sex });
       },
       setJwt: (jwt: string) => {
-        set({ jwt });
+        const cleanJwt = jwt.replace(/^["']+|["']+$/g, "");
+        set({ jwt: cleanJwt });
       }
     }),
     {
