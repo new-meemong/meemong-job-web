@@ -20,6 +20,7 @@ const Caution = styled.div`
 const Description = styled.div`
   ${fonts.greyTextNormal16}
   line-height: ${pxToVw(24)};
+  white-space: pre-wrap;
 `;
 
 type EtcInfoProps = Pick<JobPostingType, "storeName" | "description">;
