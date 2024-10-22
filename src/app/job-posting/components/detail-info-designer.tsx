@@ -6,6 +6,7 @@ import MultiInfoItem from "../../../components/details/multi-info-item";
 import { formatPriceWithCommas } from "@/lib/price-comma";
 import { JobPostingType } from "@/types/job-posting-type";
 import SingleInfoLinkItem from "@/components/details/single-info-link-item";
+import moment from "moment";
 
 const Container = styled.div`
   display: flex;
@@ -128,7 +129,15 @@ const DetailInfoDesigner = ({
       />
       <SingleInfoItem
         label={"근무 시간"}
-        content={`${startWorkTime || "00:00"} ~ ${endWorkTime || "00:00"}`}
+        content={`${
+          startWorkTime
+            ? moment(startWorkTime, "HH:mm:ss").format("HH:mm")
+            : "00:00"
+        } ~ ${
+          endWorkTime
+            ? moment(endWorkTime, "HH:mm:ss").format("HH:mm")
+            : "00:00"
+        }`}
       />
       <SingleInfoLinkItem
         label={"매장 링크"}
