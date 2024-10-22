@@ -130,7 +130,7 @@ const infoByRole = (jobPosting: JobPostingType) => {
       <InfoTextContainer>
         {/* <ProfileInfo>{role}</ProfileInfo>
         <Divider /> */}
-        <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
+        <ProfileInfo>{`교육 ${monthlyEducationCount}`}</ProfileInfo>
         <Divider />
         <ProfileInfo>{`휴무 ${availableOffDays} 가능`}</ProfileInfo>
         <Divider />
@@ -144,7 +144,7 @@ const infoByRole = (jobPosting: JobPostingType) => {
       <InfoTextContainer>
         {/* <ProfileInfo>{role}</ProfileInfo>
         <Divider /> */}
-        <ProfileInfo>{monthlyEducationCount}</ProfileInfo>
+        <ProfileInfo>{`교육 ${monthlyEducationCount}`}</ProfileInfo>
         <Divider />
         <ProfileInfo>{`교육비 ${educationCost}`}</ProfileInfo>
         <Divider />
