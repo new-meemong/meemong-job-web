@@ -26,7 +26,7 @@ const WriteButton = styled.div`
     rgba(93, 84, 183, 0.7);
   position: fixed; /* 화면에 고정 */
   right: ${pxToVw(15)}; /* 오른쪽에서 15px */
-  bottom: ${pxToVw(15)}; /* 하단에서 15px */
+  bottom: ${pxToVw(85)}; /* 하단에서 15px */
 `;
 
 const WriteButtonText = styled.span`
@@ -102,14 +102,14 @@ const FloatingButton = () => {
       {isExpanded && (
         <>
           <AdditionalButton
-            offset={numberToVw(90)}
+            offset={numberToVw(160)}
             onClick={handleJobPostingClick}
           >
             <WriteIcon />
             <AdditionalButtonText>{`매장정보\n등록`}</AdditionalButtonText>
           </AdditionalButton>
           <AdditionalButton
-            offset={numberToVw(160)}
+            offset={numberToVw(230)}
             onClick={handleResumeClick}
           >
             <WriteIcon />

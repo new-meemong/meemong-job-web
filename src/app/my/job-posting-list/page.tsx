@@ -59,15 +59,19 @@ export default function MyJobPostingListPage({ searchParams }: SearchParams) {
       myJobPostingList: state.myJobPostingList
     })
   );
-  const { login } = useAuthStore((state) => ({
-    login: state.login
+  const { login, jwt } = useAuthStore((state) => ({
+    login: state.login,
+    jwt: state.jwt
   }));
 
   const userId = searchParams.userId;
 
   useEffect(() => {
     const _fetch = async () => {
-      await login(userId);
+      if (!jwt) {
+        await login(userId);
+      }
+
       await getMyJobPostingList();
     };
 

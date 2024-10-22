@@ -11,6 +11,7 @@ import { useResumeListStore } from "@/stores/resume-list-store";
 import { HomeTopTabType, useAppStateStore } from "@/stores/app-state-store";
 import JobPostingSection from "./components/job-posting-section";
 import ResumeSection from "./components/resume-section";
+import MyJobPostingFloatingButton from "./components/my-job-posting-floating-button";
 
 const Container = styled.div`
   display: flex;
@@ -90,11 +91,13 @@ export default function HomePage({ searchParams }: SearchParams) {
   if (isLoginFailed) {
     return <div>로그인 실패</div>;
   }
+
   return (
     <Container>
       <BaseTopTabs activeTab={homeTopTab} setActiveTab={setHomeTopTab} />
       <HomeTitle />
       {homeTopTab === "jobPosting" ? <JobPostingSection /> : <ResumeSection />}
+      <MyJobPostingFloatingButton />
       <FloatingButton />
     </Container>
   );
