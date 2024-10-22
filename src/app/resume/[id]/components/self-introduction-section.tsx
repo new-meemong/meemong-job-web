@@ -12,6 +12,7 @@ const Container = styled.div`
 const Description = styled.div`
   ${fonts.greyTextSemi16}
   line-height: ${pxToVw(24)};
+  white-space: pre-wrap;
 `;
 
 interface SelfIntroductionSectionProps {
