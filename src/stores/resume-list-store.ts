@@ -27,6 +27,7 @@ export type ResumeListActions = {
   getResume: (userId: string) => Promise<ResponseResultType>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getResumeList: (queryParams?: Record<string, any>) => Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchResumeList: (queryParams?: Record<string, any>) => Promise<void>;
   updateResume: (updatedResume: ResumeType) => void;
   deleteResume: (id: string) => Promise<ResponseResultType>;
