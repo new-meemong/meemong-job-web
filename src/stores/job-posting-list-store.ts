@@ -10,6 +10,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 export type JobPostingListState = {
   jobPostingList: JobPostingType[];
+  searchResultJobPostingList: JobPostingType[];
   jobPostingListLoading: boolean;
   jobPostingFilterQueries: string;
 
@@ -24,6 +25,7 @@ export type JobPostingListActions = {
   getJobPosting: (id: string) => Promise<any>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getJobPostingList: (queryParams?: Record<string, any>) => Promise<void>;
+  searchJobPosingList: (queryParams?: Record<string, any>) => Promise<void>;
   deleteJobPosting: (id: string) => Promise<ResponseResultType>;
   updateJobPosting: (updatedJobPosting: JobPostingType) => void;
   getJobPostingFilterQuery: (key: string) => string | null;
@@ -37,6 +39,7 @@ export type JobPostingListStore = JobPostingListState & JobPostingListActions;
 
 export const defaultJobPostingListState: JobPostingListState = {
   jobPostingList: [],
+  searchResultJobPostingList: [],
   jobPostingListLoading: false,
   jobPostingFilterQueries: "",
   _postingRegions: [],
@@ -65,6 +68,17 @@ export const useJobPostingListStore = create(
 
         set({ jobPostingList: dataList as JobPostingType[] });
         set({ jobPostingListLoading: false });
+      },
+      searchJobPosingList: async (queryParams) => {
+        const _queryParams = {
+          __cursorOrder: "createdAtDesc",
+          ...queryParams
+        };
+
+        const res = await getJobPostings(_queryParams);
+        const { dataList } = res;
+
+        set({ searchResultJobPostingList: dataList as JobPostingType[] });
       },
       updateJobPosting: (updatedJobPosting) => {
         set((state) => ({

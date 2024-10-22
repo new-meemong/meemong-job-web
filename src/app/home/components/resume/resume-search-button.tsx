@@ -1,10 +1,11 @@
 import pxToVw from "@/lib/dpi-converter";
-import { parseQueryString } from "@/lib/parse-query-string";
-import { useResumeListStore } from "@/stores/resume-list-store";
+// import { parseQueryString } from "@/lib/parse-query-string";
+// import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ClipLoader } from "react-spinners";
+// import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 
 const Button = styled.div`
@@ -20,25 +21,28 @@ const Button = styled.div`
 `;
 
 const ResumeSearchButton = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [text] = useState("인재 탐색하기");
-  const { resumeFilterQueries, getResumeList } = useResumeListStore(
-    (state) => ({
-      resumeFilterQueries: state.resumeFilterQueries,
-      getResumeList: state.getResumeList
-    })
-  );
+  const router = useRouter();
+  // const [isLoading, setIsLoading] = useState(false);
+  // const { resumeFilterQueries, getResumeList } = useResumeListStore(
+  //   (state) => ({
+  //     resumeFilterQueries: state.resumeFilterQueries,
+  //     getResumeList: state.getResumeList
+  //   })
+  // );
 
   const handleClick = async () => {
-    setIsLoading(true);
-    const parsedQueries = parseQueryString(resumeFilterQueries);
-    await getResumeList(parsedQueries);
-    setIsLoading(false);
+    router.push("/search-result/resume-list");
+    // setIsLoading(true);
+    // const parsedQueries = parseQueryString(resumeFilterQueries);
+    // await getResumeList(parsedQueries);
+    // setIsLoading(false);
   };
 
   return (
     <Button onClick={handleClick}>
-      {isLoading ? <ClipLoader color={colors.white} size={30} /> : text}
+      {/* {isLoading ? <ClipLoader color={colors.white} size={30} /> : text} */}
+      {text}
     </Button>
   );
 };

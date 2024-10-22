@@ -11,6 +11,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 export type ResumeListState = {
   resumeList: ResumeType[];
+  searchResultResumeList: ResumeType[];
   resumeListLoading: boolean;
   resumeFilterQueries: string;
 
@@ -26,6 +27,7 @@ export type ResumeListActions = {
   getResume: (userId: string) => Promise<ResponseResultType>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getResumeList: (queryParams?: Record<string, any>) => Promise<void>;
+  searchResumeList: (queryParams?: Record<string, any>) => Promise<void>;
   updateResume: (updatedResume: ResumeType) => void;
   deleteResume: (id: string) => Promise<ResponseResultType>;
   getResumeFilterQuery: (key: string) => string | null;
@@ -39,6 +41,7 @@ export type ResumeListStore = ResumeListState & ResumeListActions;
 
 export const defaultResumeListState: ResumeListState = {
   resumeList: [],
+  searchResultResumeList: [],
   resumeListLoading: false,
   resumeFilterQueries: "",
   _preferredStoreRegions: [],
@@ -86,6 +89,16 @@ export const useResumeListStore = create(
 
         set({ resumeList: dataList as ResumeType[] });
         set({ resumeListLoading: false });
+      },
+      searchResumeList: async (queryParams) => {
+        const _queryParams = {
+          __cursorOrder: "createdAtDesc",
+          ...queryParams
+        };
+        const res = await getResumes(_queryParams);
+        const { dataList } = res;
+
+        set({ searchResultResumeList: dataList as ResumeType[] });
       },
       updateResume: (updatedResume) => {
         set((state) => ({
