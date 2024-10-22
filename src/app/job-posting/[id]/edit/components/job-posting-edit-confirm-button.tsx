@@ -5,7 +5,7 @@ import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { JobPostingType } from "@/types/job-posting-type";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -33,6 +33,9 @@ const Button = styled.div`
 `;
 
 const JobPostingEditConfirmButton = () => {
+  const { id } = useParams();
+  const postingId = Array.isArray(id) ? id[0] : id;
+
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -81,7 +84,9 @@ const JobPostingEditConfirmButton = () => {
 
   return (
     <Container>
-      <Button onClick={handleConfirm}>공고 수정하기</Button>
+      <Button onClick={handleConfirm}>
+        {postingId === "new" ? "공고 작성하기" : "공고 수정하기"}
+      </Button>
       <NoticeModal
         isOpen={isModalOpen}
         message={modalMessage}
