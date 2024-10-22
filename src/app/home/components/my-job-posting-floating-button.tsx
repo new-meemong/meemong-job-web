@@ -47,7 +47,7 @@ const MyJobPostingFloatingButton = () => {
     <Container>
       <WriteButton onClick={handleClick}>
         <WriteIcon />
-        <WriteButtonText>내 공고 보기</WriteButtonText>
+        <WriteButtonText>{`내가 쓴\n공고보기`}</WriteButtonText>
       </WriteButton>
     </Container>
   );
