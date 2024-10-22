@@ -32,6 +32,20 @@ const SubHeaderText = styled.div`
   ${fonts.blackBold16}
 `;
 
+const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: ${pxToVw(100)};
+`;
+
+const EmptyText = styled.div`
+  ${fonts.greySemi20}
+  white-space: pre-line;
+  text-align: center;
+`;
+
 interface SearchParams {
   searchParams: {
     userId: string;
@@ -68,9 +82,18 @@ export default function MyJobPostingListPage({ searchParams }: SearchParams) {
       <SubHeaderContainer>
         <SubHeaderText>{`총 게시글 (${myJobPostingList.length})`}</SubHeaderText>
       </SubHeaderContainer>
-      {myJobPostingList.map((jobPosting) => {
-        return <MyJobPostingItem key={jobPosting.id} jobPosting={jobPosting} />;
-      })}
+      {myJobPostingList.length === 0 ? (
+        <EmptyContainer>
+          {" "}
+          <EmptyText>{`덩그러니~!\n게시글이 없어요.`}</EmptyText>
+        </EmptyContainer>
+      ) : (
+        myJobPostingList.map((jobPosting) => {
+          return (
+            <MyJobPostingItem key={jobPosting.id} jobPosting={jobPosting} />
+          );
+        })
+      )}
     </Container>
   );
 }

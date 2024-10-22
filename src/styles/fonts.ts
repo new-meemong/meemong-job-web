@@ -97,6 +97,11 @@ export const fonts = {
   `,
 
   // grey
+  greySemi20: css`
+    font-size: ${pxToVw(20)};
+    font-weight: 500;
+    color: ${colors.grey};
+  `,
   greySemi16: css`
     font-size: ${pxToVw(16)};
     font-weight: 500;
