@@ -107,7 +107,7 @@ export default function ResumePage() {
         <SelfIntroductionSection description={resume.description} />
       </ContentContainer>
       {userId && !isMine && (
-        <BottomButtonSection postUserId={resume.userId.toString()} />
+        <BottomButtonSection postUserId={resume.User.UserID.toString()} />
       )}
     </Container>
   );
