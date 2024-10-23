@@ -3,10 +3,8 @@ import pxToVw from "@/lib/dpi-converter";
 import numberToVw from "@/lib/dpi-number-converter";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
-import { ResumeType } from "@/types/resume-type";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styled from "styled-components";
@@ -57,13 +55,6 @@ const FloatingButton = () => {
   const { checkMyResumeExist } = useResumeListStore((state) => ({
     checkMyResumeExist: state.checkMyResumeExist
   }));
-  const { resetStore, setFromResume, setAppliedRole } = useResumeEditStore(
-    (state) => ({
-      resetStore: state.resetStore,
-      setFromResume: state.setFromResume,
-      setAppliedRole: state.setAppliedRole
-    })
-  );
   const { setRole } = useJobPostingEditStore((state) => ({
     setRole: state.setRole
   }));
@@ -82,10 +73,6 @@ const FloatingButton = () => {
     const { status, data } = await checkMyResumeExist();
 
     if (status) {
-      resetStore();
-      setFromResume(data as ResumeType);
-      setAppliedRole(null);
-
       router.push(`/resume/${data!.id}/edit`);
     } else {
       router.push("/resume/new/edit");

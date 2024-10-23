@@ -6,7 +6,7 @@ import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 
@@ -81,12 +81,19 @@ const ProfileImageSection = () => {
   } else if (appliedRole === "인턴") {
     hasError = hasInternOptionNull;
   }
-  const profileImage = profileImageThumbnailUri
-    ? `${IMAGE_STORAGE_URL}${profileImageThumbnailUri}`
-    : "/images/resume_profile_default.svg";
-  const [imgSrc, setImgSrc] = useState<string>(profileImage);
+  const defaultProfileImage = "/images/resume_profile_default.svg";
+  const [imgSrc, setImgSrc] = useState<string>(defaultProfileImage);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (profileImageThumbnailUri) {
+      setImgSrc(`${IMAGE_STORAGE_URL}${profileImageThumbnailUri}`);
+    } else {
+      setImgSrc(defaultProfileImage); // 기본 이미지로 설정
+    }
+  }, [profileImageThumbnailUri]);
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 

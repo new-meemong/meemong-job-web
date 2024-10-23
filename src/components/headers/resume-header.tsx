@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import { useState } from "react";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
 import OptionIcon from "./header-icons/option-icon";
 import SingleSelectBottomModal from "../modals/single-select-bottom-modal";
 import ConfirmModal from "../modals/confirm-modal";
@@ -58,12 +57,7 @@ const ResumeHeader = ({
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
   const [noticeModalMessage, setNoticeModalMessage] = useState("");
 
-  const { resetStore, setFromResume } = useResumeEditStore((state) => ({
-    resetStore: state.resetStore,
-    setFromResume: state.setFromResume
-  }));
-  const { resumeList, deleteResume } = useResumeListStore((state) => ({
-    resumeList: state.resumeList,
+  const { deleteResume } = useResumeListStore((state) => ({
     deleteResume: state.deleteResume
   }));
 
@@ -86,14 +80,6 @@ const ResumeHeader = ({
 
   const handleOptionSelect = (option: string | null) => {
     if (option === "수정") {
-      const resume = resumeList.find(
-        (resume) => resume.id.toString() === resumeId
-      );
-      if (resume) {
-        resetStore();
-        setFromResume(resume);
-      }
-
       router.push(`/resume/${resumeId}/edit`);
     } else if (option === "삭제") {
       setIsDeleteConfirmModalOpen(true);

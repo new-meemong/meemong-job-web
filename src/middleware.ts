@@ -24,9 +24,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (url.pathname === "/my/job-posting-list") {
-    const userId =
-      request.headers.get("Authorization") ||
-      request.nextUrl.searchParams.get("userId");
+    const userId = request.nextUrl.searchParams.get("userId");
 
     if (!userId) {
       return NextResponse.json("userId is required.", { status: 401 });
@@ -39,12 +37,27 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  if (url.pathname.startsWith("/resume/") && url.pathname.endsWith("/edit")) {
+    const userId = request.nextUrl.searchParams.get("userId");
+
+    if (userId) {
+      url.searchParams.set("userId", userId);
+      console.log(
+        "[middleware] userId set to searchParams in resume edit",
+        userId
+      );
+    }
+
+    // 새로운 URL로 리다이렉트 설정
+    return NextResponse.rewrite(url);
+  }
+
   // 기본 응답
   return response;
 }
 
 export const config = {
-  matcher: ["/", "/home", "/my/job-posting-list"]
+  matcher: ["/", "/home", "/my/job-posting-list", "/resume/:path*/edit"]
 };
 
 // "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2pvYi1hcGkubWVlbW9uZy5jb20iLCJpYXQiOjE3MjkyMzY5MDAsInR5cGUiOiJDTElFTlRfQVBQX1VTRVIiLCJpc0RldkRhdGFiYXNlIjpmYWxzZSwiYXBwSWRlbnRpZmllcklkIjpudWxsLCJ1c2VySWQiOjQzNjc3LCJleHAiOjE3MzcwMTI5MDB9.7ThEnaPZDm4B4ZPMeDMiHX9dlgzEpA4qJnvpKfxE9BQ"
