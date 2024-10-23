@@ -31,11 +31,22 @@ const OptionItem = styled.div`
   border-bottom: ${pxToVw(1)} solid #f0f0f0;
 `;
 
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: ${pxToVw(16)};
+`;
+
 const Caption = styled.span`
   ${fonts.greyText4Semi12}
   padding-left: ${pxToVw(16)};
   padding-top: ${pxToVw(12)};
   padding-bottom: ${pxToVw(12)};
+`;
+
+const CompleteButton = styled.div`
+  ${fonts.purplePrimaryBold14}
 `;
 
 interface Option<T> {
@@ -67,7 +78,10 @@ const MultiSelectBottomModal = <T,>({
       <SheetContainer>
         <SheetHeader />
         <SheetContent>
-          <Caption>{caption}</Caption>
+          <HeaderContainer>
+            <Caption>{caption}</Caption>
+            <CompleteButton onClick={onClose}>선택완료</CompleteButton>
+          </HeaderContainer>
           <SheetScroller>
             {options.map((option, index) => {
               const isSelected = selectedOptions.includes(option.key);
