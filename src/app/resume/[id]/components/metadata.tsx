@@ -24,7 +24,7 @@ export default function Metadata({
   ogLocale = "ko_KR"
 }: Props) {
   return (
-    <Head>
+    <>
       <title>{seoTitle}</title>
       <meta name="description" content={seoDescription} />
       <meta property="og:type" content={ogType} />
@@ -34,6 +34,6 @@ export default function Metadata({
       <meta property="og:url" content={ogUrl} />
       <meta property="og:site_name" content={ogSiteName} />
       <meta property="og:locale" content={ogLocale} />
-    </Head>
+    </>
   );
 }
