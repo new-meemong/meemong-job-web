@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 interface Props {
   seoTitle?: string;
   seoDescription?: string;
