@@ -6,7 +6,7 @@ import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "미몽-구인구직",
-  description: "헤어 디자이너를 위한 구인구직 서비스"
+  description: "헤어 디자이너를 위한 구인구직 서비스 ~!"
 };
 
 export const viewport: Viewport = {

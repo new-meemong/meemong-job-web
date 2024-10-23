@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 interface Props {
   seoTitle?: string;
   seoDescription?: string;
@@ -12,17 +14,17 @@ interface Props {
 
 export default function Metadata({
   seoTitle = "미몽 - 구인구직",
-  seoDescription = "헤어 디자이너 구인구직 플랫폼",
+  seoDescription = "헤어 디자이너 구인구직 플랫폼222",
   ogType = "website",
   ogImage = "",
   ogTitle = "미몽 - 구인구직",
-  ogDescription = "헤어 디자이너 구인구직 플랫폼",
+  ogDescription = "헤어 디자이너 구인구직 플랫폼222",
   ogUrl = "https://meemong.com/",
   ogSiteName = "미몽",
   ogLocale = "ko_KR"
 }: Props) {
   return (
-    <>
+    <Head>
       <title>{seoTitle}</title>
       <meta name="description" content={seoDescription} />
       <meta property="og:type" content={ogType} />
@@ -32,6 +34,6 @@ export default function Metadata({
       <meta property="og:url" content={ogUrl} />
       <meta property="og:site_name" content={ogSiteName} />
       <meta property="og:locale" content={ogLocale} />
-    </>
+    </Head>
   );
 }
