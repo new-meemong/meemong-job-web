@@ -73,12 +73,12 @@ export default function ResumePage() {
   if (isLoading) {
     return (
       <>
-        <Metadata
+        {/* <Metadata
           ogUrl={`https://meemong-job-web.vercel.app/resume/${resumeId}`}
           ogImage="https://meemong-job-storage.s3.ap-northeast-2.amazonaws.com/uploads/resumes/profiles/2024/10/15/images/9dbf494e-70b4-4e2e-8fef-3e31fb998a26/s1024/9dbf494e-70b4-4e2e-8fef-3e31fb998a26.jpg"
           ogTitle={"로딩 메타데이터"}
           ogDescription="로딩중입니다."
-        />
+        /> */}
         <CenterSpinner />
       </>
     );
