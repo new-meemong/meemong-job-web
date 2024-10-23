@@ -87,7 +87,7 @@ const RegionsSelect = () => {
 
   return (
     <Container>
-      <ResumeEditLabel label={"지역*"} />
+      <ResumeEditLabel label={"근무 희망 지역*"} />
       <ContentContainer>
         <Location $hasError={hasError}>
           {convertRegions.length === 0 ? (
