@@ -1,7 +1,7 @@
 import {
   deleteResume,
+  getMyResume,
   getResume,
-  getResumeById,
   getResumes
 } from "@/apis/resumes";
 import { ResponseResultType } from "@/types/response-result-type";
@@ -23,7 +23,7 @@ export type ResumeListState = {
 
 export type ResumeListActions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  checkMyResumeExist: (userId: string) => Promise<ResponseResultType>;
+  checkMyResumeExist: () => Promise<ResponseResultType>;
   getResume: (userId: string) => Promise<ResponseResultType>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getResumeList: (queryParams?: Record<string, any>) => Promise<void>;
@@ -54,9 +54,9 @@ export const useResumeListStore = create(
   persist<ResumeListStore>(
     (set, get) => ({
       ...defaultResumeListState,
-      checkMyResumeExist: async (userId: string) => {
+      checkMyResumeExist: async () => {
         try {
-          const res = await getResumeById(userId);
+          const res = await getMyResume();
           const { dataList } = res;
 
           if (dataList.length > 0) {

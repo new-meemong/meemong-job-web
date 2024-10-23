@@ -385,6 +385,8 @@ export const useResumeEditStore = create(
 
           const resumeData = prepareResumeData(state);
 
+          resumeData.isExposure = false;
+
           const response = id
             ? await putResume(id, resumeData)
             : await postResume(resumeData);

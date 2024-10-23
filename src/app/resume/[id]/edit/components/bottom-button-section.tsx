@@ -91,9 +91,11 @@ const BottomButtonSection = () => {
   };
   return (
     <Container>
-      <SaveDraftButton onClick={handleSaveDraft}>임시저장</SaveDraftButton>
+      <SaveDraftButton
+        onClick={handleSaveDraft}
+      >{`저장 (나만 보기)`}</SaveDraftButton>
       <PublishResumeButton $hasError={false} onClick={handlePublishResume}>
-        이력서 등록 및 게시
+        저장 및 게시
       </PublishResumeButton>
       <NoticeModal
         isOpen={isModalOpen}

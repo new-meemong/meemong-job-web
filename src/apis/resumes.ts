@@ -17,6 +17,15 @@ export const getResumeById = async (userId: string) => {
     return { error: e || "Failed to get my resume" };
   }
 };
+
+export const getMyResume = async () => {
+  try {
+    return await apiFetch(`/api/v1/resumes/me`, "GET");
+  } catch (e) {
+    console.error("[getMyResume] failed", e);
+    return { error: e || "Failed to get my resume" };
+  }
+};
 export const getResume = async (id: string) => {
   try {
     return await apiFetch(`/api/v1/resumes/${id}`, "GET");
