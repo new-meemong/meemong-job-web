@@ -43,7 +43,7 @@ const ContentContainer = styled.div`
 
 export default function ResumePage() {
   const { id } = useParams();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [resume, setResume] = useState<ResumeType | null>(null);
   const resumeId: string = Array.isArray(id) ? id[0] : id;
   const { getResume } = useResumeListStore((state) => ({
@@ -74,9 +74,10 @@ export default function ResumePage() {
     return (
       <>
         <Metadata
-          ogUrl={`https://meemong.com/resumes/${resumeId}`}
+          ogUrl={`https://meemong-job-web.vercel.app/resume/${resumeId}`}
           ogImage="https://meemong-job-storage.s3.ap-northeast-2.amazonaws.com/uploads/resumes/profiles/2024/10/15/images/9dbf494e-70b4-4e2e-8fef-3e31fb998a26/s1024/9dbf494e-70b4-4e2e-8fef-3e31fb998a26.jpg"
           ogTitle={"로딩 메타데이터"}
+          ogDescription="로딩중입니다."
         />
         <CenterSpinner />
       </>
@@ -87,9 +88,10 @@ export default function ResumePage() {
     return (
       <>
         <Metadata
-          ogUrl={`https://meemong.com/resumes/${resumeId}`}
+          ogUrl={`https://meemong-job-web.vercel.app/resume/${resumeId}`}
           ogImage="https://meemong-job-storage.s3.ap-northeast-2.amazonaws.com/uploads/resumes/profiles/2024/10/15/images/9dbf494e-70b4-4e2e-8fef-3e31fb998a26/s1024/9dbf494e-70b4-4e2e-8fef-3e31fb998a26.jpg"
           ogTitle={"없음 메타데이터"}
+          ogDescription="존재하지 않는 이력서입니다."
         />
         <div>존재하지 않는 이력서입니다.</div>;
       </>
@@ -101,6 +103,7 @@ export default function ResumePage() {
         ogImage={`${IMAGE_STORAGE_URL}${resume.profileImageUri}`}
         ogTitle={resume.userName}
         ogDescription={resume.shortDescription}
+        ogUrl={`https://meemong-job-web.vercel.app/resume/${resumeId}`}
       />
       <ResumeHeader
         title={`이력서`}
