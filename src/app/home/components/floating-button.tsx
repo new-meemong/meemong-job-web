@@ -79,7 +79,7 @@ const FloatingButton = () => {
     if (!userId) {
       return;
     }
-    const { status, data } = await checkMyResumeExist(userId);
+    const { status, data } = await checkMyResumeExist();
 
     if (status) {
       resetStore();
