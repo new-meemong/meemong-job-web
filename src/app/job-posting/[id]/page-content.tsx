@@ -20,6 +20,7 @@ import StoreLocation from "../components/store-location";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
 import { messageType } from "@/types/send-app-message-type";
 import StoreFloatingButton from "@/components/buttons/store-floating-button";
+import { useEffect } from "react";
 
 const Container = styled.div`
   flex-direction: column;
@@ -53,6 +54,10 @@ export default function PageContent({
 
   const { JobPostingsStoreImages }: { JobPostingsStoreImages: ImageType[] } =
     jobPosting;
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // 페이지 로드 시 스크롤을 최상단으로 이동
+  }, []);
 
   const renderInfo = () => {
     if (jobPosting.role === "디자이너") {

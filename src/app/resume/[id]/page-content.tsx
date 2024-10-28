@@ -14,6 +14,7 @@ import BottomButtonSection from "./components/bottom-button-section";
 import { ResumeType } from "@/types/resume-type";
 import { useAuthStore } from "@/stores/auth-store";
 import StoreFloatingButton from "@/components/buttons/store-floating-button";
+import { useEffect } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -42,6 +43,10 @@ export default function PageContent({ resume }: { resume: ResumeType }) {
   }));
 
   const isMine = resume.userId.toString() === userId;
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // 페이지 로드 시 스크롤을 최상단으로 이동
+  }, []);
 
   return (
     <Container>
