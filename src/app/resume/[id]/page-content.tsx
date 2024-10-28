@@ -13,6 +13,7 @@ import SelfIntroductionSection from "./components/self-introduction-section";
 import BottomButtonSection from "./components/bottom-button-section";
 import { ResumeType } from "@/types/resume-type";
 import { useAuthStore } from "@/stores/auth-store";
+import StoreFloatingButton from "@/components/buttons/store-floating-button";
 
 const Container = styled.div`
   display: flex;
@@ -69,6 +70,7 @@ export default function PageContent({ resume }: { resume: ResumeType }) {
       {userId && !isMine && (
         <BottomButtonSection postUserId={resume.User.UserID.toString()} />
       )}
+      {!userId && <StoreFloatingButton />}
     </Container>
   );
 }

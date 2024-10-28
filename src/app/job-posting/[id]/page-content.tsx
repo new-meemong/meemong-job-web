@@ -19,6 +19,7 @@ import EtcInfo from "../components/etc-info";
 import StoreLocation from "../components/store-location";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
 import { messageType } from "@/types/send-app-message-type";
+import StoreFloatingButton from "@/components/buttons/store-floating-button";
 
 const Container = styled.div`
   flex-direction: column;
@@ -204,6 +205,7 @@ export default function PageContent({
           }}
         />
       )}
+      {!userId && <StoreFloatingButton />}
     </Container>
   );
 }
