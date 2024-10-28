@@ -13,7 +13,7 @@ const Coontainer = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: ${pxToVw(8)};
   right: ${pxToVw(16)};
-  top: ${pxToVw(68)};
+  top: ${pxToVw(16)};
   padding: ${pxToVw(8)};
   gap: ${pxToVw(2)};
 `;

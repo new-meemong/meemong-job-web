@@ -6,7 +6,9 @@ import { ResumeType } from "@/types/resume-type";
 import Image from "next/image";
 import styled from "styled-components";
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: relative;
+`;
 interface ProfileSectionProps {
   resume: ResumeType;
 }

@@ -8,7 +8,6 @@ import { JobPostingType } from "@/types/job-posting-type";
 import styled from "styled-components";
 import ImageSlider from "../components/image-slider";
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
-import ShareButton from "@/components/buttons/share-button";
 import StoreInfo from "../components/store-info";
 import Divider from "../components/divider";
 import PostingTitle from "../components/posting-title";
@@ -163,7 +162,7 @@ export default function PageContent({
           ) || []
         }
       />
-      <ShareButton />
+
       <ContentContainer>
         <StoreInfo
           storeImage={
