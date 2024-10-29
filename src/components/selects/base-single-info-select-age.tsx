@@ -38,6 +38,7 @@ const Button = styled.div<{ $isSelected: boolean; $hasError: boolean }>`
         ? colors.red
         : colors.grey};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const Info = styled.div`
@@ -150,7 +151,7 @@ const BaseSingleInfoSelectAge = ({
             $hasError={isError}
             onClick={() => handleSelect(option.key)}
           >
-            {option.value}
+            {option.value}1
           </Button>
         ))}
       </ButtonContainer>
