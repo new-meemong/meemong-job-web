@@ -80,6 +80,7 @@ const DesignerOptions = () => {
       <SelectParkingSpotCount />
       <SelectIsExistedCleaningSupplier />
       <SelectIsExistedTowelSupplier />
+      <SelectIsOnsiteManger />
       <InputBasicCutPrice />
     </>
   );

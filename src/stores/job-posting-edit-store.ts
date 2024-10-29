@@ -597,6 +597,7 @@ export const useJobPostingEditStore = create(
             parkingSpotCount: get().parkingSpotCount, // 주차장
             isExistedCleaningSupplier: get().isExistedCleaningSupplier, // 청소 업체
             isExistedTowelSupplier: get().isExistedTowelSupplier, // 수건 업체
+            IsOnsiteManager: get().isOnsiteManager, // 현장 관리자
             basicCutPrice: get().basicCutPrice, // 기본 컷 가격
 
             JobPostingsStoreImages: get().jobPostingsStoreImages // 매장 이미지

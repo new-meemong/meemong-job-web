@@ -9,10 +9,28 @@ const Container = styled.div`
 `;
 
 const SelectIsOnsiteManger = () => {
-  const { isOnsiteManager, setIsOnsiteManager, hasInternOptionNull } =
-    useJobPostingEditStore();
+  const {
+    isOnsiteManager,
+    setIsOnsiteManager,
+    hasDesignerOptionNull,
+    hasInternOptionNull,
+    role
+  } = useJobPostingEditStore((state) => ({
+    isOnsiteManager: state.isOnsiteManager,
+    setIsOnsiteManager: state.setIsOnsiteManager,
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
+    hasInternOptionNull: state.hasInternOptionNull,
+    role: state.role
+  }));
   const options = jobPostingOptions.isOnsiteManager;
-  const hasError = isOnsiteManager === null && hasInternOptionNull;
+  let hasError = false;
+
+  if (role === "디자이너") {
+    hasError = !isOnsiteManager && hasDesignerOptionNull;
+  }
+  if (role === "인턴") {
+    hasError = !isOnsiteManager && hasInternOptionNull;
+  }
 
   const handleSelect = (selectedOption: boolean | null) => {
     setIsOnsiteManager(selectedOption);
