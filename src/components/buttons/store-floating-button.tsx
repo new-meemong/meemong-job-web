@@ -1,16 +1,28 @@
 import pxToVw from "@/lib/dpi-converter";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 import Image from "next/image";
 import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: ${pxToVw(70)};
+  gap: ${pxToVw(8)};
+  padding-top: ${pxToVw(12)};
+  padding-bottom: ${pxToVw(12)};
+  background-color: ${colors.white};
+`;
+
+const StoreContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: ${pxToVw(8)};
 `;
 
@@ -25,7 +37,11 @@ const AppStoreButton = styled.div`
   position: relative;
 `;
 
-const StoreFloatingButton = () => {
+const Title = styled.div`
+  ${fonts.blackNormal14}
+`;
+
+const StoreFloatingButton = ({ title }: { title: string }) => {
   const handlePlayStoreButtonClick = () => {
     window.open(
       "https://play.google.com/store/apps/details?id=com.meemong.second&pcampaignid=web_share",
@@ -42,12 +58,15 @@ const StoreFloatingButton = () => {
 
   return (
     <Container>
-      <PlayStoreButton onClick={handlePlayStoreButtonClick}>
-        <Image src="/images/playstore_download.svg" alt="Play Store" fill />
-      </PlayStoreButton>
-      <AppStoreButton onClick={handleAppStoreButtonClick}>
-        <Image src="/images/appstore_download.svg" alt="App Store" fill />
-      </AppStoreButton>
+      <Title>{title}</Title>
+      <StoreContainer>
+        <PlayStoreButton onClick={handlePlayStoreButtonClick}>
+          <Image src="/images/playstore_download.svg" alt="Play Store" fill />
+        </PlayStoreButton>
+        <AppStoreButton onClick={handleAppStoreButtonClick}>
+          <Image src="/images/appstore_download.svg" alt="App Store" fill />
+        </AppStoreButton>
+      </StoreContainer>
     </Container>
   );
 };

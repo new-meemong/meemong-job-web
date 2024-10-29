@@ -210,7 +210,7 @@ export default function PageContent({
           }}
         />
       )}
-      {!userId && <StoreFloatingButton />}
+      {!userId && <StoreFloatingButton title={"어플 다운 후 지원하기"} />}
     </Container>
   );
 }
