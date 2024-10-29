@@ -151,7 +151,7 @@ const BaseSingleInfoSelectAge = ({
             $hasError={isError}
             onClick={() => handleSelect(option.key)}
           >
-            {option.value}1
+            {option.value}
           </Button>
         ))}
       </ButtonContainer>
