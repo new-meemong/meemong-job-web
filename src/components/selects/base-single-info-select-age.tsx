@@ -32,12 +32,13 @@ const Button = styled.div<{ $isSelected: boolean; $hasError: boolean }>`
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) =>
-      props.$isSelected
-        ? colors.purplePrimary
-        : props.$hasError
+    props.$isSelected
+      ? colors.purplePrimary
+      : props.$hasError
         ? colors.red
         : colors.grey};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const Info = styled.div`

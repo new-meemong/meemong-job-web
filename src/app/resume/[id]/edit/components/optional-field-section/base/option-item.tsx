@@ -17,12 +17,13 @@ const OptionItem = styled.div<{
     props.$size === "large"
       ? pxToVw(105)
       : props.$size === "small"
-      ? pxToVw(77)
-      : pxToVw(86)};
+        ? pxToVw(77)
+        : pxToVw(86)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 export default OptionItem;

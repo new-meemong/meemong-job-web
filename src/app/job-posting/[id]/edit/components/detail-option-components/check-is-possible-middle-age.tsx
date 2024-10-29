@@ -15,6 +15,7 @@ const CheckBox = styled.input.attrs({ type: "checkbox" })`
   width: ${pxToVw(24)};
   height: ${pxToVw(24)};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   appearance: none;
   border: ${pxToVw(2)} solid ${colors.grey};
   border-radius: ${pxToVw(2)};

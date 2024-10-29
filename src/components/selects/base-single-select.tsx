@@ -37,17 +37,18 @@ const Button = styled.div<{
     props.$size === "large"
       ? pxToVw(102)
       : props.$size === "small"
-      ? pxToVw(77)
-      : pxToVw(86)}; /* medium에 대한 기본값 설정 */
+        ? pxToVw(77)
+        : pxToVw(86)}; /* medium에 대한 기본값 설정 */
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) =>
-      props.$isSelected
-        ? colors.purplePrimary
-        : props.$hasError
+    props.$isSelected
+      ? colors.purplePrimary
+      : props.$hasError
         ? colors.red
         : colors.grey};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 interface Option<T> {

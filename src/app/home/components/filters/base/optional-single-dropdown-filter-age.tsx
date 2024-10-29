@@ -84,6 +84,7 @@ const Checkbox = styled.input.attrs({ type: "checkbox" })`
   width: ${pxToVw(24)};
   height: ${pxToVw(24)};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   appearance: none;
   border: ${pxToVw(2)} solid ${colors.grey};
   border-radius: ${pxToVw(2)};
@@ -191,8 +192,8 @@ const OptionalSingleDropdownFilterAge = <T extends string | boolean>({
               {selectedOption === "true"
                 ? "연령 제한"
                 : selectedOption === "false"
-                ? "연령 무관"
-                : selectedOption}
+                  ? "연령 무관"
+                  : selectedOption}
             </UnexpandContent>
           </UnexpandContentContainer>
           <ArrowDownGreyIcon />

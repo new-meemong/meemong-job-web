@@ -51,6 +51,7 @@ const SearchButton = styled.button`
   border-radius: ${pxToVw(4)};
 
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 
   &:disabled {
     background-color: #cccccc;
@@ -109,8 +110,8 @@ export default function SearchNaver() {
       <SearchResultContainer>
         {searchResults.length > 0
           ? searchResults.map((item) => (
-              <SearchResultItem key={item.link} {...item} />
-            ))
+            <SearchResultItem key={item.link} {...item} />
+          ))
           : searchQuery && <p>검색 결과가 없습니다.</p>}
       </SearchResultContainer>
     </Container>
