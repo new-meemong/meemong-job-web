@@ -10,6 +10,12 @@ import JobPostingEditSearchLocation from "./components/job-posting-edit-search-l
 import Divider from "./components/divider";
 import JobPostingEditBaseOption from "./components/job-posting-edit-base-option";
 import { useEffect } from "react";
+import JobPostingEditDetailOption from "./components/jobb-posting-edit-detail-option";
+import JobPostingEditStoreImage from "./components/job-posting-edit-store-image";
+import JobPostingEditEtcOption from "./components/job-posting-edit-etc-option";
+import InputDescription from "./components/input-description";
+import JobPostingEditNote from "./components/job-posting-edit-note";
+import JobPostingEditConfirmButton from "./components/job-posting-edit-confirm-button";
 
 const Container = styled.div`
   display: flex;
@@ -54,6 +60,14 @@ export default function JobPostingEditPage() {
         <JobPostingEditSearchLocation />
         <Divider />
         <JobPostingEditBaseOption />
+        <JobPostingEditDetailOption />
+        <Divider />
+        <JobPostingEditStoreImage />
+        <Divider />
+        <JobPostingEditEtcOption />
+        <InputDescription />
+        <JobPostingEditNote />
+        <JobPostingEditConfirmButton />
       </ContentContainer>
     </Container>
   );

@@ -31,7 +31,6 @@ const DesignerOptions = () => {
       <SelectOffDays />
       <SelectSettlementAllowance />
       <SelectIncentive />
-      <JobPostingEditDetailOption />
     </>
   );
 };
@@ -43,7 +42,6 @@ const InternOptions = () => {
       <SelectEducationCost />
       <SelectOffDays />
       <SelectInternSalary />
-      <JobPostingEditDetailOption />
     </>
   );
 };
@@ -57,13 +55,6 @@ const JobPostingEditBaseOption = () => {
       <DesignerRoleTab />
       <SelectJobPostingRegions />
       {role === "디자이너" ? <DesignerOptions /> : <InternOptions />}
-      <Divider />
-      <JobPostingEditStoreImage />
-      <Divider />
-      <JobPostingEditEtcOption />
-      <InputDescription />
-      <JobPostingEditNote />
-      <JobPostingEditConfirmButton />
     </Container>
   );
 };
