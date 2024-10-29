@@ -39,7 +39,9 @@ const Button = styled.div<{ $isSelected: boolean; $hasError: boolean }>`
         : colors.grey};
   cursor: pointer;
   &:active {
-    background-color: none;
+    background-color: inherit; // 기본 클릭 배경 효과 제거
+    outline: none; // 포커스 아웃라인 제거
+    pointer-events: none; // 클릭 후 비활성화
   }
 `;
 
