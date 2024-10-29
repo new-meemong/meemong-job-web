@@ -237,13 +237,13 @@ export const jobPostingOptions: {
   ],
   // 교육비 지원-디자이너
   isExistedEducationSupport: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ],
   // 식대 지원-디자이너
   isExistedMealSupport: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ],
   // 식사 시간
   mealTime: [
@@ -254,13 +254,13 @@ export const jobPostingOptions: {
   ],
   // 시술제품 지원
   isExistedProductSupport: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ],
   // 기숙사
   isExistedDormitorySupport: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ],
   // 점판 수당
   salesCommission: [
@@ -318,13 +318,13 @@ export const jobPostingOptions: {
   ],
   // 청소 업체
   isExistedCleaningSupplier: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ],
   // 수건 업체
   isExistedTowelSupplier: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ],
 
   ///////////////////// 인턴
@@ -362,17 +362,17 @@ export const jobPostingOptions: {
   ],
   // 샵 매니저 상주
   isOnsiteManager: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ],
   // 4대보험
   isExistedFourInsurances: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ],
   // 퇴직금
   isExistedRetirementPay: [
-    { key: true, value: "유" },
-    { key: false, value: "무" }
+    { key: true, value: "있음" },
+    { key: false, value: "없음" }
   ]
 };

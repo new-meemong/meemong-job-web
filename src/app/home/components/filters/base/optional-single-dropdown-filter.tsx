@@ -133,9 +133,9 @@ const OptionalSingleDropdownFilter = <T extends string | boolean>({
           <UnexpandContentContainer>
             <UnexpandContent>
               {selectedOption === "true"
-                ? "유"
+                ? "있음"
                 : selectedOption === "false"
-                ? "무"
+                ? "없음"
                 : selectedOption}
             </UnexpandContent>
           </UnexpandContentContainer>

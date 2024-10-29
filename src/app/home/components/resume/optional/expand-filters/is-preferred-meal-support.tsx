@@ -17,11 +17,11 @@ const IsPreferredMealSupport = () => {
   const options = [
     {
       key: "true",
-      value: "유"
+      value: "있음"
     },
     {
       key: "false",
-      value: "무"
+      value: "없음"
     },
     {
       key: "상관없음",

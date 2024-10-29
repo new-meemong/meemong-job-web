@@ -39,8 +39,8 @@ const SingleInfoItem = ({
       ? nullString
       : typeof content === "boolean"
       ? content
-        ? "유"
-        : "무"
+        ? "있음"
+        : "없음"
       : content;
 
   return (
