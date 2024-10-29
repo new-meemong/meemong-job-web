@@ -38,6 +38,9 @@ const Button = styled.div<{ $isSelected: boolean; $hasError: boolean }>`
         ? colors.red
         : colors.grey};
   cursor: pointer;
+  &:active {
+    background-color: none;
+  }
 `;
 
 const Info = styled.div`
