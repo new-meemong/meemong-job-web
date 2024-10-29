@@ -97,6 +97,7 @@ export default function PageContent({
             parkingSpotCount={jobPosting.parkingSpotCount}
             isExistedCleaningSupplier={jobPosting.isExistedCleaningSupplier}
             isExistedTowelSupplier={jobPosting.isExistedTowelSupplier}
+            isOnsiteManager={jobPosting.isOnsiteManager}
             basicCutPrice={jobPosting.basicCutPrice}
             startWorkTime={jobPosting.startWorkTime}
             endWorkTime={jobPosting.endWorkTime}
