@@ -68,6 +68,7 @@ const Scroller = styled(Sheet.Scroller)`
 const TimeOption = styled.div`
   padding: ${pxToVw(10)} 0;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   text-align: center;
   ${fonts.blackSemi14};
 `;

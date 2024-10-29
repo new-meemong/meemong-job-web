@@ -48,6 +48,7 @@ const Button = styled.div<{
         ? colors.red
         : colors.grey};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 interface Option<T> {

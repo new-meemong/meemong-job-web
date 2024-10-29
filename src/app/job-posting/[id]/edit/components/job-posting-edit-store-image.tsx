@@ -42,6 +42,7 @@ const ImageUploadButton = styled.label<{ $hasError: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   width: ${pxToVw(72)}; /* 버튼의 고정 너비 */
   height: ${pxToVw(72)}; /* 버튼의 고정 높이 */
   border: ${(props) =>

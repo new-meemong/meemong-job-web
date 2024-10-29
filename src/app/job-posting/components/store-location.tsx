@@ -14,6 +14,7 @@ const HeaderContainer = styled.div`
   gap: ${pxToVw(4)};
   align-items: center;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 const Address = styled.div`
   ${fonts.greyTextSemi16}

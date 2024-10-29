@@ -51,6 +51,7 @@ const SearchButton = styled.button`
   border-radius: ${pxToVw(4)};
 
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 
   &:disabled {
     background-color: #cccccc;

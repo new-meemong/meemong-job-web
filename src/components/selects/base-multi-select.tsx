@@ -49,6 +49,7 @@ const Button = styled.div<{
         ? colors.red
         : colors.grey};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   white-space: pre-line;
   text-align: center;
 `;

@@ -23,6 +23,7 @@ const OptionItem = styled.div<{
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 export default OptionItem;

@@ -38,10 +38,7 @@ const Button = styled.div<{ $isSelected: boolean; $hasError: boolean }>`
         ? colors.red
         : colors.grey};
   cursor: pointer;
-  &:active {
-    background-color: inherit; // 기본 클릭 배경 효과 제거
-    outline: none; // 포커스 아웃라인 제거
-  }
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const Info = styled.div`
