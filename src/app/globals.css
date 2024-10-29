@@ -19,6 +19,10 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+[style*="cursor: pointer"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* * {
   overflow: hidden;
 } */
