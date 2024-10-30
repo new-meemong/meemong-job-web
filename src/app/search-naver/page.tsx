@@ -69,11 +69,18 @@ const SearchResultContainer = styled.div`
   gap: ${pxToVw(12)};
 `;
 
-const InfoText = styled.div`
+const InfoTextContainer = styled.div`
+  padding-top: ${pxToVw(12)};
   padding-left: ${pxToVw(24)};
   padding-right: ${pxToVw(24)};
-  padding-top: ${pxToVw(12)};
+  display: flex;
+  flex-direction: column;
+  gap: ${pxToVw(4)};
+`;
+
+const InfoText = styled.div`
   ${fonts.redNormal14}
+  white-space: pre-line;
 `;
 
 export default function SearchNaver() {
@@ -119,10 +126,12 @@ export default function SearchNaver() {
           {isSearching ? "검색 중..." : "검색하기"}
         </SearchButton>
       </InputContainer>
-      <InfoText>
-        동일 브랜드 매장 검색시 정확한 지점명까지 기입하지 않으면 최대 5개
-        매장까지만 검색됩니다.
-      </InfoText>
+      <InfoTextContainer>
+        <InfoText>
+          {`동일 브랜드 매장 검색시 정확한 지점명까지 기입하지 않으면 최대 5개 매장까지만 검색됩니다.`}
+        </InfoText>
+        <InfoText>{`ex) 00헤어 역삼동`}</InfoText>
+      </InfoTextContainer>
       <SearchResultContainer>
         {searchResults.length > 0
           ? searchResults.map((item) => (
