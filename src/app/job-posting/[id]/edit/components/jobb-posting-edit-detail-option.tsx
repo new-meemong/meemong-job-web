@@ -33,8 +33,11 @@ import SelectInternExperienceYearNumber from "./detail-option-components/select-
 import SelectIsOnsiteManger from "./detail-option-components/select-is-onsite-manager";
 import SelectIsExistedRetirementPay from "./detail-option-components/select-is-existed-retirement-pay";
 import SelectIsExistedFourInsurance from "./detail-option-components/select-is-existed-four-insurance";
+import { colors } from "@/styles/colors";
 
-const Container = styled.div`
+const Container = styled.div``;
+
+const ContentContainer = styled.div`
   background-color: #eceaff66;
   border-radius: ${pxToVw(4)};
   padding-left: ${pxToVw(8)};
@@ -50,38 +53,50 @@ const HeaderLabel = styled.div`
   align-items: center;
 `;
 
+const Divider = styled.div`
+  width: 100%;
+  height: ${pxToVw(12)};
+  background-color: ${colors.white};
+`;
+
 const DesignerOptions = () => {
   const { isRestrictedAge } = useJobPostingEditStore();
 
   return (
     <>
-      <SelectSex />
-      <SelectIsRestrictedAge />
-      {isRestrictedAge && <CheckIsPossibleMiddleAge />}
-      <SelectDesignerLicense />
-      <SelectStoreTypes />
-      <SelectEmployeeCount />
-      <SelectIsExistedInternSystem />
-      <SelectStoreInteriorRenovationAgo />
-      <SelectWorkType />
-      <SelectWorkCycle />
-      <SelectIsExistedEducationSupport />
-      <SelectIsExistedMealSupport />
-      <SelectMealTime />
-      <SelectIsExistedProductSupport />
-      <SelectIsExistedDormitorySupport />
-      <SelectSalesCommission />
-      <SelectDesignerExperienceYearNumber />
-      <SelectSalesLast3MonthAvg />
-      <SelectSubwayAccessibility />
-      <SelectAdminAge />
-      <SelectAdminSex />
-      <SelectLeaveDayCount />
-      <SelectParkingSpotCount />
-      <SelectIsExistedCleaningSupplier />
-      <SelectIsExistedTowelSupplier />
-      <SelectIsOnsiteManger />
-      <InputBasicCutPrice />
+      <ContentContainer>
+        <HeaderLabel>구인 정보 입력*</HeaderLabel>
+        <SelectSex />
+        <SelectIsRestrictedAge />
+        {isRestrictedAge && <CheckIsPossibleMiddleAge />}
+        <SelectDesignerLicense />
+        <SelectWorkType />
+        <SelectWorkCycle />
+        <SelectDesignerExperienceYearNumber />
+        <SelectSalesLast3MonthAvg />
+      </ContentContainer>
+      <ContentContainer>
+        <HeaderLabel>매장 정보 입력*</HeaderLabel>
+        <SelectStoreTypes />
+        <SelectEmployeeCount />
+        <SelectIsExistedInternSystem />
+        <SelectStoreInteriorRenovationAgo />
+        <SelectIsExistedEducationSupport />
+        <SelectIsExistedMealSupport />
+        <SelectMealTime />
+        <SelectIsExistedProductSupport />
+        <SelectIsExistedDormitorySupport />
+        <SelectSalesCommission />
+        <SelectSubwayAccessibility />
+        <SelectAdminSex />
+        <SelectAdminAge />
+        <SelectLeaveDayCount />
+        <SelectParkingSpotCount />
+        <SelectIsExistedCleaningSupplier />
+        <SelectIsExistedTowelSupplier />
+        <SelectIsOnsiteManger />
+        <InputBasicCutPrice />
+      </ContentContainer>
     </>
   );
 };
@@ -91,33 +106,39 @@ const InternOptions = () => {
 
   return (
     <>
-      <SelectSex />
-      <SelectIsRestrictedAge />
-      {isRestrictedAge && <CheckIsPossibleMiddleAge />}
-      <SelectDesignerLicense />
-      <SelectStoreTypes />
-      <SelectEmployeeCount />
-      <SelectIsExistedInternSystem />
-      <SelectDesignerPromotionPeriod />
-      <SelectStoreInteriorRenovationAgo />
-      <SelectWorkType />
-      <SelectWorkCycle />
-      <SelectIsExistedMealSupport />
-      <SelectMealTime />
-      <SelectIsExistedProductSupport />
-      <SelectIsExistedDormitorySupport />
-      <SelectSalesCommission />
-      <SelectInternExperienceYearNumber />
-      <SelectSubwayAccessibility />
-      <SelectAdminAge />
-      <SelectAdminSex />
-      <SelectLeaveDayCount />
-      <SelectParkingSpotCount />
-      <SelectIsExistedCleaningSupplier />
-      <SelectIsExistedTowelSupplier />
-      <SelectIsOnsiteManger />
-      <SelectIsExistedFourInsurance />
-      <SelectIsExistedRetirementPay />
+      <ContentContainer>
+        <HeaderLabel>구인 정보 입력*</HeaderLabel>
+        <SelectSex />
+        <SelectIsRestrictedAge />
+        {isRestrictedAge && <CheckIsPossibleMiddleAge />}
+        <SelectDesignerLicense />
+        <SelectWorkType />
+        <SelectWorkCycle />
+        <SelectInternExperienceYearNumber />
+        <SelectIsExistedFourInsurance />
+        <SelectIsExistedRetirementPay />
+      </ContentContainer>
+      <ContentContainer>
+        <HeaderLabel>매장 정보 입력*</HeaderLabel>
+        <SelectStoreTypes />
+        <SelectEmployeeCount />
+        <SelectIsExistedInternSystem />
+        <SelectDesignerPromotionPeriod />
+        <SelectStoreInteriorRenovationAgo />
+        <SelectIsExistedMealSupport />
+        <SelectMealTime />
+        <SelectIsExistedProductSupport />
+        <SelectIsExistedDormitorySupport />
+        <SelectSalesCommission />
+        <SelectSubwayAccessibility />
+        <SelectAdminSex />
+        <SelectAdminAge />
+        <SelectLeaveDayCount />
+        <SelectParkingSpotCount />
+        <SelectIsExistedCleaningSupplier />
+        <SelectIsExistedTowelSupplier />
+        <SelectIsOnsiteManger />
+      </ContentContainer>
     </>
   );
 };
@@ -126,7 +147,6 @@ const JobPostingEditDetailOption = () => {
   const { role } = useJobPostingEditStore();
   return (
     <Container>
-      <HeaderLabel>매장 상세정보 입력*</HeaderLabel>
       {role === "디자이너" ? <DesignerOptions /> : <InternOptions />}
     </Container>
   );
