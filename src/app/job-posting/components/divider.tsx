@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: 100%;
-  height: ${pxToVw(1)};
+  height: ${pxToVw(12)};
   background-color: ${colors.greyLine};
   margin-top: ${pxToVw(20)};
   margin-bottom: ${pxToVw(20)};

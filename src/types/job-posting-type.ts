@@ -68,7 +68,7 @@ export interface JobPostingType {
   isPossibleMiddleAge: boolean | null; // 중년 가능 여부
   adminAge: AdminAgeKey; // 관리자 나이
   adminSex: AdminSexKey; // 관리자 성별
-  storeTypes: StoreTypesKey; // 매장 유형 (콤마로 구분된 문자열)
+  storeTypes: StoreTypesKey; // 매장 형태 (콤마로 구분된 문자열)
   storeInteriorRenovationAgo: StoreInteriorRenovationAgoKey; // 매장 내부 리모델링 이후
 
   // 라이센스 및 자격

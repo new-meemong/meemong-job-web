@@ -12,15 +12,20 @@ import StoreInfo from "../components/store-info";
 import Divider from "../components/divider";
 import PostingTitle from "../components/posting-title";
 import BasicInfoDesigner from "../components/basic-info-designer";
-import DetailInfoDesigner from "../components/detail-info-designer";
 import BasicInfoIntern from "../components/basic-info-intern";
-import DetailInfoIntern from "../components/detail-info-intern";
+import DetailInfoIntern from "../components/detail-person-info-intern";
 import EtcInfo from "../components/etc-info";
 import StoreLocation from "../components/store-location";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
 import { messageType } from "@/types/send-app-message-type";
 import StoreFloatingButton from "@/components/buttons/store-floating-button";
 import { useEffect } from "react";
+import DetailPersonInfoDesigner from "../components/detail-person-info-designer";
+import DetailStoreInfoDesigner from "../components/detail-store-info-designer";
+import DetailStoreEtcInfoDesigner from "../components/detail-store-etc-info-designer";
+import DetailPersonInfoIntern from "../components/detail-person-info-intern";
+import DetailStoreInfoIntern from "../components/detail-store-info-intern";
+import DetailStoreEtcInfoIntern from "../components/detail-store-etc-info-intern";
 
 const Container = styled.div`
   flex-direction: column;
@@ -37,8 +42,6 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: ${pxToVw(24)};
-  padding-left: ${pxToVw(24)};
-  padding-right: ${pxToVw(24)};
 `;
 
 export default function PageContent({
@@ -69,27 +72,32 @@ export default function PageContent({
             availableOffDays={jobPosting.availableOffDays}
             settlementAllowance={jobPosting.settlementAllowance}
             incentive={jobPosting.incentive}
+            role={jobPosting.role}
           />
           <Divider />
-          <DetailInfoDesigner
+          <DetailPersonInfoDesigner
             sex={jobPosting.sex}
             isRestrictedAge={jobPosting.isRestrictedAge}
             designerLicenses={jobPosting.designerLicenses}
+            workType={jobPosting.workType}
+            workCycleTypes={jobPosting.workCycleTypes}
+            designerExperienceYearNumber={
+              jobPosting.designerExperienceYearNumber
+            }
+            salesLast3MonthsAvg={jobPosting.salesLast3MonthsAvg}
+          />
+          <Divider />
+          <DetailStoreInfoDesigner
             storeTypes={jobPosting.storeTypes}
             employeeCount={jobPosting.employeeCount}
             isExistedInternSystem={jobPosting.isExistedInternSystem}
             storeInteriorRenovationAgo={jobPosting.storeInteriorRenovationAgo}
-            workCycleTypes={jobPosting.workCycleTypes}
             isExistedEducationSupport={jobPosting.isExistedEducationSupport}
             isExistedMealSupport={jobPosting.isExistedMealSupport}
             mealTime={jobPosting.mealTime}
             isExistedProductSupport={jobPosting.isExistedProductSupport}
             isExistedDormitorySupport={jobPosting.isExistedDormitorySupport}
             salesCommission={jobPosting.salesCommission}
-            designerExperienceYearNumber={
-              jobPosting.designerExperienceYearNumber
-            }
-            salesLast3MonthsAvg={jobPosting.salesLast3MonthsAvg}
             subwayAccessibility={jobPosting.subwayAccessibility}
             adminAge={jobPosting.adminAge}
             adminSex={jobPosting.adminSex}
@@ -99,6 +107,9 @@ export default function PageContent({
             isExistedTowelSupplier={jobPosting.isExistedTowelSupplier}
             isOnsiteManager={jobPosting.isOnsiteManager}
             basicCutPrice={jobPosting.basicCutPrice}
+          />
+          <Divider />
+          <DetailStoreEtcInfoDesigner
             startWorkTime={jobPosting.startWorkTime}
             endWorkTime={jobPosting.endWorkTime}
             storeUrl={jobPosting.storeUrl}
@@ -115,23 +126,30 @@ export default function PageContent({
             educationCost={jobPosting.educationCost}
             availableOffDays={jobPosting.availableOffDays}
             internSalary={jobPosting.internSalary}
+            role={jobPosting.role}
           />
           <Divider />
-          <DetailInfoIntern
+          <DetailPersonInfoIntern
             sex={jobPosting.sex}
             isRestrictedAge={jobPosting.isRestrictedAge}
             designerLicenses={jobPosting.designerLicenses}
+            workType={jobPosting.workType}
+            workCycleTypes={jobPosting.workCycleTypes}
+            internExperienceYearNumber={jobPosting.internExperienceYearNumber}
+            isExistedFourInsurances={jobPosting.isExistedFourInsurances}
+            isExistedRetirementPay={jobPosting.isExistedRetirementPay}
+          />
+          <Divider />
+          <DetailStoreInfoIntern
             storeTypes={jobPosting.storeTypes}
             employeeCount={jobPosting.employeeCount}
             isExistedInternSystem={jobPosting.isExistedInternSystem}
             storeInteriorRenovationAgo={jobPosting.storeInteriorRenovationAgo}
-            workCycleTypes={jobPosting.workCycleTypes}
             isExistedMealSupport={jobPosting.isExistedMealSupport}
             mealTime={jobPosting.mealTime}
             isExistedProductSupport={jobPosting.isExistedProductSupport}
             isExistedDormitorySupport={jobPosting.isExistedDormitorySupport}
             salesCommission={jobPosting.salesCommission}
-            internExperienceYearNumber={jobPosting.internExperienceYearNumber}
             designerPromotionPeriod={jobPosting.designerPromotionPeriod}
             subwayAccessibility={jobPosting.subwayAccessibility}
             adminAge={jobPosting.adminAge}
@@ -141,8 +159,9 @@ export default function PageContent({
             isExistedCleaningSupplier={jobPosting.isExistedCleaningSupplier}
             isExistedTowelSupplier={jobPosting.isExistedTowelSupplier}
             isOnsiteManager={jobPosting.isOnsiteManager}
-            isExistedFourInsurances={jobPosting.isExistedFourInsurances}
-            isExistedRetirementPay={jobPosting.isExistedRetirementPay}
+          />
+          <Divider />
+          <DetailStoreEtcInfoIntern
             startWorkTime={jobPosting.startWorkTime}
             endWorkTime={jobPosting.endWorkTime}
             storeUrl={jobPosting.storeUrl}

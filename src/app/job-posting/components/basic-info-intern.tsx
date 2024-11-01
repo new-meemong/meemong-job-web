@@ -8,6 +8,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${pxToVw(12)};
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
 `;
 
 type BasicInfoInternProps = Pick<
@@ -17,6 +19,7 @@ type BasicInfoInternProps = Pick<
   | "educationCost"
   | "availableOffDays"
   | "internSalary"
+  | "role"
 >;
 
 const BasicInfoIntern = ({
@@ -24,11 +27,13 @@ const BasicInfoIntern = ({
   monthlyEducationCount,
   educationCost,
   availableOffDays,
-  internSalary
+  internSalary,
+  role
 }: BasicInfoInternProps) => {
   return (
     <Container>
-      <InfoTitle title={"인턴 구인 기본정보"} />
+      <InfoTitle title={"기본 정보"} />
+      <SingleInfoItem label={"모집 유형"} content={role} />
       <SingleInfoItem label={"지역"} content={storeRegion} />
       <SingleInfoItem label={"교육"} content={monthlyEducationCount} />
       <SingleInfoItem label={"교육비"} content={educationCost} />

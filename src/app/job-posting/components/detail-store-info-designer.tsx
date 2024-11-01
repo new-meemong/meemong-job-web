@@ -5,33 +5,27 @@ import SingleInfoItem from "../../../components/details/single-info-item";
 import MultiInfoItem from "../../../components/details/multi-info-item";
 import { formatPriceWithCommas } from "@/lib/price-comma";
 import { JobPostingType } from "@/types/job-posting-type";
-import SingleInfoLinkItem from "@/components/details/single-info-link-item";
-import moment from "moment";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${pxToVw(12)};
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
 `;
 
 type DetailInfoDesignerProps = Pick<
   JobPostingType,
-  | "sex"
-  | "isRestrictedAge"
-  | "designerLicenses"
   | "storeTypes"
   | "employeeCount"
   | "isExistedInternSystem"
   | "storeInteriorRenovationAgo"
-  | "workCycleTypes"
   | "isExistedEducationSupport"
   | "isExistedMealSupport"
   | "mealTime"
   | "isExistedProductSupport"
   | "isExistedDormitorySupport"
   | "salesCommission"
-  | "designerExperienceYearNumber"
-  | "salesLast3MonthsAvg"
   | "subwayAccessibility"
   | "adminAge"
   | "adminSex"
@@ -41,29 +35,21 @@ type DetailInfoDesignerProps = Pick<
   | "isExistedTowelSupplier"
   | "isOnsiteManager"
   | "basicCutPrice"
-  | "startWorkTime"
-  | "endWorkTime"
-  | "storeUrl"
-  | "mainHairDye"
 >;
 
-const DetailInfoDesigner = ({
-  sex,
-  isRestrictedAge,
-  designerLicenses,
+const DetailStoreInfoDesigner = ({
   storeTypes,
   employeeCount,
   isExistedInternSystem,
   storeInteriorRenovationAgo,
-  workCycleTypes,
+
   isExistedEducationSupport,
   isExistedMealSupport,
   mealTime,
   isExistedProductSupport,
   isExistedDormitorySupport,
   salesCommission,
-  designerExperienceYearNumber,
-  salesLast3MonthsAvg,
+
   subwayAccessibility,
   adminAge,
   adminSex,
@@ -72,29 +58,23 @@ const DetailInfoDesigner = ({
   isExistedCleaningSupplier,
   isExistedTowelSupplier,
   isOnsiteManager,
-  basicCutPrice,
-  startWorkTime,
-  endWorkTime,
-  storeUrl,
-  mainHairDye
+  basicCutPrice
 }: DetailInfoDesignerProps) => {
   return (
     <Container>
-      <InfoTitle title={"매장 상세 정보"} />
-      <SingleInfoItem label={"성별"} content={sex} />
-      <SingleInfoItem
-        label={"나이"}
-        content={isRestrictedAge ? "나이 제한" : "나이 무관"}
-      />
-      <SingleInfoItem label={"미용 라이센스 소유"} content={designerLicenses} />
-      <MultiInfoItem label={"매장 유형"} content={storeTypes} />
+      <InfoTitle title={"매장 정보"} />
+
+      <MultiInfoItem label={"매장 형태"} content={storeTypes} />
       <SingleInfoItem label={"현재 직원수"} content={employeeCount} />
-      <SingleInfoItem label={"인턴 시스템"} content={isExistedInternSystem} />
+      <SingleInfoItem
+        label={"인턴배정 시스템"}
+        content={isExistedInternSystem}
+      />
       <SingleInfoItem
         label={"매장 인테리어"}
         content={storeInteriorRenovationAgo}
       />
-      <MultiInfoItem label={"근무 주기"} content={workCycleTypes} />
+
       <SingleInfoItem
         label={"교육비 지원"}
         content={isExistedEducationSupport}
@@ -107,17 +87,10 @@ const DetailInfoDesigner = ({
       />
       <SingleInfoItem label={"기숙사"} content={isExistedDormitorySupport} />
       <SingleInfoItem label={"점판 수당"} content={salesCommission} />
-      <SingleInfoItem
-        label={"디자이너 경력"}
-        content={designerExperienceYearNumber}
-      />
-      <SingleInfoItem
-        label={"이전 매장 매출 평균"}
-        content={salesLast3MonthsAvg}
-      />
+
       <SingleInfoItem label={"지하철 접근성"} content={subwayAccessibility} />
-      <SingleInfoItem label={"관리자 나이"} content={adminAge} />
       <SingleInfoItem label={"관리자 성별"} content={adminSex} />
+      <SingleInfoItem label={"관리자 나이"} content={adminAge} />
       <SingleInfoItem label={"휴가 일수"} content={leaveDayCount} />
       <SingleInfoItem
         label={"매장 주차 가능 대수"}
@@ -130,26 +103,8 @@ const DetailInfoDesigner = ({
         label={"기본 컷트가격"}
         content={`${formatPriceWithCommas(basicCutPrice || 0)}원`}
       />
-      <SingleInfoItem
-        label={"근무 시간"}
-        content={`${
-          startWorkTime
-            ? moment(startWorkTime, "HH:mm:ss").format("HH:mm")
-            : "00:00"
-        } ~ ${
-          endWorkTime
-            ? moment(endWorkTime, "HH:mm:ss").format("HH:mm")
-            : "00:00"
-        }`}
-      />
-      <SingleInfoLinkItem
-        label={"매장 링크"}
-        content={`매장 링크 바로가기 >`}
-        url={storeUrl}
-      />
-      <SingleInfoItem label={"메인 염모제"} content={mainHairDye || ""} />
     </Container>
   );
 };
 
-export default DetailInfoDesigner;
+export default DetailStoreInfoDesigner;

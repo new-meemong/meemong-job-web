@@ -7,6 +7,8 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   align-items: center;
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
 `;
 
 const StoreImage = styled(Image)`

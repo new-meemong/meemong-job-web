@@ -5,7 +5,10 @@ import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { JobPostingType } from "@/types/job-posting-type";
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
+`;
 
 const Caution = styled.div`
   ${fonts.greyTextNormal12}

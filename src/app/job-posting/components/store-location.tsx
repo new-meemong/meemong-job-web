@@ -6,7 +6,10 @@ import { JobPostingType } from "@/types/job-posting-type";
 import CopyBlackIcon from "@/components/icons/copy-black-icon";
 import toast from "react-hot-toast";
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
+`;
 
 const HeaderContainer = styled.div`
   display: flex;

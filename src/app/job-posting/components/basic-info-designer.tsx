@@ -9,6 +9,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${pxToVw(12)};
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
 `;
 
 type BasicInfoDesignerProps = Pick<
@@ -18,6 +20,7 @@ type BasicInfoDesignerProps = Pick<
   | "availableOffDays"
   | "settlementAllowance"
   | "incentive"
+  | "role"
 >;
 
 const BasicInfoDesigner = ({
@@ -25,11 +28,13 @@ const BasicInfoDesigner = ({
   monthlyEducationCount,
   availableOffDays,
   settlementAllowance,
-  incentive
+  incentive,
+  role
 }: BasicInfoDesignerProps) => {
   return (
     <Container>
-      <InfoTitle title={"디자이너 구인 기본정보"} />
+      <InfoTitle title={"기본 정보"} />
+      <SingleInfoItem label={"모집 유형"} content={role} />
       <SingleInfoItem label={"지역"} content={storeRegion} />
       <SingleInfoItem label={"교육"} content={monthlyEducationCount} />
       <SingleInfoItem label={"휴무 가능 요일"} content={availableOffDays} />
