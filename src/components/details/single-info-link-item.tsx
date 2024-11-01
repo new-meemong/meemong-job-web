@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
+  padding-left: ${pxToVw(4)};
 `;
 
 const Label = styled.div`
