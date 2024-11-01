@@ -98,7 +98,10 @@ const DetailStoreInfoDesigner = ({
       />
       <SingleInfoItem label={"청소 업체"} content={isExistedCleaningSupplier} />
       <SingleInfoItem label={"수건 업체"} content={isExistedTowelSupplier} />
-      <SingleInfoItem label={"샵 매니저 상주"} content={isOnsiteManager} />
+      <SingleInfoItem
+        label={"샵 매니저 상주"}
+        content={isOnsiteManager || ""}
+      />
       <SingleInfoItem
         label={"기본 컷트가격"}
         content={`${formatPriceWithCommas(basicCutPrice || 0)}원`}
