@@ -56,7 +56,7 @@ export default function RootLayout({
 
             function GoBack() {
               if(window.GoBack) {
-                window.GoBack.postMessage();
+                window.GoBack.postMessage('');
               } else {
                console.log("GoBack channel is not available.");}
             }
