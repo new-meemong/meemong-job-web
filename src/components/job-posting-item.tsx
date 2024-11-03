@@ -187,7 +187,7 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   };
 
   const handleClick = () => {
-    router.push(`/job-posting/${id}`);
+    router.push(`/job-posting/${id}?source=web`);
   };
   return (
     <Container onClick={handleClick}>

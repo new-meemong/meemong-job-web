@@ -25,6 +25,7 @@ import DetailStoreEtcInfoDesigner from "../components/detail-store-etc-info-desi
 import DetailPersonInfoIntern from "../components/detail-person-info-intern";
 import DetailStoreInfoIntern from "../components/detail-store-info-intern";
 import DetailStoreEtcInfoIntern from "../components/detail-store-etc-info-intern";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   flex-direction: column;
@@ -51,6 +52,9 @@ export default function PageContent({
   const { userId } = useAuthStore((state) => ({
     userId: state.userId
   }));
+
+  const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
+  const source = searchParams.get("source") || undefined;
 
   const isMine = jobPosting.userId.toString() === userId;
 
@@ -113,6 +117,7 @@ export default function PageContent({
             endWorkTime={jobPosting.endWorkTime}
             storeUrl={jobPosting.storeUrl}
             mainHairDye={jobPosting.mainHairDye}
+            source={source}
           />
         </>
       );
@@ -165,6 +170,7 @@ export default function PageContent({
             endWorkTime={jobPosting.endWorkTime}
             storeUrl={jobPosting.storeUrl}
             mainHairDye={jobPosting.mainHairDye}
+            source={source}
           />
         </>
       );

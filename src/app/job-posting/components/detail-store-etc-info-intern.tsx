@@ -16,13 +16,16 @@ const Container = styled.div`
 type DetailInfoInternProps = Pick<
   JobPostingType,
   "startWorkTime" | "endWorkTime" | "storeUrl" | "mainHairDye"
->;
+> & {
+  source?: string; // 추가된 source 속성
+};
 
 const DetailStoreEtcInfoIntern = ({
   startWorkTime,
   endWorkTime,
   storeUrl,
-  mainHairDye
+  mainHairDye,
+  source
 }: DetailInfoInternProps) => {
   return (
     <Container>
@@ -42,6 +45,7 @@ const DetailStoreEtcInfoIntern = ({
         label={"매장 링크"}
         content={`매장 링크 바로가기 >`}
         url={storeUrl}
+        source={source}
       />
       <SingleInfoItem label={"메인 염모제"} content={mainHairDye || ""} />
     </Container>

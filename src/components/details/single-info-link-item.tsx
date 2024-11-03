@@ -15,7 +15,7 @@ const Label = styled.div`
   flex-shrink: 0;
 `;
 
-const ContentLink = styled(Link)`
+const ContentLink = styled.div`
   ${fonts.greyTextSemi16};
   min-height: ${pxToVw(24)};
   word-wrap: break-word;
@@ -41,13 +41,15 @@ interface InfoItemProps {
   content: string | boolean | null;
   nullString?: string;
   url: string | null;
+  source?: string;
 }
 
 const SingleInfoLinkItem = ({
   label,
   content,
   nullString = "상관없음",
-  url
+  url,
+  source
 }: InfoItemProps) => {
   const displayContent =
     content === null
@@ -58,13 +60,23 @@ const SingleInfoLinkItem = ({
         : "없음"
       : content;
 
+  const handleClick = () => {
+    if (!url) return;
+
+    if (source === "web") {
+      window.open(url, "_blank");
+    }
+
+    if (!source) {
+      window.externalLink(url);
+    }
+  };
+
   return (
     <Container>
       <Label>{label}</Label>
       {url ? (
-        <ContentLink href={url} target="_blank" rel="noopener noreferrer">
-          {displayContent}
-        </ContentLink>
+        <ContentLink onClick={handleClick}>{displayContent}</ContentLink>
       ) : (
         <ContentText>{""}</ContentText>
       )}

@@ -16,13 +16,16 @@ const Container = styled.div`
 type DetailInfoDesignerProps = Pick<
   JobPostingType,
   "startWorkTime" | "endWorkTime" | "storeUrl" | "mainHairDye"
->;
+> & {
+  source?: string;
+};
 
 const DetailStoreEtcInfoDesigner = ({
   startWorkTime,
   endWorkTime,
   storeUrl,
-  mainHairDye
+  mainHairDye,
+  source
 }: DetailInfoDesignerProps) => {
   return (
     <Container>
@@ -42,6 +45,7 @@ const DetailStoreEtcInfoDesigner = ({
         label={"매장 링크"}
         content={`매장 링크 바로가기 >`}
         url={storeUrl}
+        source={source}
       />
       <SingleInfoItem label={"메인 염모제"} content={mainHairDye || ""} />
     </Container>
