@@ -55,10 +55,10 @@ export default function RootLayout({
             window.startChat = startChat;
 
             function closeWebview() {
-              if(window.goBack) {
-                window.goBack.postMessage();
+              if(window.GoBack) {
+                window.GoBack.postMessage();
               } else {
-               console.log("goBack channel is not available.");}
+               console.log("GoBack channel is not available.");}
             }
 
             window.closeWebview = closeWebview;
