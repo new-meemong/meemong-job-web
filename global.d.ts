@@ -5,5 +5,5 @@ interface Window {
     postUserId: string;
   }) => void;
 
-  closeWebview: () => void;
+  GoBack: () => void;
 }
