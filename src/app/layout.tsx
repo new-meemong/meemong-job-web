@@ -65,13 +65,13 @@ export default function RootLayout({
 
             function externalLink(url){
               if(window.ExternalLink) {
-                window.ExternalLink.postMessage(url);
+                window.ExternalLink.postMessage(JSON.stringify(url));
               } else {
                 console.log("ExternalLink channel is not available.");
               }
             }
 
-            window.ExternalLink = externalLink;
+            window.externalLink = externalLink;
           `}
         </Script>
       </body>
