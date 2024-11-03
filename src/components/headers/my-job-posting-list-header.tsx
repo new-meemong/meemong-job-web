@@ -34,11 +34,17 @@ const Title = styled.span`
   ${fonts.greyTextBold18}
 `;
 
-const MyJobPostingListHeader = () => {
+const MyJobPostingListHeader = ({ source }: { source?: string }) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    router.back();
+    if (source && source === "web") {
+      router.back();
+    }
+
+    if (typeof window !== "undefined" && window.closeWebview && !source) {
+      window.closeWebview("close");
+    }
   };
 
   return (

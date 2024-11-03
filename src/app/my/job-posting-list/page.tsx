@@ -49,6 +49,7 @@ const EmptyText = styled.div`
 interface SearchParams {
   searchParams: {
     userId: string;
+    source?: string;
   };
 }
 
@@ -65,6 +66,7 @@ export default function MyJobPostingListPage({ searchParams }: SearchParams) {
   }));
 
   const userId = searchParams.userId;
+  const source = searchParams.source;
 
   useEffect(() => {
     const _fetch = async () => {
@@ -82,7 +84,7 @@ export default function MyJobPostingListPage({ searchParams }: SearchParams) {
 
   return (
     <Container>
-      <MyJobPostingListHeader />
+      <MyJobPostingListHeader source={source} />
       <SubHeaderContainer>
         <SubHeaderText>{`총 게시글 (${myJobPostingList.length})`}</SubHeaderText>
       </SubHeaderContainer>

@@ -40,7 +40,7 @@ const MyJobPostingFloatingButton = () => {
   }));
 
   const handleClick = () => {
-    router.push(`/my/job-posting-list?userId=${UserID}`);
+    router.push(`/my/job-posting-list?userId=${UserID}&source=web`);
   };
 
   return (
