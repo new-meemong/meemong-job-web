@@ -40,8 +40,9 @@ const ResumeEditHeader = ({ source }: { source?: string }) => {
     if (source && source === "web") {
       router.back();
     }
-
+    window.close();
     window.GoBack();
+
     // if (!source && window.closeWebview) {
 
     // }
