@@ -4,7 +4,7 @@ import ShareWhiteIcon from "../icons/share-white-icon";
 import { fonts } from "@/styles/fonts";
 import toast, { Toaster } from "react-hot-toast";
 
-const Coontainer = styled.div`
+const Container = styled.div`
   ${fonts.whiteNormal12}
   position: absolute;
   display: flex;
@@ -16,6 +16,7 @@ const Coontainer = styled.div`
   top: ${pxToVw(16)};
   padding: ${pxToVw(8)};
   gap: ${pxToVw(2)};
+  z-index: 100;
 `;
 
 const ShareButton = () => {
@@ -40,11 +41,11 @@ const ShareButton = () => {
     }
   };
   return (
-    <Coontainer onClick={handleShareButtonClick}>
+    <Container onClick={handleShareButtonClick}>
       <ShareWhiteIcon />
       URL공유
       <Toaster />
-    </Coontainer>
+    </Container>
   );
 };
 

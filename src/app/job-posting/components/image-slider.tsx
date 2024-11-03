@@ -55,6 +55,7 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
     return (
       <SliderContainer>
         <StoreImage src={images[0]} alt="Slide 0" width={390} height={390} />
+        <ShareButton />
       </SliderContainer>
     );
   }

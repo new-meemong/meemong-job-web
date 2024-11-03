@@ -13,7 +13,6 @@ import Divider from "../components/divider";
 import PostingTitle from "../components/posting-title";
 import BasicInfoDesigner from "../components/basic-info-designer";
 import BasicInfoIntern from "../components/basic-info-intern";
-import DetailInfoIntern from "../components/detail-person-info-intern";
 import EtcInfo from "../components/etc-info";
 import StoreLocation from "../components/store-location";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
