@@ -5,7 +5,7 @@ interface Window {
     postUserId: string;
   }) => void;
 
-  GoBack: (message: null) => void;
+  closeWebview: (message: string) => void;
 
   externalLink: (message: string) => void;
 }
