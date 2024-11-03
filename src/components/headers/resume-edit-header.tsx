@@ -41,7 +41,7 @@ const ResumeEditHeader = ({ source }: { source?: string }) => {
       router.back();
     }
     window.close();
-    window.GoBack();
+    window.GoBack(null);
 
     // if (!source && window.closeWebview) {
 

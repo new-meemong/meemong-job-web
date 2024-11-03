@@ -5,5 +5,5 @@ interface Window {
     postUserId: string;
   }) => void;
 
-  GoBack: () => void;
+  GoBack: (message: null) => void;
 }
