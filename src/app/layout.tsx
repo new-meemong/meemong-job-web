@@ -62,6 +62,16 @@ export default function RootLayout({
             }
 
             window.GoBack = GoBack;
+
+            function externalLink(url){
+              if(window.ExternalLink) {
+                window.ExternalLink.postMessage(url);
+              } else {
+                console.log("ExternalLink channel is not available.");
+              }
+            }
+
+            window.ExternalLink = externalLink;
           `}
         </Script>
       </body>

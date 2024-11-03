@@ -6,4 +6,6 @@ interface Window {
   }) => void;
 
   GoBack: (message: null) => void;
+
+  externalLink: (message: string) => void;
 }

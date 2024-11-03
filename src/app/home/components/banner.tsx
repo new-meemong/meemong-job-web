@@ -36,22 +36,26 @@ const Banner = () => {
     }
   }, [banner]);
 
+  const handleBannerClick = () => {
+    if (typeof window !== "undefined" && banner?.redirect_url) {
+      window.ExternalLink(banner?.redirect_url);
+    }
+  };
+
   return (
-    <Container>
+    <Container onClick={handleBannerClick}>
       {banner && (
-        <Link href={banner?.redirect_url}>
-          <BannerImage
-            src={banner?.image_url}
-            alt="banner"
-            width={390}
-            height={80}
-            onClick={() => {
-              // if (typeof window !== "undefined") {
-              //   window.open(banner?.redirect_url, "_blank");
-              // }
-            }}
-          />
-        </Link>
+        <BannerImage
+          src={banner?.image_url}
+          alt="banner"
+          width={390}
+          height={80}
+          onClick={() => {
+            // if (typeof window !== "undefined") {
+            //   window.open(banner?.redirect_url, "_blank");
+            // }
+          }}
+        />
       )}
     </Container>
   );
