@@ -45,14 +45,23 @@ export default function RootLayout({
         </StyledComponentsRegistry>
         <Script id="send-message-to-flutter" strategy="afterInteractive">
           {`
-            function sendMessageToFlutter(message) {
+            function startChat(message) {
               if (window.Event) {
                 window.Event.postMessage(JSON.stringify(message));
               } else {
                 console.log("Event channel is not available.");
               }
             }
-            window.sendMessageToFlutter = sendMessageToFlutter;
+            window.startChat = startChat;
+
+            function closeWebview() {
+              if(window.goBack) {
+                window.goBack.postMessage();
+              } else {
+               console.log("goBack channel is not available.");}
+            }
+
+            window.closeWebview = closeWebview;
           `}
         </Script>
       </body>

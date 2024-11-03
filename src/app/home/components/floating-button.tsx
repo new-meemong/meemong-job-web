@@ -73,15 +73,15 @@ const FloatingButton = () => {
     const { status, data } = await checkMyResumeExist();
 
     if (status) {
-      router.push(`/resume/${data!.id}/edit`);
+      router.push(`/resume/${data!.id}/edit?source=web`);
     } else {
-      router.push("/resume/new/edit");
+      router.push("/resume/new/edit?source=web");
     }
   };
 
   const handleJobPostingClick = () => {
     setRole(null);
-    router.push("/job-posting/new/edit");
+    router.push("/job-posting/new/edit?");
   };
 
   return (

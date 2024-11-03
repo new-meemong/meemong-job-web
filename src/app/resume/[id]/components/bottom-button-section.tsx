@@ -36,7 +36,7 @@ interface BottomButtonSectionProps {
 
 const BottomButtonSection = ({ postUserId }: BottomButtonSectionProps) => {
   const handleSuggestButtonClick = () => {
-    if (typeof window !== "undefined" && window.sendMessageToFlutter) {
+    if (typeof window !== "undefined" && window.startChat) {
       const postUrl = window.location.href;
       const postId = postUrl.split("/").pop() as string;
       const message = {
@@ -44,9 +44,9 @@ const BottomButtonSection = ({ postUserId }: BottomButtonSectionProps) => {
         postId,
         postUserId
       };
-      window.sendMessageToFlutter(message);
+      window.startChat(message);
     } else {
-      console.log("sendMessageToFlutter function is not available.");
+      console.log("startChat function is not available.");
     }
   };
   return (

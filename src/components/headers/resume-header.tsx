@@ -80,7 +80,7 @@ const ResumeHeader = ({
 
   const handleOptionSelect = (option: string | null) => {
     if (option === "수정") {
-      router.push(`/resume/${resumeId}/edit`);
+      router.push(`/resume/${resumeId}/edit?source=web`);
     } else if (option === "삭제") {
       setIsDeleteConfirmModalOpen(true);
     }

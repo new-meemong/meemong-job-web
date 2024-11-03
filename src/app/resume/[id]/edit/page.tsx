@@ -34,6 +34,7 @@ const ContentContainer = styled.div`
 interface SearchParams {
   searchParams: {
     userId: string;
+    source?: string;
   };
 }
 
@@ -59,6 +60,9 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
   }));
 
   const userId = UserID ? UserID : searchParams.userId;
+  const source = searchParams.source;
+
+  console.log("moonsae source", source);
 
   useEffect(() => {
     const _fetch = async () => {
@@ -94,7 +98,7 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
 
   return (
     <Container>
-      <ResumeEditHeader />
+      <ResumeEditHeader source={source} />
       <ContentContainer>
         <ProfileImageSection />
         <RequiredFieldSection />

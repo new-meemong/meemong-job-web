@@ -214,7 +214,7 @@ export default function PageContent({
         <BottomFloatingButton
           title="지원하기"
           onClick={() => {
-            if (typeof window !== "undefined" && window.sendMessageToFlutter) {
+            if (typeof window !== "undefined" && window.startChat) {
               const postUrl = window.location.href;
               const postId = postUrl.split("/").pop() as string;
               const message = {
@@ -222,9 +222,9 @@ export default function PageContent({
                 postId,
                 postUserId: jobPosting.User?.UserID.toString()
               };
-              window.sendMessageToFlutter(message);
+              window.startChat(message);
             } else {
-              console.log("sendMessageToFlutter function is not available.");
+              console.log("startChat function is not available.");
             }
           }}
         />

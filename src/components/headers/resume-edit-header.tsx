@@ -33,11 +33,17 @@ const Title = styled.span`
   ${fonts.greyTextBold18}
 `;
 
-const ResumeEditHeader = () => {
+const ResumeEditHeader = ({ source }: { source?: string }) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    router.back();
+    if (source && source === "web") {
+      router.back();
+    }
+
+    if (!source && window.closeWebview) {
+      window.closeWebview();
+    }
   };
 
   return (
