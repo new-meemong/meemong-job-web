@@ -38,7 +38,8 @@ const Banner = () => {
 
   const handleBannerClick = () => {
     if (typeof window !== "undefined" && banner?.redirect_url) {
-      window.externalLink(banner?.redirect_url);
+      // window.externalLink(banner?.redirect_url);
+      window.closeWebview("test");
     }
   };
 
