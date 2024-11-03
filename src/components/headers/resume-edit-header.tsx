@@ -42,7 +42,7 @@ const ResumeEditHeader = ({ source }: { source?: string }) => {
     }
 
     if (typeof window !== "undefined" && window.closeWebview && !source) {
-      window.closeWebview("test");
+      window.closeWebview("close");
     }
 
     // if (!source && window.closeWebview) {
