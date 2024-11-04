@@ -24,7 +24,7 @@ const SelectDesignerPromotionPeriod = () => {
   return (
     <Container>
       <BaseSingleSelect
-        label="디자이너 승급기간"
+        label="인턴기간 · 승급 포함"
         options={options}
         selectedOption={designerPromotionPeriod}
         errorMessage="디자이너 승급기간을 선택해주세요."

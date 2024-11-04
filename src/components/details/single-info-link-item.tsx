@@ -60,22 +60,30 @@ const SingleInfoLinkItem = ({
         : "없음"
       : content;
 
+  const extractUrl = (url: string | null) => {
+    if (!url) return null;
+    const urlStartIndex = url.search(/https?:\/\//);
+    return urlStartIndex !== -1 ? url.slice(urlStartIndex) : null;
+  };
+
+  const validUrl = extractUrl(url);
+
   const handleClick = () => {
-    if (!url) return;
+    if (!validUrl) return;
 
     if (source === "web") {
-      window.open(url, "_blank");
+      window.open(validUrl, "_blank");
     }
 
     if (!source) {
-      window.externalLink(url);
+      window.externalLink(validUrl);
     }
   };
-
+  console.log("moonsae url", url);
   return (
     <Container>
       <Label>{label}</Label>
-      {url ? (
+      {validUrl ? (
         <ContentLink onClick={handleClick}>{displayContent}</ContentLink>
       ) : (
         <ContentText>{""}</ContentText>

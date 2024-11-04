@@ -33,7 +33,7 @@ const SelectIsExistedInternSystem = () => {
   return (
     <Container>
       <BaseSingleSelect
-        label="인턴기간 · 승급 포함"
+        label="인턴배정 시스템"
         options={options}
         selectedOption={isExistedInternSystem}
         errorMessage="인턴배정 시스템을 선택해주세요."
