@@ -27,7 +27,7 @@ export const useMyJobPostingListStore = create<MyJobPostingListStore>(
       const res = await getMyJobPostings(_queryParams);
       const { dataList } = res;
 
-      if (dataList && dataList.length > 0) {
+      if (dataList) {
         set({ myJobPostingList: dataList });
       }
     }

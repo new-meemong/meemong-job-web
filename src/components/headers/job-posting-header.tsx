@@ -10,6 +10,7 @@ import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import ConfirmModal from "../modals/confirm-modal";
 import NoticeModal from "../modals/notice-modal";
+import { useMyJobPostingListStore } from "@/stores/my-job-posting-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -68,6 +69,9 @@ const JobPostingHeader = ({
       deleteJobPosting: state.deleteJobPosting
     })
   );
+  const { getMyJobPostingList } = useMyJobPostingListStore((state) => ({
+    getMyJobPostingList: state.getMyJobPostingList
+  }));
 
   const options = isMine
     ? [
@@ -111,6 +115,7 @@ const JobPostingHeader = ({
     if (status) {
       setNoticeModalMessage(message);
       setIsNoticeModalOpen(true);
+      await getMyJobPostingList();
     } else {
       setNoticeModalMessage(message);
       setIsNoticeModalOpen(true);
