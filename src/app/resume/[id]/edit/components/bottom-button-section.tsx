@@ -45,7 +45,7 @@ const PublishResumeButton = styled.div<{ $hasError: boolean }>`
   align-items: center;
 `;
 
-const BottomButtonSection = () => {
+const BottomButtonSection = ({ source }: { source?: string }) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -100,13 +100,25 @@ const BottomButtonSection = () => {
       <NoticeModal
         isOpen={isModalOpen}
         message={modalMessage}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
         onConfirm={() => {
           if (
             (appliedRole === "디자이너" && !hasDesignerOptionNull) ||
             (appliedRole === "인턴" && !hasInternOptionNull)
           ) {
-            router.back();
+            if (source && source === "web") {
+              router.back();
+            }
+
+            if (
+              typeof window !== "undefined" &&
+              window.closeWebview &&
+              !source
+            ) {
+              window.closeWebview("close");
+            }
           }
         }}
       />

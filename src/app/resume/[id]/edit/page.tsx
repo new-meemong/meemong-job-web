@@ -62,8 +62,6 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
   const userId = UserID ? UserID : searchParams.userId;
   const source = searchParams.source;
 
-  console.log("moonsae source", source);
-
   useEffect(() => {
     const _fetch = async () => {
       if (!jwt) {
@@ -104,7 +102,7 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
         <RequiredFieldSection />
         <OptionalFieldSection />
       </ContentContainer>
-      <BottomButtonSection />
+      <BottomButtonSection source={source} />
     </Container>
   );
 }
