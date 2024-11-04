@@ -5,8 +5,10 @@ import pxToVw from "@/lib/dpi-converter";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import loadImage from "blueimp-load-image";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
 
@@ -99,9 +101,46 @@ const ProfileImageSection = () => {
 
     if (!file) return;
 
+    const MAX_SIZE_MB = 10;
+    const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
+    if (file.size > MAX_SIZE_BYTES) {
+      toast(`이미지 용량이 너무 큽니다. (최대 ${MAX_SIZE_MB}MB)`);
+      return;
+    }
+
     setIsUploading(true);
+
+    const rotatedFile = await new Promise((resolve) => {
+      loadImage(
+        file,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (img: HTMLCanvasElement | HTMLImageElement | Event, data: any) => {
+          if (data.imageHead && data.exif) {
+            loadImage.writeExifData(data.imageHead, data, "Orientation", 1);
+            (img as HTMLCanvasElement).toBlob(async (blob: Blob | null) => {
+              if (blob) {
+                loadImage.replaceHead(
+                  blob,
+                  data.imageHead,
+                  async (newBlob: Blob | null) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    (newBlob as any).name = file.name;
+                    resolve(newBlob);
+                  }
+                );
+              }
+            }, "image/jpeg");
+          } else {
+            resolve(file);
+          }
+        },
+        { meta: true, orientation: true, canvas: true }
+      );
+    });
+
     try {
-      const { data } = await uploadResumeProfileImage(file);
+      const { data } = await uploadResumeProfileImage(rotatedFile as File);
       const uri = `${data?.imageFile?.fileuri}`;
       const thumbnailUri = `${data?.imageThumbnailFile?.fileuri}`;
 
