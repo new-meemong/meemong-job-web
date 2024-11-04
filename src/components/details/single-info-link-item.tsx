@@ -79,7 +79,7 @@ const SingleInfoLinkItem = ({
       window.externalLink(validUrl);
     }
   };
-  console.log("moonsae url", url);
+
   return (
     <Container>
       <Label>{label}</Label>

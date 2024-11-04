@@ -26,7 +26,7 @@ export const getMyJobPostings = async (
 
     const combinedParams = { ...defaultParams, ...(queryParams || {}) };
     const queryString = new URLSearchParams(combinedParams).toString();
-    console.log("moonsae queryString", queryString);
+
     return await apiFetch(`/api/v1/job-postings/me?${queryString}`, "GET");
   } catch (e) {
     console.error("[getMyJobPostings] failed", e);

@@ -156,7 +156,7 @@ const OptionalSingleDropdownFilterAge = <T extends string | boolean>({
       onSelectSubOption("false" as T);
     }
   };
-  console.log("moonsae selectedOption", selectedOption);
+
   return (
     <Container>
       {isExpanded ? (

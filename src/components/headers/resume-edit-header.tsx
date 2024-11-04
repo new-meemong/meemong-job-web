@@ -35,7 +35,7 @@ const Title = styled.span`
 
 const ResumeEditHeader = ({ source }: { source?: string }) => {
   const router = useRouter();
-  console.log("moonsae source", source);
+
   const handleBackClick = () => {
     if (source && source === "web") {
       router.back();
