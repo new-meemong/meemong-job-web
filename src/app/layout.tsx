@@ -1,8 +1,11 @@
-import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
+import type { Metadata, Viewport } from "next";
+
 import BaseContainer from "@/components/base-container";
-import StyledComponentsRegistry from "./registry";
+import { FirebaseNavigationLogging } from "@/components/fireabses/navigation-loging";
 import Script from "next/script";
+import StyledComponentsRegistry from "./registry";
 
 export const metadata: Metadata = {
   title: "미몽-구인구직",
@@ -40,6 +43,7 @@ export default function RootLayout({
         /> */}
       </head>
       <body style={{ margin: "0 auto", maxWidth: "600px" }}>
+        <FirebaseNavigationLogging />
         <StyledComponentsRegistry>
           <BaseContainer>{children}</BaseContainer>
         </StyledComponentsRegistry>

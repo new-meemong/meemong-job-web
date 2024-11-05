@@ -1,13 +1,13 @@
 "use client";
 
-import MyJobPostingListHeader from "@/components/headers/my-job-posting-list-header";
 import MyJobPostingItem from "@/components/my-job-posting-item";
-import pxToVw from "@/lib/dpi-converter";
-import { useAuthStore } from "@/stores/auth-store";
-import { useMyJobPostingListStore } from "@/stores/my-job-posting-list-store";
+import MyJobPostingListHeader from "@/components/headers/my-job-posting-list-header";
 import { fonts } from "@/styles/fonts";
-import { useEffect } from "react";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useAuthStore } from "@/stores/auth-store";
+import { useEffect } from "react";
+import { useMyJobPostingListStore } from "@/stores/my-job-posting-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -80,7 +80,7 @@ export default function MyJobPostingListPage({ searchParams }: SearchParams) {
     if (userId) {
       _fetch();
     }
-  }, [getMyJobPostingList, userId]);
+  }, [getMyJobPostingList, userId, jwt, login]);
 
   return (
     <Container>
