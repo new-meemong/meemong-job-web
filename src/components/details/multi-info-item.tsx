@@ -1,5 +1,5 @@
-import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -28,7 +28,7 @@ interface InfoItemProps {
 const MultiInfoItem = ({
   label,
   content,
-  nullString = "상관없음"
+  nullString = "상관없음",
 }: InfoItemProps) => {
   const displayContent = content === null ? [nullString] : content.split(",");
 

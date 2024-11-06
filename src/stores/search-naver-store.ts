@@ -1,5 +1,5 @@
-import { searchNaver } from "@/apis/search-naver";
 import { create } from "zustand";
+import { searchNaver } from "@/apis/search-naver";
 
 export interface SearchResultItemType {
   address: string;
@@ -28,7 +28,7 @@ export type SearchNaverStore = SearchNaverState & SearchNaverActions;
 
 export const defaultSearchNaverState: SearchNaverState = {
   searchQuery: null,
-  searchResults: []
+  searchResults: [],
 };
 
 export const useSearchNaverStore = create<SearchNaverStore>((set) => ({
@@ -46,7 +46,7 @@ export const useSearchNaverStore = create<SearchNaverStore>((set) => ({
     const { items } = res;
     const cleanedItems = items.map((item: SearchResultItemType) => ({
       ...item,
-      title: item.title.replace(/<\/?[^>]+(>|$)/g, "") // 모든 HTML 태그를 제거
+      title: item.title.replace(/<\/?[^>]+(>|$)/g, ""), // 모든 HTML 태그를 제거
     }));
 
     set({ searchResults: cleanedItems });
@@ -54,5 +54,5 @@ export const useSearchNaverStore = create<SearchNaverStore>((set) => ({
 
   clear: () => {
     set({ searchQuery: null, searchResults: [] });
-  }
+  },
 }));

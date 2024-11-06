@@ -1,10 +1,10 @@
-import Metadata from "./components/metadata";
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
-import { getResume } from "@/apis/resumes";
+import Metadata from "./components/metadata";
 import PageContent from "./page-content";
+import { getResume } from "@/apis/resumes";
 
 export default async function ResumePage({
-  params
+  params,
 }: {
   params: { id: string };
 }) {

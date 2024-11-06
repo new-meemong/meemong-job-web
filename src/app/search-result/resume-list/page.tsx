@@ -1,17 +1,18 @@
 "use client";
 
-import Banner from "@/app/home/components/banner";
-import SearchResultHeader from "@/components/headers/search-result-header";
-import ResumeItem from "@/components/resume-item";
-import SearchFilterInput from "@/components/search-filter-input";
-import CenterSpinner from "@/components/spinners/center-spinner";
-import pxToVw from "@/lib/dpi-converter";
-import { parseQueryString } from "@/lib/parse-query-string";
-import { useResumeListStore } from "@/stores/resume-list-store";
-import { fonts } from "@/styles/fonts";
-import { ResumeType } from "@/types/resume-type";
 import { useEffect, useState } from "react";
+
+import Banner from "@/app/home/components/banner";
+import CenterSpinner from "@/components/spinners/center-spinner";
+import ResumeItem from "@/components/resume-item";
+import { ResumeType } from "@/types/resume-type";
+import SearchFilterInput from "@/components/search-filter-input";
+import SearchResultHeader from "@/components/headers/search-result-header";
+import { fonts } from "@/styles/fonts";
+import { parseQueryString } from "@/lib/parse-query-string";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div``;
 
@@ -35,11 +36,11 @@ export default function ResumeListPage() {
     useResumeListStore((state) => ({
       resumeFilterQueries: state.resumeFilterQueries,
       searchResumeList: state.searchResumeList,
-      searchResultResumeList: state.searchResultResumeList
+      searchResultResumeList: state.searchResultResumeList,
     }));
   const [filterText, setFilterText] = useState("");
   const [filteredResumeList, setFilteredResumeList] = useState<ResumeType[]>(
-    []
+    [],
   );
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function ResumeListPage() {
       } catch (error) {
         console.error(
           "Error parsing query string or fetching job postings:",
-          error
+          error,
         );
       } finally {
         setIsLoading(false);
@@ -71,7 +72,7 @@ export default function ResumeListPage() {
           .includes(filterText.toLowerCase()) ||
         resume.preferredStoreRegionSiNames
           .toLocaleLowerCase()
-          .includes(filterText.toLowerCase())
+          .includes(filterText.toLowerCase()),
     );
 
     setFilteredResumeList(filteredResumes);

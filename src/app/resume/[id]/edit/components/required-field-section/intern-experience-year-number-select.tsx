@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { resumeOptions } from "@/types/resume-optons";
 import { InternExperienceYearNumberKeyResume } from "@/types/resume-keys";
+import { resumeOptions } from "@/types/resume-optons";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -15,12 +15,12 @@ const InternExperienceYearNumberSelect = () => {
     internExperienceYearNumber,
     setInternExperienceYearNumber,
     appliedRole,
-    hasInternOptionNull
+    hasInternOptionNull,
   } = useResumeEditStore((state) => ({
     internExperienceYearNumber: state.internExperienceYearNumber,
     setInternExperienceYearNumber: state.setInternExperienceYearNumber,
     appliedRole: state.appliedRole,
-    hasInternOptionNull: state.hasInternOptionNull
+    hasInternOptionNull: state.hasInternOptionNull,
   }));
 
   const options = resumeOptions.internExperienceYearNumber;
@@ -32,7 +32,7 @@ const InternExperienceYearNumberSelect = () => {
 
   const handleSelect = (selectedOption: string | null) => {
     setInternExperienceYearNumber(
-      selectedOption as InternExperienceYearNumberKeyResume
+      selectedOption as InternExperienceYearNumberKeyResume,
     );
   };
   return (

@@ -1,18 +1,18 @@
 "use client";
 
-import ResumeEditHeader from "@/components/headers/resume-edit-header";
-import { useParams } from "next/navigation";
-import styled from "styled-components";
-import ProfileImageSection from "./components/profile-image-section";
-import pxToVw from "@/lib/dpi-converter";
-import RequiredFieldSection from "./components/required-field-section";
-import OptionalFieldSection from "./components/optional-field-section";
 import BottomButtonSection from "./components/bottom-button-section";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { useEffect } from "react";
-import { useAuthStore } from "@/stores/auth-store";
-import { useResumeListStore } from "@/stores/resume-list-store";
+import OptionalFieldSection from "./components/optional-field-section";
+import ProfileImageSection from "./components/profile-image-section";
+import RequiredFieldSection from "./components/required-field-section";
+import ResumeEditHeader from "@/components/headers/resume-edit-header";
 import { ResumeType } from "@/types/resume-type";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useAuthStore } from "@/stores/auth-store";
+import { useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -45,18 +45,18 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
     sex: state.sex,
     UserID: state.UserID,
     login: state.login,
-    jwt: state.jwt
+    jwt: state.jwt,
   }));
   const { setId, setSex, resetStore, setFromResume } = useResumeEditStore(
     (state) => ({
       setId: state.setId,
       setSex: state.setSex,
       resetStore: state.resetStore,
-      setFromResume: state.setFromResume
-    })
+      setFromResume: state.setFromResume,
+    }),
   );
   const { checkMyResumeExist } = useResumeListStore((state) => ({
-    checkMyResumeExist: state.checkMyResumeExist
+    checkMyResumeExist: state.checkMyResumeExist,
   }));
 
   const userId = UserID ? UserID : searchParams.userId;

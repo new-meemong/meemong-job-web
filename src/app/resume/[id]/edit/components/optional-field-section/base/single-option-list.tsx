@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import OptionItem from "./option-item";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const SingleOptionList = <T extends string | boolean>({
   options,
   selectedOption,
   onSelect,
-  buttonSize
+  buttonSize,
 }: SingleOptionListProps<T>) => {
   const handleSelect = (optionKey: T) => {
     if (selectedOption === optionKey) {

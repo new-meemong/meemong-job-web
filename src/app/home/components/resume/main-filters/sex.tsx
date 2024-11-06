@@ -1,6 +1,6 @@
 import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
-import { useResumeListStore } from "@/stores/resume-list-store";
 import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div``;
 
@@ -8,16 +8,16 @@ const Sex = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
   const options = [
     { key: "남자", value: "남자" },
     { key: "여자", value: "여자" },
-    { key: "무관", value: "무관" }
+    { key: "무관", value: "무관" },
   ];
 
   const handleSelect = (selectedOption: string | null) => {

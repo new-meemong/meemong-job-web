@@ -1,7 +1,7 @@
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
-import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const ButtonContainer = styled.div`
@@ -48,7 +48,7 @@ interface OptionalFilterUnexpandButtonProps {
 
 const JobPostingOptionalFilterUnexpand = ({
   resetFilters,
-  toggleExpanded
+  toggleExpanded,
 }: OptionalFilterUnexpandButtonProps) => {
   return (
     <ButtonContainer>

@@ -1,12 +1,13 @@
+import { createJSONStorage, persist } from "zustand/middleware";
 import {
   deleteJobPosting,
   getJobPosting,
-  getJobPostings
+  getJobPostings,
 } from "@/apis/job-postings";
+
 import { JobPostingType } from "@/types/job-posting-type";
 import { ResponseResultType } from "@/types/response-result-type";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
 
 export type JobPostingListState = {
   jobPostingList: JobPostingType[];
@@ -45,7 +46,7 @@ export const defaultJobPostingListState: JobPostingListState = {
   jobPostingFilterQueries: "",
   _postingRegions: [],
   postingRegions: null,
-  postingRegionSiNames: null
+  postingRegionSiNames: null,
 };
 
 export const useJobPostingListStore = create(
@@ -62,7 +63,7 @@ export const useJobPostingListStore = create(
         set({ jobPostingListLoading: true });
         const _queryParams = {
           __cursorOrder: "createdAtDesc",
-          ...queryParams
+          ...queryParams,
         };
         const res = await getJobPostings(_queryParams);
         const { dataList } = res;
@@ -73,7 +74,7 @@ export const useJobPostingListStore = create(
       searchJobPosingList: async (queryParams) => {
         const _queryParams = {
           __cursorOrder: "createdAtDesc",
-          ...queryParams
+          ...queryParams,
         };
 
         const res = await getJobPostings(_queryParams);
@@ -86,8 +87,8 @@ export const useJobPostingListStore = create(
           jobPostingList: state.jobPostingList.map((jobPosting) =>
             jobPosting.id === updatedJobPosting.id
               ? updatedJobPosting
-              : jobPosting
-          )
+              : jobPosting,
+          ),
         }));
       },
       deleteJobPosting: async (id: string) => {
@@ -97,7 +98,7 @@ export const useJobPostingListStore = create(
           if (res) {
             set((state) => {
               const jobPostingList = state.jobPostingList.filter(
-                (jobPosting) => jobPosting.id !== id
+                (jobPosting) => jobPosting.id !== id,
               );
 
               return { ...state, jobPostingList };
@@ -113,7 +114,7 @@ export const useJobPostingListStore = create(
       getJobPostingFilterQuery: (key: string) => {
         const state = get();
         const currentQueries = new URLSearchParams(
-          state.jobPostingFilterQueries
+          state.jobPostingFilterQueries,
         );
 
         return currentQueries.get(key);
@@ -121,7 +122,7 @@ export const useJobPostingListStore = create(
       addJobPostingFilterQuery: (query) => {
         set((state) => {
           const currentQueries = new URLSearchParams(
-            state.jobPostingFilterQueries
+            state.jobPostingFilterQueries,
           );
           const [key, value] = query.split("=");
 
@@ -133,7 +134,7 @@ export const useJobPostingListStore = create(
       removeJobPostingFilterQuery: (key) => {
         set((state) => {
           const currentQueries = new URLSearchParams(
-            state.jobPostingFilterQueries
+            state.jobPostingFilterQueries,
           );
 
           currentQueries.delete(key);
@@ -153,7 +154,7 @@ export const useJobPostingListStore = create(
 
         // currentQueries에 포함될 postingRegionSiNames (postingRegions에 없는 '시'만 필터링)
         const postingRegionsSiNamesSet = new Set(
-          postingRegions.split(",").map((region) => region.split(" ")[0])
+          postingRegions.split(",").map((region) => region.split(" ")[0]),
         );
         const filteredSiNamesForQuery = uniqueSiNames
           .filter((siName) => !postingRegionsSiNamesSet.has(siName))
@@ -163,7 +164,7 @@ export const useJobPostingListStore = create(
           // currentQueries에 postingRegions와 filteredSiNamesForQuery 추가 또는 삭제
           if (filteredSiNamesForQuery) {
             get().addJobPostingFilterQuery(
-              `postingRegionSiNames=${filteredSiNamesForQuery}`
+              `postingRegionSiNames=${filteredSiNamesForQuery}`,
             );
           } else {
             get().removeJobPostingFilterQuery("postingRegionSiNames");
@@ -177,7 +178,7 @@ export const useJobPostingListStore = create(
           return {
             _postingRegions: regions,
             postingRegionSiNames: uniqueSiNames.join(","), // state에 모든 '시' 저장
-            postingRegions: postingRegions // state에 모든 '구/군' 저장
+            postingRegions: postingRegions, // state에 모든 '구/군' 저장
           };
         });
       },
@@ -187,13 +188,13 @@ export const useJobPostingListStore = create(
           postingRegions: null,
           postingRegionSiNames: null,
           _postingRegions: [],
-          jobPostingFilterQueries: `role=${role}`
+          jobPostingFilterQueries: `role=${role}`,
         });
-      }
+      },
     }),
     {
       name: "job-posting-list-store",
-      storage: createJSONStorage(() => sessionStorage)
-    }
-  )
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
 );

@@ -1,9 +1,9 @@
 import { ErrorMessage } from "@/components/error-message";
-import pxToVw from "@/lib/dpi-converter";
+import ResumeEditLabel from "../../base/resume-edit-label";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import ResumeEditLabel from "../../base/resume-edit-label";
 
 const Container = styled.div``;
 
@@ -73,7 +73,7 @@ const EditResumeOptonMultiSelect = <T extends string | boolean>({
   errorMessage,
   onSelect,
   isError,
-  buttonSize = "small"
+  buttonSize = "small",
 }: EditResumeOptonMultiSelectProps<T>) => {
   const safeSelectedOptions = selectedOptions || [];
 

@@ -1,10 +1,9 @@
-import styled from "styled-components";
-import pxToVw from "@/lib/dpi-converter";
-
 import Banner from "./banner";
+import ResumeFilter from "./resume/resume-filter";
 import ResumeList from "./resume/resume-list";
 import ResumeSearchButton from "./resume/resume-search-button";
-import ResumeFilter from "./resume/resume-filter";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div`
@@ -20,12 +19,12 @@ const SearchWrapper = styled.div`
 
 const ResumeSection = () => {
   const { resumeFilterQueries } = useResumeListStore((state) => ({
-    resumeFilterQueries: state.resumeFilterQueries
+    resumeFilterQueries: state.resumeFilterQueries,
   }));
 
   // 쿼리 문자열을 구조화된 객체로 변환
   const queryParams = new URLSearchParams(
-    decodeURIComponent(resumeFilterQueries.replace(/\+/g, " "))
+    decodeURIComponent(resumeFilterQueries.replace(/\+/g, " ")),
   );
   const structuredQueries: Record<string, string> = {};
 

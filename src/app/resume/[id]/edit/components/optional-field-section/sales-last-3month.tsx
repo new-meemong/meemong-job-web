@@ -1,9 +1,9 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
+import DropDownItem from "./base/drop-down-item";
+import { SalesLast3MonthsAvgKeyResume } from "@/types/resume-keys";
+import SingleOptionList from "./base/single-option-list";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import DropDownItem from "./base/drop-down-item";
-import SingleOptionList from "./base/single-option-list";
-import { SalesLast3MonthsAvgKeyResume } from "@/types/resume-keys";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div``;
 
@@ -13,8 +13,8 @@ const SalesLast3Month = () => {
       salesLast3MonthsAvg: state.salesLast3MonthsAvg,
       setSalesLast3MonthsAvg: state.setSalesLast3MonthsAvg,
       hasDesignerOptionNull: state.hasDesignerOptionNull,
-      appliedRole: state.appliedRole
-    })
+      appliedRole: state.appliedRole,
+    }),
   );
 
   const options = resumeOptions.salesLast3MonthsAvg;

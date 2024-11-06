@@ -1,6 +1,6 @@
+import FullButton from "./full-button";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import FullButton from "./full-button";
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ interface BottomFloatingButtonProps {
 
 const BottomFloatingButton = ({
   title,
-  onClick
+  onClick,
 }: BottomFloatingButtonProps) => {
   return (
     <Container>

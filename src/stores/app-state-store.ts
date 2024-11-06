@@ -1,5 +1,6 @@
-import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+
+import { create } from "zustand";
 
 export type HomeTopTabType = "resume" | "jobPosting";
 
@@ -14,7 +15,7 @@ export type AppActions = {
 export type AppStateStore = AppState & AppActions;
 
 export const defaultAppState: AppState = {
-  homeTopTab: "resume"
+  homeTopTab: "resume",
 };
 
 export const useAppStateStore = create(
@@ -23,11 +24,11 @@ export const useAppStateStore = create(
       ...defaultAppState,
       setHomeTopTab: (activeTab: HomeTopTabType) => {
         set({ homeTopTab: activeTab });
-      }
+      },
     }),
     {
       name: "app-state-store",
-      storage: createJSONStorage(() => localStorage)
-    }
-  )
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
 );

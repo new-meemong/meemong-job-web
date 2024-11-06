@@ -1,10 +1,11 @@
-import styled from "styled-components";
-import SectionTitle from "./base/section-title";
-import { ResumeType } from "@/types/resume-type";
-import SingleInfoItem from "@/components/details/single-info-item";
-import pxToVw from "@/lib/dpi-converter";
 import { convertRegion, convertToShortRegion } from "@/lib/convert-region";
+
+import { ResumeType } from "@/types/resume-type";
+import SectionTitle from "./base/section-title";
+import SingleInfoItem from "@/components/details/single-info-item";
 import moment from "moment";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const RequiredInfoSection = ({ resume }: RequiredInfoSectionProps) => {
   const { preferredStoreRegions, preferredStoreRegionSiNames } = resume;
   const _convertedRegions = convertRegion({
     storeRegions: preferredStoreRegions,
-    storeRegionsSiNames: preferredStoreRegionSiNames
+    storeRegionsSiNames: preferredStoreRegionSiNames,
   });
 
   const _convertedShortRegions = convertToShortRegion(_convertedRegions);

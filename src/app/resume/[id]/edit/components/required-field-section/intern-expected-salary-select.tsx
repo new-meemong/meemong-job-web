@@ -1,8 +1,8 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
+import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
 import { InternExpectedSalaryKeyResume } from "@/types/resume-keys";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div``;
 
@@ -11,12 +11,12 @@ const InternExpectedSalarySelect = () => {
     internExpectedSalary,
     setInternExpectedSalary,
     appliedRole,
-    hasInternOptionNull
+    hasInternOptionNull,
   } = useResumeEditStore((state) => ({
     internExpectedSalary: state.internExpectedSalary,
     setInternExpectedSalary: state.setInternExpectedSalary,
     appliedRole: state.appliedRole,
-    hasInternOptionNull: state.hasInternOptionNull
+    hasInternOptionNull: state.hasInternOptionNull,
   }));
 
   const options = resumeOptions.internExpectedSalary;

@@ -1,19 +1,19 @@
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
-import { colors } from "@/styles/colors";
-import styled from "styled-components";
-import { fonts } from "@/styles/fonts";
-import pxToVw from "@/lib/dpi-converter";
-import SalesLast3MonthsAvg from "../expand-filters/sales-last-3months-avg";
 import CompletedEducationLevels from "../expand-filters/completed-education-levels";
-import PreferredOffDays from "../expand-filters/preferred-off-days";
-import WorkCycleTypes from "../expand-filters/work-cycle-types";
+import DesignerPromotionPeriod from "../expand-filters/designer-promotion-period";
 import IsPreferredDormitorySupport from "../expand-filters/is-preferred-dormitory-support";
-import { useResumeListStore } from "@/stores/resume-list-store";
-import PreferredMonthlyEducationCountDesigner from "../expand-filters/preferred-monthly-education-count-designer";
-import PreferredMonthlyEducationCountIntern from "../expand-filters/preferred-monthly-education-count-intern";
 import IsPreferredMealSupport from "../expand-filters/is-preferred-meal-support";
 import IsPreferredParking from "../expand-filters/is-preferred-parking";
-import DesignerPromotionPeriod from "../expand-filters/designer-promotion-period";
+import PreferredMonthlyEducationCountDesigner from "../expand-filters/preferred-monthly-education-count-designer";
+import PreferredMonthlyEducationCountIntern from "../expand-filters/preferred-monthly-education-count-intern";
+import PreferredOffDays from "../expand-filters/preferred-off-days";
+import SalesLast3MonthsAvg from "../expand-filters/sales-last-3months-avg";
+import WorkCycleTypes from "../expand-filters/work-cycle-types";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div`
   padding: ${pxToVw(12)} ${pxToVw(8)};
@@ -72,10 +72,10 @@ interface OptionalFilterUnexpandButtonProps {
 
 const ResumeOptionalFilterExpand = ({
   resetFilters,
-  toggleExpanded
+  toggleExpanded,
 }: OptionalFilterUnexpandButtonProps) => {
   const { getResumeFilterQuery } = useResumeListStore((state) => ({
-    getResumeFilterQuery: state.getResumeFilterQuery
+    getResumeFilterQuery: state.getResumeFilterQuery,
   }));
   const appliedRole = getResumeFilterQuery("appliedRole");
   return (

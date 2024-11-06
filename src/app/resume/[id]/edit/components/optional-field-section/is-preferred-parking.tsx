@@ -1,8 +1,8 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { resumeOptions } from "@/types/resume-optons";
-import styled from "styled-components";
 import DropDownItem from "./base/drop-down-item";
 import SingleOptionList from "./base/single-option-list";
+import { resumeOptions } from "@/types/resume-optons";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div``;
 
@@ -13,8 +13,8 @@ const IsPreferredParking = () => {
       setIsPreferredParking: state.setIsPreferredParking,
       hasDesignerOptionNull: state.hasDesignerOptionNull,
       hasInternOptionNull: state.hasInternOptionNull,
-      appliedRole: state.appliedRole
-    })
+      appliedRole: state.appliedRole,
+    }),
   );
   const options = resumeOptions.isPreferredParking;
 

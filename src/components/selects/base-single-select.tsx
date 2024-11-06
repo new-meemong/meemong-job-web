@@ -1,8 +1,8 @@
-import pxToVw from "@/lib/dpi-converter";
+import { ErrorMessage } from "../error-message";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import { ErrorMessage } from "../error-message";
 
 const Container = styled.div``;
 
@@ -76,7 +76,7 @@ const BaseSingleSelect = <T extends string | boolean>({
   errorMessage,
   onSelect,
   isError,
-  buttonSize = "large"
+  buttonSize = "large",
 }: BaseSingleSelectProps<T>) => {
   const handleSelect = (optionKey: T) => {
     if (selectedOption === optionKey) {

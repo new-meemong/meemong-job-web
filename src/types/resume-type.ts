@@ -17,8 +17,9 @@ import {
   SettlementAllowanceKeyResume,
   SexKeyResume,
   WorkCycleTypesKeyResume,
-  WorkTypeKeyResume
+  WorkTypeKeyResume,
 } from "./resume-keys";
+
 import { UserType } from "./user-type";
 
 export interface ResumeType {

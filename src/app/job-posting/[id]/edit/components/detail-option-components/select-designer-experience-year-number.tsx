@@ -1,9 +1,9 @@
 import BaseSingleSelect from "@/components/selects/base-single-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import { DesignerExperienceYearNumberKey } from "@/types/job-posting-keys";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-top: ${pxToVw(8)};
@@ -13,7 +13,7 @@ const SelectDesignerExperienceYearNumber = () => {
   const {
     designerExperienceYearNumber,
     setDesignerExperienceYearNumber,
-    hasDesignerOptionNull
+    hasDesignerOptionNull,
   } = useJobPostingEditStore();
   const options = jobPostingOptions.designerExperienceYearNumber;
   let hasError = false;
@@ -24,7 +24,7 @@ const SelectDesignerExperienceYearNumber = () => {
 
   const handleSelect = (selectedOption: string | null) => {
     setDesignerExperienceYearNumber(
-      selectedOption as DesignerExperienceYearNumberKey
+      selectedOption as DesignerExperienceYearNumberKey,
     );
   };
   return (

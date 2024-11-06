@@ -16,7 +16,7 @@ const firebaseConfig = {
   storageBucket: "new-meemong.firebasestorage.app",
   messagingSenderId: "425261596153",
   appId: "1:425261596153:web:2b2cab0df9ee1b2e979128",
-  measurementId: "G-RHKCZXCFQ5"
+  measurementId: "G-RHKCZXCFQ5",
 };
 
 // Firebase 초기화

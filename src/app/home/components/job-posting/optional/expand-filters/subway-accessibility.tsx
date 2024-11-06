@@ -1,6 +1,6 @@
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
-import styled from "styled-components";
 import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
+import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div``;
 
@@ -8,27 +8,27 @@ const SubwayAccessibility = () => {
   const {
     getJobPostingFilterQuery,
     addJobPostingFilterQuery,
-    removeJobPostingFilterQuery
+    removeJobPostingFilterQuery,
   } = useJobPostingListStore((state) => ({
     getJobPostingFilterQuery: state.getJobPostingFilterQuery,
     addJobPostingFilterQuery: state.addJobPostingFilterQuery,
-    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery
+    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery,
   }));
 
   const options = [
     {
       key: "3분 이하",
-      value: "3분 이하"
+      value: "3분 이하",
     },
     {
       key: "5분 이하",
-      value: "5분 이하"
+      value: "5분 이하",
     },
     {
       key: "15분 이하",
-      value: "15분 이하"
+      value: "15분 이하",
     },
-    { key: "상관없음", value: "상관없음" }
+    { key: "상관없음", value: "상관없음" },
   ];
 
   const selectedOption =

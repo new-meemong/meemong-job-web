@@ -1,6 +1,6 @@
-import pxToVw from "@/lib/dpi-converter";
-import { fonts } from "@/styles/fonts";
 import Link from "next/link";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -49,7 +49,7 @@ const SingleInfoLinkItem = ({
   content,
   nullString = "상관없음",
   url,
-  source
+  source,
 }: InfoItemProps) => {
   const displayContent =
     content === null

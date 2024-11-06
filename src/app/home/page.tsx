@@ -1,17 +1,18 @@
 "use client";
 
+import { HomeTopTabType, useAppStateStore } from "@/stores/app-state-store";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+
 import BaseTopTabs from "./components/base-top-tab";
 import FloatingButton from "./components/floating-button";
 import HomeTitle from "./components/home-title";
+import JobPostingSection from "./components/job-posting-section";
+import MyJobPostingFloatingButton from "./components/my-job-posting-floating-button";
+import ResumeSection from "./components/resume-section";
+import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { HomeTopTabType, useAppStateStore } from "@/stores/app-state-store";
-import JobPostingSection from "./components/job-posting-section";
-import ResumeSection from "./components/resume-section";
-import MyJobPostingFloatingButton from "./components/my-job-posting-floating-button";
 
 const Container = styled.div`
   display: flex;
@@ -31,14 +32,14 @@ interface SearchParams {
 export default function HomePage({ searchParams }: SearchParams) {
   const [isLoginFailed, setIsLoginFailed] = useState(false);
   const { getJobPostingList } = useJobPostingListStore((state) => ({
-    getJobPostingList: state.getJobPostingList
+    getJobPostingList: state.getJobPostingList,
   }));
   const { getResumeList } = useResumeListStore((state) => ({
-    getResumeList: state.getResumeList
+    getResumeList: state.getResumeList,
   }));
   const { homeTopTab, setHomeTopTab } = useAppStateStore((state) => ({
     homeTopTab: state.homeTopTab,
-    setHomeTopTab: state.setHomeTopTab
+    setHomeTopTab: state.setHomeTopTab,
   }));
 
   const UserID = searchParams.userId;
@@ -50,7 +51,7 @@ export default function HomePage({ searchParams }: SearchParams) {
     jwt: state.jwt,
     login: state.login,
     setProfileImageUri: state.setProfileImageUri,
-    setSex: state.setSex
+    setSex: state.setSex,
   }));
 
   useEffect(() => {

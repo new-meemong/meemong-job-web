@@ -1,5 +1,5 @@
-import { useAuthStore } from "@/stores/auth-store";
 import { PRODUCTION_API } from "./consts";
+import { useAuthStore } from "@/stores/auth-store";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const apiFetch = async (url: string, method: string, body?: any) => {
@@ -9,7 +9,7 @@ export const apiFetch = async (url: string, method: string, body?: any) => {
   console.log("=== API Request ===");
   console.log(method, fullUrl, {
     "Content-Type": "application/json",
-    Authorization: `${jwt}`
+    Authorization: `${jwt}`,
   });
   // console.log("Method:", method);
   // console.log("Headers:", {
@@ -26,9 +26,9 @@ export const apiFetch = async (url: string, method: string, body?: any) => {
       method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${jwt}`
+        Authorization: `${jwt}`,
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
     if (!response.ok) {
       throw new Error("API fetch failed");

@@ -1,13 +1,13 @@
 import WriteIcon from "@/components/icons/write-icon";
-import pxToVw from "@/lib/dpi-converter";
+import { colors } from "@/styles/colors";
 import numberToVw from "@/lib/dpi-number-converter";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { colors } from "@/styles/colors";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import styled from "styled-components";
 
 const Container = styled.div``;
 
@@ -53,13 +53,13 @@ const FloatingButton = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
   const { checkMyResumeExist } = useResumeListStore((state) => ({
-    checkMyResumeExist: state.checkMyResumeExist
+    checkMyResumeExist: state.checkMyResumeExist,
   }));
   const { setRole } = useJobPostingEditStore((state) => ({
-    setRole: state.setRole
+    setRole: state.setRole,
   }));
   const { userId } = useAuthStore((state) => ({
-    userId: state.userId
+    userId: state.userId,
   }));
 
   const toggleExpand = () => {

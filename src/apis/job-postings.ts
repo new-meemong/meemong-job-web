@@ -1,12 +1,12 @@
-import { useAuthStore } from "@/stores/auth-store";
-import { apiFetch } from "./fetch";
 import { JobPostingType } from "@/types/job-posting-type";
 import { PRODUCTION_API } from "./consts";
+import { apiFetch } from "./fetch";
+import { useAuthStore } from "@/stores/auth-store";
 
 export const getJobPosting = async (id: string) => {
   try {
     const defaultParams: Record<string, string> = {
-      __include: "JobPostingsStoreImages"
+      __include: "JobPostingsStoreImages",
     };
     const queryString = new URLSearchParams(defaultParams).toString();
     return await apiFetch(`/api/v1/job-postings/${id}?${queryString}`, "GET");
@@ -21,7 +21,7 @@ export const getMyJobPostings = async (
 ) => {
   try {
     const defaultParams: Record<string, string> = {
-      __include: "JobPostingsStoreImages"
+      __include: "JobPostingsStoreImages",
     };
 
     const combinedParams = { ...defaultParams, ...(queryParams || {}) };
@@ -37,7 +37,7 @@ export const getMyJobPostings = async (
 export const getJobPostings = async (queryParams?: Record<string, string>) => {
   try {
     const defaultParams: Record<string, string> = {
-      __include: "JobPostingsStoreImages"
+      __include: "JobPostingsStoreImages",
     };
 
     const combinedParams = { ...defaultParams, ...(queryParams || {}) };
@@ -90,8 +90,8 @@ export const uploadJobPostingImage = async (image: File) => {
       method: "POST",
       body: formData,
       headers: {
-        Authorization: `${jwt}`
-      }
+        Authorization: `${jwt}`,
+      },
     });
 
     const response = await fetch(request);

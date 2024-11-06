@@ -1,19 +1,19 @@
 "use client";
 
+import BottomButtonSection from "./components/bottom-button-section";
+import Divider from "./components/divider";
+import OptionalInfoSection from "./components/optional-info-section";
+import ProfileSection from "./components/profile-section";
+import RequiredInfoSection from "./components/required-info-section";
 import ResumeHeader from "@/components/headers/resume-header";
+import { ResumeType } from "@/types/resume-type";
+import SelfIntroductionSection from "./components/self-introduction-section";
+import StoreFloatingButton from "@/components/buttons/store-floating-button";
+import TitleSection from "./components/title-section";
+import UserProfile from "./components/user-profile-section";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import ProfileSection from "./components/profile-section";
-import Divider from "./components/divider";
-import UserProfile from "./components/user-profile-section";
-import TitleSection from "./components/title-section";
-import RequiredInfoSection from "./components/required-info-section";
-import OptionalInfoSection from "./components/optional-info-section";
-import SelfIntroductionSection from "./components/self-introduction-section";
-import BottomButtonSection from "./components/bottom-button-section";
-import { ResumeType } from "@/types/resume-type";
 import { useAuthStore } from "@/stores/auth-store";
-import StoreFloatingButton from "@/components/buttons/store-floating-button";
 import { useEffect } from "react";
 
 const Container = styled.div`
@@ -39,7 +39,7 @@ const ContentContainer = styled.div`
 
 export default function PageContent({ resume }: { resume: ResumeType }) {
   const { userId } = useAuthStore((state) => ({
-    userId: state.userId
+    userId: state.userId,
   }));
 
   const isMine = resume.userId.toString() === userId;

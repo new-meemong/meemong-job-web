@@ -1,7 +1,7 @@
 import DropdownMultiSelectItem from "@/components/drop-downs/dropdown-multi-select-item";
-import { useResumeListStore } from "@/stores/resume-list-store";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div``;
 
@@ -9,15 +9,15 @@ const DesignerLicenses = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
   const options = [
     ...resumeOptions.designerLicenses.filter((option) => option.key !== "없음"),
-    { key: "상관없음", value: "상관없음" }
+    { key: "상관없음", value: "상관없음" },
   ];
 
   const selectedOptions =

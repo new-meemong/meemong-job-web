@@ -1,6 +1,6 @@
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
-import styled from "styled-components";
 import OptionalSingleDropdownFilterAge from "../../../filters/base/optional-single-dropdown-filter-age";
+import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div``;
 
@@ -8,22 +8,22 @@ const IsRestrictedAge = () => {
   const {
     getJobPostingFilterQuery,
     addJobPostingFilterQuery,
-    removeJobPostingFilterQuery
+    removeJobPostingFilterQuery,
   } = useJobPostingListStore((state) => ({
     getJobPostingFilterQuery: state.getJobPostingFilterQuery,
     addJobPostingFilterQuery: state.addJobPostingFilterQuery,
-    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery
+    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery,
   }));
 
   const options = [
     { key: "false", value: "나이 무관" },
-    { key: "true", value: "나이 제한" }
+    { key: "true", value: "나이 제한" },
   ];
 
   const selectedIsRestrictedAgeOption =
     getJobPostingFilterQuery("isRestrictedAge") || "false";
   const selectedIsPossibleMiddleAgeOption = getJobPostingFilterQuery(
-    "isPossibleMiddleAge"
+    "isPossibleMiddleAge",
   );
 
   const handleIsRestrictedAgeSelect = (selectedOption: string | null) => {

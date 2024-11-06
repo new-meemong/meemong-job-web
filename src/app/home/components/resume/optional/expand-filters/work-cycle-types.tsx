@@ -1,7 +1,7 @@
-import { useResumeListStore } from "@/stores/resume-list-store";
+import OptionalMultiDropdownFilter from "../../../filters/base/optional-multi-dropdown-filter";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import OptionalMultiDropdownFilter from "../../../filters/base/optional-multi-dropdown-filter";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div``;
 
@@ -9,15 +9,15 @@ const WorkCycleTypes = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
   const options = [
     ...resumeOptions.workCycleTypes,
-    { key: "상관없음", value: "상관없음" }
+    { key: "상관없음", value: "상관없음" },
   ];
   const selectedOptions =
     getResumeFilterQuery("workCycleTypes")?.split(",") || [];
@@ -30,7 +30,7 @@ const WorkCycleTypes = () => {
 
       if (selectedOptions.includes(selectedOption)) {
         updatedOptions = selectedOptions.filter(
-          (option) => option !== selectedOption
+          (option) => option !== selectedOption,
         );
       } else {
         updatedOptions = [...selectedOptions, selectedOption];

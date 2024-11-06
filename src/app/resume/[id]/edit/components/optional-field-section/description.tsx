@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import DropDownItem from "./base/drop-down-item";
-import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div``;
@@ -32,7 +32,7 @@ const TextAreaField = styled.textarea`
 const Description = () => {
   const { description, setDescription } = useResumeEditStore((state) => ({
     description: state.description,
-    setDescription: state.setDescription
+    setDescription: state.setDescription,
   }));
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

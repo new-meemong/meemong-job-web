@@ -1,12 +1,12 @@
 import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
-import pxToVw from "@/lib/dpi-converter";
-import { useResumeListStore } from "@/stores/resume-list-store";
-import { colors } from "@/styles/colors";
-import { fonts } from "@/styles/fonts";
-import { siNmShort } from "@/types/location-type";
 import Link from "next/link";
 import React from "react";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import { siNmShort } from "@/types/location-type";
 import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ const LocationButton = styled(Link)`
 
 const ResumeLocation = () => {
   const { _preferredStoreRegions } = useResumeListStore((state) => ({
-    _preferredStoreRegions: state._preferredStoreRegions
+    _preferredStoreRegions: state._preferredStoreRegions,
   }));
 
   const convertRegions = _preferredStoreRegions?.map((item) => {

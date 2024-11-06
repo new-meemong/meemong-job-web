@@ -1,10 +1,11 @@
-import { fonts } from "@/styles/fonts";
-import { colors } from "@/styles/colors";
 import { ChangeEvent, useState } from "react";
-import styled from "styled-components";
-import pxToVw from "@/lib/dpi-converter";
-import ArrowUpGreyIcon from "@/components/icons/arrow-up-grey-icon";
+
 import ArrowDownGreyIcon from "@/components/icons/arrow-down-grey-icon";
+import ArrowUpGreyIcon from "@/components/icons/arrow-up-grey-icon";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div``;
 
@@ -130,7 +131,7 @@ const OptionalSingleDropdownFilterAge = <T extends string | boolean>({
   onSelect,
   caption,
 
-  onSelectSubOption
+  onSelectSubOption,
 }: OptionalSingleDropdownFilterProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
 

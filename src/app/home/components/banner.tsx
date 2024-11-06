@@ -1,12 +1,12 @@
 "use client";
 
-import pxToVw from "@/lib/dpi-converter";
-import { useBannerStore } from "@/stores/banner-store";
-import { colors } from "@/styles/colors";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { colors } from "@/styles/colors";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useBannerStore } from "@/stores/banner-store";
+import { useEffect } from "react";
 
 const Container = styled.div`
   margin-top: ${pxToVw(24)};
@@ -27,7 +27,7 @@ const BannerImage = styled(Image)`
 const Banner = () => {
   const { banner, fetchBanner } = useBannerStore((state) => ({
     banner: state.banner,
-    fetchBanner: state.fetchBanner
+    fetchBanner: state.fetchBanner,
   }));
 
   useEffect(() => {

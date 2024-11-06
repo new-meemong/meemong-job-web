@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@/components/error-message";
-import ResumeEditLabel from "@/app/resume/[id]/edit/components/base/resume-edit-label";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import styled from "styled-components";
 import ResumeEditInput from "../base/resume-edit-input";
+import ResumeEditLabel from "@/app/resume/[id]/edit/components/base/resume-edit-label";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -16,13 +16,13 @@ const ShortDescriptionInput = () => {
     setShortDescription,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    appliedRole
+    appliedRole,
   } = useResumeEditStore((state) => ({
     shortDescription: state.shortDescription,
     setShortDescription: state.setShortDescription,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
-    appliedRole: state.appliedRole
+    appliedRole: state.appliedRole,
   }));
 
   let hasError = false;

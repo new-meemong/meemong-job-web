@@ -1,4 +1,3 @@
-import { ImageType } from "./image-type";
 import {
   AdminAgeKey,
   AdminSexKey,
@@ -11,7 +10,6 @@ import {
   IncentiveKey,
   InternExperienceYearNumberKey,
   InternSalaryKey,
-  isExistedInternSystemKey,
   IsRestrictedAgeKey,
   LeaveDayCountKey,
   MealTimeKey,
@@ -24,8 +22,11 @@ import {
   StoreTypesKey,
   SubwayAccessibilityKey,
   WorkCycleTypesKey,
-  WorkTypeKey
+  WorkTypeKey,
+  isExistedInternSystemKey,
 } from "./job-posting-keys";
+
+import { ImageType } from "./image-type";
 import { UserType } from "./user-type";
 
 export interface JobPostingType {

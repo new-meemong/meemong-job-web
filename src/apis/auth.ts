@@ -8,7 +8,7 @@ export const webviewLogin = async (UserID: string) => {
     }
     return await apiFetch("/api/v1/auth/webview-login", "POST", {
       UserID,
-      webviewAPIKey: WEBVIEW_API_KEY
+      webviewAPIKey: WEBVIEW_API_KEY,
     });
   } catch (error) {
     // 에러를 처리하고, 필요하다면 특정 값을 반환합니다.

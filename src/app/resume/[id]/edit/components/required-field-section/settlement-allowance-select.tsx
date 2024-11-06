@@ -1,8 +1,8 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
+import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
 import { SettlementAllowanceKeyResume } from "@/types/resume-keys";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -15,12 +15,12 @@ const SettlementAllowanceSelect = () => {
     settlementAllowance,
     setSettlementAllowance,
     appliedRole,
-    hasDesignerOptionNull
+    hasDesignerOptionNull,
   } = useResumeEditStore((state) => ({
     settlementAllowance: state.settlementAllowance,
     setSettlementAllowance: state.setSettlementAllowance,
     appliedRole: state.appliedRole,
-    hasDesignerOptionNull: state.hasDesignerOptionNull
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
   }));
 
   const options = resumeOptions.settlementAllowance;

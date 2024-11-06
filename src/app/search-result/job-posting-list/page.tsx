@@ -1,17 +1,18 @@
 "use client";
 
-import Banner from "@/app/home/components/banner";
-import SearchResultHeader from "@/components/headers/search-result-header";
-import JobPostingItem from "@/components/job-posting-item";
-import SearchFilterInput from "@/components/search-filter-input";
-import CenterSpinner from "@/components/spinners/center-spinner";
-import pxToVw from "@/lib/dpi-converter";
-import { parseQueryString } from "@/lib/parse-query-string";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
-import { fonts } from "@/styles/fonts";
-import { JobPostingType } from "@/types/job-posting-type";
 import { useEffect, useState } from "react";
+
+import Banner from "@/app/home/components/banner";
+import CenterSpinner from "@/components/spinners/center-spinner";
+import JobPostingItem from "@/components/job-posting-item";
+import { JobPostingType } from "@/types/job-posting-type";
+import SearchFilterInput from "@/components/search-filter-input";
+import SearchResultHeader from "@/components/headers/search-result-header";
+import { fonts } from "@/styles/fonts";
+import { parseQueryString } from "@/lib/parse-query-string";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div``;
 
@@ -33,11 +34,11 @@ export default function JobPostingListPage() {
   const {
     jobPostingFilterQueries,
     searchJobPostingList,
-    searchResultJobPostingList
+    searchResultJobPostingList,
   } = useJobPostingListStore((state) => ({
     jobPostingFilterQueries: state.jobPostingFilterQueries,
     searchJobPostingList: state.searchJobPosingList,
-    searchResultJobPostingList: state.searchResultJobPostingList
+    searchResultJobPostingList: state.searchResultJobPostingList,
   }));
   const [filterText, setFilterText] = useState("");
   const [filteredJobPostingList, setFilteredJobPostingList] = useState<
@@ -54,7 +55,7 @@ export default function JobPostingListPage() {
       } catch (error) {
         console.error(
           "Error parsing query string or fetching job postings:",
-          error
+          error,
         );
       } finally {
         setIsLoading(false);
@@ -69,7 +70,7 @@ export default function JobPostingListPage() {
         jobPosting.postingTitle
           .toLowerCase()
           .includes(filterText.toLowerCase()) ||
-        jobPosting.storeName.toLowerCase().includes(filterText.toLowerCase())
+        jobPosting.storeName.toLowerCase().includes(filterText.toLowerCase()),
     );
 
     setFilteredJobPostingList(filteredJobPostings);

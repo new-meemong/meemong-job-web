@@ -7,11 +7,11 @@ const Role = () => {
   const {
     getJobPostingFilterQuery,
     addJobPostingFilterQuery,
-    removeJobPostingFilterQuery
+    removeJobPostingFilterQuery,
   } = useJobPostingListStore((state) => ({
     getJobPostingFilterQuery: state.getJobPostingFilterQuery,
     addJobPostingFilterQuery: state.addJobPostingFilterQuery,
-    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery
+    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery,
   }));
 
   const selectedDesignerType = getJobPostingFilterQuery("role") || "디자이너";

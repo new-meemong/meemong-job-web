@@ -1,12 +1,12 @@
-import { useAuthStore } from "@/stores/auth-store";
-import { apiFetch } from "./fetch";
-import { ResumeType } from "@/types/resume-type";
 import { PRODUCTION_API } from "./consts";
+import { ResumeType } from "@/types/resume-type";
+import { apiFetch } from "./fetch";
+import { useAuthStore } from "@/stores/auth-store";
 
 export const getResumeById = async (userId: string) => {
   try {
     const defaultParams: Record<string, string> = {
-      userId
+      userId,
     };
 
     const queryString = new URLSearchParams(defaultParams).toString();
@@ -89,8 +89,8 @@ export const uploadResumeProfileImage = async (image: File) => {
       method: "POST",
       body: formData,
       headers: {
-        Authorization: `${jwt}`
-      }
+        Authorization: `${jwt}`,
+      },
     });
 
     const response = await fetch(request);

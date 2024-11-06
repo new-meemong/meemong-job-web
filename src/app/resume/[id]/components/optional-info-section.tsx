@@ -1,9 +1,9 @@
-import pxToVw from "@/lib/dpi-converter";
+import MultiInfoItem from "@/components/details/multi-info-item";
 import { ResumeType } from "@/types/resume-type";
-import styled from "styled-components";
 import SectionTitle from "./base/section-title";
 import SingleInfoItem from "@/components/details/single-info-item";
-import MultiInfoItem from "@/components/details/multi-info-item";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ const Container = styled.div`
 const buildExperienceContent = (
   companyName: string | null | undefined,
   duration: string | null | undefined,
-  role: string | null | undefined
+  role: string | null | undefined,
 ): string => {
   if (!companyName || !duration || !role) {
     return "";
@@ -35,7 +35,7 @@ const OptionalInfoSection = ({ resume }: OptionalInfoSectionProps) => {
           content={buildExperienceContent(
             resume.designerMajorExperienceCompanyName,
             resume.designerMajorExperienceDuration,
-            resume.designerMajorExperienceRole
+            resume.designerMajorExperienceRole,
           )}
           nullString="없음"
         />
@@ -46,7 +46,7 @@ const OptionalInfoSection = ({ resume }: OptionalInfoSectionProps) => {
           content={buildExperienceContent(
             resume.internMajorExperienceCompanyName,
             resume.internMajorExperienceDuration,
-            resume.internMajorExperienceRole
+            resume.internMajorExperienceRole,
           )}
           nullString="없음"
         />

@@ -1,15 +1,15 @@
-import styled from "styled-components";
 import ResumeOptionalFilterExpand from "./resume-optional-filter-expand";
 import ResumeOptionalFilterUnexpand from "./resume-optional-filter-unexpand";
-import { useState } from "react";
+import styled from "styled-components";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { useState } from "react";
 
 const Container = styled.div``;
 
 const ResumeOptionalFilterList = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { resetResumeFilterQueries } = useResumeListStore((state) => ({
-    resetResumeFilterQueries: state.resetResumeFilterQueries
+    resetResumeFilterQueries: state.resetResumeFilterQueries,
   }));
 
   const toggleExpanded = () => {

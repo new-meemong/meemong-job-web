@@ -1,13 +1,13 @@
 import NoticeModal from "@/components/modals/notice-modal";
-import pxToVw from "@/lib/dpi-converter";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { useResumeListStore } from "@/stores/resume-list-store";
+import { ResumeType } from "@/types/resume-type";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { ResumeType } from "@/types/resume-type";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { useResumeListStore } from "@/stores/resume-list-store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import styled from "styled-components";
 
 const Container = styled.div`
   position: fixed;
@@ -54,16 +54,16 @@ const BottomButtonSection = ({ source }: { source?: string }) => {
     hasDesignerOptionNull,
     hasInternOptionNull,
     saveDraft,
-    submitResume
+    submitResume,
   } = useResumeEditStore((state) => ({
     appliedRole: state.appliedRole,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
     saveDraft: state.saveDraft,
-    submitResume: state.submitResume
+    submitResume: state.submitResume,
   }));
   const { updateResume } = useResumeListStore((state) => ({
-    updateResume: state.updateResume
+    updateResume: state.updateResume,
   }));
 
   const handleSaveDraft = async () => {

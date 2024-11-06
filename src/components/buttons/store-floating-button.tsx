@@ -1,7 +1,7 @@
-import pxToVw from "@/lib/dpi-converter";
+import Image from "next/image";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import Image from "next/image";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -45,14 +45,14 @@ const StoreFloatingButton = ({ title }: { title: string }) => {
   const handlePlayStoreButtonClick = () => {
     window.open(
       "https://play.google.com/store/apps/details?id=com.meemong.second&pcampaignid=web_share",
-      "_blank"
+      "_blank",
     );
   };
 
   const handleAppStoreButtonClick = () => {
     window.open(
       "https://apps.apple.com/kr/app/%EB%AF%B8%EB%AA%BD-%EB%8B%B9%EC%8B%A0%EB%8F%84-%ED%97%A4%EC%96%B4%EB%AA%A8%EB%8D%B8/id1572588554?l=en-GB",
-      "_blank"
+      "_blank",
     );
   };
 

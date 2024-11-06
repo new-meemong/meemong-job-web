@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import OptionItem from "./option-item";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const MultiOptionList = <T extends string>({
   options,
   selectedOptions,
   onSelect,
-  buttonSize
+  buttonSize,
 }: MultiOptionListProps<T>) => {
   return (
     <Container>

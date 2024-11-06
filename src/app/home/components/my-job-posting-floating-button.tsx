@@ -1,9 +1,9 @@
 import WriteIcon from "@/components/icons/write-icon";
-import pxToVw from "@/lib/dpi-converter";
-import { useAuthStore } from "@/stores/auth-store";
 import { colors } from "@/styles/colors";
-import { useRouter } from "next/navigation";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useAuthStore } from "@/stores/auth-store";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div``;
 
@@ -36,7 +36,7 @@ const WriteButtonText = styled.span`
 const MyJobPostingFloatingButton = () => {
   const router = useRouter();
   const { UserID } = useAuthStore((state) => ({
-    UserID: state.UserID
+    UserID: state.UserID,
   }));
 
   const handleClick = () => {

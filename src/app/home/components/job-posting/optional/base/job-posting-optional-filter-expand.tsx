@@ -1,38 +1,38 @@
-import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
-import { colors } from "@/styles/colors";
-import styled from "styled-components";
-import { fonts } from "@/styles/fonts";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
-import Sex from "../expand-filters/sex";
-import IsRestrictedAge from "../expand-filters/is-restricted-age";
-import DesignerLicenses from "../expand-filters/designer-licenses";
-import EmployeeCount from "../expand-filters/employee-count";
-import IsExistedInternSystem from "../expand-filters/is-existed-intern-system";
-import StoreInteriorRenovationAgo from "../expand-filters/store-interior-renovation-ago";
-import WorkType from "../expand-filters/work-type";
-import WorkCycleTypes from "../expand-filters/work-cycle-types";
-import IsExistedEducationSupport from "../expand-filters/is-existed-education-support";
-import IsExistedMealSupport from "../expand-filters/is-existed-meal-support";
-import MealTime from "../expand-filters/meal-time";
-import IsExistedProductSupport from "../expand-filters/is-existed-product-support";
-import IsExistedDormitorySupport from "../expand-filters/is-existed-dormitory-support";
-import SalesCommission from "../expand-filters/sales-commission";
-import DesignerExperienceYearNumber from "../expand-filters/designer-experience-year-number";
-import SalesLast3MonthsAvg from "../expand-filters/sales-last-3months-avg";
-import SubwayAccessibility from "../expand-filters/subway-accessibility";
 import AdminAge from "../expand-filters/admin-age";
 import AdminSex from "../expand-filters/admin-sex";
-import LeaveDayCount from "../expand-filters/leave-day-count";
-import ParkingSpotCount from "../expand-filters/parking-spot-count";
-import IsExistedCleaningSupplier from "../expand-filters/is-existed-cleaning-supplier";
-import IsExistedTowelSupplier from "../expand-filters/is-existed-towel-supplier";
-import StoreTypes from "../expand-filters/store-types";
+import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
+import DesignerExperienceYearNumber from "../expand-filters/designer-experience-year-number";
+import DesignerLicenses from "../expand-filters/designer-licenses";
 import DesignerPromotionPeriod from "../expand-filters/designer-promotion-period";
+import EmployeeCount from "../expand-filters/employee-count";
 import InternExperienceYearNumber from "../expand-filters/intern-experience-year-number";
-import IsOnsiteManager from "../expand-filters/is-onsite-manager";
+import IsExistedCleaningSupplier from "../expand-filters/is-existed-cleaning-supplier";
+import IsExistedDormitorySupport from "../expand-filters/is-existed-dormitory-support";
+import IsExistedEducationSupport from "../expand-filters/is-existed-education-support";
 import IsExistedFourInsurances from "../expand-filters/is-existed-four-insurances";
+import IsExistedInternSystem from "../expand-filters/is-existed-intern-system";
+import IsExistedMealSupport from "../expand-filters/is-existed-meal-support";
+import IsExistedProductSupport from "../expand-filters/is-existed-product-support";
 import IsExistedRetirementPay from "../expand-filters/is-existed-retirement-pay";
+import IsExistedTowelSupplier from "../expand-filters/is-existed-towel-supplier";
+import IsOnsiteManager from "../expand-filters/is-onsite-manager";
+import IsRestrictedAge from "../expand-filters/is-restricted-age";
+import LeaveDayCount from "../expand-filters/leave-day-count";
+import MealTime from "../expand-filters/meal-time";
+import ParkingSpotCount from "../expand-filters/parking-spot-count";
+import SalesCommission from "../expand-filters/sales-commission";
+import SalesLast3MonthsAvg from "../expand-filters/sales-last-3months-avg";
+import Sex from "../expand-filters/sex";
+import StoreInteriorRenovationAgo from "../expand-filters/store-interior-renovation-ago";
+import StoreTypes from "../expand-filters/store-types";
+import SubwayAccessibility from "../expand-filters/subway-accessibility";
+import WorkCycleTypes from "../expand-filters/work-cycle-types";
+import WorkType from "../expand-filters/work-type";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div`
   padding: ${pxToVw(12)} ${pxToVw(8)};
@@ -91,10 +91,10 @@ interface OptionalFilterUnexpandButtonProps {
 
 const JobPostingOptionalFilterExpand = ({
   resetFilters,
-  toggleExpanded
+  toggleExpanded,
 }: OptionalFilterUnexpandButtonProps) => {
   const { getJobPostingFilterQuery } = useJobPostingListStore((state) => ({
-    getJobPostingFilterQuery: state.getJobPostingFilterQuery
+    getJobPostingFilterQuery: state.getJobPostingFilterQuery,
   }));
   const role = getJobPostingFilterQuery("role");
   return (

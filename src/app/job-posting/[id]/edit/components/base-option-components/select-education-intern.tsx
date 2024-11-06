@@ -1,9 +1,9 @@
 import BaseSingleSelect from "@/components/selects/base-single-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import { MonthlyEducationInternCountKey } from "@/types/job-posting-keys";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-left: ${pxToVw(8)};
@@ -15,14 +15,14 @@ const SelectEducationIntern = () => {
   const {
     monthlyEducationInternCount,
     setMonthlyEducationInternCount,
-    hasInternOptionNull
+    hasInternOptionNull,
   } = useJobPostingEditStore();
   const educationCounts = jobPostingOptions.monthlyEducationInternCount;
   const hasError = !monthlyEducationInternCount && hasInternOptionNull;
 
   const handleSelect = (selectedOption: string | null) => {
     setMonthlyEducationInternCount(
-      selectedOption as MonthlyEducationInternCountKey
+      selectedOption as MonthlyEducationInternCountKey,
     );
   };
 

@@ -1,9 +1,9 @@
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { SearchResultItemType } from "@/stores/search-naver-store";
 import { fonts } from "@/styles/fonts";
-import { useRouter } from "next/navigation";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div``;
 
@@ -23,7 +23,7 @@ export const SearchResultItem = (item: SearchResultItemType) => {
       title: item.title,
       address: item.address,
       mapx: item.mapx,
-      mapy: item.mapy
+      mapy: item.mapy,
     };
     setStoreRegion(info);
     router.back();

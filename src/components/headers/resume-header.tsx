@@ -1,14 +1,14 @@
-import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
-import { useRouter } from "next/navigation";
-import { fonts } from "@/styles/fonts";
-import pxToVw from "@/lib/dpi-converter";
-import { useState } from "react";
-import OptionIcon from "./header-icons/option-icon";
-import SingleSelectBottomModal from "../modals/single-select-bottom-modal";
 import ConfirmModal from "../modals/confirm-modal";
 import NoticeModal from "../modals/notice-modal";
+import OptionIcon from "./header-icons/option-icon";
+import SingleSelectBottomModal from "../modals/single-select-bottom-modal";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -48,7 +48,7 @@ const ResumeHeader = ({
   title,
   resumeId,
   isMine,
-  isEnableButton
+  isEnableButton,
 }: ResumeHeaderProps) => {
   const router = useRouter();
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
@@ -58,13 +58,13 @@ const ResumeHeader = ({
   const [noticeModalMessage, setNoticeModalMessage] = useState("");
 
   const { deleteResume } = useResumeListStore((state) => ({
-    deleteResume: state.deleteResume
+    deleteResume: state.deleteResume,
   }));
 
   const options = isMine
     ? [
         { key: "수정", value: "수정" },
-        { key: "삭제", value: "삭제" }
+        { key: "삭제", value: "삭제" },
       ]
     : [];
 

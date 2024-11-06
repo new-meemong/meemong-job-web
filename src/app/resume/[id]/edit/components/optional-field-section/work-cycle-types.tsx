@@ -1,9 +1,9 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
+import DropDownItem from "./base/drop-down-item";
+import MultiOptionList from "./base/multi-option-list";
 import { WorkCycleTypesKeyResume } from "@/types/resume-keys";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import DropDownItem from "./base/drop-down-item";
-import MultiOptionList from "./base/multi-option-list";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div``;
 
@@ -13,7 +13,7 @@ const WorkCycleTypes = () => {
     setWorkCycleTypes: state.setWorkCycleTypes,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
-    appliedRole: state.appliedRole
+    appliedRole: state.appliedRole,
   }));
 
   const options = resumeOptions.workCycleTypes;

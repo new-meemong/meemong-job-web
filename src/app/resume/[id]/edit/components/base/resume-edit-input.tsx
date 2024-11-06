@@ -1,6 +1,6 @@
-import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const Input = styled.input<{ $hasError: boolean }>`
@@ -35,7 +35,7 @@ const ResumeEditInput = ({
   value,
   onChange,
   placeholder,
-  $hasError = false
+  $hasError = false,
 }: ResumeEditInputProps) => {
   return (
     <Input

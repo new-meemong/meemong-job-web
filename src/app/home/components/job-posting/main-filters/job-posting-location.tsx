@@ -1,12 +1,12 @@
 import ArrowRightPurpleIcon from "@/components/icons/arrow-right-purple-icon";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
-import { colors } from "@/styles/colors";
-import { fonts } from "@/styles/fonts";
-import { siNmShort } from "@/types/location-type";
 import Link from "next/link";
 import React from "react";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import { siNmShort } from "@/types/location-type";
 import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ const LocationButton = styled(Link)`
 
 const JobPostingLocation = () => {
   const { _postingRegions } = useJobPostingListStore((state) => ({
-    _postingRegions: state._postingRegions
+    _postingRegions: state._postingRegions,
   }));
 
   const convertRegions = _postingRegions?.map((item) => {

@@ -1,10 +1,10 @@
+import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import Metadata from "@/app/resume/[id]/components/metadata";
 import PageContent from "./page-content";
 import { getJobPosting } from "@/apis/job-postings";
-import { IMAGE_STORAGE_URL } from "@/apis/consts";
 
 export default async function JobPostingPage({
-  params
+  params,
 }: {
   params: { id: string };
 }) {

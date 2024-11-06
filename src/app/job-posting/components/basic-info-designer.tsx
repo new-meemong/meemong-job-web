@@ -1,9 +1,9 @@
-import styled from "styled-components";
 import InfoTitle from "./info-title";
-import SingleInfoItem from "../../../components/details/single-info-item";
-import pxToVw from "@/lib/dpi-converter";
-import SingleInfoTooltipItem from "./single-info-tooltip-item";
 import { JobPostingType } from "@/types/job-posting-type";
+import SingleInfoItem from "../../../components/details/single-info-item";
+import SingleInfoTooltipItem from "./single-info-tooltip-item";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ const BasicInfoDesigner = ({
   availableOffDays,
   settlementAllowance,
   incentive,
-  role
+  role,
 }: BasicInfoDesignerProps) => {
   return (
     <Container>

@@ -57,12 +57,12 @@ export default function MyJobPostingListPage({ searchParams }: SearchParams) {
   const { myJobPostingList, getMyJobPostingList } = useMyJobPostingListStore(
     (state) => ({
       getMyJobPostingList: state.getMyJobPostingList,
-      myJobPostingList: state.myJobPostingList
-    })
+      myJobPostingList: state.myJobPostingList,
+    }),
   );
   const { login, jwt } = useAuthStore((state) => ({
     login: state.login,
-    jwt: state.jwt
+    jwt: state.jwt,
   }));
 
   const userId = searchParams.userId;

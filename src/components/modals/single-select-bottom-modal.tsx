@@ -1,6 +1,6 @@
-import pxToVw from "@/lib/dpi-converter";
-import { fonts } from "@/styles/fonts";
 import { Sheet } from "react-modal-sheet";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const SheetContainer = styled(Sheet.Container)`
@@ -41,7 +41,7 @@ const SingleSelectBottomModal = <T extends string | boolean | null>({
   isOpen,
   onClose,
   options,
-  onSelect
+  onSelect,
 }: SingleSelectBottomModalProps<T>) => {
   // const itemHeight = 48; // OptionItem의 높이
   // const contentHeight = options.length * itemHeight;

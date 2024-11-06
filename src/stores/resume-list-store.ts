@@ -1,13 +1,14 @@
+import { createJSONStorage, persist } from "zustand/middleware";
 import {
   deleteResume,
   getMyResume,
   getResume,
-  getResumes
+  getResumes,
 } from "@/apis/resumes";
+
 import { ResponseResultType } from "@/types/response-result-type";
 import { ResumeType } from "@/types/resume-type";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
 
 export type ResumeListState = {
   resumeList: ResumeType[];
@@ -47,7 +48,7 @@ export const defaultResumeListState: ResumeListState = {
   resumeFilterQueries: "",
   _preferredStoreRegions: [],
   preferredStoreRegions: null,
-  preferredStoreRegionSiNames: null
+  preferredStoreRegionSiNames: null,
 };
 
 export const useResumeListStore = create(
@@ -83,7 +84,7 @@ export const useResumeListStore = create(
         set({ resumeListLoading: true });
         const _queryParams = {
           __cursorOrder: "createdAtDesc",
-          ...queryParams
+          ...queryParams,
         };
         const res = await getResumes(_queryParams);
         const { dataList } = res;
@@ -94,7 +95,7 @@ export const useResumeListStore = create(
       searchResumeList: async (queryParams) => {
         const _queryParams = {
           __cursorOrder: "createdAtDesc",
-          ...queryParams
+          ...queryParams,
         };
         const res = await getResumes(_queryParams);
         const { dataList } = res;
@@ -104,8 +105,8 @@ export const useResumeListStore = create(
       updateResume: (updatedResume) => {
         set((state) => ({
           resumeList: state.resumeList.map((resume) =>
-            resume.id === updatedResume.id ? updatedResume : resume
-          )
+            resume.id === updatedResume.id ? updatedResume : resume,
+          ),
         }));
       },
       deleteResume: async (id: string) => {
@@ -115,7 +116,7 @@ export const useResumeListStore = create(
           if (res) {
             set((state) => {
               const resumeList = state.resumeList.filter(
-                (resume) => resume.id !== id
+                (resume) => resume.id !== id,
               );
 
               return { ...state, resumeList };
@@ -166,7 +167,9 @@ export const useResumeListStore = create(
 
         // currentQueries에 포함될 preferredStoreRegionSiNames (preferredStoreRegions에 없는 '시'만 필터링)
         const preferredStoreRegionsSiNamesSet = new Set(
-          preferredStoreRegions.split(",").map((region) => region.split(" ")[0])
+          preferredStoreRegions
+            .split(",")
+            .map((region) => region.split(" ")[0]),
         );
         const filteredSiNamesForQuery = uniqueSiNames
           .filter((siName) => !preferredStoreRegionsSiNamesSet.has(siName))
@@ -176,7 +179,7 @@ export const useResumeListStore = create(
           // 쿼리에 preferredStoreRegions와 filteredSiNamesForQuery 추가 또는 삭제
           if (filteredSiNamesForQuery) {
             get().addResumeFilterQuery(
-              `preferredStoreRegionSiNames=${filteredSiNamesForQuery}`
+              `preferredStoreRegionSiNames=${filteredSiNamesForQuery}`,
             );
           } else {
             get().removeResumeFilterQuery("preferredStoreRegionSiNames");
@@ -184,7 +187,7 @@ export const useResumeListStore = create(
 
           if (preferredStoreRegions) {
             get().addResumeFilterQuery(
-              `preferredStoreRegions=${preferredStoreRegions}`
+              `preferredStoreRegions=${preferredStoreRegions}`,
             );
           } else {
             get().removeResumeFilterQuery("preferredStoreRegions");
@@ -193,18 +196,18 @@ export const useResumeListStore = create(
           return {
             _preferredStoreRegions: regions,
             preferredStoreRegionSiNames: uniqueSiNames.join(","), // state에 모든 '시' 저장
-            preferredStoreRegions: preferredStoreRegions // state에 모든 '구/군' 저장
+            preferredStoreRegions: preferredStoreRegions, // state에 모든 '구/군' 저장
           };
         });
       },
       resetResumeFilterQueries: () => {
         const appliedRole = get().getResumeFilterQuery("appliedRole");
         set({ resumeFilterQueries: `appliedRole=${appliedRole}` });
-      }
+      },
     }),
     {
       name: "resume-list-store",
-      storage: createJSONStorage(() => localStorage)
-    }
-  )
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
 );

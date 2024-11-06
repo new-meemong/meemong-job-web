@@ -1,8 +1,7 @@
-import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { messageType } from "@/types/send-app-message-type";
-
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -42,7 +41,7 @@ const BottomButtonSection = ({ postUserId }: BottomButtonSectionProps) => {
       const message = {
         type: "resume" as messageType,
         postId,
-        postUserId
+        postUserId,
       };
       window.startChat(message);
     } else {

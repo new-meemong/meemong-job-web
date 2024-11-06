@@ -1,18 +1,19 @@
-import { IMAGE_STORAGE_URL } from "@/apis/consts";
-import { uploadJobPostingImage } from "@/apis/job-postings";
-import { ErrorMessage } from "@/components/error-message";
-import ImageUploadIcon from "@/components/icons/image-upload-icon";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { colors } from "@/styles/colors";
-import { fonts } from "@/styles/fonts";
-import Image from "next/image";
 import { ChangeEvent, useState } from "react";
-import styled from "styled-components";
-import loadImage from "blueimp-load-image";
+
 import CenterSpinner from "@/components/spinners/center-spinner";
 import ConfirmModal from "@/components/modals/confirm-modal";
+import { ErrorMessage } from "@/components/error-message";
+import { IMAGE_STORAGE_URL } from "@/apis/consts";
+import Image from "next/image";
+import ImageUploadIcon from "@/components/icons/image-upload-icon";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import loadImage from "blueimp-load-image";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 import toast from "react-hot-toast";
+import { uploadJobPostingImage } from "@/apis/job-postings";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div``;
 
@@ -94,7 +95,7 @@ const JobPostingEditStoreImage = () => {
     setJobPostingsStoreImages,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    role
+    role,
   } = useJobPostingEditStore();
   let hasError = false;
 
@@ -147,7 +148,7 @@ const JobPostingEditStoreImage = () => {
                     (newBlob as any).name = selectedFile.name; // TypeScript에서는 Blob에 name 속성이 없으므로 any로 캐스팅
                     // 4. 기존 메서드로 파일 s3에 업로드
                     resolve(newBlob);
-                  }
+                  },
                 );
               }
             }, "image/jpeg");
@@ -156,7 +157,7 @@ const JobPostingEditStoreImage = () => {
             resolve(selectedFile);
           }
         },
-        { meta: true, orientation: true, canvas: true }
+        { meta: true, orientation: true, canvas: true },
       );
     });
 
@@ -204,7 +205,7 @@ const JobPostingEditStoreImage = () => {
 
   const handleDeleteConfirm = () => {
     const updatedImages = jobPostingsStoreImages.filter(
-      (_, i) => i !== deleteIndex
+      (_, i) => i !== deleteIndex,
     );
     setJobPostingsStoreImages(updatedImages);
     setIsDeleteConfirmModalOpen(false);

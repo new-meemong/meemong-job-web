@@ -6,10 +6,11 @@ import BaseContainer from "@/components/base-container";
 import { FirebaseNavigationLogging } from "@/components/fireabses/navigation-loging";
 import Script from "next/script";
 import StyledComponentsRegistry from "./registry";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "미몽-구인구직",
-  description: "헤어 디자이너를 위한 구인구직 서비스 ~!"
+  description: "헤어 디자이너를 위한 구인구직 서비스 ~!",
 };
 
 export const viewport: Viewport = {
@@ -18,11 +19,11 @@ export const viewport: Viewport = {
   initialScale: 1,
   userScalable: false,
   maximumScale: 1.0,
-  minimumScale: 1.0
+  minimumScale: 1.0,
 };
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -43,7 +44,9 @@ export default function RootLayout({
         /> */}
       </head>
       <body style={{ margin: "0 auto", maxWidth: "600px" }}>
-        <FirebaseNavigationLogging />
+        <Suspense fallback={null}>
+          <FirebaseNavigationLogging />
+        </Suspense>
         <StyledComponentsRegistry>
           <BaseContainer>{children}</BaseContainer>
         </StyledComponentsRegistry>

@@ -1,15 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { useServerInsertedHTML } from "next/navigation";
 import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+
+import { useServerInsertedHTML } from "next/navigation";
 
 /**
  * 서버측 초기 렌더링시 레이아웃 깨지는 이슈 수정
  * 참고: https://stackoverflow.com/questions/74242349/styles-take-time-to-load-next-js
  */
 export default function StyledComponentsRegistry({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {

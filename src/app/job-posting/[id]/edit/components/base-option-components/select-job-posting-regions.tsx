@@ -1,13 +1,13 @@
-import { ErrorMessage } from "@/components/error-message";
 import ArrowRightGreyIcon from "@/components/icons/arrow-right-grey-icon";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { colors } from "@/styles/colors";
-import { fonts } from "@/styles/fonts";
-import { siNmShort } from "@/types/location-type";
+import { ErrorMessage } from "@/components/error-message";
 import Link from "next/link";
 import React from "react";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import { siNmShort } from "@/types/location-type";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -86,7 +86,7 @@ const SelectJobPostingRegions = () => {
       _postingRegions: state._postingRegions,
       hasDesignerOptionNull: state.hasDesignerOptionNull,
       hasInternOptionNull: state.hasInternOptionNull,
-      role: state.role
+      role: state.role,
     }));
 
   const convertRegions = _postingRegions?.map((item) => {

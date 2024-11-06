@@ -1,16 +1,17 @@
-import { IMAGE_STORAGE_URL } from "@/apis/consts";
-import { uploadResumeProfileImage } from "@/apis/resumes";
+import { useEffect, useRef, useState } from "react";
+
 import CameraFillIcon from "@/components/icons/camera-fill-icon";
-import pxToVw from "@/lib/dpi-converter";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { ClipLoader } from "react-spinners";
+import { IMAGE_STORAGE_URL } from "@/apis/consts";
+import Image from "next/image";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import loadImage from "blueimp-load-image";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { ClipLoader } from "react-spinners";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import toast from "react-hot-toast";
+import { uploadResumeProfileImage } from "@/apis/resumes";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -67,14 +68,14 @@ const ProfileImageSection = () => {
     setProfileImageUri,
     appliedRole,
     hasDesignerOptionNull,
-    hasInternOptionNull
+    hasInternOptionNull,
   } = useResumeEditStore((state) => ({
     setProfileImageThumbnailUri: state.setProfileImageThumbnailUri,
     setProfileImageUri: state.setProfileImageUri,
     appliedRole: state.appliedRole,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
-    profileImageThumbnailUri: state.profileImageThumbnailUri
+    profileImageThumbnailUri: state.profileImageThumbnailUri,
   }));
   let hasError = false;
 
@@ -127,7 +128,7 @@ const ProfileImageSection = () => {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     (newBlob as any).name = file.name;
                     resolve(newBlob);
-                  }
+                  },
                 );
               }
             }, "image/jpeg");
@@ -135,7 +136,7 @@ const ProfileImageSection = () => {
             resolve(file);
           }
         },
-        { meta: true, orientation: true, canvas: true }
+        { meta: true, orientation: true, canvas: true },
       );
     });
 

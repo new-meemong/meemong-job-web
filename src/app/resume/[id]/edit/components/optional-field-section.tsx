@@ -1,23 +1,23 @@
 import ArrowDownPurpleEditIcon from "@/components/icons/arrow-down-purple-edit-icon";
 import ArrowUpPurpleEditIcon from "@/components/icons/arrow-up-purple-edit-icon";
-import pxToVw from "@/lib/dpi-converter";
-import { fonts } from "@/styles/fonts";
-import { useState } from "react";
-import styled from "styled-components";
-import MajorExperience from "./optional-field-section/major-experience";
-import SalesLast3Month from "./optional-field-section/sales-last-3month";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import PreferredOffDays from "./optional-field-section/preferred-off-days";
-import WorkCycleTypes from "./optional-field-section/work-cycle-types";
+import CompletedEducationLevels from "./optional-field-section/completed-education-levels";
+import Description from "./optional-field-section/description";
 import DesignerPromotionPeriod from "./optional-field-section/designer-promition-period";
 import IsPreferredDormitorySupport from "./optional-field-section/is-preferred-dormitory-support";
-import PreferredMonthlyEducationDesignerCount from "./optional-field-section/preferred-monthly-education-designer-count";
-import PreferredMonthlyEducationInternCount from "./optional-field-section/preferred-monthly-education-intern-count";
 import IsPreferredMealSupport from "./optional-field-section/is-preferred-meal-support";
 import IsPreferredParking from "./optional-field-section/is-preferred-parking";
+import MajorExperience from "./optional-field-section/major-experience";
 import Mbti from "./optional-field-section/mbti";
-import Description from "./optional-field-section/description";
-import CompletedEducationLevels from "./optional-field-section/completed-education-levels";
+import PreferredMonthlyEducationDesignerCount from "./optional-field-section/preferred-monthly-education-designer-count";
+import PreferredMonthlyEducationInternCount from "./optional-field-section/preferred-monthly-education-intern-count";
+import PreferredOffDays from "./optional-field-section/preferred-off-days";
+import SalesLast3Month from "./optional-field-section/sales-last-3month";
+import WorkCycleTypes from "./optional-field-section/work-cycle-types";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { useState } from "react";
 
 const Contianer = styled.div`
   display: flex;
@@ -62,7 +62,7 @@ const ItemContainer = styled.div`
 const OptionalFieldSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { appliedRole } = useResumeEditStore((state) => ({
-    appliedRole: state.appliedRole
+    appliedRole: state.appliedRole,
   }));
   return (
     <Contianer>

@@ -1,18 +1,19 @@
 "use client";
 
-import PageContainer from "@/components/page-container";
-import styled from "styled-components";
-import BottomArea from "./components/bottom-area";
-import { colors } from "@/styles/colors";
-import LocationHeader from "@/components/headers/location-header";
 import { Suspense, useEffect, useState } from "react";
-import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";
-import CheckboxUnselectIcon from "@/components/icons/checkbox-unselect-icon";
-import { fonts } from "@/styles/fonts";
-import pxToVw from "@/lib/dpi-converter";
 import { siNmShort, siSggList } from "@/types/location-type";
 import { useRouter, useSearchParams } from "next/navigation";
+
+import BottomArea from "./components/bottom-area";
+import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";
+import CheckboxUnselectIcon from "@/components/icons/checkbox-unselect-icon";
+import LocationHeader from "@/components/headers/location-header";
+import PageContainer from "@/components/page-container";
 import { TargetType } from "./types/target-type";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 import toast from "react-hot-toast";
 
 const ContentContainer = styled.div`
@@ -74,7 +75,7 @@ function SelectLocationContent() {
   const target = searchParams.get("target");
 
   const [selectedLeftItem, setSelectedLeftItem] = useState<SiNmShort>(
-    siNmShort[0]
+    siNmShort[0],
   );
   const [selectedRightItems, setSelectedRightItems] = useState<
     { key: string; value: string }[]
@@ -86,7 +87,7 @@ function SelectLocationContent() {
       "jobPostingEdit",
       "resumeEdit",
       "jobPostingList",
-      "resumeList"
+      "resumeList",
     ];
 
     if (!validTargets.includes(target as TargetType)) {
@@ -104,18 +105,18 @@ function SelectLocationContent() {
     setSelectedRightItems((prevSelectedItems) => {
       const isItemSelected = prevSelectedItems.some(
         (selectedItem) =>
-          selectedItem.key === item.key && selectedItem.value === item.value
+          selectedItem.key === item.key && selectedItem.value === item.value,
       );
 
       const currentSiItems = prevSelectedItems.filter((selectedItem) =>
-        selectedItem.key.startsWith(item.key.split(" ")[0])
+        selectedItem.key.startsWith(item.key.split(" ")[0]),
       );
 
       // "전체"를 클릭했을 때 해당 시의 다른 항목 해제
       if (item.value.includes("전체")) {
         if (isItemSelected) {
           return prevSelectedItems.filter(
-            (selectedItem) => !selectedItem.value.includes("전체")
+            (selectedItem) => !selectedItem.value.includes("전체"),
           ); // "전체"를 다시 클릭하면 해당 시의 "전체"만 해제
         } else {
           // "전체" 선택 시 해당 시의 다른 항목들 해제하고 "전체"만 선택, 최대 3개까지 선택 가능
@@ -124,9 +125,9 @@ function SelectLocationContent() {
           }
           return [
             ...prevSelectedItems.filter(
-              (selectedItem) => !currentSiItems.includes(selectedItem)
+              (selectedItem) => !currentSiItems.includes(selectedItem),
             ),
-            item
+            item,
           ];
         }
       }
@@ -134,7 +135,7 @@ function SelectLocationContent() {
       // "전체" 이외의 항목 선택 시 해당 시의 "전체" 항목 해제
       if (
         currentSiItems.some((selectedItem) =>
-          selectedItem.value.includes("전체")
+          selectedItem.value.includes("전체"),
         )
       ) {
         if (prevSelectedItems.length - 1 + 1 > 3) {
@@ -142,16 +143,16 @@ function SelectLocationContent() {
         }
         return [
           ...prevSelectedItems.filter(
-            (selectedItem) => !currentSiItems.includes(selectedItem)
+            (selectedItem) => !currentSiItems.includes(selectedItem),
           ),
-          item
+          item,
         ]; // "전체"가 선택된 상태에서 다른 항목을 클릭하면 "전체" 해제
       }
 
       // 기존 항목 추가/제거 로직
       if (isItemSelected) {
         return prevSelectedItems.filter(
-          (selectedItem) => selectedItem.key !== item.key
+          (selectedItem) => selectedItem.key !== item.key,
         );
       } else if (prevSelectedItems.length < 3) {
         return [...prevSelectedItems, item];
@@ -186,7 +187,7 @@ function SelectLocationContent() {
               const isSelected = selectedRightItems.some(
                 (selectedItem) =>
                   selectedItem.key === item.key &&
-                  selectedItem.value === item.value
+                  selectedItem.value === item.value,
               );
               return (
                 <RightListItem

@@ -1,30 +1,30 @@
 "use client";
 
-import JobPostingHeader from "@/components/headers/job-posting-header";
-import pxToVw from "@/lib/dpi-converter";
-import { useAuthStore } from "@/stores/auth-store";
-import { ImageType } from "@/types/image-type";
-import { JobPostingType } from "@/types/job-posting-type";
-import styled from "styled-components";
-import ImageSlider from "../components/image-slider";
-import { IMAGE_STORAGE_URL } from "@/apis/consts";
-import StoreInfo from "../components/store-info";
-import Divider from "../components/divider";
-import PostingTitle from "../components/posting-title";
 import BasicInfoDesigner from "../components/basic-info-designer";
 import BasicInfoIntern from "../components/basic-info-intern";
-import EtcInfo from "../components/etc-info";
-import StoreLocation from "../components/store-location";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
-import { messageType } from "@/types/send-app-message-type";
-import StoreFloatingButton from "@/components/buttons/store-floating-button";
-import { useEffect } from "react";
 import DetailPersonInfoDesigner from "../components/detail-person-info-designer";
-import DetailStoreInfoDesigner from "../components/detail-store-info-designer";
-import DetailStoreEtcInfoDesigner from "../components/detail-store-etc-info-designer";
 import DetailPersonInfoIntern from "../components/detail-person-info-intern";
-import DetailStoreInfoIntern from "../components/detail-store-info-intern";
+import DetailStoreEtcInfoDesigner from "../components/detail-store-etc-info-designer";
 import DetailStoreEtcInfoIntern from "../components/detail-store-etc-info-intern";
+import DetailStoreInfoDesigner from "../components/detail-store-info-designer";
+import DetailStoreInfoIntern from "../components/detail-store-info-intern";
+import Divider from "../components/divider";
+import EtcInfo from "../components/etc-info";
+import { IMAGE_STORAGE_URL } from "@/apis/consts";
+import ImageSlider from "../components/image-slider";
+import { ImageType } from "@/types/image-type";
+import JobPostingHeader from "@/components/headers/job-posting-header";
+import { JobPostingType } from "@/types/job-posting-type";
+import PostingTitle from "../components/posting-title";
+import StoreFloatingButton from "@/components/buttons/store-floating-button";
+import StoreInfo from "../components/store-info";
+import StoreLocation from "../components/store-location";
+import { messageType } from "@/types/send-app-message-type";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useAuthStore } from "@/stores/auth-store";
+import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
@@ -45,12 +45,12 @@ const ContentContainer = styled.div`
 `;
 
 export default function PageContent({
-  jobPosting
+  jobPosting,
 }: {
   jobPosting: JobPostingType;
 }) {
   const { userId } = useAuthStore((state) => ({
-    userId: state.userId
+    userId: state.userId,
   }));
 
   const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
@@ -189,7 +189,7 @@ export default function PageContent({
           JobPostingsStoreImages?.map((image) =>
             image?.uri
               ? `${IMAGE_STORAGE_URL}${image?.uri}`
-              : "/images/default_profile_image.jpg"
+              : "/images/default_profile_image.jpg",
           ) || []
         }
       />
@@ -226,7 +226,7 @@ export default function PageContent({
               const message = {
                 type: "job-posting" as messageType,
                 postId,
-                postUserId: jobPosting.User?.UserID.toString()
+                postUserId: jobPosting.User?.UserID.toString(),
               };
               window.startChat(message);
             } else {

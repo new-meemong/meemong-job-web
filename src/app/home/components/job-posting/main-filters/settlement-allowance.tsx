@@ -1,7 +1,7 @@
 import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
 import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div``;
 
@@ -9,15 +9,15 @@ const SettlementAllowance = () => {
   const {
     getJobPostingFilterQuery,
     addJobPostingFilterQuery,
-    removeJobPostingFilterQuery
+    removeJobPostingFilterQuery,
   } = useJobPostingListStore((state) => ({
     getJobPostingFilterQuery: state.getJobPostingFilterQuery,
     addJobPostingFilterQuery: state.addJobPostingFilterQuery,
-    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery
+    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery,
   }));
   const options = [
     ...jobPostingOptions.settlementAllowance,
-    { key: "상관없음", value: "상관없음" }
+    { key: "상관없음", value: "상관없음" },
   ];
   const selectedOption =
     getJobPostingFilterQuery("settlementAllowance") || "상관없음";

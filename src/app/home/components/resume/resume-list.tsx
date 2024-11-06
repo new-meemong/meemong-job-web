@@ -1,8 +1,8 @@
 import ResumeItem from "@/components/resume-item";
-import pxToVw from "@/lib/dpi-converter";
-import { useResumeListStore } from "@/stores/resume-list-store";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div`
   padding: ${pxToVw(24)};
@@ -17,7 +17,7 @@ const Title = styled.span`
 
 const ResumeList = () => {
   const { resumeList } = useResumeListStore((state) => ({
-    resumeList: state.resumeList
+    resumeList: state.resumeList,
   }));
 
   return (

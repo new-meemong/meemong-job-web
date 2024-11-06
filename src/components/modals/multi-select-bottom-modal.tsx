@@ -1,9 +1,9 @@
-import { fonts } from "@/styles/fonts";
-import { Sheet } from "react-modal-sheet";
-import styled from "styled-components";
 import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";
 import CheckboxUnselectIcon from "@/components/icons/checkbox-unselect-icon";
+import { Sheet } from "react-modal-sheet";
+import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const SheetContainer = styled(Sheet.Container)`
   border-top-right-radius: ${pxToVw(30)} !important;
@@ -70,7 +70,7 @@ const MultiSelectBottomModal = <T,>({
   onClose,
   options,
   onSelect,
-  caption = "중복 선택 가능"
+  caption = "중복 선택 가능",
 }: MultiSelectBottomModalProps<T>) => {
   return (
     <Sheet isOpen={isOpen} onClose={onClose} detent="content-height">

@@ -1,17 +1,17 @@
-import styled from "styled-components";
-import ShortDescriptionInput from "./required-field-section/short-description-input";
-import UserNameInput from "./required-field-section/user-name-input";
-import pxToVw from "@/lib/dpi-converter";
-import RegionsSelect from "./required-field-section/regions-select";
-import BirthdayInput from "./required-field-section/birthday-input";
 import AppliedRoleSelect from "./required-field-section/applied-role-select";
-import WorkTypeSelect from "./required-field-section/work-type-select";
-import SettlementAllowanceSelect from "./required-field-section/settlement-allowance-select";
-import DesignerLicensesSelect from "./required-field-section/designer-licenses-select";
+import BirthdayInput from "./required-field-section/birthday-input";
 import DesignerExperienceYearNumberSelect from "./required-field-section/designer-experience-year-number-select";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
+import DesignerLicensesSelect from "./required-field-section/designer-licenses-select";
 import InternExpectedSalarySelect from "./required-field-section/intern-expected-salary-select";
 import InternExperienceYearNumberSelect from "./required-field-section/intern-experience-year-number-select";
+import RegionsSelect from "./required-field-section/regions-select";
+import SettlementAllowanceSelect from "./required-field-section/settlement-allowance-select";
+import ShortDescriptionInput from "./required-field-section/short-description-input";
+import UserNameInput from "./required-field-section/user-name-input";
+import WorkTypeSelect from "./required-field-section/work-type-select";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Contianer = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const Contianer = styled.div`
 
 const RequiredFieldSection = () => {
   const { appliedRole } = useResumeEditStore((state) => ({
-    appliedRole: state.appliedRole
+    appliedRole: state.appliedRole,
   }));
 
   return (

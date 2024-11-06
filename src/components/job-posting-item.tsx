@@ -1,13 +1,13 @@
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
-import { convertToShortRegionFromQuery } from "@/lib/convert-region";
-import pxToVw from "@/lib/dpi-converter";
-import { colors } from "@/styles/colors";
-import { fonts } from "@/styles/fonts";
-import { JobPostingType } from "@/types/job-posting-type";
 import Image from "next/image";
+import { JobPostingType } from "@/types/job-posting-type";
+import { colors } from "@/styles/colors";
+import { convertToShortRegionFromQuery } from "@/lib/convert-region";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import styled from "styled-components";
 
 const Container = styled.div`
   padding: ${pxToVw(12)};
@@ -92,7 +92,7 @@ const InfoTextContainer = styled.div`
 
   & > *:nth-child(even) {
     margin-bottom: ${pxToVw(
-      0
+      0,
     )}; /* 마지막 줄의 Divider는 간격을 없애기 위해 수정 */
   }
 `;
@@ -123,7 +123,7 @@ const infoByRole = (jobPosting: JobPostingType) => {
     settlementAllowance,
     incentive,
     educationCost,
-    internSalary
+    internSalary,
   } = jobPosting;
   if (role === "디자이너") {
     return (
@@ -168,7 +168,7 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
     storeRegion,
     storeRegionSiName,
     postingTitle,
-    JobPostingsStoreImages
+    JobPostingsStoreImages,
   } = jobPosting;
 
   const initialImage = JobPostingsStoreImages?.[0]?.thumbnailUri
@@ -179,7 +179,7 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
 
   const shortRegion = convertToShortRegionFromQuery(
     storeRegion,
-    storeRegionSiName
+    storeRegionSiName,
   )[0];
 
   const handleImageError = () => {

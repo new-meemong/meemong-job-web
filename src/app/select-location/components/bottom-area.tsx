@@ -1,13 +1,13 @@
 import FullButton from "@/components/buttons/full-button";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { fonts } from "@/styles/fonts";
-import { useRouter } from "next/navigation";
-import styled from "styled-components";
 import { TargetType } from "../types/target-type";
-import { useResumeListStore } from "@/stores/resume-list-store";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { useResumeListStore } from "@/stores/resume-list-store";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -43,16 +43,16 @@ interface BottomAreaProps {
 const BottomArea = ({ selectedRightItems, target }: BottomAreaProps) => {
   const router = useRouter();
   const { setPostingRegions } = useJobPostingEditStore((state) => ({
-    setPostingRegions: state.setPostingRegions
+    setPostingRegions: state.setPostingRegions,
   }));
   const { setPreferredStoreRegionsEdit } = useResumeEditStore((state) => ({
-    setPreferredStoreRegionsEdit: state.setPreferredStoreRegions
+    setPreferredStoreRegionsEdit: state.setPreferredStoreRegions,
   }));
   const { setPreferredStoreRegionsList } = useResumeListStore((state) => ({
-    setPreferredStoreRegionsList: state.setPreferredStoreRegions
+    setPreferredStoreRegionsList: state.setPreferredStoreRegions,
   }));
   const { setPostingRegionsList } = useJobPostingListStore((state) => ({
-    setPostingRegionsList: state.setPostingRegions
+    setPostingRegionsList: state.setPostingRegions,
   }));
 
   const handleConfirm = () => {

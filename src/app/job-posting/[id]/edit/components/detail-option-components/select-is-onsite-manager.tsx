@@ -1,8 +1,8 @@
 import BaseSingleSelect from "@/components/selects/base-single-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-top: ${pxToVw(8)};
@@ -14,13 +14,13 @@ const SelectIsOnsiteManger = () => {
     setIsOnsiteManager,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    role
+    role,
   } = useJobPostingEditStore((state) => ({
     isOnsiteManager: state.isOnsiteManager,
     setIsOnsiteManager: state.setIsOnsiteManager,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
-    role: state.role
+    role: state.role,
   }));
   const options = jobPostingOptions.isOnsiteManager;
   let hasError = false;

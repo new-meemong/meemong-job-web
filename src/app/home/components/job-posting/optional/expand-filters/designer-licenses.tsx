@@ -1,7 +1,7 @@
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import OptionalMultiDropdownFilter from "../../../filters/base/optional-multi-dropdown-filter";
 import { jobPostingOptions } from "@/types/job-posting-options";
 import styled from "styled-components";
-import OptionalMultiDropdownFilter from "../../../filters/base/optional-multi-dropdown-filter";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div``;
 
@@ -9,11 +9,11 @@ const DesignerLicenses = () => {
   const {
     getJobPostingFilterQuery,
     addJobPostingFilterQuery,
-    removeJobPostingFilterQuery
+    removeJobPostingFilterQuery,
   } = useJobPostingListStore((state) => ({
     getJobPostingFilterQuery: state.getJobPostingFilterQuery,
     addJobPostingFilterQuery: state.addJobPostingFilterQuery,
-    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery
+    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery,
   }));
   const options = jobPostingOptions.designerLicenses;
   const selectedOptions =
@@ -27,7 +27,7 @@ const DesignerLicenses = () => {
 
       if (selectedOptions.includes(selectedOption)) {
         updatedOptions = selectedOptions.filter(
-          (option) => option !== selectedOption
+          (option) => option !== selectedOption,
         );
       } else {
         updatedOptions = [...selectedOptions, selectedOption];
@@ -35,7 +35,7 @@ const DesignerLicenses = () => {
 
       if (updatedOptions.length > 0) {
         addJobPostingFilterQuery(
-          `designerLicenses=${updatedOptions.join(",")}`
+          `designerLicenses=${updatedOptions.join(",")}`,
         );
       } else {
         removeJobPostingFilterQuery("designerLicenses");

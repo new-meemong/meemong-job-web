@@ -1,9 +1,9 @@
-import pxToVw from "@/lib/dpi-converter";
-import styled from "styled-components";
-import SingleInfoItem from "../../../components/details/single-info-item";
 import { JobPostingType } from "@/types/job-posting-type";
+import SingleInfoItem from "../../../components/details/single-info-item";
 import SingleInfoLinkItem from "@/components/details/single-info-link-item";
 import moment from "moment";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const DetailStoreEtcInfoDesigner = ({
   endWorkTime,
   storeUrl,
   mainHairDye,
-  source
+  source,
 }: DetailInfoDesignerProps) => {
   return (
     <Container>

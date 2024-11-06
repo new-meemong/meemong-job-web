@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import ResumeEditLabel from "../base/resume-edit-label";
+import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
-import { colors } from "@/styles/colors";
+import styled from "styled-components";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div`
@@ -53,13 +53,13 @@ const BirthdayInput = () => {
     setBirthday,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    appliedRole
+    appliedRole,
   } = useResumeEditStore((state) => ({
     birthday: state.birthday,
     setBirthday: state.setBirthday,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
-    appliedRole: state.appliedRole
+    appliedRole: state.appliedRole,
   }));
 
   let hasError = false;

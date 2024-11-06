@@ -1,9 +1,9 @@
-import styled from "styled-components";
 import DropDownItem from "./base/drop-down-item";
 import ResumeEditInput from "../base/resume-edit-input";
 import { fonts } from "@/styles/fonts";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div``;
 
@@ -31,7 +31,7 @@ const MajorExperience = () => {
     setInternMajorExperienceDuration,
     internMajorExperienceRole,
     setInternMajorExperienceRole,
-    appliedRole
+    appliedRole,
   } = useResumeEditStore((state) => ({
     designerMajorExperienceCompanyName:
       state.designerMajorExperienceCompanyName,
@@ -50,11 +50,11 @@ const MajorExperience = () => {
     internMajorExperienceRole: state.internMajorExperienceRole,
     setInternMajorExperienceRole: state.setInternMajorExperienceRole,
 
-    appliedRole: state.appliedRole
+    appliedRole: state.appliedRole,
   }));
 
   const handleMajorExperienceCompanyNameChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (appliedRole === "디자이너") {
       setDesignerMajorExperienceCompanyName(e.target.value);
@@ -64,7 +64,7 @@ const MajorExperience = () => {
   };
 
   const handleMajorExperienceDurationChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (appliedRole === "디자이너") {
       setDesignerMajorExperienceDuration(e.target.value);
@@ -74,7 +74,7 @@ const MajorExperience = () => {
   };
 
   const handleMajorExperienceRoleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (appliedRole === "디자이너") {
       setDesignerMajorExperienceRole(e.target.value);

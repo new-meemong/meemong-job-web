@@ -1,6 +1,6 @@
-import { getMyJobPostings } from "@/apis/job-postings";
 import { JobPostingType } from "@/types/job-posting-type";
 import { create } from "zustand";
+import { getMyJobPostings } from "@/apis/job-postings";
 
 type MyJobPostingListState = {
   myJobPostingList: JobPostingType[];
@@ -13,7 +13,7 @@ type MyJobPostingListActions = {
 type MyJobPostingListStore = MyJobPostingListState & MyJobPostingListActions;
 
 const defaultMyJobPostingListState: MyJobPostingListState = {
-  myJobPostingList: []
+  myJobPostingList: [],
 };
 
 export const useMyJobPostingListStore = create<MyJobPostingListStore>(
@@ -30,6 +30,6 @@ export const useMyJobPostingListStore = create<MyJobPostingListStore>(
       if (dataList) {
         set({ myJobPostingList: dataList });
       }
-    }
-  })
+    },
+  }),
 );

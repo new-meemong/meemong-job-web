@@ -1,14 +1,14 @@
-import { colors } from "@/styles/colors";
-import styled from "styled-components";
-import Image from "next/image";
-import { useState } from "react";
-import { fonts } from "@/styles/fonts";
-import pxToVw from "@/lib/dpi-converter";
-import { useRouter } from "next/navigation";
-import { ResumeType } from "@/types/resume-type";
-import moment from "moment";
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
+import Image from "next/image";
+import { ResumeType } from "@/types/resume-type";
+import { colors } from "@/styles/colors";
 import { convertToShortRegionFromQuery } from "@/lib/convert-region";
+import { fonts } from "@/styles/fonts";
+import moment from "moment";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Container = styled.div`
   width: 100%;
@@ -53,7 +53,7 @@ const InfoTextContainer = styled.div`
 
   & > *:nth-child(even) {
     margin-bottom: ${pxToVw(
-      0
+      0,
     )}; /* 마지막 줄의 Divider는 간격을 없애기 위해 수정 */
   }
 `;
@@ -100,7 +100,7 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
     designerLicenses,
     designerExperienceYearNumber,
     internExperienceYearNumber,
-    profileImageThumbnailUri
+    profileImageThumbnailUri,
   } = resume;
   const imageUri = profileImageThumbnailUri
     ? `${IMAGE_STORAGE_URL}${profileImageThumbnailUri}`
@@ -110,7 +110,7 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
 
   const shortRegion = convertToShortRegionFromQuery(
     preferredStoreRegions,
-    preferredStoreRegionSiNames
+    preferredStoreRegionSiNames,
   ).join(", ");
 
   const handleImageError = () => {

@@ -1,7 +1,7 @@
 import DropdownSingleSelectItem from "@/components/drop-downs/dropdown-single-select-item";
-import { useResumeListStore } from "@/stores/resume-list-store";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div``;
 
@@ -9,11 +9,11 @@ const WorkType = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
   const options = resumeOptions.workType;
 

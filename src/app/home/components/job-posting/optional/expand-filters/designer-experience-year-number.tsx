@@ -1,7 +1,7 @@
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
 import { jobPostingOptions } from "@/types/job-posting-options";
 import styled from "styled-components";
-import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div``;
 
@@ -9,11 +9,11 @@ const DesignerExperienceYearNumber = () => {
   const {
     getJobPostingFilterQuery,
     addJobPostingFilterQuery,
-    removeJobPostingFilterQuery
+    removeJobPostingFilterQuery,
   } = useJobPostingListStore((state) => ({
     getJobPostingFilterQuery: state.getJobPostingFilterQuery,
     addJobPostingFilterQuery: state.addJobPostingFilterQuery,
-    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery
+    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery,
   }));
 
   const options = [...jobPostingOptions.designerExperienceYearNumber];
@@ -25,7 +25,7 @@ const DesignerExperienceYearNumber = () => {
     selectedOption = selectedOption === "상관없음" ? null : selectedOption;
     if (selectedOption) {
       addJobPostingFilterQuery(
-        `designerExperienceYearNumber=${selectedOption}`
+        `designerExperienceYearNumber=${selectedOption}`,
       );
     } else {
       removeJobPostingFilterQuery("designerExperienceYearNumber");

@@ -1,9 +1,9 @@
 import BaseSingleSelect from "@/components/selects/base-single-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { RoleKey } from "@/types/job-posting-keys";
 import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-left: ${pxToVw(8)};
@@ -14,7 +14,7 @@ const Container = styled.div`
 const DesignerRoleTab = () => {
   const { role, setRole } = useJobPostingEditStore((state) => ({
     role: state.role,
-    setRole: state.setRole
+    setRole: state.setRole,
   }));
 
   const options = jobPostingOptions.role;

@@ -27,5 +27,5 @@ export const colors = {
 
   red: "#FF0000",
   deepCyan: "#1584A0",
-  naverGreen: "#03CF5D"
+  naverGreen: "#03CF5D",
 };

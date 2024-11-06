@@ -1,13 +1,14 @@
+import { useParams, useRouter } from "next/navigation";
+
+import { JobPostingType } from "@/types/job-posting-type";
 import NoticeModal from "@/components/modals/notice-modal";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { JobPostingType } from "@/types/job-posting-type";
-import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import { useState } from "react";
 
 const Container = styled.div`
   position: fixed;
@@ -44,16 +45,16 @@ const JobPostingEditConfirmButton = () => {
     submitInternJobPosting,
     role,
     hasDesignerOptionNull,
-    hasInternOptionNull
+    hasInternOptionNull,
   } = useJobPostingEditStore((state) => ({
     submitDesignerJobPosting: state.submitDesignerJobPosting,
     submitInternJobPosting: state.submitInternJobPosting,
     role: state.role,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
-    hasInternOptionNull: state.hasInternOptionNull
+    hasInternOptionNull: state.hasInternOptionNull,
   }));
   const { updateJobPosting } = useJobPostingListStore((state) => ({
-    updateJobPosting: state.updateJobPosting
+    updateJobPosting: state.updateJobPosting,
   }));
 
   const handleConfirm = async () => {

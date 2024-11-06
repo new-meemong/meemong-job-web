@@ -1,5 +1,5 @@
-import { css } from "styled-components";
 import { colors } from "./colors";
+import { css } from "styled-components";
 import pxToVw from "@/lib/dpi-converter";
 
 export const fonts = {
@@ -272,5 +272,5 @@ export const fonts = {
     font-size: ${pxToVw(10)};
     font-weight: 700;
     color: ${colors.naverGreen};
-  `
+  `,
 };

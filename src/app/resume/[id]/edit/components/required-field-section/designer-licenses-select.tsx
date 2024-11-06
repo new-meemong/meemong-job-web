@@ -1,8 +1,8 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { DesignerLicensesKeyResume } from "@/types/resume-keys";
+import EditResumeOptonMultiSelect from "./base/edit-resume-option-multi-select";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import EditResumeOptonMultiSelect from "./base/edit-resume-option-multi-select";
-import { DesignerLicensesKeyResume } from "@/types/resume-keys";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -16,13 +16,13 @@ const DesignerLicensesSelect = () => {
     setDesignerLicenses,
     appliedRole,
     hasDesignerOptionNull,
-    hasInternOptionNull
+    hasInternOptionNull,
   } = useResumeEditStore((state) => ({
     designerLicenses: state.designerLicenses,
     setDesignerLicenses: state.setDesignerLicenses,
     appliedRole: state.appliedRole,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
-    hasInternOptionNull: state.hasInternOptionNull
+    hasInternOptionNull: state.hasInternOptionNull,
   }));
 
   const licenses = resumeOptions.designerLicenses || [];

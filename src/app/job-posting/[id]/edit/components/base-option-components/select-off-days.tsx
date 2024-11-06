@@ -1,9 +1,9 @@
-import BaseMultiSelect from "@/components/selects/base-multi-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import { AvailableOffDaysKey } from "@/types/job-posting-keys";
+import BaseMultiSelect from "@/components/selects/base-multi-select";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-left: ${pxToVw(8)};
@@ -17,7 +17,7 @@ const SelectOffDays = () => {
     setAvailableOffDays,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    role
+    role,
   } = useJobPostingEditStore();
   const offDays = jobPostingOptions.availableOffDays;
   let hasError = false;

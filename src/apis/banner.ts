@@ -4,8 +4,8 @@ export const getBanner = async () => {
     const res = await fetch(url, {
       headers: {
         Authorization: "Bearer xxxx",
-        "X-HEADER-SESSION": "xxxx"
-      }
+        "X-HEADER-SESSION": "xxxx",
+      },
     });
 
     if (!res.ok) {

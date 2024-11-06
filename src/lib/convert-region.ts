@@ -11,7 +11,7 @@ type result = {
 
 export const convertRegion = ({
   storeRegions,
-  storeRegionsSiNames
+  storeRegionsSiNames,
 }: convertRegionProps): result[] => {
   const result: result[] = [];
   const regions = storeRegions.split(",").filter(Boolean); // 빈값 제거
@@ -42,7 +42,7 @@ export const convertRegion = ({
 };
 
 export const convertToShortRegion = (
-  regionList: { key: string; value: string }[]
+  regionList: { key: string; value: string }[],
 ) => {
   let result = "";
 
@@ -53,7 +53,7 @@ export const convertToShortRegion = (
     } else {
       // "전체"가 아닌 경우 시의 짧은 이름을 찾아서 구와 함께 추가
       const siShort = siNmShort.find((si) =>
-        region.key.startsWith(si.key)
+        region.key.startsWith(si.key),
       )?.value;
       result += `${siShort} ${region.value}, `;
     }
@@ -66,10 +66,10 @@ export const convertToShortRegion = (
 // 서버의 gu, si 데이터 기준 화면에 뿌려지는 짧은 지역명으로 변환
 export const convertToShortRegionFromQuery = (
   gu: string | null,
-  si: string | null
+  si: string | null,
 ) => {
   const siNmShortMap = Object.fromEntries(
-    siNmShort.map(({ key, value }) => [key, value])
+    siNmShort.map(({ key, value }) => [key, value]),
   );
   let result: string[] = [];
 

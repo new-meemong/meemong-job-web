@@ -1,9 +1,9 @@
 import BaseSingleSelect from "@/components/selects/base-single-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import { StoreInteriorRenovationAgoKey } from "@/types/job-posting-keys";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-top: ${pxToVw(8)};
@@ -15,7 +15,7 @@ const SelectStoreInteriorRenovationAgo = () => {
     setStoreInteriorRenovationAgo,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    role
+    role,
   } = useJobPostingEditStore();
   const options = jobPostingOptions.storeInteriorRenovationAgo;
   let hasError = false;
@@ -28,7 +28,7 @@ const SelectStoreInteriorRenovationAgo = () => {
 
   const handleSelect = (selectedOption: string | null) => {
     setStoreInteriorRenovationAgo(
-      selectedOption as StoreInteriorRenovationAgoKey
+      selectedOption as StoreInteriorRenovationAgoKey,
     );
   };
 

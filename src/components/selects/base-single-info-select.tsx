@@ -1,11 +1,12 @@
-import pxToVw from "@/lib/dpi-converter";
+import { ReactNode, useState } from "react";
+
+import { ErrorMessage } from "../error-message";
+import { Sheet } from "react-modal-sheet";
+import TooltipHelpPurpleIcon from "../icons/tooltip-help-purple-icon";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { ReactNode, useState } from "react";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import TooltipHelpPurpleIcon from "../icons/tooltip-help-purple-icon";
-import { Sheet } from "react-modal-sheet";
-import { ErrorMessage } from "../error-message";
 
 const Container = styled.div``;
 
@@ -117,7 +118,7 @@ const BaseSingleInfoSelect = ({
   isError,
   infoLabel,
   infoHeader,
-  info
+  info,
 }: BaseSingleInfoSelectProps) => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
 

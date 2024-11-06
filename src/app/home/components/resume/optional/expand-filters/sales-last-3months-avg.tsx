@@ -1,7 +1,7 @@
+import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
+import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { resumeOptions } from "@/types/resume-optons";
-import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
 
 const Container = styled.div``;
 
@@ -9,15 +9,15 @@ const SalesLast3MonthsAvg = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
   const options = [
     ...resumeOptions.salesLast3MonthsAvg,
-    { key: "상관없음", value: "상관없음" }
+    { key: "상관없음", value: "상관없음" },
   ];
   const selectedOption =
     getResumeFilterQuery("salesLast3MonthsAvg") || "상관없음";

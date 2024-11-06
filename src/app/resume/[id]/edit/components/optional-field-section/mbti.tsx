@@ -1,14 +1,14 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import styled from "styled-components";
 import DropDownItem from "./base/drop-down-item";
 import ResumeEditInput from "../base/resume-edit-input";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div``;
 
 const Mbti = () => {
   const { mbti, setMbti } = useResumeEditStore((state) => ({
     mbti: state.mbti,
-    setMbti: state.setMbti
+    setMbti: state.setMbti,
   }));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

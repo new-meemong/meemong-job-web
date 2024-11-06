@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { resumeOptions } from "@/types/resume-optons";
 import { DesignerExperienceYearNumberKeyResume } from "@/types/resume-keys";
+import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
+import { resumeOptions } from "@/types/resume-optons";
+import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -16,13 +16,13 @@ const DesignerExperienceYearNumberSelect = () => {
     setDesignerExperienceYearNumber,
     appliedRole,
     hasDesignerOptionNull,
-    hasInternOptionNull
+    hasInternOptionNull,
   } = useResumeEditStore((state) => ({
     designerExperienceYearNumber: state.designerExperienceYearNumber,
     setDesignerExperienceYearNumber: state.setDesignerExperienceYearNumber,
     appliedRole: state.appliedRole,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
-    hasInternOptionNull: state.hasInternOptionNull
+    hasInternOptionNull: state.hasInternOptionNull,
   }));
 
   const options = resumeOptions.designerExperienceYearNumber;
@@ -36,7 +36,7 @@ const DesignerExperienceYearNumberSelect = () => {
 
   const handleSelect = (selectedOption: string | null) => {
     setDesignerExperienceYearNumber(
-      selectedOption as DesignerExperienceYearNumberKeyResume
+      selectedOption as DesignerExperienceYearNumberKeyResume,
     );
   };
   return (

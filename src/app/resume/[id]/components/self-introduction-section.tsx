@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import SectionTitle from "./base/section-title";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ interface SelfIntroductionSectionProps {
 }
 
 const SelfIntroductionSection = ({
-  description
+  description,
 }: SelfIntroductionSectionProps) => {
   return (
     <Container>

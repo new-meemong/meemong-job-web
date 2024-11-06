@@ -1,10 +1,10 @@
 import { ErrorMessage } from "@/components/error-message";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import Link from "next/link";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import Link from "next/link";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -46,13 +46,13 @@ const JobPostingEditSearchLocation = () => {
     storeAddress,
     role,
     hasDesignerOptionNull,
-    hasInternOptionNull
+    hasInternOptionNull,
   } = useJobPostingEditStore((state) => ({
     storeName: state.storeName,
     storeAddress: state.storeAddress,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
-    role: state.role
+    role: state.role,
   }));
 
   let hasError = false;

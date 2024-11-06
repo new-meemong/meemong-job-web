@@ -1,11 +1,11 @@
-import styled from "styled-components";
 import ArrowDownGreyIcon from "../icons/arrow-down-grey-icon";
+import NoticeModal from "../modals/notice-modal";
 import SingleSelectBottomModal from "@/components/modals/single-select-bottom-modal";
-import { useState } from "react";
+import TooltipIcon from "../icons/tooltip";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
-import TooltipIcon from "../icons/tooltip";
-import NoticeModal from "../modals/notice-modal";
+import styled from "styled-components";
+import { useState } from "react";
 
 const Container = styled.div``;
 
@@ -59,7 +59,7 @@ const DropdownSingleSelectItem = <T extends string | boolean | null>({
   options,
   tooltip,
   selectedOption,
-  onSelect
+  onSelect,
 }: DropdownItemProps<T>) => {
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
   const [isTooltipModalOpen, setIsTooltipModalOpen] = useState(false);

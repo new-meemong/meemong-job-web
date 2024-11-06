@@ -1,14 +1,14 @@
-import { ErrorMessage } from "@/components/error-message";
 import ArrowRightGreyIcon from "@/components/icons/arrow-right-grey-icon";
-import ResumeEditLabel from "@/app/resume/[id]/edit/components/base/resume-edit-label";
-import pxToVw from "@/lib/dpi-converter";
-import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { colors } from "@/styles/colors";
-import { fonts } from "@/styles/fonts";
-import { siNmShort } from "@/types/location-type";
+import { ErrorMessage } from "@/components/error-message";
 import Link from "next/link";
 import React from "react";
+import ResumeEditLabel from "@/app/resume/[id]/edit/components/base/resume-edit-label";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import { siNmShort } from "@/types/location-type";
 import styled from "styled-components";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div`
   display: flex;
@@ -57,12 +57,12 @@ const RegionsSelect = () => {
     _preferredStoreRegions,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    appliedRole
+    appliedRole,
   } = useResumeEditStore((state) => ({
     _preferredStoreRegions: state._preferredStoreRegions,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
-    appliedRole: state.appliedRole
+    appliedRole: state.appliedRole,
   }));
 
   const convertRegions = _preferredStoreRegions?.map((item) => {

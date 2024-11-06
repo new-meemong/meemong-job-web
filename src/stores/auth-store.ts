@@ -1,7 +1,8 @@
-import { webviewLogin } from "@/apis/auth";
+import { createJSONStorage, persist } from "zustand/middleware";
+
 import { UserModel } from "@/models/user-model";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { webviewLogin } from "@/apis/auth";
 
 export type AuthState = {
   jwt: string | null;
@@ -26,7 +27,7 @@ export const defaultAuthState: AuthState = {
   userId: null,
   UserID: null,
   profileImageUri: null,
-  sex: null
+  sex: null,
 };
 
 export const useAuthStore = create(
@@ -45,7 +46,7 @@ export const useAuthStore = create(
             set({
               jwt: data.token, // JWT 토큰을 상태에 저장
               userId: String(data.id), // userId를 상태에 저장
-              UserID: String(data.UserID)
+              UserID: String(data.UserID),
             });
 
             return true;
@@ -69,11 +70,11 @@ export const useAuthStore = create(
       setJwt: (jwt: string) => {
         const cleanJwt = jwt.replace(/^["']+|["']+$/g, "");
         set({ jwt: cleanJwt });
-      }
+      },
     }),
     {
       name: "auth-store",
-      storage: createJSONStorage(() => sessionStorage)
-    }
-  )
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
 );

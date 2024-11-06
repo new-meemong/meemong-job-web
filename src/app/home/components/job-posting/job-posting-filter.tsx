@@ -1,18 +1,17 @@
-import pxToVw from "@/lib/dpi-converter";
-import { colors } from "@/styles/colors";
-import styled from "styled-components";
-
-import Role from "./main-filters/role";
+import AvailableOffDays from "./main-filters/available-off-days";
+import EducationCost from "./main-filters/education-cost";
+import Incentive from "./main-filters/incentive";
+import InternSalary from "./main-filters/intern-salary";
 import JobPostingLocation from "./main-filters/job-posting-location";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import JobPostingOptionalFilterList from "./optional/base/job-posting-optional-filter-list";
 import MonthlyEducationCountDesigner from "./main-filters/monthly-education-count-designer";
 import MonthlyEducationCountIntern from "./main-filters/monthly-education-count-intern";
-import AvailableOffDays from "./main-filters/available-off-days";
+import Role from "./main-filters/role";
 import SettlementAllowance from "./main-filters/settlement-allowance";
-import Incentive from "./main-filters/incentive";
-import JobPostingOptionalFilterList from "./optional/base/job-posting-optional-filter-list";
-import EducationCost from "./main-filters/education-cost";
-import InternSalary from "./main-filters/intern-salary";
+import { colors } from "@/styles/colors";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div`
   margin: ${pxToVw(0)} ${pxToVw(24)};
@@ -24,7 +23,7 @@ const Container = styled.div`
 
 const JobPostingFilter = () => {
   const { getJobPostingFilterQuery } = useJobPostingListStore((state) => ({
-    getJobPostingFilterQuery: state.getJobPostingFilterQuery
+    getJobPostingFilterQuery: state.getJobPostingFilterQuery,
   }));
   const role = getJobPostingFilterQuery("role");
 

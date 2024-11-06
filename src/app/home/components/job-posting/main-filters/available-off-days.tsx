@@ -1,7 +1,7 @@
 import DropdownMultiSelectItem from "@/components/drop-downs/dropdown-multi-select-item";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { jobPostingOptions } from "@/types/job-posting-options";
 import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 
 const Container = styled.div``;
 
@@ -9,15 +9,15 @@ const AvailableOffDays = () => {
   const {
     getJobPostingFilterQuery,
     addJobPostingFilterQuery,
-    removeJobPostingFilterQuery
+    removeJobPostingFilterQuery,
   } = useJobPostingListStore((state) => ({
     getJobPostingFilterQuery: state.getJobPostingFilterQuery,
     addJobPostingFilterQuery: state.addJobPostingFilterQuery,
-    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery
+    removeJobPostingFilterQuery: state.removeJobPostingFilterQuery,
   }));
   const options = [
     ...jobPostingOptions.availableOffDays,
-    { key: "상관없음", value: "상관없음" }
+    { key: "상관없음", value: "상관없음" },
   ];
 
   const selectedOptions =

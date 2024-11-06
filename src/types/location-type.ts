@@ -20,7 +20,7 @@ export const siNmShort = [
   { key: "경상북도", value: "경북" },
   { key: "경상남도", value: "경남" },
   { key: "제주특별자치도", value: "제주" },
-  { key: "강원특별자치", value: "강원" }
+  { key: "강원특별자치", value: "강원" },
 ];
 
 export const siSggList: SiSggList = {
@@ -34,7 +34,7 @@ export const siSggList: SiSggList = {
     {
       key: "서울특별시 동대문구",
       value: "동대문구",
-      viewString: "서울 동대문구"
+      viewString: "서울 동대문구",
     },
     { key: "서울특별시 중랑구", value: "중랑구", viewString: "서울 중랑구" },
     { key: "서울특별시 성북구", value: "성북구", viewString: "서울 성북구" },
@@ -45,7 +45,7 @@ export const siSggList: SiSggList = {
     {
       key: "서울특별시 서대문구",
       value: "서대문구",
-      viewString: "서울 서대문구"
+      viewString: "서울 서대문구",
     },
     { key: "서울특별시 마포구", value: "마포구", viewString: "서울 마포구" },
     { key: "서울특별시 양천구", value: "양천구", viewString: "서울 양천구" },
@@ -55,14 +55,14 @@ export const siSggList: SiSggList = {
     {
       key: "서울특별시 영등포구",
       value: "영등포구",
-      viewString: "서울 영등포구"
+      viewString: "서울 영등포구",
     },
     { key: "서울특별시 동작구", value: "동작구", viewString: "서울 동작구" },
     { key: "서울특별시 관악구", value: "관악구", viewString: "서울 관악구" },
     { key: "서울특별시 서초구", value: "서초구", viewString: "서울 서초구" },
     { key: "서울특별시 강남구", value: "강남구", viewString: "서울 강남구" },
     { key: "서울특별시 송파구", value: "송파구", viewString: "서울 송파구" },
-    { key: "서울특별시 강동구", value: "강동구", viewString: "서울 강동구" }
+    { key: "서울특별시 강동구", value: "강동구", viewString: "서울 강동구" },
   ],
   부산광역시: [
     { key: "부산광역시 전체", value: "부산 전체", viewString: "부산 전체" },
@@ -73,7 +73,7 @@ export const siSggList: SiSggList = {
     {
       key: "부산광역시 부산진구",
       value: "부산진구",
-      viewString: "부산 부산진구"
+      viewString: "부산 부산진구",
     },
     { key: "부산광역시 동래구", value: "동래구", viewString: "부산 동래구" },
     { key: "부산광역시 남구", value: "남구", viewString: "부산 남구" },
@@ -81,7 +81,7 @@ export const siSggList: SiSggList = {
     {
       key: "부산광역시 해운대구",
       value: "해운대구",
-      viewString: "부산 해운대구"
+      viewString: "부산 해운대구",
     },
     { key: "부산광역시 사하구", value: "사하구", viewString: "부산 사하구" },
     { key: "부산광역시 금정구", value: "금정구", viewString: "부산 금정구" },
@@ -89,7 +89,7 @@ export const siSggList: SiSggList = {
     { key: "부산광역시 연제구", value: "연제구", viewString: "부산 연제구" },
     { key: "부산광역시 수영구", value: "수영구", viewString: "부산 수영구" },
     { key: "부산광역시 사상구", value: "사상구", viewString: "부산 사상구" },
-    { key: "부산광역시 기장군", value: "기장군", viewString: "부산 기장군" }
+    { key: "부산광역시 기장군", value: "기장군", viewString: "부산 기장군" },
   ],
   대구광역시: [
     { key: "대구광역시 전체", value: "대구 전체", viewString: "대구 전체" },
@@ -101,7 +101,7 @@ export const siSggList: SiSggList = {
     { key: "대구광역시 수성구", value: "수성구", viewString: "대구 수성구" },
     { key: "대구광역시 달서구", value: "달서구", viewString: "대구 달서구" },
     { key: "대구광역시 달성군", value: "달성군", viewString: "대구 달성군" },
-    { key: "대구광역시 군위군", value: "군위군", viewString: "대구 군위군" }
+    { key: "대구광역시 군위군", value: "군위군", viewString: "대구 군위군" },
   ],
   인천광역시: [
     { key: "인천광역시 전체", value: "인천 전체", viewString: "인천 전체" },
@@ -110,7 +110,7 @@ export const siSggList: SiSggList = {
     {
       key: "인천광역시 미추홀구",
       value: "미추홀구",
-      viewString: "인천 미추홀구"
+      viewString: "인천 미추홀구",
     },
     { key: "인천광역시 연수구", value: "연수구", viewString: "인천 연수구" },
     { key: "인천광역시 남동구", value: "남동구", viewString: "인천 남동구" },
@@ -118,7 +118,7 @@ export const siSggList: SiSggList = {
     { key: "인천광역시 계양구", value: "계양구", viewString: "인천 계양구" },
     { key: "인천광역시 서구", value: "서구", viewString: "인천 서구" },
     { key: "인천광역시 강화군", value: "강화군", viewString: "인천 강화군" },
-    { key: "인천광역시 옹진군", value: "옹진군", viewString: "인천 옹진군" }
+    { key: "인천광역시 옹진군", value: "옹진군", viewString: "인천 옹진군" },
   ],
   광주광역시: [
     { key: "광주광역시 전체", value: "광주 전체", viewString: "광주 전체" },
@@ -126,7 +126,7 @@ export const siSggList: SiSggList = {
     { key: "광주광역시 서구", value: "서구", viewString: "광주 서구" },
     { key: "광주광역시 남구", value: "남구", viewString: "광주 남구" },
     { key: "광주광역시 북구", value: "북구", viewString: "광주 북구" },
-    { key: "광주광역시 광산구", value: "광산구", viewString: "광주 광산구" }
+    { key: "광주광역시 광산구", value: "광산구", viewString: "광주 광산구" },
   ],
   대전광역시: [
     { key: "대전광역시 전체", value: "대전 전체", viewString: "대전 전체" },
@@ -134,7 +134,7 @@ export const siSggList: SiSggList = {
     { key: "대전광역시 중구", value: "중구", viewString: "대전 중구" },
     { key: "대전광역시 서구", value: "서구", viewString: "대전 서구" },
     { key: "대전광역시 유성구", value: "유성구", viewString: "대전 유성구" },
-    { key: "대전광역시 대덕구", value: "대덕구", viewString: "대전 대덕구" }
+    { key: "대전광역시 대덕구", value: "대덕구", viewString: "대전 대덕구" },
   ],
   울산광역시: [
     { key: "울산광역시 전체", value: "울산 전체", viewString: "울산 전체" },
@@ -142,14 +142,14 @@ export const siSggList: SiSggList = {
     { key: "울산광역시 남구", value: "남구", viewString: "울산 남구" },
     { key: "울산광역시 동구", value: "동구", viewString: "울산 동구" },
     { key: "울산광역시 북구", value: "북구", viewString: "울산 북구" },
-    { key: "울산광역시 울주군", value: "울주군", viewString: "울산 울주군" }
+    { key: "울산광역시 울주군", value: "울주군", viewString: "울산 울주군" },
   ],
   세종특별자치시: [
     {
       key: "세종특별자치시 전체",
       value: "세종시 전체",
-      viewString: "세종 전체"
-    }
+      viewString: "세종 전체",
+    },
   ],
   경기도: [
     { key: "경기도 전체", value: "경기 전체", viewString: "경기 전체" },
@@ -157,50 +157,50 @@ export const siSggList: SiSggList = {
     {
       key: "경기도 수원시 장안구",
       value: "수원시 장안구",
-      viewString: "경기 수원시 장안구"
+      viewString: "경기 수원시 장안구",
     },
     {
       key: "경기도 수원시 권선구",
       value: "수원시 권선구",
-      viewString: "경기 수원시 권선구"
+      viewString: "경기 수원시 권선구",
     },
     {
       key: "경기도 수원시 팔달구",
       value: "수원시 팔달구",
-      viewString: "경기 수원시 팔달구"
+      viewString: "경기 수원시 팔달구",
     },
     {
       key: "경기도 수원시 영통구",
       value: "수원시 영통구",
-      viewString: "경기 수원시 영통구"
+      viewString: "경기 수원시 영통구",
     },
     { key: "경기도 성남시", value: "성남시", viewString: "경기 성남시" },
     {
       key: "경기도 성남시 수정구",
       value: "성남시 수정구",
-      viewString: "경기 성남시 수정구"
+      viewString: "경기 성남시 수정구",
     },
     {
       key: "경기도 성남시 중원구",
       value: "성남시 중원구",
-      viewString: "경기 성남시 중원구"
+      viewString: "경기 성남시 중원구",
     },
     {
       key: "경기도 성남시 분당구",
       value: "성남시 분당구",
-      viewString: "경기 성남시 분당구"
+      viewString: "경기 성남시 분당구",
     },
     { key: "경기도 의정부시", value: "의정부시", viewString: "경기 의정부시" },
     { key: "경기도 안양시", value: "안양시", viewString: "경기 안양시" },
     {
       key: "경기도 안양시 만안구",
       value: "안양시 만안구",
-      viewString: "경기 안양시 만안구"
+      viewString: "경기 안양시 만안구",
     },
     {
       key: "경기도 안양시 동안구",
       value: "안양시 동안구",
-      viewString: "경기 안양시 동안구"
+      viewString: "경기 안양시 동안구",
     },
     { key: "경기도 부천시", value: "부천시", viewString: "경기 부천시" },
     { key: "경기도 광명시", value: "광명시", viewString: "경기 광명시" },
@@ -225,7 +225,7 @@ export const siSggList: SiSggList = {
     { key: "경기도 광주시", value: "광주시", viewString: "경기 광주시" },
     { key: "경기도 양주시", value: "양주시", viewString: "경기 양주시" },
     { key: "경기도 포천시", value: "포천시", viewString: "경기 포천시" },
-    { key: "경기도 여주시", value: "여주시", viewString: "경기 여주시" }
+    { key: "경기도 여주시", value: "여주시", viewString: "경기 여주시" },
   ],
   충청북도: [
     { key: "충청북도 전체", value: "충북 전체", viewString: "충북 전체" },
@@ -239,7 +239,7 @@ export const siSggList: SiSggList = {
     { key: "충청북도 진천군", value: "진천군", viewString: "충북 진천군" },
     { key: "충청북도 괴산군", value: "괴산군", viewString: "충북 괴산군" },
     { key: "충청북도 음성군", value: "음성군", viewString: "충북 음성군" },
-    { key: "충청북도 단양군", value: "단양군", viewString: "충북 단양군" }
+    { key: "충청북도 단양군", value: "단양군", viewString: "충북 단양군" },
   ],
   충청남도: [
     { key: "충청남도 전체", value: "충남 전체", viewString: "충남 전체" },
@@ -257,7 +257,7 @@ export const siSggList: SiSggList = {
     { key: "충청남도 청양군", value: "청양군", viewString: "충남 청양군" },
     { key: "충청남도 홍성군", value: "홍성군", viewString: "충남 홍성군" },
     { key: "충청남도 예산군", value: "예산군", viewString: "충남 예산군" },
-    { key: "충청남도 태안군", value: "태안군", viewString: "충남 태안군" }
+    { key: "충청남도 태안군", value: "태안군", viewString: "충남 태안군" },
   ],
   전라북도: [
     { key: "전라북도 전체", value: "전북 전체", viewString: "전북 전체" },
@@ -274,7 +274,7 @@ export const siSggList: SiSggList = {
     { key: "전라북도 임실군", value: "임실군", viewString: "전북 임실군" },
     { key: "전라북도 순창군", value: "순창군", viewString: "전북 순창군" },
     { key: "전라북도 고창군", value: "고창군", viewString: "전북 고창군" },
-    { key: "전라북도 부안군", value: "부안군", viewString: "전북 부안군" }
+    { key: "전라북도 부안군", value: "부안군", viewString: "전북 부안군" },
   ],
   전라남도: [
     { key: "전라남도 전체", value: "전남 전체", viewString: "전남 전체" },
@@ -299,7 +299,7 @@ export const siSggList: SiSggList = {
     { key: "전라남도 장성군", value: "장성군", viewString: "전남 장성군" },
     { key: "전라남도 완도군", value: "완도군", viewString: "전남 완도군" },
     { key: "전라남도 진도군", value: "진도군", viewString: "전남 진도군" },
-    { key: "전라남도 신안군", value: "신안군", viewString: "전남 신안군" }
+    { key: "전라남도 신안군", value: "신안군", viewString: "전남 신안군" },
   ],
   경상북도: [
     { key: "경상북도 전체", value: "경북 전체", viewString: "경북 전체" },
@@ -324,7 +324,7 @@ export const siSggList: SiSggList = {
     { key: "경상북도 예천군", value: "예천군", viewString: "경북 예천군" },
     { key: "경상북도 봉화군", value: "봉화군", viewString: "경북 봉화군" },
     { key: "경상북도 울진군", value: "울진군", viewString: "경북 울진군" },
-    { key: "경상북도 울릉군", value: "울릉군", viewString: "경북 울릉군" }
+    { key: "경상북도 울릉군", value: "울릉군", viewString: "경북 울릉군" },
   ],
   경상남도: [
     { key: "경상남도 전체", value: "경남 전체", viewString: "경남 전체" },
@@ -345,21 +345,21 @@ export const siSggList: SiSggList = {
     { key: "경상남도 산청군", value: "산청군", viewString: "경남 산청군" },
     { key: "경상남도 함양군", value: "함양군", viewString: "경남 함양군" },
     { key: "경상남도 거창군", value: "거창군", viewString: "경남 거창군" },
-    { key: "경상남도 합천군", value: "합천군", viewString: "경남 합천군" }
+    { key: "경상남도 합천군", value: "합천군", viewString: "경남 합천군" },
   ],
   제주특별자치도: [
     { key: "제주특별자치도 전체", value: "제주 전체", viewString: "제주 전체" },
     {
       key: "제주특별자치도 제주시",
       value: "제주시",
-      viewString: "제주 제주시"
+      viewString: "제주 제주시",
     },
     {
       key: "제주특별자치도 서귀포시",
       value: "서귀포시",
-      viewString: "제주 서귀포시"
-    }
-  ]
+      viewString: "제주 서귀포시",
+    },
+  ],
 };
 
 export const locationKeysAndShorts = [
@@ -371,7 +371,7 @@ export const locationKeysAndShorts = [
   {
     key: "서울특별시 동대문구",
     value: "동대문구",
-    viewString: "서울 동대문구"
+    viewString: "서울 동대문구",
   },
   { key: "서울특별시 중랑구", value: "중랑구", viewString: "서울 중랑구" },
   { key: "서울특별시 성북구", value: "성북구", viewString: "서울 성북구" },
@@ -382,7 +382,7 @@ export const locationKeysAndShorts = [
   {
     key: "서울특별시 서대문구",
     value: "서대문구",
-    viewString: "서울 서대문구"
+    viewString: "서울 서대문구",
   },
   { key: "서울특별시 마포구", value: "마포구", viewString: "서울 마포구" },
   { key: "서울특별시 양천구", value: "양천구", viewString: "서울 양천구" },
@@ -392,7 +392,7 @@ export const locationKeysAndShorts = [
   {
     key: "서울특별시 영등포구",
     value: "영등포구",
-    viewString: "서울 영등포구"
+    viewString: "서울 영등포구",
   },
   { key: "서울특별시 동작구", value: "동작구", viewString: "서울 동작구" },
   { key: "서울특별시 관악구", value: "관악구", viewString: "서울 관악구" },
@@ -407,7 +407,7 @@ export const locationKeysAndShorts = [
   {
     key: "부산광역시 부산진구",
     value: "부산진구",
-    viewString: "부산 부산진구"
+    viewString: "부산 부산진구",
   },
   { key: "부산광역시 동래구", value: "동래구", viewString: "부산 동래구" },
   { key: "부산광역시 남구", value: "남구", viewString: "부산 남구" },
@@ -415,7 +415,7 @@ export const locationKeysAndShorts = [
   {
     key: "부산광역시 해운대구",
     value: "해운대구",
-    viewString: "부산 해운대구"
+    viewString: "부산 해운대구",
   },
   { key: "부산광역시 사하구", value: "사하구", viewString: "부산 사하구" },
   { key: "부산광역시 금정구", value: "금정구", viewString: "부산 금정구" },
@@ -438,7 +438,7 @@ export const locationKeysAndShorts = [
   {
     key: "인천광역시 미추홀구",
     value: "미추홀구",
-    viewString: "인천 미추홀구"
+    viewString: "인천 미추홀구",
   },
   { key: "인천광역시 연수구", value: "연수구", viewString: "인천 연수구" },
   { key: "인천광역시 남동구", value: "남동구", viewString: "인천 남동구" },
@@ -466,50 +466,50 @@ export const locationKeysAndShorts = [
   {
     key: "경기도 수원시 장안구",
     value: "수원시 장안구",
-    viewString: "경기 수원시 장안구"
+    viewString: "경기 수원시 장안구",
   },
   {
     key: "경기도 수원시 권선구",
     value: "수원시 권선구",
-    viewString: "경기 수원시 권선구"
+    viewString: "경기 수원시 권선구",
   },
   {
     key: "경기도 수원시 팔달구",
     value: "수원시 팔달구",
-    viewString: "경기 수원시 팔달구"
+    viewString: "경기 수원시 팔달구",
   },
   {
     key: "경기도 수원시 영통구",
     value: "수원시 영통구",
-    viewString: "경기 수원시 영통구"
+    viewString: "경기 수원시 영통구",
   },
   { key: "경기도 성남시", value: "성남시", viewString: "경기 성남시" },
   {
     key: "경기도 성남시 수정구",
     value: "성남시 수정구",
-    viewString: "경기 성남시 수정구"
+    viewString: "경기 성남시 수정구",
   },
   {
     key: "경기도 성남시 중원구",
     value: "성남시 중원구",
-    viewString: "경기 성남시 중원구"
+    viewString: "경기 성남시 중원구",
   },
   {
     key: "경기도 성남시 분당구",
     value: "성남시 분당구",
-    viewString: "경기 성남시 분당구"
+    viewString: "경기 성남시 분당구",
   },
   { key: "경기도 의정부시", value: "의정부시", viewString: "경기 의정부시" },
   { key: "경기도 안양시", value: "안양시", viewString: "경기 안양시" },
   {
     key: "경기도 안양시 만안구",
     value: "안양시 만안구",
-    viewString: "경기 안양시 만안구"
+    viewString: "경기 안양시 만안구",
   },
   {
     key: "경기도 안양시 동안구",
     value: "안양시 동안구",
-    viewString: "경기 안양시 동안구"
+    viewString: "경기 안양시 동안구",
   },
   { key: "경기도 부천시", value: "부천시", viewString: "경기 부천시" },
   { key: "경기도 광명시", value: "광명시", viewString: "경기 광명시" },
@@ -640,11 +640,11 @@ export const locationKeysAndShorts = [
   {
     key: "제주특별자치도 제주시",
     value: "제주시",
-    viewString: "제주 제주시"
+    viewString: "제주 제주시",
   },
   {
     key: "제주특별자치도 서귀포시",
     value: "서귀포시",
-    viewString: "제주 서귀포시"
-  }
+    viewString: "제주 서귀포시",
+  },
 ];

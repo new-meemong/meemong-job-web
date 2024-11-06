@@ -1,9 +1,9 @@
 import BaseMultiSelect from "@/components/selects/base-multi-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import { StoreTypesKey } from "@/types/job-posting-keys";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-top: ${pxToVw(8)};
@@ -15,7 +15,7 @@ const SelectStoreTypes = () => {
     setStoreTypes,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    role
+    role,
   } = useJobPostingEditStore();
   const options = jobPostingOptions.storeTypes;
   let hasError = false;

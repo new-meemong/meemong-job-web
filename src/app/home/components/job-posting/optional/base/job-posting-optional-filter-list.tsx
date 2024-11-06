@@ -1,15 +1,15 @@
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
-import { useState } from "react";
-import styled from "styled-components";
 import JobPostingOptionalFilterExpand from "./job-posting-optional-filter-expand";
 import JobPostingOptionalFilterUnexpand from "./job-posting-optional-filter-unexpand";
+import styled from "styled-components";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import { useState } from "react";
 
 const Container = styled.div``;
 
 const JobPostingOptionalFilterList = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { resetJobPostingFilterQueries } = useJobPostingListStore((state) => ({
-    resetJobPostingFilterQueries: state.resetJobPostingFilterQueries
+    resetJobPostingFilterQueries: state.resetJobPostingFilterQueries,
   }));
 
   const toggleExpanded = () => {

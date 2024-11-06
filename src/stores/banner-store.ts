@@ -1,5 +1,5 @@
-import { getBanner } from "@/apis/banner";
 import { create } from "zustand";
+import { getBanner } from "@/apis/banner";
 // import { createJSONStorage, persist } from "zustand/middleware";
 
 export type BannerType = {
@@ -24,7 +24,7 @@ export type BannerActions = {
 export type BannerStateStore = BannerState & BannerActions;
 
 export const defaultBannerState: BannerState = {
-  banner: null
+  banner: null,
 };
 
 export const useBannerStore = create<BannerStateStore>((set) => ({
@@ -36,8 +36,8 @@ export const useBannerStore = create<BannerStateStore>((set) => ({
     }
 
     const banner = res.data.filter(
-      (_banner: BannerType) => _banner.banner_type === "구인구직"
+      (_banner: BannerType) => _banner.banner_type === "구인구직",
     )[0];
     set({ banner: banner });
-  }
+  },
 }));

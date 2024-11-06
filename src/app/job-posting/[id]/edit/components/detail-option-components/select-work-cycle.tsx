@@ -1,9 +1,9 @@
 import BaseMultiSelect from "@/components/selects/base-multi-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import { WorkCycleTypesKey } from "@/types/job-posting-keys";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-top: ${pxToVw(8)};
@@ -15,13 +15,13 @@ const SelectWorkCycle = () => {
     setWorkCycles,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    role
+    role,
   } = useJobPostingEditStore((state) => ({
     workCycleTypes: state.workCycleTypes,
     setWorkCycles: state.setWorkCycles,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
-    role: state.role
+    role: state.role,
   }));
 
   const options = jobPostingOptions.workCycleTypes;

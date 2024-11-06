@@ -1,9 +1,9 @@
 import BaseSingleSelect from "@/components/selects/base-single-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import { MonthlyEducationDesignerCountKey } from "@/types/job-posting-keys";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-left: ${pxToVw(8)};
@@ -15,13 +15,13 @@ const SelectEducationDesigner = () => {
   const {
     monthlyEducationDesignerCount,
     setMonthlyEducationDesignerCount,
-    hasDesignerOptionNull
+    hasDesignerOptionNull,
   } = useJobPostingEditStore();
   const educationCounts = jobPostingOptions.monthlyEducationDesignerCount;
 
   const handleSelect = (selectedOption: string | null) => {
     setMonthlyEducationDesignerCount(
-      selectedOption as MonthlyEducationDesignerCountKey
+      selectedOption as MonthlyEducationDesignerCountKey,
     );
   };
   const hasError = !monthlyEducationDesignerCount && hasDesignerOptionNull;

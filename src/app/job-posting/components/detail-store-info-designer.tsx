@@ -1,10 +1,10 @@
+import InfoTitle from "./info-title";
+import { JobPostingType } from "@/types/job-posting-type";
+import MultiInfoItem from "../../../components/details/multi-info-item";
+import SingleInfoItem from "../../../components/details/single-info-item";
+import { formatPriceWithCommas } from "@/lib/price-comma";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import InfoTitle from "./info-title";
-import SingleInfoItem from "../../../components/details/single-info-item";
-import MultiInfoItem from "../../../components/details/multi-info-item";
-import { formatPriceWithCommas } from "@/lib/price-comma";
-import { JobPostingType } from "@/types/job-posting-type";
 
 const Container = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ const DetailStoreInfoDesigner = ({
   isExistedCleaningSupplier,
   isExistedTowelSupplier,
   isOnsiteManager,
-  basicCutPrice
+  basicCutPrice,
 }: DetailInfoDesignerProps) => {
   return (
     <Container>

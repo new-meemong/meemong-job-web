@@ -1,9 +1,9 @@
+import InfoTitle from "./info-title";
+import { JobPostingType } from "@/types/job-posting-type";
+import MultiInfoItem from "../../../components/details/multi-info-item";
+import SingleInfoItem from "../../../components/details/single-info-item";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import InfoTitle from "./info-title";
-import SingleInfoItem from "../../../components/details/single-info-item";
-import MultiInfoItem from "../../../components/details/multi-info-item";
-import { JobPostingType } from "@/types/job-posting-type";
 
 const Container = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const DetailPersonInfoIntern = ({
   internExperienceYearNumber,
 
   isExistedFourInsurances,
-  isExistedRetirementPay
+  isExistedRetirementPay,
 }: DetailInfoInternProps) => {
   console.log("internExperienceYearNumber", internExperienceYearNumber);
   return (

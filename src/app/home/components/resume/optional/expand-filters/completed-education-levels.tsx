@@ -1,6 +1,6 @@
-import { useResumeListStore } from "@/stores/resume-list-store";
-import styled from "styled-components";
 import OptionalMultiDropdownFilter from "../../../filters/base/optional-multi-dropdown-filter";
+import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div``;
 
@@ -8,18 +8,18 @@ const CompletedEducationLevels = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
   const options = [
     { key: "미용고등학교 졸업", value: "미용고등학교 졸업" },
     { key: "미용대학교 졸업", value: "미용대학교 졸업" },
     { key: "일반고등학교 졸업", value: "일반고등학교 졸업" },
     { key: "일반대학교 졸업", value: "일반대학교 졸업" },
-    { key: "상관없음", value: "상관없음" }
+    { key: "상관없음", value: "상관없음" },
   ];
   const selectedOptions =
     getResumeFilterQuery("completedEducationLevels")?.split(",") || [];
@@ -32,7 +32,7 @@ const CompletedEducationLevels = () => {
 
       if (selectedOptions.includes(selectedOption)) {
         updatedOptions = selectedOptions.filter(
-          (option) => option !== selectedOption
+          (option) => option !== selectedOption,
         );
       } else {
         updatedOptions = [...selectedOptions, selectedOption];
@@ -40,7 +40,7 @@ const CompletedEducationLevels = () => {
 
       if (updatedOptions.length > 0) {
         addResumeFilterQuery(
-          `completedEducationLevels=${updatedOptions.join(",")}`
+          `completedEducationLevels=${updatedOptions.join(",")}`,
         );
       } else {
         removeResumeFilterQuery("completedEducationLevels");

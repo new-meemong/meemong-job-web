@@ -1,8 +1,9 @@
-import pxToVw from "@/lib/dpi-converter";
-import styled from "styled-components";
+import toast, { Toaster } from "react-hot-toast";
+
 import ShareWhiteIcon from "../icons/share-white-icon";
 import { fonts } from "@/styles/fonts";
-import toast, { Toaster } from "react-hot-toast";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 
 const Container = styled.div`
   ${fonts.whiteNormal12}
@@ -27,16 +28,16 @@ const ShareButton = () => {
       toast.dismiss();
       toast("URL이 복사되었습니다.", {
         style: {
-          pointerEvents: "none" // Make the toast non-interactive
-        }
+          pointerEvents: "none", // Make the toast non-interactive
+        },
       }); // 복사 완료 후 알림
     } catch (err) {
       console.error("URL 복사 실패:", err);
       toast.dismiss();
       toast("URL 복사에 실패했습니다.", {
         style: {
-          pointerEvents: "none" // Make the toast non-interactive
-        }
+          pointerEvents: "none", // Make the toast non-interactive
+        },
       });
     }
   };

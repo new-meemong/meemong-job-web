@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   if (!query) {
     return NextResponse.json(
       { message: "Invalid query parameter" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
   // }
 
   const apiUrl = `https://openapi.naver.com/v1/search/local.json?query=${encodeURIComponent(
-    query
+    query,
   )}&display=5&sort=random`;
 
   try {
@@ -42,8 +42,8 @@ export async function GET(request: NextRequest) {
       method: "GET",
       headers: {
         "X-Naver-Client-Id": "yY0HmuEeAdiJVtNu0TzZ",
-        "X-Naver-Client-Secret": "G8pCmKz8ko"
-      }
+        "X-Naver-Client-Secret": "G8pCmKz8ko",
+      },
     });
 
     if (!response.ok) {
@@ -52,9 +52,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(
         {
           message:
-            errorData.errorMessage || "Naver API 요청 중 오류가 발생했습니다."
+            errorData.errorMessage || "Naver API 요청 중 오류가 발생했습니다.",
         },
-        { status: response.status }
+        { status: response.status },
       );
     }
 
@@ -66,9 +66,9 @@ export async function GET(request: NextRequest) {
     console.error("Naver API Error:", error.message);
     return NextResponse.json(
       {
-        message: "Naver API 요청 중 오류가 발생했습니다."
+        message: "Naver API 요청 중 오류가 발생했습니다.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

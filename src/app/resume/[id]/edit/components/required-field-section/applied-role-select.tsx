@@ -1,8 +1,8 @@
+import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
+import { RoleKeyResume } from "@/types/resume-keys";
+import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
-import { resumeOptions } from "@/types/resume-optons";
-import { RoleKeyResume } from "@/types/resume-keys";
-import EditResumeOptonSingleSelect from "./base/edit-resume-option-single-select";
 
 const Container = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const Container = styled.div`
 const AppliedRoleSelect = () => {
   const { appliedRole, setAppliedRole } = useResumeEditStore((state) => ({
     appliedRole: state.appliedRole,
-    setAppliedRole: state.setAppliedRole
+    setAppliedRole: state.setAppliedRole,
   }));
   const options = resumeOptions.appliedRole;
 

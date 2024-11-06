@@ -1,29 +1,29 @@
-import { useResumeEditStore } from "@/stores/resume-edit-store";
+import DropDownItem from "./base/drop-down-item";
 import { PreferredMonthlyEducationInternCountKeyResume } from "@/types/resume-keys";
+import SingleOptionList from "./base/single-option-list";
 import { resumeOptions } from "@/types/resume-optons";
 import styled from "styled-components";
-import DropDownItem from "./base/drop-down-item";
-import SingleOptionList from "./base/single-option-list";
+import { useResumeEditStore } from "@/stores/resume-edit-store";
 
 const Container = styled.div``;
 
 const PreferredMonthlyEducationInternCount = () => {
   const {
     preferredMonthlyEducationInternCount,
-    setPreferredMonthlyEducationInternCount
+    setPreferredMonthlyEducationInternCount,
   } = useResumeEditStore((state) => ({
     preferredMonthlyEducationInternCount:
       state.preferredMonthlyEducationInternCount,
     setPreferredMonthlyEducationInternCount:
       state.setPreferredMonthlyEducationInternCount,
     appliedRole: state.appliedRole,
-    hasDesignerOptionNull: state.hasDesignerOptionNull
+    hasDesignerOptionNull: state.hasDesignerOptionNull,
   }));
   const options = resumeOptions.preferredMonthlyEducationInternCount;
 
   const handleSelect = (selectedOption: string | null) => {
     setPreferredMonthlyEducationInternCount(
-      selectedOption as PreferredMonthlyEducationInternCountKeyResume
+      selectedOption as PreferredMonthlyEducationInternCountKeyResume,
     );
   };
 

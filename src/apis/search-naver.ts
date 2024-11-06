@@ -4,7 +4,7 @@ export const searchNaver = async (query: string) => {
       query
     )}&display=5&sort=random`,
     {
-      method: "GET"
+      method: "GET",
     }
   );
 

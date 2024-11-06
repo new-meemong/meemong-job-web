@@ -1,6 +1,3 @@
-import { postResume, putResume } from "@/apis/resumes";
-import { siSggList } from "@/types/location-type";
-import { ResponseResultType } from "@/types/response-result-type";
 import {
   CompletedEducationLevelsKeyResume,
   DesignerExperienceYearNumberKeyResume,
@@ -18,13 +15,17 @@ import {
   SalesLast3MonthsAvgKeyResume,
   SettlementAllowanceKeyResume,
   WorkCycleTypesKeyResume,
-  WorkTypeKeyResume
+  WorkTypeKeyResume,
 } from "@/types/resume-keys";
-import { ResumeType } from "@/types/resume-type";
-import moment from "moment";
-import toast from "react-hot-toast";
-import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { postResume, putResume } from "@/apis/resumes";
+
+import { ResponseResultType } from "@/types/response-result-type";
+import { ResumeType } from "@/types/resume-type";
+import { create } from "zustand";
+import moment from "moment";
+import { siSggList } from "@/types/location-type";
+import toast from "react-hot-toast";
 
 type ResumeEditState = {
   id: string | null;
@@ -86,17 +87,17 @@ type ResumeEditActions = {
   setAppliedRole: (role: RoleKeyResume | null) => void;
   setWorkType: (workType: WorkTypeKeyResume | null) => void;
   setSettlementAllowance: (
-    allowance: SettlementAllowanceKeyResume | null
+    allowance: SettlementAllowanceKeyResume | null,
   ) => void;
   setInternExpectedSalary: (
-    salary: InternExpectedSalaryKeyResume | null
+    salary: InternExpectedSalaryKeyResume | null,
   ) => void;
   setDesignerLicenses: (licences: DesignerLicensesKeyResume) => void;
   setDesignerExperienceYearNumber: (
-    yearNumber: DesignerExperienceYearNumberKeyResume | null
+    yearNumber: DesignerExperienceYearNumberKeyResume | null,
   ) => void;
   setInternExperienceYearNumber: (
-    yearNumber: InternExperienceYearNumberKeyResume | null
+    yearNumber: InternExperienceYearNumberKeyResume | null,
   ) => void;
   setDesignerMajorExperienceCompanyName: (companyName: string | null) => void;
   setDesignerMajorExperienceDuration: (duration: string | null) => void;
@@ -106,27 +107,27 @@ type ResumeEditActions = {
   setInternMajorExperienceRole: (role: string | null) => void;
   setSalesLast3MonthsAvg: (avg: SalesLast3MonthsAvgKeyResume | null) => void;
   setCompletedEducationLevels: (
-    level: CompletedEducationLevelsKeyResume
+    level: CompletedEducationLevelsKeyResume,
   ) => void;
   setPreferredOffDays: (days: PreferredOffDaysKeyResume) => void;
   setWorkCycleTypes: (cycle: WorkCycleTypesKeyResume) => void;
   setDesignerPromotionPeriod: (
-    period: DesignerPromotionPeriodKeyResume | null
+    period: DesignerPromotionPeriodKeyResume | null,
   ) => void;
   setIsPreferredDormitorySupport: (
-    isPreferred: IsPreferredDormitorySupportKeyResume | null
+    isPreferred: IsPreferredDormitorySupportKeyResume | null,
   ) => void;
   setPreferredMonthlyEducationDesignerCount: (
-    count: PreferredMonthlyEducationDesignerCountKeyResume | null
+    count: PreferredMonthlyEducationDesignerCountKeyResume | null,
   ) => void;
   setPreferredMonthlyEducationInternCount: (
-    count: PreferredMonthlyEducationInternCountKeyResume | null
+    count: PreferredMonthlyEducationInternCountKeyResume | null,
   ) => void;
   setIsPreferredMealSupport: (
-    isPreferred: IsPreferredMealSupportKeyResume | null
+    isPreferred: IsPreferredMealSupportKeyResume | null,
   ) => void;
   setIsPreferredParking: (
-    isPreferred: IsPreferredParkingKeyResume | null
+    isPreferred: IsPreferredParkingKeyResume | null,
   ) => void;
   setMbti: (mbti: string | null) => void;
   setDescription: (description: string | null) => void;
@@ -177,7 +178,7 @@ const defaultResumeEditState: ResumeEditState = {
   description: null,
   hasDesignerOptionNull: false,
   hasInternOptionNull: false,
-  isExposure: false
+  isExposure: false,
 };
 
 export const useResumeEditStore = create(
@@ -192,13 +193,13 @@ export const useResumeEditStore = create(
           set({
             preferredMonthlyEducationDesignerCount:
               resume.preferredMonthlyEducationCount as PreferredMonthlyEducationDesignerCountKeyResume,
-            preferredMonthlyEducationInternCount: null
+            preferredMonthlyEducationInternCount: null,
           });
         } else if (resume.appliedRole === "인턴") {
           set({
             preferredMonthlyEducationDesignerCount: null,
             preferredMonthlyEducationInternCount:
-              resume.preferredMonthlyEducationCount as PreferredMonthlyEducationInternCountKeyResume
+              resume.preferredMonthlyEducationCount as PreferredMonthlyEducationInternCountKeyResume,
           });
         }
 
@@ -225,7 +226,7 @@ export const useResumeEditStore = create(
           internExpectedSalary: resume.internExpectedSalary || "상관없음",
           designerLicenses: resume.designerLicenses
             ? (resume.designerLicenses.split(
-                ","
+                ",",
               ) as DesignerLicensesKeyResume[])
             : ["없음"],
           designerExperienceYearNumber: resume.designerExperienceYearNumber,
@@ -242,12 +243,12 @@ export const useResumeEditStore = create(
           salesLast3MonthsAvg: resume.salesLast3MonthsAvg,
           completedEducationLevels: resume.completedEducationLevels
             ? (resume.completedEducationLevels.split(
-                ","
+                ",",
               ) as CompletedEducationLevelsKeyResume[])
             : [],
           preferredOffDays: resume.preferredOffDays
             ? (resume.preferredOffDays.split(
-                ","
+                ",",
               ) as PreferredOffDaysKeyResume[])
             : ["상관없음"],
           workCycleTypes: resume.workCycleTypes
@@ -259,7 +260,7 @@ export const useResumeEditStore = create(
           isPreferredParking: resume.isPreferredParking,
           mbti: resume.mbti,
           description: resume.description,
-          isExposure: resume.isExposure
+          isExposure: resume.isExposure,
         });
       },
       setId: (id: string | null) => set({ id }),
@@ -277,7 +278,7 @@ export const useResumeEditStore = create(
       setSex: (sex) => set({ sex }),
       setPreferredStoreRegions: (regions) => {
         const preferredStoreRegionSiNames = Array.from(
-          new Set(regions.map((item) => item.key.split(" ")[0]))
+          new Set(regions.map((item) => item.key.split(" ")[0])),
         ).join(",");
         const preferredStoreRegions = regions
           .filter((item) => !item.value.includes("전체"))
@@ -287,7 +288,7 @@ export const useResumeEditStore = create(
         set({
           _preferredStoreRegions: regions,
           preferredStoreRegionSiNames,
-          preferredStoreRegions: preferredStoreRegions
+          preferredStoreRegions: preferredStoreRegions,
         });
       },
       setBirthday: (birthday) => set({ birthday }),
@@ -295,7 +296,7 @@ export const useResumeEditStore = create(
         set({ appliedRole: role }),
       setWorkType: (workType: WorkTypeKeyResume | null) => set({ workType }),
       setSettlementAllowance: (
-        allowance: SettlementAllowanceKeyResume | null
+        allowance: SettlementAllowanceKeyResume | null,
       ) => set({ settlementAllowance: allowance }),
       setInternExpectedSalary: (salary: InternExpectedSalaryKeyResume | null) =>
         set({ internExpectedSalary: salary }),
@@ -305,10 +306,10 @@ export const useResumeEditStore = create(
         set({ designerLicenses: toggleSelect(designerLicenses, license) });
       },
       setDesignerExperienceYearNumber: (
-        yearNumber: DesignerExperienceYearNumberKeyResume | null
+        yearNumber: DesignerExperienceYearNumberKeyResume | null,
       ) => set({ designerExperienceYearNumber: yearNumber }),
       setInternExperienceYearNumber: (
-        yearNumber: InternExperienceYearNumberKeyResume | null
+        yearNumber: InternExperienceYearNumberKeyResume | null,
       ) => set({ internExperienceYearNumber: yearNumber }),
       setDesignerMajorExperienceCompanyName: (companyName) =>
         set({ designerMajorExperienceCompanyName: companyName }),
@@ -324,14 +325,14 @@ export const useResumeEditStore = create(
         set({ internMajorExperienceRole: role }),
       setSalesLast3MonthsAvg: (avg) => set({ salesLast3MonthsAvg: avg }),
       setCompletedEducationLevels: (
-        level: CompletedEducationLevelsKeyResume
+        level: CompletedEducationLevelsKeyResume,
       ) => {
         const { completedEducationLevels } = get();
         set({
           completedEducationLevels: toggleSelect(
             completedEducationLevels,
-            level
-          )
+            level,
+          ),
         });
       },
       setPreferredOffDays: (day: PreferredOffDaysKeyResume) => {
@@ -370,14 +371,14 @@ export const useResumeEditStore = create(
           if (!appliedRole) {
             return {
               status: false,
-              message: "지원 분야를 선택해주세요."
+              message: "지원 분야를 선택해주세요.",
             };
           }
           if (missingFields) {
             setOptionNullFlag(appliedRole, true, set);
             return {
               status: false,
-              message: `모든 항목을 입력해야\n이력서를 등록할 수 있습니다.`
+              message: `모든 항목을 입력해야\n이력서를 등록할 수 있습니다.`,
             };
           } else {
             setOptionNullFlag(appliedRole, false, set);
@@ -395,12 +396,12 @@ export const useResumeEditStore = create(
             return {
               status: true,
               message: "이력서가 성공적으로 저장되었습니다.",
-              data: response.data
+              data: response.data,
             };
           } else {
             return {
               status: false,
-              message: "이력서 저장중 오류가 발생했습니다."
+              message: "이력서 저장중 오류가 발생했습니다.",
             };
           }
         } catch (e) {
@@ -408,7 +409,7 @@ export const useResumeEditStore = create(
 
           return {
             status: false,
-            message: "이력서 저장중 오류가 발생했습니다."
+            message: "이력서 저장중 오류가 발생했습니다.",
           };
         }
       },
@@ -422,14 +423,14 @@ export const useResumeEditStore = create(
           if (!appliedRole) {
             return {
               status: false,
-              message: "지원 분야를 선택해주세요."
+              message: "지원 분야를 선택해주세요.",
             };
           }
           if (missingFields) {
             setOptionNullFlag(appliedRole, true, set);
             return {
               status: false,
-              message: `필수 항목을 입력해야\n이력서를 등록할 수 있습니다.`
+              message: `필수 항목을 입력해야\n이력서를 등록할 수 있습니다.`,
             };
           } else {
             setOptionNullFlag(appliedRole, false, set);
@@ -445,12 +446,12 @@ export const useResumeEditStore = create(
             return {
               status: true,
               message: "이력서가 성공적으로 등록되었습니다.",
-              data: response.data
+              data: response.data,
             };
           } else {
             return {
               status: false,
-              message: "이력서 등록중 오류가 발생했습니다."
+              message: "이력서 등록중 오류가 발생했습니다.",
             };
           }
         } catch (e) {
@@ -458,16 +459,16 @@ export const useResumeEditStore = create(
           toast("이력서 등록중 오류가 발생했습니다. 다시 시도해주세요.");
           return {
             status: false,
-            message: "이력서 등록중 오류가 발생했습니다."
+            message: "이력서 등록중 오류가 발생했습니다.",
           };
         }
-      }
+      },
     }),
     {
       name: "resume-edit-store",
-      storage: createJSONStorage(() => localStorage)
-    }
-  )
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
 );
 
 const parsePostingRegions = (resume: ResumeType) => {
@@ -509,14 +510,14 @@ const prepareResumeData = (state: ResumeEditState): ResumeType => {
 
   return convertToNullJobPostingData({
     ...resumeRequiredStates,
-    ...resumeOptionalStates
+    ...resumeOptionalStates,
   }) as ResumeType;
 };
 
 const setOptionNullFlag = (
   appliedRole: RoleKeyResume,
   flag: boolean,
-  set: (partialState: Partial<ResumeEditState>) => void
+  set: (partialState: Partial<ResumeEditState>) => void,
 ) => {
   const flagKey =
     appliedRole === "디자이너"
@@ -531,7 +532,7 @@ const setOptionNullFlag = (
 
 const hasMissingRequiredFields = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  requiredStates: Record<string, any>
+  requiredStates: Record<string, any>,
 ): boolean => {
   return Object.entries(requiredStates).some(([key, value]) => {
     if (
@@ -568,7 +569,7 @@ const getResumeRequiredData = (state: ResumeEditState) => {
       workType: state.workType,
       settlementAllowance: state.settlementAllowance,
       designerLicenses: state.designerLicenses.join(","),
-      designerExperienceYearNumber: state.designerExperienceYearNumber
+      designerExperienceYearNumber: state.designerExperienceYearNumber,
     };
   } else if (appliedRole === "인턴") {
     requiredStates = {
@@ -584,7 +585,7 @@ const getResumeRequiredData = (state: ResumeEditState) => {
       workType: state.workType,
       internExpectedSalary: state.internExpectedSalary,
       designerLicenses: state.designerLicenses.join(","),
-      internExperienceYearNumber: state.internExperienceYearNumber
+      internExperienceYearNumber: state.internExperienceYearNumber,
     };
   }
 
@@ -612,7 +613,7 @@ const getResumeOptionalData = (state: ResumeEditState) => {
       isPreferredParking: state.isPreferredParking,
       mbti: state.mbti,
       description: state.description,
-      sex: state.sex
+      sex: state.sex,
     };
   } else if (appliedRole === "인턴") {
     optionalStates = {
@@ -630,7 +631,7 @@ const getResumeOptionalData = (state: ResumeEditState) => {
       isPreferredParking: state.isPreferredParking,
       mbti: state.mbti,
       description: state.description,
-      sex: state.sex
+      sex: state.sex,
     };
   }
 
@@ -649,7 +650,7 @@ const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
 
   // 이미 "상관없음" 또는 "없음"이 선택된 상태에서 다른 항목을 선택하려는 경우, 해제
   selectedItems = selectedItems.filter(
-    (selectedItem) => !indifferentOptions.includes(selectedItem)
+    (selectedItem) => !indifferentOptions.includes(selectedItem),
   );
 
   if (selectedItems.includes(item)) {
@@ -663,7 +664,7 @@ const toggleSelect = <T extends string>(selectedItems: T[], item: T): T[] => {
 
 const convertToNullJobPostingData = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: Record<string, any>
+  data: Record<string, any>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Record<string, any> => {
   const nullifyValues = ["상관없음", "해당없음", "필요없음"];
@@ -671,7 +672,7 @@ const convertToNullJobPostingData = (
   return Object.fromEntries(
     Object.entries(data).map(([key, value]) => [
       key,
-      nullifyValues.includes(value) ? null : value
-    ])
+      nullifyValues.includes(value) ? null : value,
+    ]),
   );
 };

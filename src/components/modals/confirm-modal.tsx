@@ -1,7 +1,7 @@
-import pxToVw from "@/lib/dpi-converter";
+import Modal from "react-modal";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import Modal from "react-modal";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const customStyles = {
@@ -13,11 +13,11 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     borderRadius: pxToVw(10),
-    padding: 0
+    padding: 0,
   },
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.75)" // 어두운 배경 설정
-  }
+    backgroundColor: "rgba(0, 0, 0, 0.75)", // 어두운 배경 설정
+  },
 };
 
 const Container = styled.div`
@@ -86,7 +86,7 @@ const ConfirmModal = ({
   message,
   confirmText = "확인",
   cancelText = "취소",
-  isWarning = false
+  isWarning = false,
 }: ConfirmModalProps) => {
   const handleConfirmClick = () => {
     onConfirm();

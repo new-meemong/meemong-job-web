@@ -1,9 +1,9 @@
-import styled from "styled-components";
 import ArrowDownGreyIcon from "../icons/arrow-down-grey-icon";
-import { useState } from "react";
 import MultiSelectBottomModal from "@/components/modals/multi-select-bottom-modal";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useState } from "react";
 
 const Container = styled.div``;
 
@@ -49,7 +49,7 @@ const DropdownMultiSelectItem = <T extends string | boolean>({
   label,
   options,
   selectedOptions,
-  onSelect
+  onSelect,
 }: DropdownItemProps<T>) => {
   const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
 

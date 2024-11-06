@@ -1,13 +1,14 @@
 "use client";
 
+import { ChangeEvent, useState } from "react";
+
 import SearchNaverHeader from "@/components/headers/search-naver-header";
-import pxToVw from "@/lib/dpi-converter";
-import { useSearchNaverStore } from "@/stores/search-naver-store";
+import SearchResultItem from "./components/search-result-item";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { ChangeEvent, useState } from "react";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import SearchResultItem from "./components/search-result-item";
+import { useSearchNaverStore } from "@/stores/search-naver-store";
 
 const Container = styled.div`
   display: flex;
@@ -89,7 +90,7 @@ export default function SearchNaver() {
       searchQuery: state.searchQuery,
       searchResults: state.searchResults,
       setSearchQuery: state.setSearchQuery,
-      search: state.search
+      search: state.search,
     }));
   const [isSearching, setIsSearching] = useState(false);
 

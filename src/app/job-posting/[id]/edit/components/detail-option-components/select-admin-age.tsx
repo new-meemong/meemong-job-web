@@ -1,9 +1,9 @@
-import BaseSingleSelect from "@/components/selects/base-single-select";
-import pxToVw from "@/lib/dpi-converter";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { jobPostingOptions } from "@/types/job-posting-options";
 import { AdminAgeKey } from "@/types/job-posting-keys";
+import BaseSingleSelect from "@/components/selects/base-single-select";
+import { jobPostingOptions } from "@/types/job-posting-options";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`
   padding-top: ${pxToVw(8)};
@@ -15,7 +15,7 @@ const SelectAdminAge = () => {
     setAdminAge,
     hasDesignerOptionNull,
     hasInternOptionNull,
-    role
+    role,
   } = useJobPostingEditStore();
   const options = jobPostingOptions.adminAge;
   let hasError = false;

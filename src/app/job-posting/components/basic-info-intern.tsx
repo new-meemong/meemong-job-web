@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import InfoTitle from "./info-title";
+import { JobPostingType } from "@/types/job-posting-type";
 import SingleInfoItem from "../../../components/details/single-info-item";
 import pxToVw from "@/lib/dpi-converter";
-import { JobPostingType } from "@/types/job-posting-type";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ const BasicInfoIntern = ({
   educationCost,
   availableOffDays,
   internSalary,
-  role
+  role,
 }: BasicInfoInternProps) => {
   return (
     <Container>

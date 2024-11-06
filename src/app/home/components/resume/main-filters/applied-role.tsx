@@ -1,17 +1,17 @@
-import { useResumeListStore } from "@/stores/resume-list-store";
 import DesignerTypeTab from "../../filters/designer-type-tab";
 import { RoleKey } from "@/types/job-posting-keys";
 import { useEffect } from "react";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const AppliedRole = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
 
   const selectedDesignerType =

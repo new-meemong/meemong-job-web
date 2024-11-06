@@ -1,6 +1,6 @@
-import { useResumeListStore } from "@/stores/resume-list-store";
-import styled from "styled-components";
 import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
+import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div``;
 
@@ -8,37 +8,37 @@ const DesignerPromotionPeriod = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
   const options = [
     {
       key: "1년 이하",
-      value: "1년 이하"
+      value: "1년 이하",
     },
     {
       key: "1년 6개월 이하",
-      value: "1년 6개월 이하"
+      value: "1년 6개월 이하",
     },
     {
       key: "2년 이하",
-      value: "2년 이하"
+      value: "2년 이하",
     },
     {
       key: "3년 미만",
-      value: "3년 미만"
+      value: "3년 미만",
     },
     {
       key: "3년 이상",
-      value: "3년 이상"
+      value: "3년 이상",
     },
     {
       key: "상관없음",
-      value: "상관없음"
-    }
+      value: "상관없음",
+    },
   ];
   const selectedOption =
     getResumeFilterQuery("designerPromotionPeriod") || "상관없음";

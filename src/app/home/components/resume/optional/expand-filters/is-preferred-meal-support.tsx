@@ -1,6 +1,6 @@
-import { useResumeListStore } from "@/stores/resume-list-store";
-import styled from "styled-components";
 import OptionalSingleDropdownFilter from "../../../filters/base/optional-single-dropdown-filter";
+import styled from "styled-components";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div``;
 
@@ -8,25 +8,25 @@ const IsPreferredMealSupport = () => {
   const {
     getResumeFilterQuery,
     addResumeFilterQuery,
-    removeResumeFilterQuery
+    removeResumeFilterQuery,
   } = useResumeListStore((state) => ({
     getResumeFilterQuery: state.getResumeFilterQuery,
     addResumeFilterQuery: state.addResumeFilterQuery,
-    removeResumeFilterQuery: state.removeResumeFilterQuery
+    removeResumeFilterQuery: state.removeResumeFilterQuery,
   }));
   const options = [
     {
       key: "true",
-      value: "있음"
+      value: "있음",
     },
     {
       key: "false",
-      value: "없음"
+      value: "없음",
     },
     {
       key: "상관없음",
-      value: "상관없음"
-    }
+      value: "상관없음",
+    },
   ];
   const selectedOption =
     getResumeFilterQuery("isPreferredMealSupport") || "상관없음";

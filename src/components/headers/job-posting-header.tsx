@@ -1,16 +1,16 @@
-import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
-import { useRouter } from "next/navigation";
-import { fonts } from "@/styles/fonts";
-import pxToVw from "@/lib/dpi-converter";
-import OptionIcon from "./header-icons/option-icon";
-import SingleSelectBottomModal from "../modals/single-select-bottom-modal";
-import { useState } from "react";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import ConfirmModal from "../modals/confirm-modal";
 import NoticeModal from "../modals/notice-modal";
+import OptionIcon from "./header-icons/option-icon";
+import SingleSelectBottomModal from "../modals/single-select-bottom-modal";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useMyJobPostingListStore } from "@/stores/my-job-posting-list-store";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -50,7 +50,7 @@ const JobPostingHeader = ({
   title,
   jobPostingId,
   isMine,
-  isEnableButton = false
+  isEnableButton = false,
 }: ResumeHeaderProps) => {
   const router = useRouter();
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
@@ -61,22 +61,22 @@ const JobPostingHeader = ({
 
   const { resetStore, setFromJobPosting } = useJobPostingEditStore((state) => ({
     resetStore: state.resetStore,
-    setFromJobPosting: state.setFromJobPosting
+    setFromJobPosting: state.setFromJobPosting,
   }));
   const { jobPostingList, deleteJobPosting } = useJobPostingListStore(
     (state) => ({
       jobPostingList: state.jobPostingList,
-      deleteJobPosting: state.deleteJobPosting
-    })
+      deleteJobPosting: state.deleteJobPosting,
+    }),
   );
   const { getMyJobPostingList } = useMyJobPostingListStore((state) => ({
-    getMyJobPostingList: state.getMyJobPostingList
+    getMyJobPostingList: state.getMyJobPostingList,
   }));
 
   const options = isMine
     ? [
         { key: "수정", value: "수정" },
-        { key: "삭제", value: "삭제" }
+        { key: "삭제", value: "삭제" },
       ]
     : [];
 
@@ -93,7 +93,7 @@ const JobPostingHeader = ({
   const handleOptionSelect = (option: string | null) => {
     if (option === "수정") {
       const jobPosting = jobPostingList.find(
-        (posting) => posting.id.toString() === jobPostingId
+        (posting) => posting.id.toString() === jobPostingId,
       );
       if (jobPosting) {
         resetStore(); // 스토어를 초기화
