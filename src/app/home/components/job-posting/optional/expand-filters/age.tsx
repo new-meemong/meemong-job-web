@@ -18,7 +18,7 @@ const Age = () => {
 
   const options = jobPostingOptions.age;
 
-  const selectedOption = getJobPostingFilterQuery("age");
+  const selectedOption = getJobPostingFilterQuery("age") || "상관없음";
 
   const handleSelect = (selectedOption: string | null) => {
     if (selectedOption) {
