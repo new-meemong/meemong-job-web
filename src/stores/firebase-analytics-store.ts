@@ -24,13 +24,11 @@ export const useAnalyticsStore = create<AnalyticsState>(() => ({
   logPageView: (url: string, params: object) => {
     if (!analytics) return;
     try {
-      console.log("moonsae logPageView", url, params);
-      // logEvent(analytics, "page_view", {
-      //   page_path: url,
-      //   timestamp: new Date().toISOString(),
-      //   ...params
-      // });
-      console.log("url", url);
+      logEvent(analytics, "page_view", {
+        page_path: url,
+        timestamp: new Date().toISOString(),
+        ...params,
+      });
     } catch (error) {
       console.error("Error tracking page view:", error);
     }
