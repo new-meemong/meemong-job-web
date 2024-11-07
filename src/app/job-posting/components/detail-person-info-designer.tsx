@@ -17,7 +17,6 @@ type DetailInfoDesignerProps = Pick<
   JobPostingType,
   | "sex"
   | "age"
-  // | "isRestrictedAge"
   | "designerLicenses"
   | "workType"
   | "workCycleTypes"
@@ -28,7 +27,7 @@ type DetailInfoDesignerProps = Pick<
 const DetailPersonInfoDesigner = ({
   sex,
   age,
-  // isRestrictedAge,
+
   designerLicenses,
   workType,
   workCycleTypes,

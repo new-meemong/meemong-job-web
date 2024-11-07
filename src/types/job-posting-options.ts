@@ -52,8 +52,7 @@ type SettlementAllowanceOption = Option<SettlementAllowanceKey>;
 type IncentiveOption = Option<IncentiveKey>;
 type SexOption = Option<SexKey>;
 type AgeOption = Option<AgeKey>;
-// type IsRestrictedAgeOption = Option<IsRestrictedAgeKey>;
-// type IsPossibleMiddleAgeOption = Option<IsPossibleMiddleAgeKey>;
+
 type DesignerLicensesOption = Option<DesignerLicensesKey>;
 type StoreTypesOption = Option<StoreTypesKey>;
 type EmployeeCountOption = Option<EmployeeCountKey>;
@@ -96,8 +95,7 @@ export const jobPostingOptions: {
   incentive: IncentiveOption[];
   sex: SexOption[];
   age: AgeOption[];
-  // isRestrictedAge: IsRestrictedAgeOption[];
-  // isPossibleMiddleAge: IsPossibleMiddleAgeOption[];
+
   designerLicenses: DesignerLicensesOption[];
   storeTypes: StoreTypesOption[];
   employeeCount: EmployeeCountOption[];
@@ -189,16 +187,7 @@ export const jobPostingOptions: {
     { key: "40세 이하", value: "40세 이하" },
     { key: "상관없음", value: "상관없음" },
   ],
-  // // 나이 제한
-  // isRestrictedAge: [
-  //   { key: false, value: "나이 무관" },
-  //   { key: true, value: "나이 제한" },
-  // ],
-  // // 40대 이상 가능 여부
-  // isPossibleMiddleAge: [
-  //   { key: false, value: "중년층 채용 불가" },
-  //   { key: true, value: "중년층 채용 가능" },
-  // ],
+
   // 미용 라이센스
   designerLicenses: [
     { key: "자격증", value: "자격증" },

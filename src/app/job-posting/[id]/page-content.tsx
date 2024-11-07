@@ -99,7 +99,6 @@ export default function PageContent({
           <DetailPersonInfoDesigner
             sex={jobPosting.sex}
             age={jobPosting.age}
-            // isRestrictedAge={jobPosting.isRestrictedAge}
             designerLicenses={jobPosting.designerLicenses}
             workType={jobPosting.workType}
             workCycleTypes={jobPosting.workCycleTypes}
@@ -155,7 +154,6 @@ export default function PageContent({
           <DetailPersonInfoIntern
             sex={jobPosting.sex}
             age={jobPosting.age}
-            // isRestrictedAge={jobPosting.isRestrictedAge}
             designerLicenses={jobPosting.designerLicenses}
             workType={jobPosting.workType}
             workCycleTypes={jobPosting.workCycleTypes}

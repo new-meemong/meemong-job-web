@@ -17,7 +17,6 @@ import IsExistedProductSupport from "../expand-filters/is-existed-product-suppor
 import IsExistedRetirementPay from "../expand-filters/is-existed-retirement-pay";
 import IsExistedTowelSupplier from "../expand-filters/is-existed-towel-supplier";
 import IsOnsiteManager from "../expand-filters/is-onsite-manager";
-// import IsRestrictedAge from "../expand-filters/is-restricted-age";
 import LeaveDayCount from "../expand-filters/leave-day-count";
 import MealTime from "../expand-filters/meal-time";
 import ParkingSpotCount from "../expand-filters/parking-spot-count";

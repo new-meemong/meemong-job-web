@@ -63,11 +63,6 @@ export type AgeKey =
   | "35세 이하"
   | "40세 이하"
   | "상관없음";
-// // 나이 제한
-// export type IsRestrictedAgeKey = boolean;
-
-// // 나이 제한 - 40대 이상 가능 여부
-// export type IsPossibleMiddleAgeKey = boolean;
 
 // 미용 라이센스
 export type DesignerLicensesKey = "자격증" | "면허증" | "상관없음";
