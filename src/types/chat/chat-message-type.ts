@@ -1,11 +1,12 @@
 import { Timestamp } from "firebase/firestore";
-enum ChatMessageTypeEnum {
+export enum ChatMessageTypeEnum {
   TEXT = "text",
   IMAGE = "image",
   FILE = "file",
 }
 
 export interface ChatMessageType {
+  id: string;
   message: string;
   messageType: ChatMessageTypeEnum;
   metaPathList: string[];
