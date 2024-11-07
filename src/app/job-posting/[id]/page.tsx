@@ -33,7 +33,7 @@ export default async function JobPostingPage({
         ogDescription={data.description}
         ogUrl={`https://meemong-job-web.vercel.app/job-posting/${jobPostingId}`}
       />
-      <PageContent jobPosting={data} />
+      <PageContent initialJobPosting={data} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import {
   AdminAgeKey,
   AdminSexKey,
+  AgeKey,
   AvailableOffDaysKey,
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
@@ -19,8 +20,6 @@ import {
   IsExistedRetirementPayKey,
   IsExistedTowelSupplierKey,
   IsOnsiteManagerKey,
-  IsPossibleMiddleAgeKey,
-  IsRestrictedAgeKey,
   LeaveDayCountKey,
   MealTimeKey,
   MonthlyEducationDesignerCountKey,
@@ -52,8 +51,9 @@ type AvailableOffDaysOption = Option<AvailableOffDaysKey>;
 type SettlementAllowanceOption = Option<SettlementAllowanceKey>;
 type IncentiveOption = Option<IncentiveKey>;
 type SexOption = Option<SexKey>;
-type IsRestrictedAgeOption = Option<IsRestrictedAgeKey>;
-type IsPossibleMiddleAgeOption = Option<IsPossibleMiddleAgeKey>;
+type AgeOption = Option<AgeKey>;
+// type IsRestrictedAgeOption = Option<IsRestrictedAgeKey>;
+// type IsPossibleMiddleAgeOption = Option<IsPossibleMiddleAgeKey>;
 type DesignerLicensesOption = Option<DesignerLicensesKey>;
 type StoreTypesOption = Option<StoreTypesKey>;
 type EmployeeCountOption = Option<EmployeeCountKey>;
@@ -95,8 +95,9 @@ export const jobPostingOptions: {
   settlementAllowance: SettlementAllowanceOption[];
   incentive: IncentiveOption[];
   sex: SexOption[];
-  isRestrictedAge: IsRestrictedAgeOption[];
-  isPossibleMiddleAge: IsPossibleMiddleAgeOption[];
+  age: AgeOption[];
+  // isRestrictedAge: IsRestrictedAgeOption[];
+  // isPossibleMiddleAge: IsPossibleMiddleAgeOption[];
   designerLicenses: DesignerLicensesOption[];
   storeTypes: StoreTypesOption[];
   employeeCount: EmployeeCountOption[];
@@ -181,16 +182,23 @@ export const jobPostingOptions: {
     { key: "여자", value: "여자" },
     { key: "무관", value: "무관" },
   ],
-  // 나이 제한
-  isRestrictedAge: [
-    { key: false, value: "나이 무관" },
-    { key: true, value: "나이 제한" },
+  age: [
+    { key: "25세 이하", value: "25세 이하" },
+    { key: "30세 이하", value: "30세 이하" },
+    { key: "35세 이하", value: "35세 이하" },
+    { key: "40세 이하", value: "40세 이하" },
+    { key: "상관없음", value: "상관없음" },
   ],
-  // 40대 이상 가능 여부
-  isPossibleMiddleAge: [
-    { key: false, value: "중년층 채용 불가" },
-    { key: true, value: "중년층 채용 가능" },
-  ],
+  // // 나이 제한
+  // isRestrictedAge: [
+  //   { key: false, value: "나이 무관" },
+  //   { key: true, value: "나이 제한" },
+  // ],
+  // // 40대 이상 가능 여부
+  // isPossibleMiddleAge: [
+  //   { key: false, value: "중년층 채용 불가" },
+  //   { key: true, value: "중년층 채용 가능" },
+  // ],
   // 미용 라이센스
   designerLicenses: [
     { key: "자격증", value: "자격증" },

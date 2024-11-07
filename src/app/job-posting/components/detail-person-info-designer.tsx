@@ -16,7 +16,8 @@ const Container = styled.div`
 type DetailInfoDesignerProps = Pick<
   JobPostingType,
   | "sex"
-  | "isRestrictedAge"
+  | "age"
+  // | "isRestrictedAge"
   | "designerLicenses"
   | "workType"
   | "workCycleTypes"
@@ -26,7 +27,8 @@ type DetailInfoDesignerProps = Pick<
 
 const DetailPersonInfoDesigner = ({
   sex,
-  isRestrictedAge,
+  age,
+  // isRestrictedAge,
   designerLicenses,
   workType,
   workCycleTypes,
@@ -38,10 +40,7 @@ const DetailPersonInfoDesigner = ({
     <Container>
       <InfoTitle title={"구인 정보"} />
       <SingleInfoItem label={"성별"} content={sex} />
-      <SingleInfoItem
-        label={"나이"}
-        content={isRestrictedAge ? "나이 제한" : "나이 무관"}
-      />
+      <SingleInfoItem label={"나이"} content={age} />
       <SingleInfoItem label={"미용 라이센스 소유"} content={designerLicenses} />
       <SingleInfoItem label={"근무 형태"} content={workType} />
       <MultiInfoItem label={"근무 주기"} content={workCycleTypes} />

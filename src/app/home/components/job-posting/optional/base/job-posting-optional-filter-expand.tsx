@@ -1,5 +1,6 @@
 import AdminAge from "../expand-filters/admin-age";
 import AdminSex from "../expand-filters/admin-sex";
+import Age from "../expand-filters/age";
 import ArrowDownPurpleIcon from "@/components/icons/arrow-down-purple-icon";
 import DesignerExperienceYearNumber from "../expand-filters/designer-experience-year-number";
 import DesignerLicenses from "../expand-filters/designer-licenses";
@@ -16,7 +17,7 @@ import IsExistedProductSupport from "../expand-filters/is-existed-product-suppor
 import IsExistedRetirementPay from "../expand-filters/is-existed-retirement-pay";
 import IsExistedTowelSupplier from "../expand-filters/is-existed-towel-supplier";
 import IsOnsiteManager from "../expand-filters/is-onsite-manager";
-import IsRestrictedAge from "../expand-filters/is-restricted-age";
+// import IsRestrictedAge from "../expand-filters/is-restricted-age";
 import LeaveDayCount from "../expand-filters/leave-day-count";
 import MealTime from "../expand-filters/meal-time";
 import ParkingSpotCount from "../expand-filters/parking-spot-count";
@@ -107,7 +108,7 @@ const JobPostingOptionalFilterExpand = ({
         </FilterExpandButton>
       </ButtonContainer>
       <Sex />
-      <IsRestrictedAge />
+      <Age />
       <DesignerLicenses />
       <StoreTypes />
       <EmployeeCount />

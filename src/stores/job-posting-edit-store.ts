@@ -1,6 +1,7 @@
 import {
   AdminAgeKey,
   AdminSexKey,
+  AgeKey,
   AvailableOffDaysKey,
   BasicCutPriceKey,
   DescriptionKey,
@@ -22,8 +23,6 @@ import {
   IsExistedRetirementPayKey,
   IsExistedTowelSupplierKey,
   IsOnsiteManagerKey,
-  IsPossibleMiddleAgeKey,
-  IsRestrictedAgeKey,
   LeaveDayCountKey,
   MainHairDyeKey,
   MealTimeKey,
@@ -88,8 +87,9 @@ type JobPostingEditState = {
 
   // 상세 정보
   sex: SexKey | null;
-  isRestrictedAge: IsRestrictedAgeKey | null;
-  isPossibleMiddleAge: IsPossibleMiddleAgeKey | null;
+  age: AgeKey | null;
+  // isRestrictedAge: IsRestrictedAgeKey | null;
+  // isPossibleMiddleAge: IsPossibleMiddleAgeKey | null;
   designerLicenses: DesignerLicensesKey[];
   storeTypes: StoreTypesKey[];
   employeeCount: EmployeeCountKey | null;
@@ -156,8 +156,9 @@ type JobPostingEditActions = {
   setSettlementAllowance: (settlementAllowance: SettlementAllowanceKey) => void;
   setIncentive: (incentive: IncentiveKey) => void;
   setSex: (sex: SexKey) => void;
-  setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey | null) => void;
-  setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) => void;
+  setAge: (age: AgeKey) => void;
+  // setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey | null) => void;
+  // setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) => void;
   setDesignerLicenses: (designerLicense: DesignerLicensesKey) => void;
   setStoreTypes: (store: StoreTypesKey) => void;
   setEmployeeCount: (employeeCount: EmployeeCountKey) => void;
@@ -256,8 +257,9 @@ const defaultJobPostingEditState: JobPostingEditState = {
   settlementAllowance: null,
   incentive: null,
   sex: null,
-  isRestrictedAge: null,
-  isPossibleMiddleAge: null,
+  age: null,
+  // isRestrictedAge: null,
+  // isPossibleMiddleAge: null,
   designerLicenses: [],
   storeTypes: [],
   employeeCount: null,
@@ -363,8 +365,9 @@ export const useJobPostingEditStore = create(
           settlementAllowance: jobPosting.settlementAllowance,
           incentive: jobPosting.incentive,
           sex: jobPosting.sex,
-          isRestrictedAge: jobPosting.isRestrictedAge,
-          isPossibleMiddleAge: jobPosting.isPossibleMiddleAge,
+          age: jobPosting.age,
+          // isRestrictedAge: jobPosting.isRestrictedAge,
+          // isPossibleMiddleAge: jobPosting.isPossibleMiddleAge,
           designerLicenses: jobPosting.designerLicenses
             ? (jobPosting.designerLicenses.split(",") as DesignerLicensesKey[])
             : ["상관없음"],
@@ -448,14 +451,15 @@ export const useJobPostingEditStore = create(
         set({ settlementAllowance }),
       setIncentive: (incentive: IncentiveKey) => set({ incentive }),
       setSex: (sex: SexKey) => set({ sex }),
-      setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey | null) => {
-        set({ isRestrictedAge });
-        if (!isRestrictedAge) {
-          set({ isPossibleMiddleAge: null });
-        }
-      },
-      setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) =>
-        set({ isPossibleMiddleAge }),
+      setAge: (age: AgeKey) => set({ age }),
+      // setIsRestrictedAge: (isRestrictedAge: IsRestrictedAgeKey | null) => {
+      //   set({ isRestrictedAge });
+      //   if (!isRestrictedAge) {
+      //     set({ isPossibleMiddleAge: null });
+      //   }
+      // },
+      // setIsPossibleMiddleAge: (isPossibleMiddleAge: IsPossibleMiddleAgeKey) =>
+      //   set({ isPossibleMiddleAge }),
       setDesignerLicenses: (license: DesignerLicensesKey) => {
         const { designerLicenses } = get();
         set({ designerLicenses: toggleSelect(designerLicenses, license) });
@@ -574,8 +578,9 @@ export const useJobPostingEditStore = create(
 
             // 상세 정보
             sex: get().sex, // 성별
-            isRestrictedAge: get().isRestrictedAge, // 나이 제한
-            isPossibleMiddleAge: get().isPossibleMiddleAge || false, // 중년 가능
+            age: get().age, // 나이
+            // isRestrictedAge: get().isRestrictedAge, // 나이 제한
+            // isPossibleMiddleAge: get().isPossibleMiddleAge || false, // 중년 가능
             designerLicenses: get().designerLicenses.join(), // 미용 라이센스
             storeTypes: get().storeTypes.join(), // 매장 형태
             employeeCount: get().employeeCount, // 직원 수
@@ -703,8 +708,9 @@ export const useJobPostingEditStore = create(
 
             // 상세 정보
             sex: get().sex, // 성별
-            isRestrictedAge: get().isRestrictedAge, // 나이 제한
-            isPossibleMiddleAge: get().isPossibleMiddleAge || false, // 중년 가능
+            age: get().age, // 나이
+            // isRestrictedAge: get().isRestrictedAge, // 나이 제한
+            // isPossibleMiddleAge: get().isPossibleMiddleAge || false, // 중년 가능
             designerLicenses: get().designerLicenses.join(), // 미용 라이센스
             storeTypes: get().storeTypes.join(), // 매장 형태
             employeeCount: get().employeeCount, // 직원 수
@@ -749,7 +755,7 @@ export const useJobPostingEditStore = create(
               message: "인턴 구인 공고를 등록해야 합니다.",
             };
           }
-
+          console.log("jobPostingData", jobPostingData);
           const hasNullField = Object.entries(jobPostingData).some(
             ([key, value]) =>
               key !== "postingRegions" &&

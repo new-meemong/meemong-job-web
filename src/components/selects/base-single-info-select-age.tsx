@@ -29,7 +29,7 @@ const Button = styled.div<{ $isSelected: boolean; $hasError: boolean }>`
   justify-content: center;
   align-items: center;
   height: ${pxToVw(34)};
-  width: ${pxToVw(160)};
+  width: ${pxToVw(77)};
   border-radius: ${pxToVw(4)};
   border: ${pxToVw(1)} solid
     ${(props) =>
@@ -92,23 +92,23 @@ const ConfirmButton = styled.div`
   margin-top: ${pxToVw(30)};
 `;
 
-interface Option {
-  key: boolean;
+interface Option<T> {
+  key: T;
   value: string;
 }
-interface BaseSingleInfoSelectProps {
+interface BaseSingleInfoSelectProps<T> {
   label: string;
-  options: Option[];
-  selectedOption: boolean | null;
+  options: Option<T>[];
+  selectedOption: T | null;
   errorMessage: string;
   isError: boolean;
-  onSelect: (optionKey: boolean | null) => void;
+  onSelect: (optionKey: T | null) => void;
   infoLabel: string;
   infoHeader: string;
   info: ReactNode;
 }
 
-const BaseSingleInfoSelectAge = ({
+const BaseSingleInfoSelectAge = <T extends string>({
   label,
   options,
   selectedOption,
@@ -118,7 +118,7 @@ const BaseSingleInfoSelectAge = ({
   infoLabel,
   infoHeader,
   info,
-}: BaseSingleInfoSelectProps) => {
+}: BaseSingleInfoSelectProps<T>) => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
 
   const handleOpenInfo = () => {
@@ -129,7 +129,7 @@ const BaseSingleInfoSelectAge = ({
     setIsOpenInfo(false);
   };
 
-  const handleSelect = (optionKey: boolean | null) => {
+  const handleSelect = (optionKey: T) => {
     if (selectedOption === optionKey) {
       onSelect(null);
     } else {

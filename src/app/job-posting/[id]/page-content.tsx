@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import BasicInfoDesigner from "../components/basic-info-designer";
 import BasicInfoIntern from "../components/basic-info-intern";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
@@ -24,7 +26,7 @@ import { messageType } from "@/types/send-app-message-type";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
-import { useEffect } from "react";
+import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
@@ -45,12 +47,19 @@ const ContentContainer = styled.div`
 `;
 
 export default function PageContent({
-  jobPosting,
+  initialJobPosting,
 }: {
-  jobPosting: JobPostingType;
+  initialJobPosting: JobPostingType;
 }) {
+  const [jobPosting, setJobPosting] =
+    useState<JobPostingType>(initialJobPosting);
+
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
+  }));
+
+  const { getJobPosting } = useJobPostingListStore((state) => ({
+    getJobPosting: state.getJobPosting,
   }));
 
   const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
@@ -65,6 +74,15 @@ export default function PageContent({
     window.scrollTo(0, 0); // 페이지 로드 시 스크롤을 최상단으로 이동
   }, []);
 
+  useEffect(() => {
+    const _fetch = async () => {
+      const response = await getJobPosting(jobPosting.id);
+      if (response) {
+        setJobPosting(response);
+      }
+    };
+    _fetch();
+  }, [initialJobPosting.id]);
   const renderInfo = () => {
     if (jobPosting.role === "디자이너") {
       return (
@@ -80,7 +98,8 @@ export default function PageContent({
           <Divider />
           <DetailPersonInfoDesigner
             sex={jobPosting.sex}
-            isRestrictedAge={jobPosting.isRestrictedAge}
+            age={jobPosting.age}
+            // isRestrictedAge={jobPosting.isRestrictedAge}
             designerLicenses={jobPosting.designerLicenses}
             workType={jobPosting.workType}
             workCycleTypes={jobPosting.workCycleTypes}
@@ -135,7 +154,8 @@ export default function PageContent({
           <Divider />
           <DetailPersonInfoIntern
             sex={jobPosting.sex}
-            isRestrictedAge={jobPosting.isRestrictedAge}
+            age={jobPosting.age}
+            // isRestrictedAge={jobPosting.isRestrictedAge}
             designerLicenses={jobPosting.designerLicenses}
             workType={jobPosting.workType}
             workCycleTypes={jobPosting.workCycleTypes}

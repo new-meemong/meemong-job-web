@@ -57,11 +57,17 @@ export type InternSalaryKey = "210만원 이하" | "210만원 이상" | "250만�
 // 성별
 export type SexKey = "남자" | "여자" | "무관";
 
-// 나이 제한
-export type IsRestrictedAgeKey = boolean;
+export type AgeKey =
+  | "25세 이하"
+  | "30세 이하"
+  | "35세 이하"
+  | "40세 이하"
+  | "상관없음";
+// // 나이 제한
+// export type IsRestrictedAgeKey = boolean;
 
-// 나이 제한 - 40대 이상 가능 여부
-export type IsPossibleMiddleAgeKey = boolean;
+// // 나이 제한 - 40대 이상 가능 여부
+// export type IsPossibleMiddleAgeKey = boolean;
 
 // 미용 라이센스
 export type DesignerLicensesKey = "자격증" | "면허증" | "상관없음";

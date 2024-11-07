@@ -1,6 +1,7 @@
 import {
   AdminAgeKey,
   AdminSexKey,
+  AgeKey,
   AvailableOffDaysKey,
   DesignerExperienceYearNumberKey,
   DesignerLicensesKey,
@@ -10,7 +11,6 @@ import {
   IncentiveKey,
   InternExperienceYearNumberKey,
   InternSalaryKey,
-  IsRestrictedAgeKey,
   LeaveDayCountKey,
   MealTimeKey,
   ParkingSpotCountKey,
@@ -61,12 +61,13 @@ export interface JobPostingType {
   incentive: IncentiveKey; // 인센티브
   internSalary: InternSalaryKey; // 인턴 월급
   sex: SexKey; // 성별
+  age: AgeKey; // 나이
 
   // 직원 및 관리
   employeeCount: EmployeeCountKey; // 직원 수
   isOnsiteManager: boolean; // 샵 매니저 상주 여부
   isExistedInternSystem: isExistedInternSystemKey; // 인턴 시스템 존재 여부 (예: "0", "1")
-  isPossibleMiddleAge: boolean | null; // 중년 가능 여부
+  // isPossibleMiddleAge: boolean | null; // 중년 가능 여부
   adminAge: AdminAgeKey; // 관리자 나이
   adminSex: AdminSexKey; // 관리자 성별
   storeTypes: StoreTypesKey; // 매장 형태 (콤마로 구분된 문자열)
@@ -115,8 +116,8 @@ export interface JobPostingType {
   // 사용자 정보
   userId: number; // 사용자 ID
 
-  // 기타 옵션
-  isRestrictedAge: IsRestrictedAgeKey; // 나이 제한 여부
+  // // 기타 옵션
+  // isRestrictedAge: IsRestrictedAgeKey; // 나이 제한 여부
 
   JobPostingsStoreImages: ImageType[];
   User: UserType;

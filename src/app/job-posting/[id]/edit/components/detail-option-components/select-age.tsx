@@ -1,3 +1,4 @@
+import { AgeKey } from "@/types/job-posting-keys";
 import BaseSingleInfoSelectAge from "@/components/selects/base-single-info-select-age";
 import Link from "next/link";
 import { colors } from "@/styles/colors";
@@ -118,25 +119,20 @@ const Info = () => {
   );
 };
 
-const SelectIsRestrictedAge = () => {
-  const {
-    isRestrictedAge,
-    setIsRestrictedAge,
-    hasDesignerOptionNull,
-    hasInternOptionNull,
-    role,
-  } = useJobPostingEditStore();
-  const options = jobPostingOptions.isRestrictedAge;
+const SelectAge = () => {
+  const { age, setAge, hasDesignerOptionNull, hasInternOptionNull, role } =
+    useJobPostingEditStore();
+  const options = jobPostingOptions.age;
   let hasError = false;
 
   if (role === "디자이너") {
-    hasError = isRestrictedAge === null && hasDesignerOptionNull;
+    hasError = age === null && hasDesignerOptionNull;
   } else {
-    hasError = isRestrictedAge === null && hasInternOptionNull;
+    hasError = age === null && hasInternOptionNull;
   }
 
-  const handleSelect = (option: boolean | null) => {
-    setIsRestrictedAge(option);
+  const handleSelect = (option: string | null) => {
+    setAge(option as AgeKey);
   };
 
   return (
@@ -144,7 +140,7 @@ const SelectIsRestrictedAge = () => {
       <BaseSingleInfoSelectAge
         label="나이"
         options={options}
-        selectedOption={isRestrictedAge}
+        selectedOption={age}
         errorMessage="나이를 선택해주세요."
         isError={hasError}
         onSelect={handleSelect}
@@ -156,4 +152,4 @@ const SelectIsRestrictedAge = () => {
   );
 };
 
-export default SelectIsRestrictedAge;
+export default SelectAge;

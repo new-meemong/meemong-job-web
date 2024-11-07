@@ -1,39 +1,38 @@
-import pxToVw from "@/lib/dpi-converter";
-import { fonts } from "@/styles/fonts";
-import styled from "styled-components";
-import SelectSex from "./detail-option-components/select-sex";
-import SelectIsRestrictedAge from "./detail-option-components/select-is-restricted-age";
-import CheckIsPossibleMiddleAge from "./detail-option-components/check-is-possible-middle-age";
-import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import SelectDesignerLicense from "./detail-option-components/select-designer-license";
-import SelectStoreTypes from "./detail-option-components/select-store-types";
-import SelectEmployeeCount from "./detail-option-components/select-employee-count";
-import SelectIsExistedInternSystem from "./detail-option-components/select-is-existed-intern-system";
-import SelectStoreInteriorRenovationAgo from "./detail-option-components/select-store-interior-renovation-ago";
-import SelectWorkType from "./detail-option-components/select-work-type";
-import SelectWorkCycle from "./detail-option-components/select-work-cycle";
-import SelectIsExistedEducationSupport from "./detail-option-components/select-is-existed-education-support";
-import SelectIsExistedMealSupport from "./detail-option-components/select-is-existed-meal-support";
-import SelectMealTime from "./detail-option-components/select-meal-time";
-import SelectIsExistedProductSupport from "./detail-option-components/select-is-existed-product-support";
-import SelectIsExistedDormitorySupport from "./detail-option-components/select-is-existed-dormitory-support";
-import SelectSalesCommission from "./detail-option-components/select-sales-commission";
-import SelectDesignerExperienceYearNumber from "./detail-option-components/select-designer-experience-year-number";
-import SelectSalesLast3MonthAvg from "./detail-option-components/select-sales-last-3month-avg";
-import SelectSubwayAccessibility from "./detail-option-components/select-subway-accessibility";
+import InputBasicCutPrice from "./detail-option-components/input-basic-cut-price";
 import SelectAdminAge from "./detail-option-components/select-admin-age";
 import SelectAdminSex from "./detail-option-components/select-admin-sex";
-import SelectLeaveDayCount from "./detail-option-components/select-leave-day-count";
-import SelectParkingSpotCount from "./detail-option-components/select-parking-spot-count";
-import SelectIsExistedCleaningSupplier from "./detail-option-components/select-is-existed-cleaning-supplier";
-import SelectIsExistedTowelSupplier from "./detail-option-components/select-is-existed-towel-supplier";
-import InputBasicCutPrice from "./detail-option-components/input-basic-cut-price";
+import SelectAge from "./detail-option-components/select-age";
+import SelectDesignerExperienceYearNumber from "./detail-option-components/select-designer-experience-year-number";
+import SelectDesignerLicense from "./detail-option-components/select-designer-license";
 import SelectDesignerPromotionPeriod from "./detail-option-components/select-designer-promotion-period";
+import SelectEmployeeCount from "./detail-option-components/select-employee-count";
 import SelectInternExperienceYearNumber from "./detail-option-components/select-intern-experience-year-number";
-import SelectIsOnsiteManger from "./detail-option-components/select-is-onsite-manager";
-import SelectIsExistedRetirementPay from "./detail-option-components/select-is-existed-retirement-pay";
+import SelectIsExistedCleaningSupplier from "./detail-option-components/select-is-existed-cleaning-supplier";
+import SelectIsExistedDormitorySupport from "./detail-option-components/select-is-existed-dormitory-support";
+import SelectIsExistedEducationSupport from "./detail-option-components/select-is-existed-education-support";
 import SelectIsExistedFourInsurance from "./detail-option-components/select-is-existed-four-insurance";
+import SelectIsExistedInternSystem from "./detail-option-components/select-is-existed-intern-system";
+import SelectIsExistedMealSupport from "./detail-option-components/select-is-existed-meal-support";
+import SelectIsExistedProductSupport from "./detail-option-components/select-is-existed-product-support";
+import SelectIsExistedRetirementPay from "./detail-option-components/select-is-existed-retirement-pay";
+import SelectIsExistedTowelSupplier from "./detail-option-components/select-is-existed-towel-supplier";
+import SelectIsOnsiteManger from "./detail-option-components/select-is-onsite-manager";
+import SelectLeaveDayCount from "./detail-option-components/select-leave-day-count";
+import SelectMealTime from "./detail-option-components/select-meal-time";
+import SelectParkingSpotCount from "./detail-option-components/select-parking-spot-count";
+import SelectSalesCommission from "./detail-option-components/select-sales-commission";
+import SelectSalesLast3MonthAvg from "./detail-option-components/select-sales-last-3month-avg";
+import SelectSex from "./detail-option-components/select-sex";
+import SelectStoreInteriorRenovationAgo from "./detail-option-components/select-store-interior-renovation-ago";
+import SelectStoreTypes from "./detail-option-components/select-store-types";
+import SelectSubwayAccessibility from "./detail-option-components/select-subway-accessibility";
+import SelectWorkCycle from "./detail-option-components/select-work-cycle";
+import SelectWorkType from "./detail-option-components/select-work-type";
 import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div``;
 
@@ -60,15 +59,12 @@ const Divider = styled.div`
 `;
 
 const DesignerOptions = () => {
-  const { isRestrictedAge } = useJobPostingEditStore();
-
   return (
     <>
       <ContentContainer>
         <HeaderLabel>구인 정보 입력*</HeaderLabel>
         <SelectSex />
-        <SelectIsRestrictedAge />
-        {isRestrictedAge && <CheckIsPossibleMiddleAge />}
+        <SelectAge />
         <SelectDesignerLicense />
         <SelectWorkType />
         <SelectWorkCycle />
@@ -102,15 +98,12 @@ const DesignerOptions = () => {
 };
 
 const InternOptions = () => {
-  const { isRestrictedAge } = useJobPostingEditStore();
-
   return (
     <>
       <ContentContainer>
         <HeaderLabel>구인 정보 입력*</HeaderLabel>
         <SelectSex />
-        <SelectIsRestrictedAge />
-        {isRestrictedAge && <CheckIsPossibleMiddleAge />}
+        <SelectAge />
         <SelectDesignerLicense />
         <SelectWorkType />
         <SelectWorkCycle />
