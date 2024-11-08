@@ -164,7 +164,10 @@ const BirthdayInput = () => {
         <Sheet.Backdrop onTap={() => setIsOpen(false)} />
         <SheetContainer>
           <SheetHeader />
-          <SheetContent disableDrag={true}>
+          <SheetContent
+            disableDrag={true}
+            style={{ paddingBottom: safeAreaInsetBottom }}
+          >
             <DatePickerContainer>
               <ScrollColumn>
                 {years.map((year) => (
