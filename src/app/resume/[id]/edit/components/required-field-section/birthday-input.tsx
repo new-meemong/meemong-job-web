@@ -1,4 +1,8 @@
+import { useEffect, useState } from "react";
+
+import FullButton from "@/components/buttons/full-button";
 import ResumeEditLabel from "../base/resume-edit-label";
+import { Sheet } from "react-modal-sheet";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
@@ -9,6 +13,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 `;
 
 const InputWrapper = styled.div<{ $hasError: boolean }>`
@@ -42,12 +47,66 @@ const Input = styled.input`
   }
 `;
 
-// const Caption = styled.span`
-//   margin-left: ${pxToVw(8)};
-//   ${fonts.greyText4Semi12}
-// `;
+const SheetContainer = styled(Sheet.Container)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top-right-radius: ${pxToVw(30)} !important;
+  border-top-left-radius: ${pxToVw(30)} !important;
+`;
+
+const SheetHeader = styled(Sheet.Header)``;
+
+const SheetContent = styled(Sheet.Content)`
+  height: 100%;
+  padding-left: ${pxToVw(24)};
+  padding-right: ${pxToVw(24)};
+  background-color: ${colors.white};
+`;
+
+const DatePickerContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: ${pxToVw(20)} 0;
+`;
+
+const ScrollColumn = styled.div`
+  flex: 1;
+  height: ${pxToVw(200)};
+  overflow-y: scroll;
+  text-align: center;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const DateOption = styled.div<{ $isSelected?: boolean }>`
+  ${fonts.blackSemi14}
+  padding: ${pxToVw(10)} 0;
+  color: ${({ $isSelected }) => ($isSelected ? colors.black : colors.grey)};
+`;
+
+const ConfirmButton = styled.div`
+  width: 100%;
+  height: ${pxToVw(48)};
+  background-color: ${colors.purplePrimary};
+  color: ${colors.white};
+`;
 
 const BirthdayInput = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [safeAreaInsetBottom, setSafeAreaInsetBottom] = useState(0);
+  const [selectedYear, setSelectedYear] = useState<number>(1990);
+  const [selectedMonth, setSelectedMonth] = useState<number>(1);
+  const [selectedDay, setSelectedDay] = useState<number>(1);
+  const years = Array.from({ length: 50 }, (_, i) => 1960 + i);
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+  const days = Array.from(
+    { length: new Date(selectedYear, selectedMonth, 0).getDate() },
+    (_, i) => i + 1,
+  );
   const {
     birthday,
     setBirthday,
@@ -71,13 +130,25 @@ const BirthdayInput = () => {
     hasError = !birthday && hasInternOptionNull;
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value.length <= 6) {
-      const numericValue = value ? value : null;
-      setBirthday(numericValue);
-    }
+  const handleDateSelect = () => {
+    const formattedMonth = String(selectedMonth).padStart(2, "0");
+    const formattedDay = String(selectedDay).padStart(2, "0");
+    const birthdate = `${selectedYear}${formattedMonth}${formattedDay}`; // 연도 전체 사용
+    setBirthday(birthdate);
+    setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const insetBottom = getComputedStyle(document.documentElement)
+        .getPropertyValue("--safe-area-inset-bottom")
+        .trim();
+
+      const result = insetBottom.slice(0, -2);
+
+      setSafeAreaInsetBottom(Number(result));
+    }
+  }, []);
 
   return (
     <Container>
@@ -85,11 +156,59 @@ const BirthdayInput = () => {
       <InputWrapper $hasError={hasError}>
         <Input
           type="number"
-          placeholder="ex) 890516"
+          placeholder="생년월일 입력"
           value={birthday || ""}
-          onChange={handleChange}
+          onClick={() => setIsOpen(true)}
         />
       </InputWrapper>
+      <Sheet
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        snapPoints={[0.4]}
+      >
+        <Sheet.Backdrop onTap={() => setIsOpen(false)} />
+        <SheetContainer>
+          <SheetHeader />
+          <SheetContent disableDrag={true}>
+            <DatePickerContainer>
+              <ScrollColumn>
+                {years.map((year) => (
+                  <DateOption
+                    key={year}
+                    $isSelected={year === selectedYear}
+                    onClick={() => setSelectedYear(year)}
+                  >
+                    {year}년
+                  </DateOption>
+                ))}
+              </ScrollColumn>
+              <ScrollColumn>
+                {months.map((month) => (
+                  <DateOption
+                    key={month}
+                    $isSelected={month === selectedMonth}
+                    onClick={() => setSelectedMonth(month)}
+                  >
+                    {month}월
+                  </DateOption>
+                ))}
+              </ScrollColumn>
+              <ScrollColumn>
+                {days.map((day) => (
+                  <DateOption
+                    key={day}
+                    $isSelected={day === selectedDay}
+                    onClick={() => setSelectedDay(day)}
+                  >
+                    {day}일
+                  </DateOption>
+                ))}
+              </ScrollColumn>
+            </DatePickerContainer>
+            <FullButton title={"선택완료"} onClick={handleDateSelect} />
+          </SheetContent>
+        </SheetContainer>
+      </Sheet>
     </Container>
   );
 };
