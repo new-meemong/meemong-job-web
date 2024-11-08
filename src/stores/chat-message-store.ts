@@ -14,8 +14,10 @@ import {
   query,
   setDoc,
   startAfter,
+  where,
 } from "firebase/firestore";
 
+import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 
@@ -31,12 +33,13 @@ interface ChatMessageState {
   loadMoreMessages: (channelId: string) => Promise<void>;
 
   // 메시지 전송 관련 액션
-  sendMessage: (
-    channelId: string,
-    message: string,
-    senderId: string,
-    participantsIds: string[],
-  ) => Promise<void>;
+  sendMessage: (params: {
+    chatChannelType: ChatChannelTypeEnum;
+    message: string;
+    messageType: ChatMessageTypeEnum;
+    senderId: string;
+    receiverId: string;
+  }) => Promise<void>;
 
   // 메시지 읽음 상태 관련 액션
   updateMessageReadStatus: (
@@ -117,25 +120,53 @@ export const useChatMessageStore = create<ChatMessageState>((set, get) => ({
     }
   },
 
-  sendMessage: async (
-    channelId: string,
-    message: string,
-    senderId: string,
-    participantsIds: string[],
-  ) => {
+  sendMessage: async ({
+    chatChannelType,
+    message,
+    messageType,
+    senderId,
+    receiverId,
+  }) => {
     try {
+      // 기존 채널 찾기
+      const channelsRef = collection(db, "chatChannels");
+      const q = query(
+        channelsRef,
+        where("type", "==", chatChannelType),
+        where("participantsIds", "array-contains-any", [senderId, receiverId]),
+      );
+
+      const channelsSnapshot = await getDocs(q);
+      let channelId: string;
+      console.log("moonsae channelsSnapshot", channelsSnapshot);
+      // 기존 채널이 없는 경우 새로운 채널 생성
+      if (channelsSnapshot.empty) {
+        const newChannelRef = doc(collection(db, "chatChannels"));
+        const newChannel = {
+          type: chatChannelType,
+          participantsIds: [senderId, receiverId],
+          createdAt: Timestamp.now(),
+          updatedAt: Timestamp.now(),
+        };
+        await setDoc(newChannelRef, newChannel);
+        channelId = newChannelRef.id;
+      } else {
+        // 기존 채널 사용
+        channelId = channelsSnapshot.docs[0].id;
+      }
+      console.log("moonsae channelId", channelId);
+      // 메시지 생성
       const messageRef = doc(
         collection(db, `chatChannels/${channelId}/messages`),
       );
-
-      const readStatus = participantsIds.reduce((acc, userId) => {
-        acc[userId] = userId === senderId;
-        return acc;
-      }, {} as { [key: string]: boolean });
+      const readStatus = {
+        [senderId]: true,
+        [receiverId]: false,
+      };
 
       const newMessage: Omit<ChatMessageType, "id"> = {
         message,
-        messageType: ChatMessageTypeEnum.TEXT,
+        messageType,
         metaPathList: [],
         senderId,
         readStatus,

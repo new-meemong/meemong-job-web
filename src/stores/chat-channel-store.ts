@@ -1,6 +1,6 @@
 import {
-  ChannelTypeEnum,
   ChatChannelType,
+  ChatChannelTypeEnum,
 } from "@/types/chat/chat-channel-type";
 import {
   Timestamp,
@@ -34,7 +34,7 @@ interface ChatChannelState {
 
   // 채널 관련 액션
   findOrCreateChannel: (
-    channelType: ChannelTypeEnum,
+    channelType: ChatChannelTypeEnum,
     currentUserId: string,
     targetUserId: string,
   ) => Promise<string>;
@@ -60,7 +60,7 @@ export const useChatChannelStore = create<ChatChannelState>((set) => ({
   error: null,
 
   findOrCreateChannel: async (
-    channelType: ChannelTypeEnum,
+    channelType: ChatChannelTypeEnum,
     currentUserId: string,
     targetUserId: string,
   ) => {

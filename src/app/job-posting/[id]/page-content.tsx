@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import BasicInfoDesigner from "../components/basic-info-designer";
 import BasicInfoIntern from "../components/basic-info-intern";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
+import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
+import { ChatMessageTypeEnum } from "@/types/chat/chat-message-type";
 import DetailPersonInfoDesigner from "../components/detail-person-info-designer";
 import DetailPersonInfoIntern from "../components/detail-person-info-intern";
 import DetailStoreEtcInfoDesigner from "../components/detail-store-etc-info-designer";
@@ -26,6 +28,7 @@ import { messageType } from "@/types/send-app-message-type";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
+import { useChatMessageStore } from "@/stores/chat-message-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useSearchParams } from "next/navigation";
 
@@ -60,6 +63,10 @@ export default function PageContent({
 
   const { getJobPosting } = useJobPostingListStore((state) => ({
     getJobPosting: state.getJobPosting,
+  }));
+
+  const { sendMessage } = useChatMessageStore((state) => ({
+    sendMessage: state.sendMessage,
   }));
 
   const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
@@ -237,19 +244,30 @@ export default function PageContent({
       {userId && !isMine && (
         <BottomFloatingButton
           title="지원하기"
-          onClick={() => {
-            if (typeof window !== "undefined" && window.startChat) {
-              const postUrl = window.location.href;
-              const postId = postUrl.split("/").pop() as string;
-              const message = {
-                type: "job-posting" as messageType,
-                postId,
-                postUserId: jobPosting.User?.UserID.toString(),
-              };
-              window.startChat(message);
-            } else {
-              console.log("startChat function is not available.");
+          onClick={async () => {
+            try {
+              await sendMessage({
+                chatChannelType: ChatChannelTypeEnum.JOB_POSTING,
+                message: `${jobPosting.storeName} 구인공고에 지원합니다.`,
+                messageType: ChatMessageTypeEnum.TEXT,
+                senderId: userId,
+                receiverId: jobPosting.userId.toString(),
+              });
+            } catch (error) {
+              console.error("채팅 메시지 전송 실패:", error);
             }
+            // if (typeof window !== "undefined" && window.startChat) {
+            //   const postUrl = window.location.href;
+            //   const postId = postUrl.split("/").pop() as string;
+            //   const message = {
+            //     type: "job-posting" as messageType,
+            //     postId,
+            //     postUserId: jobPosting.User?.UserID.toString(),
+            //   };
+            //   window.startChat(message);
+            // } else {
+            //   console.log("startChat function is not available.");
+            // }
           }}
         />
       )}

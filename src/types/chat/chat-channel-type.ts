@@ -1,7 +1,7 @@
 import { ChatMessageType } from "./chat-message-type";
 import { Timestamp } from "firebase/firestore";
 
-export enum ChannelTypeEnum {
+export enum ChatChannelTypeEnum {
   GROUP = "group",
   MODEL_MATCHING = "model_matching",
   PART_TIME_JOB = "part_time_job",
@@ -11,7 +11,7 @@ export enum ChannelTypeEnum {
 export interface ChatChannelType {
   id: string;
   channelKey: string; // `${channelType}_${participants.join('_')}`
-  channelType: ChannelTypeEnum;
+  channelType: ChatChannelTypeEnum;
   lastMessage: ChatMessageType;
   participantsIds: string[];
   channelOpenUserId: string;

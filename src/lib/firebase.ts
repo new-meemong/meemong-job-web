@@ -1,8 +1,7 @@
 import { Analytics, getAnalytics, isSupported } from "firebase/analytics";
-import { getApps, initializeApp } from "firebase/app";
-
 // Import the functions you need from the SDKs you need
-import { getFirestore } from "firebase/firestore";
+import { enableIndexedDbPersistence, getFirestore } from "firebase/firestore";
+import { getApps, initializeApp } from "firebase/app";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,7 +20,7 @@ const firebaseConfig = {
 
 // Firebase 초기화
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
-const db = getFirestore(app);
+const db = getFirestore(app, "meemong-chat");
 
 // Analytics는 클라이언트 사이드에서만 초기화
 let analytics: Analytics | null = null;
