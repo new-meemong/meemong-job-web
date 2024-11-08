@@ -580,7 +580,7 @@ const getResumeRequiredData = (state: ResumeEditState) => {
 
       preferredStoreRegions: state.preferredStoreRegions,
       preferredStoreRegionSiNames: state.preferredStoreRegionSiNames,
-      birthday: moment(state.birthday, "YYMMDD").format("YYYY-MM-DD"),
+      birthday: moment(state.birthday, "YYYYMMDD").format("YYYY-MM-DD"),
       appliedRole: state.appliedRole,
       workType: state.workType,
       internExpectedSalary: state.internExpectedSalary,
