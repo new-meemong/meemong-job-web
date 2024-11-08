@@ -159,7 +159,7 @@ const BirthdayInput = () => {
       <Sheet
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        snapPoints={[0.4]}
+        snapPoints={[0.5]}
       >
         <Sheet.Backdrop onTap={() => setIsOpen(false)} />
         <SheetContainer>
