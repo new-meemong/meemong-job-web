@@ -33,7 +33,7 @@ const InputWrapper = styled.div<{ $hasError: boolean }>`
   justify-content: space-between;
 `;
 
-const Input = styled.input`
+const Input = styled.div`
   ${fonts.blackSemi12}
 
   /* width: ${pxToVw(70)}; 너비 설정 */
@@ -153,13 +153,8 @@ const BirthdayInput = () => {
   return (
     <Container>
       <ResumeEditLabel label={"생년월일*"} />
-      <InputWrapper $hasError={hasError}>
-        <Input
-          type="number"
-          placeholder="생년월일 입력"
-          value={birthday || ""}
-          onClick={() => setIsOpen(true)}
-        />
+      <InputWrapper $hasError={hasError} onClick={() => setIsOpen(true)}>
+        <Input>{birthday || "생년월일 입력"}</Input>
       </InputWrapper>
       <Sheet
         isOpen={isOpen}
