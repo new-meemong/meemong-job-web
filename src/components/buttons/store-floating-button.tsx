@@ -38,7 +38,7 @@ const AppStoreButton = styled.div`
 `;
 
 const Title = styled.div`
-  ${fonts.blackNormal14}
+  ${fonts.greySemi14}
 `;
 
 const StoreFloatingButton = ({ title }: { title: string }) => {

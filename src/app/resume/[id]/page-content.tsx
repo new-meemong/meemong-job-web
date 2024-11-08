@@ -75,7 +75,7 @@ export default function PageContent({ resume }: { resume: ResumeType }) {
       {userId && !isMine && (
         <BottomButtonSection postUserId={resume.User.UserID.toString()} />
       )}
-      {!userId && <StoreFloatingButton title={"어플 다운 후 제안하기"} />}
+      {!userId && <StoreFloatingButton title={"어플 다운 후 채팅하기"} />}
     </Container>
   );
 }

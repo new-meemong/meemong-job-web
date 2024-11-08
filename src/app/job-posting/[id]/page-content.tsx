@@ -253,7 +253,7 @@ export default function PageContent({
           }}
         />
       )}
-      {!userId && <StoreFloatingButton title={"어플 다운 후 지원하기"} />}
+      {!userId && <StoreFloatingButton title={"어플 다운 후 채팅하기"} />}
     </Container>
   );
 }
