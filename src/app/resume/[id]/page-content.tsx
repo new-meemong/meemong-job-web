@@ -100,7 +100,10 @@ export default function PageContent({
         <SelfIntroductionSection description={resume.description} />
       </ContentContainer>
       {userId && !isMine && (
-        <BottomButtonSection postUserId={resume.User.UserID.toString()} />
+        <BottomButtonSection
+          postUserId={resume.User.UserID.toString()}
+          postId={resume.id}
+        />
       )}
       {!userId && <StoreFloatingButton title={"어플 다운 후 채팅하기"} />}
     </Container>

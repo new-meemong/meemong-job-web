@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import BasicInfoDesigner from "../components/basic-info-designer";
 import BasicInfoIntern from "../components/basic-info-intern";
 import BottomFloatingButton from "@/components/buttons/bottom-floating-button";
-import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
-import { ChatMessageTypeEnum } from "@/types/chat/chat-message-type";
 import DetailPersonInfoDesigner from "../components/detail-person-info-designer";
 import DetailPersonInfoIntern from "../components/detail-person-info-intern";
 import DetailStoreEtcInfoDesigner from "../components/detail-store-etc-info-designer";
@@ -18,17 +16,19 @@ import EtcInfo from "../components/etc-info";
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import ImageSlider from "../components/image-slider";
 import { ImageType } from "@/types/image-type";
+import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
 import JobPostingHeader from "@/components/headers/job-posting-header";
 import { JobPostingType } from "@/types/job-posting-type";
 import PostingTitle from "../components/posting-title";
 import StoreFloatingButton from "@/components/buttons/store-floating-button";
 import StoreInfo from "../components/store-info";
 import StoreLocation from "../components/store-location";
-import { messageType } from "@/types/send-app-message-type";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores/auth-store";
-import { useChatMessageStore } from "@/stores/chat-message-store";
+import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
+import { useJobPostingChatMessageStore } from "@/stores/job-posting-chat-message-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useSearchParams } from "next/navigation";
 
@@ -65,7 +65,10 @@ export default function PageContent({
     getJobPosting: state.getJobPosting,
   }));
 
-  const { sendMessage } = useChatMessageStore((state) => ({
+  const { findOrCreateChannel } = useJobPostingChatChannelStore((state) => ({
+    findOrCreateChannel: state.findOrCreateChannel,
+  }));
+  const { sendMessage } = useJobPostingChatMessageStore((state) => ({
     sendMessage: state.sendMessage,
   }));
 
@@ -246,13 +249,30 @@ export default function PageContent({
           title="지원하기"
           onClick={async () => {
             try {
-              await sendMessage({
-                chatChannelType: ChatChannelTypeEnum.JOB_POSTING,
-                message: `${jobPosting.storeName} 구인공고에 지원합니다.`,
-                messageType: ChatMessageTypeEnum.TEXT,
+              const { channelId, isCreated } = await findOrCreateChannel({
                 senderId: userId,
                 receiverId: jobPosting.userId.toString(),
+                jobPostingId: jobPosting.id,
+                resumeId: null,
               });
+              console.log("channelId", channelId);
+              console.log("isCreated", isCreated);
+              if (!channelId) {
+                toast.error("채널 생성 중 오류가 발생했습니다.");
+                return;
+              }
+
+              if (isCreated) {
+                await sendMessage({
+                  channelId,
+                  message: `구인구직 공고를 보고 대화를 시작했습니다.`,
+                  messageType: JobPostingChatMessageTypeEnum.TEXT,
+                  senderId: userId,
+                  receiverId: jobPosting.userId.toString(),
+                });
+              } else {
+                // 해당 채팅방으로 이동
+              }
             } catch (error) {
               console.error("채팅 메시지 전송 실패:", error);
             }

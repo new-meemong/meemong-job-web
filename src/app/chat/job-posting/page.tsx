@@ -3,8 +3,8 @@
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
-import { useChatChannelStore } from "@/stores/chat-channel-store";
 import { useEffect } from "react";
+import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 
 const Container = styled.div`
   display: flex;
@@ -22,10 +22,12 @@ export default function JobPostingChatListPage() {
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
   }));
-  const { channels, subscribeToChannels } = useChatChannelStore((state) => ({
-    channels: state.channels,
-    subscribeToChannels: state.subscribeToChannels,
-  }));
+  const { channels, subscribeToChannels } = useJobPostingChatChannelStore(
+    (state) => ({
+      channels: state.channels,
+      subscribeToChannels: state.subscribeToChannels,
+    }),
+  );
 
   console.log("moonsae userId", userId);
   useEffect(() => {
