@@ -80,6 +80,10 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
         if (resumeId === "new") {
           setId(null);
         }
+
+        if (sex) {
+          setSex(sex);
+        }
       }
     };
 
@@ -87,12 +91,6 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
       _fetch();
     }
   }, [userId]);
-
-  useEffect(() => {
-    if (sex) {
-      setSex(sex);
-    }
-  }, [sex, setSex]);
 
   return (
     <Container>
