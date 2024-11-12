@@ -22,6 +22,7 @@ const nextConfig = {
       "meemong-job-storage.s3.ap-northeast-2.amazonaws.comnull",
       "meemong-job-storage.s3.ap-northeast-2.amazonaws.comundefined",
       "lh3.googleusercontent.com",
+      "k.kakaocdn.net"
     ], // 허용할 도메인 추가
   },
 };
