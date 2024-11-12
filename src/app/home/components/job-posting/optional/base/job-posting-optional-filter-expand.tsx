@@ -134,7 +134,7 @@ const JobPostingOptionalFilterExpand = ({
       <ParkingSpotCount />
       <IsExistedCleaningSupplier />
       <IsExistedTowelSupplier />
-      {role === "인턴" && <IsOnsiteManager />}
+      <IsOnsiteManager />
       {role === "인턴" && <IsExistedFourInsurances />}
       {role === "인턴" && <IsExistedRetirementPay />}
     </Container>
