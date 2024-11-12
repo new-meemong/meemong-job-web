@@ -26,6 +26,7 @@ export const colors = {
   greyCautionBackground: "#F7F7FF",
 
   red: "#FF0000",
+  lightRed: "#FF4444",
   deepCyan: "#1584A0",
   naverGreen: "#03CF5D",
 };

@@ -1,7 +1,7 @@
 import ArrowRightGreyOutlineIcon from "@/components/icons/arrow-right-grey-outline";
-import pxToVw from "@/lib/dpi-converter";
-import { fonts } from "@/styles/fonts";
 import Image from "next/image";
+import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const Container = styled.div`

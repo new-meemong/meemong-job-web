@@ -1,5 +1,6 @@
 "use client";
 
+import JobPostingChatChannelItem from "./components/JobPostingChatChannelItem";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
@@ -29,7 +30,6 @@ export default function JobPostingChatListPage() {
     }),
   );
 
-  console.log("moonsae userId", userId);
   useEffect(() => {
     if (!userId) return;
 
@@ -52,6 +52,16 @@ export default function JobPostingChatListPage() {
     };
   }, [userId, subscribeToChannels]);
 
-  console.log("moonsae channels", channels);
-  return <Container></Container>;
+  return (
+    <Container>
+      {channels.map((channel) => {
+        return (
+          <JobPostingChatChannelItem
+            key={channel.id}
+            jobPostingChatChannel={channel}
+          />
+        );
+      })}
+    </Container>
+  );
 }

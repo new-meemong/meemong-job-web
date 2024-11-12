@@ -20,6 +20,7 @@ import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel
 import { JobPostingChatMessageType } from "@/types/chat/job-posting-chat-message-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
+import { getUser } from "@/apis/user";
 
 interface ChatChannelState {
   channels: JobPostingChatChannelType[];
@@ -137,13 +138,11 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
     subscribeToChannels: (userId: string) => {
       set({ loading: true });
-      console.log("구독 시작 - userId:", userId);
 
       const channelsRef = collection(
         db,
         ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
       );
-      console.log("채널 컬렉션 경로:", channelsRef.path);
 
       const q = query(
         channelsRef,
@@ -154,17 +153,30 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
       const unsubscribe = onSnapshot(
         q,
-        (snapshot) => {
-          console.log(
-            "스냅샷 데이터:",
-            snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })),
-          );
+        async (snapshot) => {
           const channels = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
           })) as JobPostingChatChannelType[];
 
-          set({ channels, loading: false });
+          // 각 채널의 상대방 정보 가져오기
+          const channelsWithUser = await Promise.all(
+            channels.map(async (channel) => {
+              const otherUserId = channel.participantsIds.find(
+                (id) => id !== userId,
+              );
+              if (!otherUserId) return channel;
+
+              const { data } = await getUser(otherUserId);
+
+              return {
+                ...channel,
+                otherUser: data ? data : null,
+              };
+            }),
+          );
+
+          set({ channels: channelsWithUser, loading: false });
         },
         (error) => {
           console.error("채널 구독 에러:", error);

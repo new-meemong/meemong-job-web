@@ -3,4 +3,9 @@ export interface UserType {
   UserID: string;
   DisplayName: string;
   ProfilePictureURL: string;
+  Role: number;
+  Sex: string;
+  Email: string;
+  Korean: string;
+  FcmToken: string;
 }

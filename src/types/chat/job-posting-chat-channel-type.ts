@@ -1,6 +1,7 @@
 import { FieldValue, Timestamp } from "firebase/firestore";
 
 import { JobPostingChatMessageType } from "./job-posting-chat-message-type";
+import { UserType } from "../user-type";
 
 export interface JobPostingChatChannelType {
   id: string;
@@ -11,6 +12,8 @@ export interface JobPostingChatChannelType {
 
   createdAt: Timestamp | FieldValue;
   updatedAt: Timestamp | FieldValue;
+
+  otherUser?: UserType;
 
   // 하위 컬렉션
   // chatChannelUserMetas/{userId}: ChatChannelUserMetaType - 채널 참여자별 메타 데이터
