@@ -263,7 +263,9 @@ export const useResumeEditStore = create(
           isExposure: resume.isExposure,
         });
       },
-      setId: (id: string | null) => set({ id }),
+      setId: (id: string | null) => {
+        set({ id });
+      },
       setProfileImageUri: (uri) => set({ profileImageUri: uri }),
       setProfileImageThumbnailUri: (uri) =>
         set({ profileImageThumbnailUri: uri }),

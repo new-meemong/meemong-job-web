@@ -69,21 +69,20 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
       }
 
       const { data } = await checkMyResumeExist();
-
       if (data) {
         resetStore();
         setFromResume(data as ResumeType);
+      }
 
-        if (resumeId !== "new") {
-          setId(resumeId);
-        }
-        if (resumeId === "new") {
-          setId(null);
-        }
+      if (resumeId !== "new") {
+        setId(resumeId);
+      }
+      if (resumeId === "new") {
+        setId(null);
+      }
 
-        if (sex) {
-          setSex(sex);
-        }
+      if (sex) {
+        setSex(sex);
       }
     };
 
