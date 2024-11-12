@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import BottomButtonSection from "./components/bottom-button-section";
 import Divider from "./components/divider";
 import OptionalInfoSection from "./components/optional-info-section";
@@ -14,7 +16,7 @@ import UserProfile from "./components/user-profile-section";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
-import { useEffect } from "react";
+import { useResumeListStore } from "@/stores/resume-list-store";
 
 const Container = styled.div`
   display: flex;
@@ -37,16 +39,41 @@ const ContentContainer = styled.div`
   padding-right: ${pxToVw(24)};
 `;
 
-export default function PageContent({ resume }: { resume: ResumeType }) {
+export default function PageContent({
+  initialResume,
+}: {
+  initialResume: ResumeType;
+}) {
+  const [resume, setResume] = useState<ResumeType>(initialResume);
+
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
   }));
 
-  const isMine = resume.userId.toString() === userId;
+  const { getResume } = useResumeListStore((state) => ({
+    getResume: state.getResume,
+  }));
+
+  const isMine = resume?.userId?.toString() === userId;
 
   useEffect(() => {
     window.scrollTo(0, 0); // 페이지 로드 시 스크롤을 최상단으로 이동
   }, []);
+
+  useEffect(() => {
+    const _fetch = async () => {
+      const { data } = await getResume(initialResume.id);
+
+      if (data) {
+        setResume(data as ResumeType);
+      }
+    };
+    _fetch();
+  }, [initialResume?.id]);
+
+  if (!resume) {
+    return <div>이력서 불러오기 실패</div>;
+  }
 
   return (
     <Container>

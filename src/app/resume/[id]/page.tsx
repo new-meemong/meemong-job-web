@@ -33,7 +33,7 @@ export default async function ResumePage({
         ogDescription={data.shortDescription}
         ogUrl={`https://meemong-job-web.vercel.app/resume/${resumeId}`}
       />
-      <PageContent resume={data} />
+      <PageContent initialResume={data} />
     </>
   );
 }
