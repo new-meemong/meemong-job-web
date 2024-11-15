@@ -67,7 +67,6 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
           `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/messages`,
         ),
         orderBy("createdAt", "desc"),
-        limit(20),
       );
 
       const unsubscribe = onSnapshot(

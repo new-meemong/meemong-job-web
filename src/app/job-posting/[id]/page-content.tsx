@@ -255,8 +255,7 @@ export default function PageContent({
                 jobPostingId: jobPosting.id,
                 resumeId: null,
               });
-              console.log("channelId", channelId);
-              console.log("isCreated", isCreated);
+
               if (!channelId) {
                 toast.error("채널 생성 중 오류가 발생했습니다.");
                 return;

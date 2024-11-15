@@ -9,6 +9,7 @@ import { fonts } from "@/styles/fonts";
 import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -108,6 +109,7 @@ interface JobPostingChatChannelItemProps {
 export default function JobPostingChatChannelItem({
   chatChannelUserMeta,
 }: JobPostingChatChannelItemProps) {
+  const router = useRouter();
   const [offset, setOffset] = useState(0);
   const [startX, setStartX] = useState(0);
 
@@ -141,6 +143,13 @@ export default function JobPostingChatChannelItem({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onClick={() => {
+          console.log(
+            "chatChannelUserMeta.channelId",
+            chatChannelUserMeta.channelId,
+          );
+          router.push(`/chat/job-posting/${chatChannelUserMeta.channelId}`);
+        }}
       >
         <UserImage
           src={userImage}

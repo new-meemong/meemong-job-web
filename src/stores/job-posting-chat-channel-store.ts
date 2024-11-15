@@ -23,6 +23,7 @@ import { JobPostingChatMessageType } from "@/types/chat/job-posting-chat-message
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
+import { useAuthStore } from "./auth-store";
 
 interface ChatChannelState {
   chatChannelUserMetas: ChatChannelUserMetaType[];
@@ -56,6 +57,8 @@ interface ChatChannelState {
 
   // 해당 채널 차단 해제
   unblockChannel: (channelId: string, userId: string) => Promise<void>;
+
+  getChannel: (channelId: string) => Promise<JobPostingChatChannelType | null>;
 }
 
 export const useJobPostingChatChannelStore = create<ChatChannelState>(
@@ -151,12 +154,12 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             // 각 채널 메타데이터에 대해 otherUser 정보를 가져옴
             const userMetasPromises = snapshot.docs.map(async (doc) => {
               const data = doc.data();
-              const otherUser = await getUser(data.otherUserId);
+              const res = await getUser(data.otherUserId);
 
               return {
                 channelId: doc.id,
                 ...data,
-                otherUser: otherUser.error ? null : otherUser,
+                otherUser: res.error ? null : res.data,
               };
             });
 
@@ -293,6 +296,39 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         });
       } catch (error) {
         console.error("채널 고정 해제 중 오류 발생:", error);
+      }
+    },
+
+    getChannel: async (channelId: string) => {
+      try {
+        const currentUserId = useAuthStore.getState().userId;
+        const channelRef = doc(
+          db,
+          ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+          channelId,
+        );
+        const channelSnap = await getDoc(channelRef);
+
+        if (channelSnap.exists()) {
+          const channelData = channelSnap.data();
+          // 현재 사용자가 아닌 다른 참여자의 ID를 찾습니다
+          const otherUserId = channelData.participantsIds.find(
+            (id: string) => id !== currentUserId,
+          );
+
+          // 다른 사용자의 정보를 가져옵니다
+          const otherUserData = await getUser(otherUserId);
+
+          return {
+            id: channelSnap.id,
+            ...channelData,
+            otherUser: otherUserData.error ? null : otherUserData.data,
+          } as JobPostingChatChannelType;
+        }
+        return null;
+      } catch (error) {
+        console.error("채널 정보 조회 중 오류 발생:", error);
+        throw new Error("채널 정보를 불러오는 중 오류가 발생했습니다.");
       }
     },
   }),

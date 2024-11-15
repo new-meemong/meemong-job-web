@@ -1,6 +1,6 @@
 "use client";
 
-import JobPostingChatChannelItem from "./components/JobPostingChatChannelItem";
+import JobPostingChatChannelItem from "./components/job-posting-chat-channel-item";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
