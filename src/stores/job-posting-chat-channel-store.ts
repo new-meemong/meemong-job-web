@@ -2,12 +2,14 @@ import {
   Timestamp,
   collection,
   doc,
+  getDoc,
   getDocs,
   increment,
   limit,
   onSnapshot,
   orderBy,
   query,
+  runTransaction,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -23,7 +25,7 @@ import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
 
 interface ChatChannelState {
-  channels: JobPostingChatChannelType[];
+  chatChannelUserMetas: ChatChannelUserMetaType[];
   loading: boolean;
   error: string | null;
 
@@ -58,7 +60,7 @@ interface ChatChannelState {
 
 export const useJobPostingChatChannelStore = create<ChatChannelState>(
   (set) => ({
-    channels: [],
+    chatChannelUserMetas: [],
     loading: false,
     error: null,
 
@@ -69,66 +71,63 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       resumeId,
     }) => {
       try {
-        // channelKey 생성 (참여자 ID를 정렬하여 일관된 키 생성)
+        // 참여자 ID 정렬 및 channelKey 생성
         const participantIds = [senderId, receiverId].sort();
         const channelKey = `${
           ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS
         }_${participantIds.join("_")}_${jobPostingId}_${resumeId}`;
 
-        // 1. 기존 채널 찾기
-        const channelsRef = collection(
+        // 채널 레퍼런스 생성
+        const channelRef = doc(
           db,
           ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
-        );
-        const q = query(
-          channelsRef,
-          where("channelKey", "==", channelKey),
-          limit(1),
+          channelKey,
         );
 
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-          return { channelId: querySnapshot.docs[0].id, isCreated: false };
-        }
+        // 트랜잭션을 사용하여 채널 생성 및 중복 방지
+        const result = await runTransaction(db, async (transaction) => {
+          const channelSnapshot = await transaction.get(channelRef);
+          if (channelSnapshot.exists()) {
+            // 채널이 이미 존재하면 반환
+            return { channelId: channelRef.id, isCreated: false };
+          }
 
-        // 2. 새 채널 생성
-        const channelRef = doc(
-          collection(db, ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS),
-        );
-
-        const newChannel: Omit<JobPostingChatChannelType, "id"> = {
-          channelKey, // channelKey 추가
-          lastMessage: {} as JobPostingChatMessageType,
-          participantsIds: participantIds, // 정렬된 참여자 ID 사용
-          channelOpenUserId: senderId,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        };
-
-        await setDoc(channelRef, newChannel);
-
-        // 3. 참여자별 메타 데이터 생성
-        const metaPromises = participantIds.map((userId) => {
-          const userMetaRef = doc(
-            collection(
-              db,
-              `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelRef.id}/chatChannelUserMetas`,
-            ),
-            userId,
-          );
-          const userMeta: ChatChannelUserMetaType = {
-            unreadCount: 0,
-            isBlockChannel: false,
-
+          // 채널 생성
+          const newChannel: Omit<JobPostingChatChannelType, "id"> = {
+            channelKey,
+            participantsIds: participantIds,
+            channelOpenUserId: senderId,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
           };
-          return setDoc(userMetaRef, userMeta);
+
+          transaction.set(channelRef, newChannel);
+
+          // 참여자별 메타데이터 생성 (경로 변경)
+          participantIds.forEach((userId) => {
+            const userMetaRef = doc(
+              db,
+              `users/${userId}/chatChannelUserMetas`,
+              channelRef.id,
+            );
+            const userMeta: ChatChannelUserMetaType = {
+              channelId: channelRef.id,
+              otherUserId: participantIds.filter((id) => id !== userId)[0],
+              unreadCount: 0,
+              isBlockChannel: false,
+              lastMessage: {} as JobPostingChatMessageType,
+              isPinned: false,
+              pinnedAt: null,
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp(),
+            };
+            transaction.set(userMetaRef, userMeta);
+          });
+
+          return { channelId: channelRef.id, isCreated: true };
         });
 
-        await Promise.all(metaPromises);
-
-        return { channelId: channelRef.id, isCreated: true };
+        return result;
       } catch (error) {
         set({ error: "채널 생성 중 오류가 발생했습니다." });
         console.error("Error creating channel:", error);
@@ -139,49 +138,46 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
     subscribeToChannels: (userId: string) => {
       set({ loading: true });
 
-      const channelsRef = collection(
+      // 사용자별 채널 메타데이터 구독 (경로 변경)
+      const userMetaRef = collection(
         db,
-        ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
-      );
-
-      const q = query(
-        channelsRef,
-        where("participantsIds", "array-contains", userId),
-        orderBy("updatedAt", "desc"),
-        limit(100),
+        `users/${userId}/chatChannelUserMetas`,
       );
 
       const unsubscribe = onSnapshot(
-        q,
+        userMetaRef,
         async (snapshot) => {
-          const channels = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          })) as JobPostingChatChannelType[];
-
-          // 각 채널의 상대방 정보 가져오기
-          const channelsWithUser = await Promise.all(
-            channels.map(async (channel) => {
-              const otherUserId = channel.participantsIds.find(
-                (id) => id !== userId,
-              );
-              if (!otherUserId) return channel;
-
-              const { data } = await getUser(otherUserId);
+          try {
+            // 각 채널 메타데이터에 대해 otherUser 정보를 가져옴
+            const userMetasPromises = snapshot.docs.map(async (doc) => {
+              const data = doc.data();
+              const otherUser = await getUser(data.otherUserId);
 
               return {
-                ...channel,
-                otherUser: data ? data : null,
+                channelId: doc.id,
+                ...data,
+                otherUser: otherUser.error ? null : otherUser,
               };
-            }),
-          );
+            });
 
-          set({ channels: channelsWithUser, loading: false });
+            const userMetas = await Promise.all(userMetasPromises);
+
+            set({
+              chatChannelUserMetas: userMetas as ChatChannelUserMetaType[],
+              loading: false,
+            });
+          } catch (error) {
+            console.error("채널 메타데이터 및 사용자 정보 로딩 에러:", error);
+            set({
+              error: "채널 정보를 불러오는 중 오류가 발생했습니다.",
+              loading: false,
+            });
+          }
         },
         (error) => {
-          console.error("채널 구독 에러:", error);
+          console.error("채널 메타데이터 구독 에러:", error);
           set({
-            error: "채널 목록을 불러오는 중 오류가 발생했습니다.",
+            error: "채널 메타데이터를 불러오는 중 오류가 발생했습니다.",
             loading: false,
           });
         },
@@ -197,8 +193,8 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       try {
         const userMetaRef = doc(
           db,
-          `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/chatChannelUserMetas`,
-          receiverId,
+          `users/${receiverId}/chatChannelUserMetas`,
+          channelId,
         );
 
         await updateDoc(userMetaRef, {
@@ -206,17 +202,98 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
           updatedAt: serverTimestamp(),
         });
       } catch (error) {
-        console.error("안읽은 메시지 카운트 업데이트 중 오류 발생:", error);
+        console.error("안 읽은 메시지 카운트 업데이트 중 오류 발생:", error);
       }
     },
 
     resetChannelUserMetaUnreadCount: async (
       channelId: string,
       userId: string,
-    ) => {},
+    ) => {
+      try {
+        const userMetaRef = doc(
+          db,
+          `users/${userId}/chatChannelUserMetas`,
+          channelId,
+        );
 
-    blockChannel: async (channelId: string, userId: string) => {},
+        await updateDoc(userMetaRef, {
+          unreadCount: 0,
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        console.error("안 읽은 메시지 카운트 리셋 중 오류 발생:", error);
+      }
+    },
 
-    unblockChannel: async (channelId: string, userId: string) => {},
+    blockChannel: async (channelId: string, userId: string) => {
+      try {
+        const userMetaRef = doc(
+          db,
+          `users/${userId}/chatChannelUserMetas`,
+          channelId,
+        );
+
+        await updateDoc(userMetaRef, {
+          isBlockChannel: true,
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        console.error("채널 차단 중 오류 발생:", error);
+      }
+    },
+
+    unblockChannel: async (channelId: string, userId: string) => {
+      try {
+        const userMetaRef = doc(
+          db,
+          `users/${userId}/chatChannelUserMetas`,
+          channelId,
+        );
+
+        await updateDoc(userMetaRef, {
+          isBlockChannel: false,
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        console.error("채널 차단 해제 중 오류 발생:", error);
+      }
+    },
+
+    pinChannel: async (channelId: string, userId: string) => {
+      try {
+        const userMetaRef = doc(
+          db,
+          `users/${userId}/chatChannelUserMetas`,
+          channelId,
+        );
+
+        await updateDoc(userMetaRef, {
+          isPinned: true,
+          pinnedAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        console.error("채널 고정 중 오류 발생:", error);
+      }
+    },
+
+    unpinChannel: async (channelId: string, userId: string) => {
+      try {
+        const userMetaRef = doc(
+          db,
+          `users/${userId}/chatChannelUserMetas`,
+          channelId,
+        );
+
+        await updateDoc(userMetaRef, {
+          isPinned: false,
+          pinnedAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        console.error("채널 고정 해제 중 오류 발생:", error);
+      }
+    },
   }),
 );

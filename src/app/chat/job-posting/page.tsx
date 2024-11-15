@@ -23,12 +23,11 @@ export default function JobPostingChatListPage() {
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
   }));
-  const { channels, subscribeToChannels } = useJobPostingChatChannelStore(
-    (state) => ({
-      channels: state.channels,
+  const { chatChannelUserMetas, subscribeToChannels } =
+    useJobPostingChatChannelStore((state) => ({
+      chatChannelUserMetas: state.chatChannelUserMetas,
       subscribeToChannels: state.subscribeToChannels,
-    }),
-  );
+    }));
 
   useEffect(() => {
     if (!userId) return;
@@ -54,11 +53,11 @@ export default function JobPostingChatListPage() {
 
   return (
     <Container>
-      {channels.map((channel) => {
+      {chatChannelUserMetas.map((chatChannelUserMetas) => {
         return (
           <JobPostingChatChannelItem
-            key={channel.id}
-            jobPostingChatChannel={channel}
+            key={chatChannelUserMetas.channelId}
+            chatChannelUserMeta={chatChannelUserMetas}
           />
         );
       })}

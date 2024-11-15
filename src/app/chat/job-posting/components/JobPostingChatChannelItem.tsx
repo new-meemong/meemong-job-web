@@ -1,3 +1,4 @@
+import { ChatChannelUserMetaType } from "@/types/chat/chat-channel-user-meta-type";
 import DeleteIcon from "@/components/icons/delete-icon";
 import Image from "next/image";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
@@ -101,11 +102,11 @@ const DeleteButton = styled.button`
 `;
 
 interface JobPostingChatChannelItemProps {
-  jobPostingChatChannel: JobPostingChatChannelType;
+  chatChannelUserMeta: ChatChannelUserMetaType;
 }
 
 export default function JobPostingChatChannelItem({
-  jobPostingChatChannel,
+  chatChannelUserMeta,
 }: JobPostingChatChannelItemProps) {
   const [offset, setOffset] = useState(0);
   const [startX, setStartX] = useState(0);
@@ -130,7 +131,7 @@ export default function JobPostingChatChannelItem({
     }
   };
 
-  const { otherUser } = jobPostingChatChannel;
+  const { lastMessage, otherUser } = chatChannelUserMeta;
   const userImage =
     otherUser?.ProfilePictureURL || "/images/resume_profile_default.svg";
   return (
@@ -149,15 +150,12 @@ export default function JobPostingChatChannelItem({
         />
         <CenterContentWrapper>
           <UserName>{otherUser?.DisplayName || "알수없음"}</UserName>
-          <Message>{jobPostingChatChannel.lastMessage.message}</Message>
+          <Message>{lastMessage.message}</Message>
         </CenterContentWrapper>
         <RightContentWrapper>
           <LatestMessageDate>
-            {jobPostingChatChannel.lastMessage.updatedAt &&
-            "toDate" in jobPostingChatChannel.lastMessage.updatedAt
-              ? moment(
-                  jobPostingChatChannel.lastMessage.updatedAt.toDate(),
-                ).format("MM-DD HH:mm")
+            {lastMessage.updatedAt && "toDate" in lastMessage.updatedAt
+              ? moment(lastMessage.updatedAt.toDate()).format("MM-DD HH:mm")
               : ""}
           </LatestMessageDate>
         </RightContentWrapper>

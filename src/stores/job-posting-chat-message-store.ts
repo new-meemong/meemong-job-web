@@ -15,6 +15,7 @@ import {
   serverTimestamp,
   setDoc,
   startAfter,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -137,17 +138,39 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
           ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
           channelId,
         );
-        await setDoc(
-          channelRef,
-          {
-            lastMessage: {
-              id: messageRef.id,
-              ...newMessage,
-            },
-            updatedAt: serverTimestamp(),
-          },
-          { merge: true },
+        await updateDoc(channelRef, {
+          updatedAt: serverTimestamp(),
+        });
+
+        // 양쪽 사용자의 메타데이터에 lastMessage 업데이트
+        const senderMetaRef = doc(
+          db,
+          `users/${senderId}/chatChannelUserMetas`,
+          channelId,
         );
+        const receiverMetaRef = doc(
+          db,
+          `users/${receiverId}/chatChannelUserMetas`,
+          channelId,
+        );
+
+        const lastMessageData = {
+          id: messageRef.id,
+          ...newMessage,
+        };
+
+        // 사용자 메타데이터 업데이트
+        const updateSenderMeta = updateDoc(senderMetaRef, {
+          lastMessage: lastMessageData,
+          updatedAt: serverTimestamp(),
+        });
+
+        const updateReceiverMeta = updateDoc(receiverMetaRef, {
+          lastMessage: lastMessageData,
+          updatedAt: serverTimestamp(),
+        });
+
+        await Promise.all([updateSenderMeta, updateReceiverMeta]);
 
         // 수신자의 읽지 않은 메시지 카운트 증가
         await useJobPostingChatChannelStore
