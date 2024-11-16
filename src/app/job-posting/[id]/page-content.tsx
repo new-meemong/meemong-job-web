@@ -24,6 +24,7 @@ import StoreFloatingButton from "@/components/buttons/store-floating-button";
 import StoreInfo from "../components/store-info";
 import StoreLocation from "../components/store-location";
 import pxToVw from "@/lib/dpi-converter";
+import { removeQueryParams } from "@/lib/remove-query-params";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores/auth-store";
@@ -265,7 +266,13 @@ export default function PageContent({
                 await sendMessage({
                   channelId,
                   message: `구인구직 공고를 보고 대화를 시작했습니다.`,
-                  messageType: JobPostingChatMessageTypeEnum.TEXT,
+                  messageType: JobPostingChatMessageTypeEnum.JOB_POSTING,
+                  metaPathList: [
+                    {
+                      jobPostingId: jobPosting.id,
+                      href: removeQueryParams(window.location.href),
+                    },
+                  ],
                   senderId: userId,
                   receiverId: jobPosting.userId.toString(),
                 });

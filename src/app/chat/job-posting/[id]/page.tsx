@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-import BottomInput from "./components/chat-input";
 import CenterSpinner from "@/components/spinners/center-spinner";
-import ChatInput from "./components/chat-input";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
 import JobPostingChatDetailHeader from "@/components/headers/job-posting-chat-detail-header";
+import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
+import MessageSection from "./components/message-section";
 import styled from "styled-components";
+import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 import { useJobPostingChatMessageStore } from "@/stores/job-posting-chat-message-store";
 
@@ -20,20 +21,6 @@ const Container = styled.div`
   left: 0; // 추가
   right: 0; // 추가
   bottom: 0;
-`;
-
-const MessagesContainer = styled.div`
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  min-height: 0;
-`;
-
-const MessageItem = styled.div`
-  margin-bottom: 12px;
-  padding: 8px 12px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
 `;
 
 const InputContainer = styled.div`
@@ -80,12 +67,15 @@ export default function JobPostingChatDetailPage({
   const { getChannel } = useJobPostingChatChannelStore((state) => ({
     getChannel: state.getChannel,
   }));
-  const { messages, subscribeToMessages, sendMessage } =
-    useJobPostingChatMessageStore((state) => ({
-      messages: state.messages,
+  const { subscribeToMessages, sendMessage } = useJobPostingChatMessageStore(
+    (state) => ({
       subscribeToMessages: state.subscribeToMessages,
       sendMessage: state.sendMessage,
-    }));
+    }),
+  );
+  const { userId } = useAuthStore((state) => ({
+    userId: state.userId,
+  }));
 
   useEffect(() => {
     const fetchChannel = async () => {
@@ -116,32 +106,45 @@ export default function JobPostingChatDetailPage({
     }
   }, [params.id, subscribeToMessages]);
 
-  console.log(channel);
+  const handleSendMessage = async () => {
+    if (!messageText.trim() || !channel?.otherUser?.id || !userId) return;
 
-  if (loading) {
-    return <CenterSpinner />;
-  }
+    try {
+      await sendMessage({
+        channelId: params.id,
+        senderId: userId, // TODO: 실제 사용자 ID로 교체 필요
+        receiverId: channel.otherUser.id,
+        message: messageText,
+        messageType: JobPostingChatMessageTypeEnum.TEXT,
+      });
+      setMessageText(""); // 메시지 전송 후 입력창 초기화
+    } catch (error) {
+      console.error("메시지 전송 실패:", error);
+    }
+  };
 
-  console.log("messages", messages);
+  if (!channel) return null;
 
   return (
     <Container>
       <JobPostingChatDetailHeader
         otherUserDisplayName={channel?.otherUser?.DisplayName || ""}
       />
-      <MessagesContainer>
-        {messages.map((message) => (
-          <MessageItem key={message.id}>{message.message}</MessageItem>
-        ))}
-      </MessagesContainer>
+
+      <MessageSection loading={loading} channel={channel} />
       <InputContainer>
         <MessageInput
           type="text"
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
           placeholder="메시지를 입력하세요..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSendMessage();
+            }
+          }}
         />
-        <SendButton>전송</SendButton>
+        <SendButton onClick={handleSendMessage}>전송</SendButton>
       </InputContainer>
     </Container>
   );

@@ -1,6 +1,7 @@
 import {
   JobPostingChatMessageType,
   JobPostingChatMessageTypeEnum,
+  MetaPathType,
 } from "@/types/chat/job-posting-chat-message-type";
 import {
   Timestamp,
@@ -39,7 +40,7 @@ interface JobPostingChatMessageState {
     receiverId: string;
     message: string;
     messageType: JobPostingChatMessageTypeEnum;
-    metaPathList?: string[];
+    metaPathList?: MetaPathType[];
   }) => Promise<void>;
 
   // 메시지 읽음 상태 관련 액션
@@ -122,7 +123,7 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         const newMessage: Omit<JobPostingChatMessageType, "id"> = {
           message,
           messageType,
-          metaPathList: [],
+          metaPathList,
           senderId,
           readStatus,
           createdAt: serverTimestamp(),

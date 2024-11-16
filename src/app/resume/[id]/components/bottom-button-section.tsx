@@ -3,6 +3,7 @@ import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { messageType } from "@/types/send-app-message-type";
 import pxToVw from "@/lib/dpi-converter";
+import { removeQueryParams } from "@/lib/remove-query-params";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores/auth-store";
@@ -74,7 +75,13 @@ const BottomButtonSection = ({
         await sendMessage({
           channelId,
           message: `구인구직 공고를 보고 대화를 시작했습니다.`,
-          messageType: JobPostingChatMessageTypeEnum.TEXT,
+          messageType: JobPostingChatMessageTypeEnum.RESUME,
+          metaPathList: [
+            {
+              resumeId: postId,
+              href: removeQueryParams(window.location.href),
+            },
+          ],
           senderId: userId,
           receiverId: postUserId,
         });

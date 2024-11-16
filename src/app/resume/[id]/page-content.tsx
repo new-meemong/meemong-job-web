@@ -101,7 +101,7 @@ export default function PageContent({
       </ContentContainer>
       {userId && !isMine && (
         <BottomButtonSection
-          postUserId={resume.User.UserID.toString()}
+          postUserId={resume.User.id.toString()}
           postId={resume.id}
         />
       )}
