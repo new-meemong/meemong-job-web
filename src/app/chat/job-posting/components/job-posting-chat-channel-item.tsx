@@ -54,15 +54,16 @@ const CenterContentWrapper = styled.div`
 const RightContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
   height: 100%;
   padding-top: ${pxToVw(10)};
   gap: ${pxToVw(4)};
 `;
 
 const UnreadCount = styled.div`
-  ${fonts.whiteBold14}
-  background-color: ${colors.deepCyan};
+  ${fonts.whiteNormal12}
+  background-color: ${colors.red};
   border-radius: ${pxToVw(10)};
   padding: ${pxToVw(2)} ${pxToVw(6)};
   min-width: ${pxToVw(16)};

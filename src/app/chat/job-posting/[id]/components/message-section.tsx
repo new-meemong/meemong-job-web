@@ -6,6 +6,7 @@ import {
 import CenterSpinner from "@/components/spinners/center-spinner";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
 import { Timestamp } from "firebase/firestore";
+import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
@@ -69,6 +70,13 @@ const MessageContainer = styled.div`
   max-width: 80%;
 `;
 
+const MessageStatusContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+`;
+
 const ReadStatusText = styled.span`
   font-size: 12px;
   color: #666;
@@ -88,6 +96,13 @@ const LinkButton = styled.a`
   &:hover {
     background-color: #f8f9fa;
   }
+`;
+
+const MessageTime = styled.span`
+  font-size: 12px;
+  color: #666;
+  align-self: flex-end;
+  min-width: ${pxToVw(55)};
 `;
 
 const MessageSection = ({
@@ -161,26 +176,6 @@ const MessageSection = ({
     return true; // 상대방 메시지는 항상 false 반환
   };
 
-  const renderMessageContent = (message: JobPostingChatMessageType) => {
-    if (
-      (message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING ||
-        message.messageType === JobPostingChatMessageTypeEnum.RESUME) &&
-      message.metaPathList?.[0]
-    ) {
-      return (
-        <>
-          <div>{message.message}</div>
-          <LinkButton href={message.metaPathList[0].href}>
-            {message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING
-              ? "모집공고 보기"
-              : "이력서 보기"}
-          </LinkButton>
-        </>
-      );
-    }
-    return message.message;
-  };
-
   return (
     <MessagesContainer>
       {loading ? (
@@ -190,35 +185,14 @@ const MessageSection = ({
           const messageCreatedAt = message.createdAt as Timestamp;
           const isRead = checkIsRead(messageCreatedAt, message);
 
-          return (
-            <MessageWrapper
+          return message.senderId === userId ? (
+            <MyMessage key={message.id} message={message} isRead={isRead} />
+          ) : (
+            <OtherMessage
               key={message.id}
-              isMine={message.senderId === userId}
-            >
-              {!(message.senderId === userId) && (
-                <ProfileContainer>
-                  <ProfileImage
-                    src={
-                      channel?.otherUser?.ProfilePictureURL ||
-                      "/default-profile.png"
-                    }
-                    alt="프로필"
-                  />
-                  <ProfileName>
-                    {channel?.otherUser?.DisplayName || "사용자"}
-                  </ProfileName>
-                </ProfileContainer>
-              )}
-
-              <MessageContainer>
-                {message.senderId === userId && (
-                  <ReadStatusText>{isRead ? "읽음" : "1"}</ReadStatusText>
-                )}
-                <MessageItem $isMine={message.senderId === userId}>
-                  {renderMessageContent(message)}
-                </MessageItem>
-              </MessageContainer>
-            </MessageWrapper>
+              message={message}
+              channel={channel}
+            />
           );
         })
       )}
@@ -227,3 +201,73 @@ const MessageSection = ({
 };
 
 export default MessageSection;
+
+// 내 메시지 컴포넌트
+const MyMessage = ({
+  message,
+  isRead,
+}: {
+  message: JobPostingChatMessageType;
+  isRead: boolean;
+}) => (
+  <MessageWrapper isMine={true}>
+    <MessageContainer>
+      <MessageStatusContainer>
+        <ReadStatusText>{isRead ? "읽음" : "1"}</ReadStatusText>
+        <MessageTime>
+          {moment((message.createdAt as Timestamp).toDate()).format(
+            "MM-DD HH:mm",
+          )}
+        </MessageTime>
+      </MessageStatusContainer>
+      <MessageItem $isMine={true}>{renderMessageContent(message)}</MessageItem>
+    </MessageContainer>
+  </MessageWrapper>
+);
+
+// 상대방 메시지 컴포넌트
+const OtherMessage = ({
+  message,
+  channel,
+}: {
+  message: JobPostingChatMessageType;
+  channel: JobPostingChatChannelType;
+}) => (
+  <MessageWrapper isMine={false}>
+    <ProfileContainer>
+      <ProfileImage
+        src={channel?.otherUser?.ProfilePictureURL || "/default-profile.png"}
+        alt="프로필"
+      />
+      <ProfileName>{channel?.otherUser?.DisplayName || "사용자"}</ProfileName>
+    </ProfileContainer>
+    <MessageContainer>
+      <MessageItem $isMine={false}>{renderMessageContent(message)}</MessageItem>
+      <MessageTime>
+        {moment((message.createdAt as Timestamp).toDate()).format(
+          "MM-DD HH:mm",
+        )}
+      </MessageTime>
+    </MessageContainer>
+  </MessageWrapper>
+);
+
+const renderMessageContent = (message: JobPostingChatMessageType) => {
+  if (
+    (message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING ||
+      message.messageType === JobPostingChatMessageTypeEnum.RESUME) &&
+    message.metaPathList?.[0]
+  ) {
+    return (
+      <>
+        <div>{message.message}</div>
+        <LinkButton href={message.metaPathList[0].href}>
+          {message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING
+            ? "모집공고 보기"
+            : "이력서 보기"}
+        </LinkButton>
+      </>
+    );
+  }
+  return message.message;
+};
