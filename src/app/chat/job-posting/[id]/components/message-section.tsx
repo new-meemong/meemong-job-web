@@ -104,17 +104,12 @@ const MessageSection = ({
     userId: state.userId,
   }));
 
-  const {
-    updateUserLastReadAt,
-    chatChannelUserMetas,
-    otherUserMeta,
-    subscribeToOtherUserMeta,
-  } = useJobPostingChatChannelStore((state) => ({
-    updateUserLastReadAt: state.updateUserLastReadAt,
-    chatChannelUserMetas: state.chatChannelUserMetas,
-    otherUserMeta: state.otherUserMeta,
-    subscribeToOtherUserMeta: state.subscribeToOtherUserMeta,
-  }));
+  const { updateUserLastReadAt, otherUserMeta, subscribeToOtherUserMeta } =
+    useJobPostingChatChannelStore((state) => ({
+      updateUserLastReadAt: state.updateUserLastReadAt,
+      otherUserMeta: state.otherUserMeta,
+      subscribeToOtherUserMeta: state.subscribeToOtherUserMeta,
+    }));
 
   useEffect(() => {
     if (!channel?.id || !channel.otherUser?.id) return;

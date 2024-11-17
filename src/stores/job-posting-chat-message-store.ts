@@ -161,7 +161,7 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         const updateReceiverMeta = updateDoc(receiverMetaRef, {
           lastMessage: lastMessageData,
           updatedAt: serverTimestamp(),
-          unreardCount: increment(1),
+          unreadCount: increment(1),
         });
 
         await Promise.all([updateSenderMeta, updateReceiverMeta]);

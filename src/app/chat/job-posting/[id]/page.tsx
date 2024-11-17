@@ -77,7 +77,11 @@ export default function JobPostingChatDetailPage({
     userId: state.userId,
   }));
 
-  const { updateChannelUserInfo } = useJobPostingChatChannelStore();
+  const { updateChannelUserInfo, resetChannelUserMetaUnreadCount } =
+    useJobPostingChatChannelStore((state) => ({
+      updateChannelUserInfo: state.updateChannelUserInfo,
+      resetChannelUserMetaUnreadCount: state.resetChannelUserMetaUnreadCount,
+    }));
 
   useEffect(() => {
     const fetchChannel = async () => {
@@ -113,7 +117,13 @@ export default function JobPostingChatDetailPage({
 
     // 채팅방 입장 시 상대방 정보 업데이트
     updateChannelUserInfo(params.id, userId);
-  }, [userId, params.id, updateChannelUserInfo]);
+    resetChannelUserMetaUnreadCount(params.id, userId);
+  }, [
+    userId,
+    params.id,
+    updateChannelUserInfo,
+    resetChannelUserMetaUnreadCount,
+  ]);
 
   const handleSendMessage = async () => {
     if (!messageText.trim() || !channel?.otherUser?.id || !userId) return;

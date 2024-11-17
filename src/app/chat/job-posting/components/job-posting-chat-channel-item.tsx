@@ -49,7 +49,6 @@ const CenterContentWrapper = styled.div`
   justify-content: center;
   gap: ${pxToVw(4)};
   height: 100%;
-  /* background-color: yellow; */
 `;
 
 const RightContentWrapper = styled.div`
@@ -58,7 +57,16 @@ const RightContentWrapper = styled.div`
   align-items: center;
   height: 100%;
   padding-top: ${pxToVw(10)};
-  /* background-color: blue; */
+  gap: ${pxToVw(4)};
+`;
+
+const UnreadCount = styled.div`
+  ${fonts.whiteBold14}
+  background-color: ${colors.deepCyan};
+  border-radius: ${pxToVw(10)};
+  padding: ${pxToVw(2)} ${pxToVw(6)};
+  min-width: ${pxToVw(16)};
+  text-align: center;
 `;
 
 const UserName = styled.div`
@@ -136,6 +144,7 @@ export default function JobPostingChatChannelItem({
   const { lastMessage, otherUser } = chatChannelUserMeta;
   const userImage =
     otherUser?.ProfilePictureURL || "/images/resume_profile_default.svg";
+
   return (
     <Container>
       <ContentWrapper
@@ -167,6 +176,9 @@ export default function JobPostingChatChannelItem({
               ? moment(lastMessage.updatedAt.toDate()).format("MM-DD HH:mm")
               : ""}
           </LatestMessageDate>
+          {Number(chatChannelUserMeta.unreadCount) > 0 && (
+            <UnreadCount>{Number(chatChannelUserMeta.unreadCount)}</UnreadCount>
+          )}
         </RightContentWrapper>
       </ContentWrapper>
       <RightButtonWrapper>
