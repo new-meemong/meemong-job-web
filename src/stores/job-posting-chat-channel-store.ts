@@ -54,6 +54,10 @@ interface ChatChannelState {
   ) => Promise<void>;
 
   updateUserLastReadAt: (channelId: string, userId: string) => Promise<void>;
+
+  pinChannel: (channelId: string, userId: string) => Promise<void>;
+  unpinChannel: (channelId: string, userId: string) => Promise<void>;
+
   // 해당 채널 차단
   blockChannel: (channelId: string, userId: string) => Promise<void>;
 
@@ -136,6 +140,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             const userMeta: ChatChannelUserMetaType = {
               channelId: channelRef.id,
               otherUserId,
+              userId,
               otherUser: otherUserData,
               unreadCount: 0,
               isBlockChannel: false,
@@ -176,10 +181,12 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             const userMetas = snapshot.docs.map((doc) => ({
               channelId: doc.id,
               ...doc.data(),
-            }));
+            })) as ChatChannelUserMetaType[];
+
+            const sortedChannels = sortChannels(userMetas);
 
             set({
-              chatChannelUserMetas: userMetas as ChatChannelUserMetaType[],
+              chatChannelUserMetas: sortedChannels,
               loading: false,
             });
           } catch (error) {
@@ -419,3 +426,30 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
     },
   }),
 );
+
+// 채널 데이터를 정렬하는 함수
+const sortChannels = (channels: ChatChannelUserMetaType[]) => {
+  return channels.sort((a, b) => {
+    // 둘 다 고정된 경우 pinnedAt으로 비교
+    if (a.isPinned && b.isPinned) {
+      const aTime = a.pinnedAt instanceof Timestamp ? a.pinnedAt.toMillis() : 0;
+      const bTime = b.pinnedAt instanceof Timestamp ? b.pinnedAt.toMillis() : 0;
+      return bTime - aTime;
+    }
+
+    // 고정된 항목을 위로
+    if (a.isPinned) return -1;
+    if (b.isPinned) return 1;
+
+    // 나머지는 lastMessage.updatedAt으로 정렬
+    const aTime =
+      a.lastMessage.updatedAt instanceof Timestamp
+        ? a.lastMessage.updatedAt.toMillis()
+        : 0;
+    const bTime =
+      b.lastMessage.updatedAt instanceof Timestamp
+        ? b.lastMessage.updatedAt.toMillis()
+        : 0;
+    return bTime - aTime;
+  });
+};

@@ -1,8 +1,8 @@
 import { ChatChannelUserMetaType } from "@/types/chat/chat-channel-user-meta-type";
 import DeleteIcon from "@/components/icons/delete-icon";
 import Image from "next/image";
-import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
-import PinLineIcon from "@/components/icons/pin-line-icon";
+import PinListIcon from "@/components/icons/pin-list-icon";
+import PinToggleButton from "./pin-toggle-button";
 import { UserType } from "@/types/user-type";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
@@ -69,6 +69,12 @@ const UnreadCount = styled.div`
   text-align: center;
 `;
 
+const UserNameWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${pxToVw(4)};
+`;
+
 const UserName = styled.div`
   ${fonts.blackBold14}
 `;
@@ -88,6 +94,7 @@ const RightButtonWrapper = styled.div`
   position: absolute;
   right: ${pxToVw(24)};
 `;
+
 const PinButton = styled.button`
   height: ${pxToVw(60)};
   width: ${pxToVw(60)};
@@ -141,6 +148,10 @@ export default function JobPostingChatChannelItem({
     }
   };
 
+  const handleToggle = () => {
+    setOffset(0);
+  };
+
   const { lastMessage, otherUser } = chatChannelUserMeta;
   const userImage =
     otherUser?.ProfilePictureURL || "/images/resume_profile_default.svg";
@@ -167,7 +178,10 @@ export default function JobPostingChatChannelItem({
           height={50}
         />
         <CenterContentWrapper>
-          <UserName>{otherUser?.DisplayName || "알수없음"}</UserName>
+          <UserNameWrapper>
+            <UserName>{otherUser?.DisplayName || "알수없음"}</UserName>
+            {chatChannelUserMeta.isPinned && <PinListIcon />}
+          </UserNameWrapper>
           <Message>{lastMessage.message}</Message>
         </CenterContentWrapper>
         <RightContentWrapper>
@@ -182,9 +196,12 @@ export default function JobPostingChatChannelItem({
         </RightContentWrapper>
       </ContentWrapper>
       <RightButtonWrapper>
-        <PinButton>
-          <PinLineIcon />
-        </PinButton>
+        <PinToggleButton
+          channelId={chatChannelUserMeta.channelId}
+          userId={chatChannelUserMeta.userId}
+          isPinned={chatChannelUserMeta.isPinned}
+          onToggle={handleToggle}
+        />
         <DeleteButton>
           <DeleteIcon />
         </DeleteButton>

@@ -9,10 +9,10 @@ const IconWrapper = styled.div`
   position: relative;
 `;
 
-const PinFullIcon = () => (
+const PinFillIcon = () => (
   <IconWrapper>
-    <Image src="/icons/pin_full.svg" alt="pin full" fill />
+    <Image src="/icons/pin_fill.svg" alt="pin fill" fill />
   </IconWrapper>
 );
 
-export default PinFullIcon;
+export default PinFillIcon;
