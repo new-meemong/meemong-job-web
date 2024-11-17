@@ -17,9 +17,6 @@ export interface JobPostingChatMessageType {
   messageType: JobPostingChatMessageTypeEnum;
   metaPathList: MetaPathType[];
   senderId: string;
-  readStatus: {
-    [key: string]: boolean;
-  };
 
   createdAt: Timestamp | FieldValue;
   updatedAt: Timestamp | FieldValue;

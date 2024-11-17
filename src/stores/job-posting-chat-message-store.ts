@@ -9,6 +9,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  increment,
   limit,
   onSnapshot,
   orderBy,
@@ -42,13 +43,6 @@ interface JobPostingChatMessageState {
     messageType: JobPostingChatMessageTypeEnum;
     metaPathList?: MetaPathType[];
   }) => Promise<void>;
-
-  // 메시지 읽음 상태 관련 액션
-  updateMessageReadStatus: (
-    channelId: string,
-    messageId: string,
-    userId: string,
-  ) => Promise<void>;
 }
 
 export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
@@ -125,7 +119,6 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
           messageType,
           metaPathList,
           senderId,
-          readStatus,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         };
@@ -168,41 +161,13 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         const updateReceiverMeta = updateDoc(receiverMetaRef, {
           lastMessage: lastMessageData,
           updatedAt: serverTimestamp(),
+          unreardCount: increment(1),
         });
 
         await Promise.all([updateSenderMeta, updateReceiverMeta]);
-
-        // 수신자의 읽지 않은 메시지 카운트 증가
-        await useJobPostingChatChannelStore
-          .getState()
-          .addChannelUserMetaUnreadCount(channelId, receiverId);
       } catch (error) {
         console.error("Error sending message:", error);
         set({ error: "메시지 전송에 실패했습니다." });
-      }
-    },
-
-    updateMessageReadStatus: async (
-      channelId: string,
-      messageId: string,
-      userId: string,
-    ) => {
-      try {
-        const messageRef = doc(
-          db,
-          `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/messages/${messageId}`,
-        );
-        await setDoc(
-          messageRef,
-          {
-            readStatus: {
-              [userId]: true,
-            },
-          },
-          { merge: true },
-        );
-      } catch (error) {
-        console.error("Error updating message read status:", error);
       }
     },
   }),

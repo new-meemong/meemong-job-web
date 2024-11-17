@@ -15,8 +15,10 @@ export interface ChatChannelUserMetaType {
 
   otherUserId: string;
 
+  lastReadAt: Timestamp | FieldValue | null;
+
   createdAt: Timestamp | FieldValue;
   updatedAt: Timestamp | FieldValue;
 
-  otherUser?: UserType; // 상대방 유저 정보, 별도로 API 호출
+  otherUser: UserType;
 }

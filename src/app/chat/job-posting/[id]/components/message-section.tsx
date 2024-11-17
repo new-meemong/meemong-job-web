@@ -5,8 +5,12 @@ import {
 
 import CenterSpinner from "@/components/spinners/center-spinner";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
+import { Timestamp } from "firebase/firestore";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
+import { useEffect } from "react";
+import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 import { useJobPostingChatMessageStore } from "@/stores/job-posting-chat-message-store";
 
 const Container = styled.div``;
@@ -49,12 +53,26 @@ const ProfileName = styled.span`
   text-align: center;
 `;
 
-const MessageItem = styled.div<{ isMine: boolean }>`
+const MessageItem = styled.div<{ $isMine: boolean }>`
   padding: 8px 12px;
-  background-color: ${(props) => (props.isMine ? "#007bff" : "#f5f5f5")};
-  color: ${(props) => (props.isMine ? "white" : "black")};
+  background-color: ${(props) => (props.$isMine ? "#007bff" : "#f5f5f5")};
+  color: ${(props) => (props.$isMine ? "white" : "black")};
   border-radius: 8px;
-  max-width: 70%;
+`;
+
+const MessageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: ${pxToVw(4)};
+  max-width: 80%;
+`;
+
+const ReadStatusText = styled.span`
+  font-size: 12px;
+  color: #666;
+  min-width: ${pxToVw(20)};
 `;
 
 const LinkButton = styled.a`
@@ -86,13 +104,69 @@ const MessageSection = ({
     userId: state.userId,
   }));
 
-  const renderMessageContent = (message: JobPostingChatMessageType) => {
-    console.log(
-      "message",
-      message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING,
-      message.messageType,
-      JobPostingChatMessageTypeEnum.JOB_POSTING,
+  const {
+    updateUserLastReadAt,
+    chatChannelUserMetas,
+    otherUserMeta,
+    subscribeToOtherUserMeta,
+  } = useJobPostingChatChannelStore((state) => ({
+    updateUserLastReadAt: state.updateUserLastReadAt,
+    chatChannelUserMetas: state.chatChannelUserMetas,
+    otherUserMeta: state.otherUserMeta,
+    subscribeToOtherUserMeta: state.subscribeToOtherUserMeta,
+  }));
+
+  useEffect(() => {
+    if (!channel?.id || !channel.otherUser?.id) return;
+
+    const unsubscribe = subscribeToOtherUserMeta(
+      channel.id,
+      channel.otherUser.id,
     );
+
+    return () => {
+      unsubscribe();
+    };
+  }, [channel?.id, channel?.otherUser?.id]);
+
+  useEffect(() => {
+    if (!channel?.id || !userId || loading) return;
+
+    // 메시지가 변경될 때마다 lastReadAt 업데이트
+    updateUserLastReadAt(channel.id, userId);
+  }, [channel?.id, userId, messages.length, loading]);
+
+  useEffect(() => {
+    if (!channel?.id || !userId) return;
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        updateUserLastReadAt(channel.id, userId);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [channel?.id, userId]);
+
+  const checkIsRead = (
+    messageCreatedAt: Timestamp,
+    message: JobPostingChatMessageType,
+  ) => {
+    // 내가 보낸 메시지인 경우에만 상대방의 lastReadAt 확인
+    if (userId === message.senderId) {
+      const otherLastReadAt = otherUserMeta?.lastReadAt as Timestamp | null;
+      return otherLastReadAt
+        ? messageCreatedAt?.toMillis() <= otherLastReadAt?.toMillis()
+        : false;
+    }
+    return true; // 상대방 메시지는 항상 false 반환
+  };
+
+  const renderMessageContent = (message: JobPostingChatMessageType) => {
     if (
       (message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING ||
         message.messageType === JobPostingChatMessageTypeEnum.RESUME) &&
@@ -111,13 +185,16 @@ const MessageSection = ({
     }
     return message.message;
   };
+
   return (
     <MessagesContainer>
       {loading ? (
         <CenterSpinner />
       ) : (
         messages.map((message) => {
-          console.log("message", message);
+          const messageCreatedAt = message.createdAt as Timestamp;
+          const isRead = checkIsRead(messageCreatedAt, message);
+
           return (
             <MessageWrapper
               key={message.id}
@@ -137,9 +214,15 @@ const MessageSection = ({
                   </ProfileName>
                 </ProfileContainer>
               )}
-              <MessageItem isMine={message.senderId === userId}>
-                {renderMessageContent(message)}
-              </MessageItem>
+
+              <MessageContainer>
+                {message.senderId === userId && (
+                  <ReadStatusText>{isRead ? "읽음" : "1"}</ReadStatusText>
+                )}
+                <MessageItem $isMine={message.senderId === userId}>
+                  {renderMessageContent(message)}
+                </MessageItem>
+              </MessageContainer>
             </MessageWrapper>
           );
         })

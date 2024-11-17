@@ -27,6 +27,7 @@ import { useAuthStore } from "./auth-store";
 
 interface ChatChannelState {
   chatChannelUserMetas: ChatChannelUserMetaType[];
+  otherUserMeta: ChatChannelUserMetaType | null;
   loading: boolean;
   error: string | null;
 
@@ -52,6 +53,7 @@ interface ChatChannelState {
     userId: string,
   ) => Promise<void>;
 
+  updateUserLastReadAt: (channelId: string, userId: string) => Promise<void>;
   // 해당 채널 차단
   blockChannel: (channelId: string, userId: string) => Promise<void>;
 
@@ -59,6 +61,13 @@ interface ChatChannelState {
   unblockChannel: (channelId: string, userId: string) => Promise<void>;
 
   getChannel: (channelId: string) => Promise<JobPostingChatChannelType | null>;
+
+  subscribeToOtherUserMeta: (
+    channelId: string,
+    otherUserId: string,
+  ) => () => void;
+
+  updateChannelUserInfo: (channelId: string, userId: string) => Promise<void>;
 }
 
 export const useJobPostingChatChannelStore = create<ChatChannelState>(
@@ -66,6 +75,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
     chatChannelUserMetas: [],
     loading: false,
     error: null,
+    otherUserMeta: null,
 
     findOrCreateChannel: async ({
       senderId,
@@ -95,6 +105,12 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             return { channelId: channelRef.id, isCreated: false };
           }
 
+          // 각 참여자의 사용자 정보를 미리 가져옴
+          const [senderData, receiverData] = await Promise.all([
+            getUser(senderId),
+            getUser(receiverId),
+          ]);
+
           // 채널 생성
           const newChannel: Omit<JobPostingChatChannelType, "id"> = {
             channelKey,
@@ -113,14 +129,20 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
               `users/${userId}/chatChannelUserMetas`,
               channelRef.id,
             );
+            const otherUserId = participantIds.filter((id) => id !== userId)[0];
+            const otherUserData =
+              userId === senderId ? receiverData.data : senderData.data;
+
             const userMeta: ChatChannelUserMetaType = {
               channelId: channelRef.id,
-              otherUserId: participantIds.filter((id) => id !== userId)[0],
+              otherUserId,
+              otherUser: otherUserData,
               unreadCount: 0,
               isBlockChannel: false,
               lastMessage: {} as JobPostingChatMessageType,
               isPinned: false,
               pinnedAt: null,
+              lastReadAt: null,
               createdAt: serverTimestamp(),
               updatedAt: serverTimestamp(),
             };
@@ -151,19 +173,10 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         userMetaRef,
         async (snapshot) => {
           try {
-            // 각 채널 메타데이터에 대해 otherUser 정보를 가져옴
-            const userMetasPromises = snapshot.docs.map(async (doc) => {
-              const data = doc.data();
-              const res = await getUser(data.otherUserId);
-
-              return {
-                channelId: doc.id,
-                ...data,
-                otherUser: res.error ? null : res.data,
-              };
-            });
-
-            const userMetas = await Promise.all(userMetasPromises);
+            const userMetas = snapshot.docs.map((doc) => ({
+              channelId: doc.id,
+              ...doc.data(),
+            }));
 
             set({
               chatChannelUserMetas: userMetas as ChatChannelUserMetaType[],
@@ -226,6 +239,23 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         });
       } catch (error) {
         console.error("안 읽은 메시지 카운트 리셋 중 오류 발생:", error);
+      }
+    },
+
+    updateUserLastReadAt: async (channelId: string, userId: string) => {
+      try {
+        const userMetaRef = doc(
+          db,
+          `users/${userId}/chatChannelUserMetas`,
+          channelId,
+        );
+
+        await updateDoc(userMetaRef, {
+          lastReadAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      } catch (error) {
+        console.error("사용자 lastReadAt 업데이트 중 오류 발생:", error);
       }
     },
 
@@ -329,6 +359,62 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       } catch (error) {
         console.error("채널 정보 조회 중 오류 발생:", error);
         throw new Error("채널 정보를 불러오는 중 오류가 발생했습니다.");
+      }
+    },
+
+    subscribeToOtherUserMeta: (channelId: string, otherUserId: string) => {
+      const otherUserMetaRef = doc(
+        db,
+        `users/${otherUserId}/chatChannelUserMetas`,
+        channelId,
+      );
+
+      const unsubscribe = onSnapshot(
+        otherUserMetaRef,
+        async (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+            const res = await getUser(data.otherUserId);
+
+            set({
+              otherUserMeta: {
+                channelId: snapshot.id,
+                ...data,
+                otherUser: res.error ? null : res.data,
+              } as ChatChannelUserMetaType,
+            });
+          }
+        },
+        (error) => {
+          console.error("상대방 메타데이터 구독 에러:", error);
+        },
+      );
+
+      return unsubscribe;
+    },
+
+    updateChannelUserInfo: async (channelId: string, userId: string) => {
+      try {
+        const userMetaRef = doc(
+          db,
+          `users/${userId}/chatChannelUserMetas`,
+          channelId,
+        );
+
+        const userMetaSnap = await getDoc(userMetaRef);
+        if (!userMetaSnap.exists()) return;
+
+        const userMeta = userMetaSnap.data();
+        const userData = await getUser(userMeta.otherUserId);
+
+        if (!userData.error) {
+          await updateDoc(userMetaRef, {
+            otherUser: userData.data,
+            updatedAt: serverTimestamp(),
+          });
+        }
+      } catch (error) {
+        console.error("사용자 정보 업데이트 중 오류 발생:", error);
       }
     },
   }),
