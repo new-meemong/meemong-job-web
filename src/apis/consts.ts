@@ -1,5 +1,5 @@
 export const TEST_API = "https://job-api-test.meemong.com";
-export const PRODUCTION_API = "https://job-api-test.meemong.com";
+export const PRODUCTION_API = "https://job-api.meemong.com";
 export const IMAGE_STORAGE_URL =
   "https://meemong-job-storage.s3.ap-northeast-2.amazonaws.com";
 
