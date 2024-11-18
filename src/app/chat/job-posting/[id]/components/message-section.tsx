@@ -2,6 +2,7 @@ import {
   JobPostingChatMessageType,
   JobPostingChatMessageTypeEnum,
 } from "@/types/chat/job-posting-chat-message-type";
+import { useEffect, useRef } from "react";
 
 import CenterSpinner from "@/components/spinners/center-spinner";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
@@ -10,7 +11,6 @@ import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
-import { useEffect } from "react";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 import { useJobPostingChatMessageStore } from "@/stores/job-posting-chat-message-store";
 
@@ -112,6 +112,8 @@ const MessageSection = ({
   loading: boolean;
   channel: JobPostingChatChannelType;
 }) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const { messages } = useJobPostingChatMessageStore((state) => ({
     messages: state.messages,
   }));
@@ -119,12 +121,17 @@ const MessageSection = ({
     userId: state.userId,
   }));
 
-  const { updateUserLastReadAt, otherUserMeta, subscribeToOtherUserMeta } =
-    useJobPostingChatChannelStore((state) => ({
-      updateUserLastReadAt: state.updateUserLastReadAt,
-      otherUserMeta: state.otherUserMeta,
-      subscribeToOtherUserMeta: state.subscribeToOtherUserMeta,
-    }));
+  const {
+    updateUserLastReadAt,
+    otherUserMeta,
+    subscribeToOtherUserMeta,
+    resetChannelUserMetaUnreadCount,
+  } = useJobPostingChatChannelStore((state) => ({
+    updateUserLastReadAt: state.updateUserLastReadAt,
+    otherUserMeta: state.otherUserMeta,
+    subscribeToOtherUserMeta: state.subscribeToOtherUserMeta,
+    resetChannelUserMetaUnreadCount: state.resetChannelUserMetaUnreadCount,
+  }));
 
   useEffect(() => {
     if (!channel?.id || !channel.otherUser?.id) return;
@@ -138,12 +145,16 @@ const MessageSection = ({
       unsubscribe();
     };
   }, [channel?.id, channel?.otherUser?.id]);
-
   useEffect(() => {
     if (!channel?.id || !userId || loading) return;
 
     // 메시지가 변경될 때마다 lastReadAt 업데이트
     updateUserLastReadAt(channel.id, userId);
+
+    // cleanup 함수에서 채팅방을 나갈 때 unreadCount 초기화
+    return () => {
+      resetChannelUserMetaUnreadCount(channel.id, userId);
+    };
   }, [channel?.id, userId, messages.length, loading]);
 
   useEffect(() => {
@@ -161,6 +172,22 @@ const MessageSection = ({
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [channel?.id, userId]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // 채팅방 첫 접속시 스크롤 아래로
+  useEffect(() => {
+    if (!loading) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
+    }
+  }, [loading]);
+
+  // 새 메시지가 올 때마다 스크롤 아래로
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages.length]);
 
   const checkIsRead = (
     messageCreatedAt: Timestamp,
@@ -181,20 +208,23 @@ const MessageSection = ({
       {loading ? (
         <CenterSpinner />
       ) : (
-        messages.map((message) => {
-          const messageCreatedAt = message.createdAt as Timestamp;
-          const isRead = checkIsRead(messageCreatedAt, message);
+        <>
+          {messages.map((message) => {
+            const messageCreatedAt = message.createdAt as Timestamp;
+            const isRead = checkIsRead(messageCreatedAt, message);
 
-          return message.senderId === userId ? (
-            <MyMessage key={message.id} message={message} isRead={isRead} />
-          ) : (
-            <OtherMessage
-              key={message.id}
-              message={message}
-              channel={channel}
-            />
-          );
-        })
+            return message.senderId === userId ? (
+              <MyMessage key={message.id} message={message} isRead={isRead} />
+            ) : (
+              <OtherMessage
+                key={message.id}
+                message={message}
+                channel={channel}
+              />
+            );
+          })}
+          <div ref={messagesEndRef} /> {/* 스크롤 위치 지정을 위한 요소 */}
+        </>
       )}
     </MessagesContainer>
   );

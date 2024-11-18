@@ -24,7 +24,6 @@ import {
 import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
-import { useJobPostingChatChannelStore } from "./job-posting-chat-channel-store";
 
 interface JobPostingChatMessageState {
   messages: JobPostingChatMessageType[];
