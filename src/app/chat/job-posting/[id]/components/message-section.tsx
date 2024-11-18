@@ -215,7 +215,7 @@ const MyMessage = ({
       <MessageStatusContainer>
         <ReadStatusText>{isRead ? "읽음" : "1"}</ReadStatusText>
         <MessageTime>
-          {moment((message.createdAt as Timestamp).toDate()).format(
+          {moment((message.createdAt as Timestamp)?.toDate()).format(
             "MM-DD HH:mm",
           )}
         </MessageTime>
