@@ -34,13 +34,13 @@ export const useAuthStore = create(
   persist<AuthStore>(
     (set) => ({
       ...defaultAuthState,
-      login: async (userId: string) => {
+      login: async (UserID: string) => {
         try {
-          if (!userId) {
+          if (!UserID) {
             throw new Error("userId is required");
           }
 
-          const { data }: { data: UserModel } = await webviewLogin(userId);
+          const { data }: { data: UserModel } = await webviewLogin(UserID);
 
           if (data && data.token) {
             set({

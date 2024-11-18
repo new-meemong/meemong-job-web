@@ -59,13 +59,13 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
     checkMyResumeExist: state.checkMyResumeExist,
   }));
 
-  const userId = UserID ? UserID : searchParams.userId;
+  const _UserID = UserID ? UserID : searchParams.userId;
   const source = searchParams.source;
 
   useEffect(() => {
     const _fetch = async () => {
       if (!jwt) {
-        await login(userId);
+        await login(_UserID);
       }
 
       const { data } = await checkMyResumeExist();
@@ -86,10 +86,10 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
       }
     };
 
-    if (userId) {
+    if (_UserID) {
       _fetch();
     }
-  }, [userId]);
+  }, [_UserID]);
 
   return (
     <Container>

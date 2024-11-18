@@ -65,22 +65,22 @@ export default function MyJobPostingListPage({ searchParams }: SearchParams) {
     jwt: state.jwt,
   }));
 
-  const userId = searchParams.userId;
+  const _UserID = searchParams.userId;
   const source = searchParams.source;
 
   useEffect(() => {
     const _fetch = async () => {
       if (!jwt) {
-        await login(userId);
+        await login(_UserID);
       }
 
       await getMyJobPostingList();
     };
 
-    if (userId) {
+    if (_UserID) {
       _fetch();
     }
-  }, [getMyJobPostingList, userId, jwt, login]);
+  }, [getMyJobPostingList, _UserID, jwt, login]);
 
   return (
     <Container>
