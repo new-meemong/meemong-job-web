@@ -14,6 +14,7 @@ export interface ChatChannelUserMetaType {
   pinnedAt: Timestamp | FieldValue | null;
 
   otherUserId: string;
+  userId: string;
 
   lastReadAt: Timestamp | FieldValue | null;
 
