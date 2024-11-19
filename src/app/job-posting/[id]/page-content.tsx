@@ -23,6 +23,7 @@ import PostingTitle from "../components/posting-title";
 import StoreFloatingButton from "@/components/buttons/store-floating-button";
 import StoreInfo from "../components/store-info";
 import StoreLocation from "../components/store-location";
+import { messageType } from "@/types/send-app-message-type";
 import pxToVw from "@/lib/dpi-converter";
 import { removeQueryParams } from "@/lib/remove-query-params";
 import styled from "styled-components";
@@ -263,7 +264,7 @@ export default function PageContent({
               }
 
               if (isCreated) {
-                await sendMessage({
+                const { success } = await sendMessage({
                   channelId,
                   message: `구인구직 공고를 보고 대화를 시작했습니다.`,
                   messageType: JobPostingChatMessageTypeEnum.JOB_POSTING,
@@ -276,24 +277,30 @@ export default function PageContent({
                   senderId: userId,
                   receiverId: jobPosting.userId.toString(),
                 });
+
+                if (success) {
+                } else {
+                  toast.error("채팅 메시지 전송 실패");
+                }
+              }
+
+              if (typeof window !== "undefined" && window.startChat) {
+                const postUrl = window.location.href;
+                const postId = postUrl.split("/").pop() as string;
+                const message = {
+                  type: "job-posting" as messageType,
+                  postId,
+                  postUserId: jobPosting.User?.UserID.toString(),
+                  chatChannelId: channelId,
+                };
+                window.startChat(message);
               } else {
-                // 해당 채팅방으로 이동
+                console.log("startChat function is not available.");
               }
             } catch (error) {
-              console.error("채팅 메시지 전송 실패:", error);
+              console.error("요청 실패:", error);
+              toast.error("요청이 실패하였습니다. 관리자에게 문의하세요.");
             }
-            // if (typeof window !== "undefined" && window.startChat) {
-            //   const postUrl = window.location.href;
-            //   const postId = postUrl.split("/").pop() as string;
-            //   const message = {
-            //     type: "job-posting" as messageType,
-            //     postId,
-            //     postUserId: jobPosting.User?.UserID.toString(),
-            //   };
-            //   window.startChat(message);
-            // } else {
-            //   console.log("startChat function is not available.");
-            // }
           }}
         />
       )}

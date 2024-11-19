@@ -41,7 +41,7 @@ interface JobPostingChatMessageState {
     message: string;
     messageType: JobPostingChatMessageTypeEnum;
     metaPathList?: MetaPathType[];
-  }) => Promise<void>;
+  }) => Promise<{ success: boolean; channelId: string | null }>;
 }
 
 export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
@@ -98,7 +98,7 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
     }) => {
       try {
         if (!channelId) {
-          return;
+          return { success: false, channelId: null };
         }
 
         // 메시지 생성
@@ -108,10 +108,6 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
             `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/messages`,
           ),
         );
-        const readStatus = {
-          [senderId]: true,
-          [receiverId]: false,
-        };
 
         const newMessage: Omit<JobPostingChatMessageType, "id"> = {
           message,
@@ -164,9 +160,12 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         });
 
         await Promise.all([updateSenderMeta, updateReceiverMeta]);
+
+        return { success: true, channelId };
       } catch (error) {
         console.error("Error sending message:", error);
         set({ error: "메시지 전송에 실패했습니다." });
+        return { success: false, channelId: null };
       }
     },
   }),
