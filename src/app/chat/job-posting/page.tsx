@@ -41,9 +41,9 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
     login: state.login,
     jwt: state.jwt,
   }));
-  const { chatChannelUserMetas, subscribeToChannels, loading } =
+  const { userJobPostingChatChannels, subscribeToChannels, loading } =
     useJobPostingChatChannelStore((state) => ({
-      chatChannelUserMetas: state.chatChannelUserMetas,
+      userJobPostingChatChannels: state.userJobPostingChatChannels,
       subscribeToChannels: state.subscribeToChannels,
       loading: state.loading,
     }));
@@ -89,16 +89,16 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
 
   return (
     <Container>
-      {chatChannelUserMetas.length === 0 ? (
+      {userJobPostingChatChannels.length === 0 ? (
         <EmptyState>
           <p>아직 채팅 내역이 없습니다.</p>
         </EmptyState>
       ) : (
-        chatChannelUserMetas.map((chatChannelUserMetas) => {
+        userJobPostingChatChannels.map((userJobPostingChatChannel) => {
           return (
             <JobPostingChatChannelItem
-              key={chatChannelUserMetas.channelId}
-              chatChannelUserMeta={chatChannelUserMetas}
+              key={userJobPostingChatChannel.channelId}
+              userJobPostingChatChannel={userJobPostingChatChannel}
             />
           );
         })

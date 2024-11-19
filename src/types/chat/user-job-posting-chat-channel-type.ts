@@ -3,7 +3,7 @@ import { FieldValue, Timestamp } from "firebase/firestore";
 import { JobPostingChatMessageType } from "./job-posting-chat-message-type";
 import { UserType } from "../user-type";
 
-export interface ChatChannelUserMetaType {
+export interface UserJobPostingChatChannelType {
   channelId: string;
   unreadCount: number | FieldValue;
   isBlockChannel: boolean;

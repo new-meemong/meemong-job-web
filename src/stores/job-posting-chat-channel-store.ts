@@ -17,17 +17,17 @@ import {
 } from "firebase/firestore";
 
 import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
-import { ChatChannelUserMetaType } from "@/types/chat/chat-channel-user-meta-type";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
 import { JobPostingChatMessageType } from "@/types/chat/job-posting-chat-message-type";
+import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
 import { useAuthStore } from "./auth-store";
 
 interface ChatChannelState {
-  chatChannelUserMetas: ChatChannelUserMetaType[];
-  otherUserMeta: ChatChannelUserMetaType | null;
+  userJobPostingChatChannels: UserJobPostingChatChannelType[];
+  otherUserJobPostingChatChannel: UserJobPostingChatChannelType | null;
   loading: boolean;
   error: string | null;
 
@@ -41,17 +41,8 @@ interface ChatChannelState {
 
   subscribeToChannels: (userId: string) => () => void;
 
-  // 해당 채널의 유저 unreadCount + 1
-  addChannelUserMetaUnreadCount: (
-    channelId: string,
-    receiverId: string,
-  ) => Promise<void>;
-
   // 해당 채널의 유저 unreadCount 초기화
-  resetChannelUserMetaUnreadCount: (
-    channelId: string,
-    userId: string,
-  ) => Promise<void>;
+  resetUnreadCount: (channelId: string, userId: string) => Promise<void>;
 
   updateUserLastReadAt: (channelId: string, userId: string) => Promise<void>;
 
@@ -66,20 +57,17 @@ interface ChatChannelState {
 
   getChannel: (channelId: string) => Promise<JobPostingChatChannelType | null>;
 
-  subscribeToOtherUserMeta: (
-    channelId: string,
-    otherUserId: string,
-  ) => () => void;
+  subscribeToOtherUser: (channelId: string, otherUserId: string) => () => void;
 
   updateChannelUserInfo: (channelId: string, userId: string) => Promise<void>;
 }
 
 export const useJobPostingChatChannelStore = create<ChatChannelState>(
   (set) => ({
-    chatChannelUserMetas: [],
+    userJobPostingChatChannels: [],
     loading: false,
     error: null,
-    otherUserMeta: null,
+    otherUserJobPostingChatChannel: null,
 
     findOrCreateChannel: async ({
       senderId,
@@ -128,16 +116,16 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
           // 참여자별 메타데이터 생성 (경로 변경)
           participantIds.forEach((userId) => {
-            const userMetaRef = doc(
+            const userChannelRef = doc(
               db,
-              `users/${userId}/chatChannelUserMetas`,
+              `users/${userId}/userJobPostingChatChannels`,
               channelRef.id,
             );
             const otherUserId = participantIds.filter((id) => id !== userId)[0];
             const otherUserData =
               userId === senderId ? receiverData.data : senderData.data;
 
-            const userMeta: ChatChannelUserMetaType = {
+            const userJobPostingChatChannel: UserJobPostingChatChannelType = {
               channelId: channelRef.id,
               otherUserId,
               userId,
@@ -151,7 +139,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
               createdAt: serverTimestamp(),
               updatedAt: serverTimestamp(),
             };
-            transaction.set(userMetaRef, userMeta);
+            transaction.set(userChannelRef, userJobPostingChatChannel);
           });
 
           return { channelId: channelRef.id, isCreated: true };
@@ -169,24 +157,21 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       set({ loading: true });
 
       // 사용자별 채널 메타데이터 구독 (경로 변경)
-      const userMetaRef = collection(
-        db,
-        `users/${userId}/chatChannelUserMetas`,
-      );
+      const ref = collection(db, `users/${userId}/userJobPostingChatChannels`);
 
       const unsubscribe = onSnapshot(
-        userMetaRef,
+        ref,
         async (snapshot) => {
           try {
-            const userMetas = snapshot.docs.map((doc) => ({
+            const channels = snapshot.docs.map((doc) => ({
               channelId: doc.id,
               ...doc.data(),
-            })) as ChatChannelUserMetaType[];
+            })) as UserJobPostingChatChannelType[];
 
-            const sortedChannels = sortChannels(userMetas);
+            const sortedChannels = sortChannels(channels);
 
             set({
-              chatChannelUserMetas: sortedChannels,
+              userJobPostingChatChannels: sortedChannels,
               loading: false,
             });
           } catch (error) {
@@ -209,38 +194,15 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       return unsubscribe;
     },
 
-    addChannelUserMetaUnreadCount: async (
-      channelId: string,
-      receiverId: string,
-    ) => {
+    resetUnreadCount: async (channelId: string, userId: string) => {
       try {
-        const userMetaRef = doc(
+        const ref = doc(
           db,
-          `users/${receiverId}/chatChannelUserMetas`,
+          `users/${userId}/userJobPostingChatChannels`,
           channelId,
         );
 
-        await updateDoc(userMetaRef, {
-          unreadCount: increment(1),
-          updatedAt: serverTimestamp(),
-        });
-      } catch (error) {
-        console.error("안 읽은 메시지 카운트 업데이트 중 오류 발생:", error);
-      }
-    },
-
-    resetChannelUserMetaUnreadCount: async (
-      channelId: string,
-      userId: string,
-    ) => {
-      try {
-        const userMetaRef = doc(
-          db,
-          `users/${userId}/chatChannelUserMetas`,
-          channelId,
-        );
-
-        await updateDoc(userMetaRef, {
+        await updateDoc(ref, {
           unreadCount: 0,
           updatedAt: serverTimestamp(),
         });
@@ -251,13 +213,13 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
     updateUserLastReadAt: async (channelId: string, userId: string) => {
       try {
-        const userMetaRef = doc(
+        const ref = doc(
           db,
-          `users/${userId}/chatChannelUserMetas`,
+          `users/${userId}/userJobPostingChatChannels`,
           channelId,
         );
 
-        await updateDoc(userMetaRef, {
+        await updateDoc(ref, {
           lastReadAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });
@@ -268,13 +230,13 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
     blockChannel: async (channelId: string, userId: string) => {
       try {
-        const userMetaRef = doc(
+        const ref = doc(
           db,
-          `users/${userId}/chatChannelUserMetas`,
+          `users/${userId}/userJobPostingChatChannels`,
           channelId,
         );
 
-        await updateDoc(userMetaRef, {
+        await updateDoc(ref, {
           isBlockChannel: true,
           updatedAt: serverTimestamp(),
         });
@@ -285,13 +247,13 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
     unblockChannel: async (channelId: string, userId: string) => {
       try {
-        const userMetaRef = doc(
+        const ref = doc(
           db,
-          `users/${userId}/chatChannelUserMetas`,
+          `users/${userId}/userJobPostingChatChannels`,
           channelId,
         );
 
-        await updateDoc(userMetaRef, {
+        await updateDoc(ref, {
           isBlockChannel: false,
           updatedAt: serverTimestamp(),
         });
@@ -302,13 +264,13 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
     pinChannel: async (channelId: string, userId: string) => {
       try {
-        const userMetaRef = doc(
+        const ref = doc(
           db,
-          `users/${userId}/chatChannelUserMetas`,
+          `users/${userId}/userJobPostingChatChannels`,
           channelId,
         );
 
-        await updateDoc(userMetaRef, {
+        await updateDoc(ref, {
           isPinned: true,
           pinnedAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
@@ -320,13 +282,13 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
     unpinChannel: async (channelId: string, userId: string) => {
       try {
-        const userMetaRef = doc(
+        const ref = doc(
           db,
-          `users/${userId}/chatChannelUserMetas`,
+          `users/${userId}/userJobPostingChatChannels`,
           channelId,
         );
 
-        await updateDoc(userMetaRef, {
+        await updateDoc(ref, {
           isPinned: false,
           pinnedAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
@@ -369,26 +331,26 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       }
     },
 
-    subscribeToOtherUserMeta: (channelId: string, otherUserId: string) => {
-      const otherUserMetaRef = doc(
+    subscribeToOtherUser: (channelId: string, otherUserId: string) => {
+      const ref = doc(
         db,
-        `users/${otherUserId}/chatChannelUserMetas`,
+        `users/${otherUserId}/userJobPostingChatChannels`,
         channelId,
       );
 
       const unsubscribe = onSnapshot(
-        otherUserMetaRef,
+        ref,
         async (snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.data();
             const res = await getUser(data.otherUserId);
 
             set({
-              otherUserMeta: {
+              otherUserJobPostingChatChannel: {
                 channelId: snapshot.id,
                 ...data,
                 otherUser: res.error ? null : res.data,
-              } as ChatChannelUserMetaType,
+              } as UserJobPostingChatChannelType,
             });
           }
         },
@@ -402,20 +364,20 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
     updateChannelUserInfo: async (channelId: string, userId: string) => {
       try {
-        const userMetaRef = doc(
+        const ref = doc(
           db,
-          `users/${userId}/chatChannelUserMetas`,
+          `users/${userId}/userJobPostingChatChannels`,
           channelId,
         );
 
-        const userMetaSnap = await getDoc(userMetaRef);
-        if (!userMetaSnap.exists()) return;
+        const snap = await getDoc(ref);
+        if (!snap.exists()) return;
 
-        const userMeta = userMetaSnap.data();
-        const userData = await getUser(userMeta.otherUserId);
+        const userJobPostingChatChannel = snap.data();
+        const userData = await getUser(userJobPostingChatChannel.otherUserId);
 
         if (!userData.error) {
-          await updateDoc(userMetaRef, {
+          await updateDoc(ref, {
             otherUser: userData.data,
             updatedAt: serverTimestamp(),
           });
@@ -428,7 +390,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 );
 
 // 채널 데이터를 정렬하는 함수
-const sortChannels = (channels: ChatChannelUserMetaType[]) => {
+const sortChannels = (channels: UserJobPostingChatChannelType[]) => {
   return channels.sort((a, b) => {
     // 둘 다 고정된 경우 pinnedAt으로 비교
     if (a.isPinned && b.isPinned) {

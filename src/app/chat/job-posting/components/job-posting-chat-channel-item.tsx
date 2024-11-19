@@ -1,8 +1,8 @@
-import { ChatChannelUserMetaType } from "@/types/chat/chat-channel-user-meta-type";
 import DeleteIcon from "@/components/icons/delete-icon";
 import Image from "next/image";
 import PinListIcon from "@/components/icons/pin-list-icon";
 import PinToggleButton from "./pin-toggle-button";
+import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import { UserType } from "@/types/user-type";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
@@ -119,11 +119,11 @@ const DeleteButton = styled.button`
 `;
 
 interface JobPostingChatChannelItemProps {
-  chatChannelUserMeta: ChatChannelUserMetaType;
+  userJobPostingChatChannel: UserJobPostingChatChannelType;
 }
 
 export default function JobPostingChatChannelItem({
-  chatChannelUserMeta,
+  userJobPostingChatChannel,
 }: JobPostingChatChannelItemProps) {
   const router = useRouter();
   const [offset, setOffset] = useState(0);
@@ -153,7 +153,7 @@ export default function JobPostingChatChannelItem({
     setOffset(0);
   };
 
-  const { lastMessage, otherUser } = chatChannelUserMeta;
+  const { lastMessage, otherUser } = userJobPostingChatChannel;
   const userImage =
     otherUser?.ProfilePictureURL || "/images/resume_profile_default.svg";
 
@@ -165,11 +165,9 @@ export default function JobPostingChatChannelItem({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         onClick={() => {
-          console.log(
-            "chatChannelUserMeta.channelId",
-            chatChannelUserMeta.channelId,
+          router.push(
+            `/chat/job-posting/${userJobPostingChatChannel.channelId}`,
           );
-          router.push(`/chat/job-posting/${chatChannelUserMeta.channelId}`);
         }}
       >
         <UserImage
@@ -181,7 +179,7 @@ export default function JobPostingChatChannelItem({
         <CenterContentWrapper>
           <UserNameWrapper>
             <UserName>{otherUser?.DisplayName || "알수없음"}</UserName>
-            {chatChannelUserMeta.isPinned && <PinListIcon />}
+            {userJobPostingChatChannel.isPinned && <PinListIcon />}
           </UserNameWrapper>
           <Message>{lastMessage.message}</Message>
         </CenterContentWrapper>
@@ -191,16 +189,18 @@ export default function JobPostingChatChannelItem({
               ? moment(lastMessage.updatedAt.toDate()).format("MM-DD HH:mm")
               : ""}
           </LatestMessageDate>
-          {Number(chatChannelUserMeta.unreadCount) > 0 && (
-            <UnreadCount>{Number(chatChannelUserMeta.unreadCount)}</UnreadCount>
+          {Number(userJobPostingChatChannel.unreadCount) > 0 && (
+            <UnreadCount>
+              {Number(userJobPostingChatChannel.unreadCount)}
+            </UnreadCount>
           )}
         </RightContentWrapper>
       </ContentWrapper>
       <RightButtonWrapper>
         <PinToggleButton
-          channelId={chatChannelUserMeta.channelId}
-          userId={chatChannelUserMeta.userId}
-          isPinned={chatChannelUserMeta.isPinned}
+          channelId={userJobPostingChatChannel.channelId}
+          userId={userJobPostingChatChannel.userId}
+          isPinned={userJobPostingChatChannel.isPinned}
           onToggle={handleToggle}
         />
         <DeleteButton>

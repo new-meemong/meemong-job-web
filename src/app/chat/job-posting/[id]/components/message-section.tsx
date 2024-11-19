@@ -124,23 +124,20 @@ const MessageSection = ({
 
   const {
     updateUserLastReadAt,
-    otherUserMeta,
-    subscribeToOtherUserMeta,
-    resetChannelUserMetaUnreadCount,
+    otherUserJobPostingChatChannel,
+    subscribeToOtherUser,
+    resetUnreadCount,
   } = useJobPostingChatChannelStore((state) => ({
     updateUserLastReadAt: state.updateUserLastReadAt,
-    otherUserMeta: state.otherUserMeta,
-    subscribeToOtherUserMeta: state.subscribeToOtherUserMeta,
-    resetChannelUserMetaUnreadCount: state.resetChannelUserMetaUnreadCount,
+    otherUserJobPostingChatChannel: state.otherUserJobPostingChatChannel,
+    subscribeToOtherUser: state.subscribeToOtherUser,
+    resetUnreadCount: state.resetUnreadCount,
   }));
 
   useEffect(() => {
     if (!channel?.id || !channel.otherUser?.id) return;
 
-    const unsubscribe = subscribeToOtherUserMeta(
-      channel.id,
-      channel.otherUser.id,
-    );
+    const unsubscribe = subscribeToOtherUser(channel.id, channel.otherUser.id);
 
     return () => {
       unsubscribe();
@@ -155,7 +152,7 @@ const MessageSection = ({
 
     // cleanup 함수에서 채팅방을 나갈 때 unreadCount 초기화
     return () => {
-      resetChannelUserMetaUnreadCount(channel.id, userId);
+      resetUnreadCount(channel.id, userId);
     };
   }, [channel?.id, userId, messages.length, loading]);
 
@@ -197,7 +194,8 @@ const MessageSection = ({
   ) => {
     // 내가 보낸 메시지인 경우에만 상대방의 lastReadAt 확인
     if (userId === message.senderId) {
-      const otherLastReadAt = otherUserMeta?.lastReadAt as Timestamp | null;
+      const otherLastReadAt =
+        otherUserJobPostingChatChannel?.lastReadAt as Timestamp | null;
       return otherLastReadAt
         ? messageCreatedAt?.toMillis() <= otherLastReadAt?.toMillis()
         : false;

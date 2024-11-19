@@ -137,12 +137,12 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         // 양쪽 사용자의 메타데이터에 lastMessage 업데이트
         const senderMetaRef = doc(
           db,
-          `users/${senderId}/chatChannelUserMetas`,
+          `users/${senderId}/userJobPostingChatChannels`,
           channelId,
         );
         const receiverMetaRef = doc(
           db,
-          `users/${receiverId}/chatChannelUserMetas`,
+          `users/${receiverId}/userJobPostingChatChannels`,
           channelId,
         );
 
