@@ -8,6 +8,7 @@ import JobPostingChatDetailHeader from "@/components/headers/job-posting-chat-de
 import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
 import MessageSection from "./components/message-section";
 import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
@@ -26,7 +27,7 @@ const Container = styled.div`
 
 const InputContainer = styled.div`
   display: flex;
-  padding: 16px;
+  padding: ${pxToVw(16)};
   border-top: 1px solid #eee;
   background: white;
   position: sticky; // 추가
@@ -35,18 +36,18 @@ const InputContainer = styled.div`
 
 const MessageInput = styled.input`
   flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 8px;
+  padding: ${pxToVw(8)} ${pxToVw(12)};
+  border: ${pxToVw(1)} solid #ddd;
+  border-radius: ${pxToVw(4)};
+  margin-right: ${pxToVw(8)};
 `;
 
 const SendButton = styled.button`
-  padding: 8px 16px;
+  padding: ${pxToVw(8)} ${pxToVw(16)};
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: ${pxToVw(4)};
   cursor: pointer;
 
   &:hover {

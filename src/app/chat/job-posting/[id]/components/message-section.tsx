@@ -21,7 +21,7 @@ const Container = styled.div``;
 const MessagesContainer = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  padding: ${pxToVw(16)};
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@ const MessageWrapper = styled.div<{ isMine: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.isMine ? "row-reverse" : "row")};
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: ${pxToVw(20)};
 `;
 
 const ProfileContainer = styled.div`
@@ -39,28 +39,28 @@ const ProfileContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin: ${(props) => (props.theme.isMine ? "0 0 0 8px" : "0 8px 0 0")};
-  width: 40px;
+  width: ${pxToVw(40)};
 `;
 
 const ProfileImage = styled.img`
-  width: 40px;
-  height: 40px;
+  width: ${pxToVw(40)};
+  height: ${pxToVw(40)};
   border-radius: 50%;
-  margin-bottom: 4px;
+  margin-bottom: ${pxToVw(4)};
 `;
 
 const ProfileName = styled.span`
-  font-size: 12px;
+  font-size: ${pxToVw(12)};
   color: #666;
   word-break: break-all;
   text-align: center;
 `;
 
 const MessageItem = styled.div<{ $isMine: boolean }>`
-  padding: 8px 12px;
+  padding: ${pxToVw(8)} ${pxToVw(12)};
   background-color: ${(props) => (props.$isMine ? "#007bff" : "#f5f5f5")};
   color: ${(props) => (props.$isMine ? "white" : "black")};
-  border-radius: 8px;
+  border-radius: ${pxToVw(8)};
 `;
 
 const MessageContainer = styled.div`
@@ -76,24 +76,24 @@ const MessageStatusContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: ${pxToVw(4)};
 `;
 
 const ReadStatusText = styled.span`
-  font-size: 12px;
+  font-size: ${pxToVw(12)};
   color: #666;
   min-width: ${pxToVw(20)};
 `;
 
 const LinkButton = styled.a`
   display: inline-block;
-  margin-top: 8px;
-  padding: 6px 12px;
+  margin-top: ${pxToVw(8)};
+  padding: ${pxToVw(6)} ${pxToVw(12)};
   background-color: #ffffff;
   color: #007bff;
-  border-radius: 4px;
+  border-radius: ${pxToVw(4)};
   text-decoration: none;
-  font-size: 14px;
+  font-size: ${pxToVw(14)};
 
   &:hover {
     background-color: #f8f9fa;
@@ -101,7 +101,7 @@ const LinkButton = styled.a`
 `;
 
 const MessageTime = styled.span`
-  font-size: 12px;
+  font-size: ${pxToVw(12)};
   color: #666;
   align-self: flex-end;
   min-width: ${pxToVw(55)};
