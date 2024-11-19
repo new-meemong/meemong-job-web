@@ -5,6 +5,7 @@ export enum JobPostingChatMessageTypeEnum {
   FILE = "file",
   JOB_POSTING = "jobPosting",
   RESUME = "resume",
+  SYSTEM = "system",
 }
 
 export interface MetaPathType {

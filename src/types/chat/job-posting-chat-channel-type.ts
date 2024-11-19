@@ -1,8 +1,5 @@
 import { FieldValue, Timestamp } from "firebase/firestore";
 
-import { JobPostingChatMessageType } from "./job-posting-chat-message-type";
-import { UserType } from "../user-type";
-
 export interface JobPostingChatChannelType {
   id: string; // 채널 ID
   channelKey: string; // `${channelType}_${참여자ID들.정렬().join('_')}_${채용공고ID}_${이력서ID}`
