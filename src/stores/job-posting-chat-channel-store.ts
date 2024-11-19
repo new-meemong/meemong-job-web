@@ -154,8 +154,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
     },
 
     subscribeToChannels: (userId: string) => {
-      set({ loading: true });
-
+      set({ loading: true, userJobPostingChatChannels: [] });
       // 사용자별 채널 메타데이터 구독 (경로 변경)
       const ref = collection(db, `users/${userId}/userJobPostingChatChannels`);
 
@@ -179,6 +178,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             set({
               error: "채널 정보를 불러오는 중 오류가 발생했습니다.",
               loading: false,
+              userJobPostingChatChannels: [],
             });
           }
         },
@@ -187,6 +187,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
           set({
             error: "채널 메타데이터를 불러오는 중 오류가 발생했습니다.",
             loading: false,
+            userJobPostingChatChannels: [],
           });
         },
       );

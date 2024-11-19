@@ -1,11 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import CenterSpinner from "@/components/spinners/center-spinner";
 import JobPostingChatChannelItem from "./components/job-posting-chat-channel-item";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores/auth-store";
-import { useEffect } from "react";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 
 const Container = styled.div`
@@ -36,16 +38,16 @@ interface SearchParams {
 }
 
 export default function JobPostingChatListPage({ searchParams }: SearchParams) {
+  const [isLoading, setIsLoading] = useState(false);
   const { userId, login, jwt } = useAuthStore((state) => ({
     userId: state.userId,
     login: state.login,
     jwt: state.jwt,
   }));
-  const { userJobPostingChatChannels, subscribeToChannels, loading } =
+  const { userJobPostingChatChannels, subscribeToChannels } =
     useJobPostingChatChannelStore((state) => ({
       userJobPostingChatChannels: state.userJobPostingChatChannels,
       subscribeToChannels: state.subscribeToChannels,
-      loading: state.loading,
     }));
 
   const _UserID = searchParams.userId;
@@ -53,8 +55,15 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
   useEffect(() => {
     const _fetch = async () => {
       if (!jwt && _UserID) {
-        // jwt가 없고 userId가 있는 경우에만 로그인 시도
-        await login(_UserID);
+        setIsLoading(true); // 로딩 시작
+        try {
+          await login(_UserID);
+        } catch (error) {
+          console.error("로그인 중 오류 발생:", error);
+          toast.error("로그인 중 오류가 발생했습니다.");
+        } finally {
+          setIsLoading(false); // 로딩 끝
+        }
       }
     };
 
@@ -63,7 +72,7 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
 
   useEffect(() => {
     if (!userId) return;
-
+    setIsLoading(true);
     let unsubscribe: () => void;
 
     try {
@@ -71,6 +80,7 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
     } catch (error) {
       console.error("채널 구독 중 오류 발생:", error);
     }
+    setIsLoading(false);
 
     return () => {
       if (unsubscribe) {
@@ -83,9 +93,9 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
     };
   }, [userId, subscribeToChannels]);
 
-  if (loading) return <CenterSpinner />;
+  if (isLoading) return <CenterSpinner />;
 
-  if (!userId) return <>로그인 실패</>;
+  if (!userId && !isLoading && _UserID) return <>로그인 실패</>;
 
   return (
     <Container>
