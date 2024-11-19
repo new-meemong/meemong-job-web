@@ -7,6 +7,7 @@ import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel
 import JobPostingChatDetailHeader from "@/components/headers/job-posting-chat-detail-header";
 import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
 import MessageSection from "./components/message-section";
+import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
@@ -61,27 +62,34 @@ export default function JobPostingChatDetailPage({
   const [channel, setChannel] = useState<JobPostingChatChannelType | null>(
     null,
   );
+  const [userChannel, setUserChannel] =
+    useState<UserJobPostingChatChannelType | null>(null);
   const [messageText, setMessageText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { getChannel } = useJobPostingChatChannelStore((state) => ({
-    getChannel: state.getChannel,
+
+  const { userId } = useAuthStore((state) => ({
+    userId: state.userId,
   }));
+
   const { subscribeToMessages, sendMessage } = useJobPostingChatMessageStore(
     (state) => ({
       subscribeToMessages: state.subscribeToMessages,
       sendMessage: state.sendMessage,
     }),
   );
-  const { userId } = useAuthStore((state) => ({
-    userId: state.userId,
-  }));
 
-  const { updateChannelUserInfo, resetUnreadCount } =
-    useJobPostingChatChannelStore((state) => ({
-      updateChannelUserInfo: state.updateChannelUserInfo,
-      resetUnreadCount: state.resetUnreadCount,
-    }));
+  const {
+    userJobPostingChatChannels,
+    getChannel,
+    updateChannelUserInfo,
+    resetUnreadCount,
+  } = useJobPostingChatChannelStore((state) => ({
+    userJobPostingChatChannels: state.userJobPostingChatChannels,
+    getChannel: state.getChannel,
+    updateChannelUserInfo: state.updateChannelUserInfo,
+    resetUnreadCount: state.resetUnreadCount,
+  }));
 
   useEffect(() => {
     const fetchChannel = async () => {
@@ -106,6 +114,19 @@ export default function JobPostingChatDetailPage({
   }, [params.id, getChannel]);
 
   useEffect(() => {
+    if (userJobPostingChatChannels.length > 0 && params.id) {
+      const foundUserChannel = userJobPostingChatChannels.find(
+        (channel) => channel.channelId === params.id,
+      );
+      if (foundUserChannel) {
+        setUserChannel(foundUserChannel);
+      } else {
+        setError("사용자 채널 정보를 찾을 수 없습니다.");
+      }
+    }
+  }, [userJobPostingChatChannels, params.id]);
+
+  useEffect(() => {
     if (params.id) {
       const unsubscribe = subscribeToMessages(params.id);
       return () => unsubscribe();
@@ -121,13 +142,13 @@ export default function JobPostingChatDetailPage({
   }, [userId, params.id, updateChannelUserInfo, resetUnreadCount]);
 
   const handleSendMessage = async () => {
-    if (!messageText.trim() || !channel?.otherUser?.id || !userId) return;
+    if (!messageText.trim() || !userChannel?.otherUser?.id || !userId) return;
 
     try {
       await sendMessage({
         channelId: params.id,
         senderId: userId, // TODO: 실제 사용자 ID로 교체 필요
-        receiverId: channel.otherUser.id,
+        receiverId: userChannel.otherUser.id,
         message: messageText,
         messageType: JobPostingChatMessageTypeEnum.TEXT,
       });
@@ -137,15 +158,15 @@ export default function JobPostingChatDetailPage({
     }
   };
 
-  if (!channel) return null;
+  if (!userChannel) return null;
 
   return (
     <Container>
       <JobPostingChatDetailHeader
-        otherUserDisplayName={channel?.otherUser?.DisplayName || ""}
+        otherUserDisplayName={userChannel?.otherUser?.DisplayName || ""}
       />
 
-      <MessageSection loading={loading} channel={channel} />
+      <MessageSection loading={loading} userChannel={userChannel} />
       <InputContainer>
         <MessageInput
           type="text"

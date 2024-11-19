@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import CenterSpinner from "@/components/spinners/center-spinner";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
 import { Timestamp } from "firebase/firestore";
+import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import { WEB_DOMAIN } from "@/apis/consts";
 import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
@@ -108,10 +109,10 @@ const MessageTime = styled.span`
 
 const MessageSection = ({
   loading,
-  channel,
+  userChannel,
 }: {
   loading: boolean;
-  channel: JobPostingChatChannelType;
+  userChannel: UserJobPostingChatChannelType;
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -135,33 +136,36 @@ const MessageSection = ({
   }));
 
   useEffect(() => {
-    if (!channel?.id || !channel.otherUser?.id) return;
+    if (!userChannel?.channelId || !userChannel.otherUser?.id) return;
 
-    const unsubscribe = subscribeToOtherUser(channel.id, channel.otherUser.id);
+    const unsubscribe = subscribeToOtherUser(
+      userChannel.channelId,
+      userChannel.otherUser.id,
+    );
 
     return () => {
       unsubscribe();
     };
-  }, [channel?.id, channel?.otherUser?.id]);
+  }, [userChannel?.channelId, userChannel?.otherUser?.id]);
 
   useEffect(() => {
-    if (!channel?.id || !userId || loading) return;
+    if (!userChannel?.channelId || !userId || loading) return;
 
     // 메시지가 변경될 때마다 lastReadAt 업데이트
-    updateUserLastReadAt(channel.id, userId);
+    updateUserLastReadAt(userChannel.channelId, userId);
 
     // cleanup 함수에서 채팅방을 나갈 때 unreadCount 초기화
     return () => {
-      resetUnreadCount(channel.id, userId);
+      resetUnreadCount(userChannel.channelId, userId);
     };
-  }, [channel?.id, userId, messages.length, loading]);
+  }, [userChannel?.channelId, userId, messages.length, loading]);
 
   useEffect(() => {
-    if (!channel?.id || !userId) return;
+    if (!userChannel?.channelId || !userId) return;
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        updateUserLastReadAt(channel.id, userId);
+        updateUserLastReadAt(userChannel.channelId, userId);
       }
     };
 
@@ -170,7 +174,7 @@ const MessageSection = ({
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [channel?.id, userId]);
+  }, [userChannel?.channelId, userId]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -219,7 +223,7 @@ const MessageSection = ({
               <OtherMessage
                 key={message.id}
                 message={message}
-                channel={channel}
+                userChannel={userChannel}
               />
             );
           })}
@@ -258,18 +262,22 @@ const MyMessage = ({
 // 상대방 메시지 컴포넌트
 const OtherMessage = ({
   message,
-  channel,
+  userChannel,
 }: {
   message: JobPostingChatMessageType;
-  channel: JobPostingChatChannelType;
+  userChannel: UserJobPostingChatChannelType;
 }) => (
   <MessageWrapper isMine={false}>
     <ProfileContainer>
       <ProfileImage
-        src={channel?.otherUser?.ProfilePictureURL || "/default-profile.png"}
+        src={
+          userChannel?.otherUser?.ProfilePictureURL || "/default-profile.png"
+        }
         alt="프로필"
       />
-      <ProfileName>{channel?.otherUser?.DisplayName || "사용자"}</ProfileName>
+      <ProfileName>
+        {userChannel?.otherUser?.DisplayName || "사용자"}
+      </ProfileName>
     </ProfileContainer>
     <MessageContainer>
       <MessageItem $isMine={false}>{renderMessageContent(message)}</MessageItem>

@@ -312,17 +312,10 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         if (channelSnap.exists()) {
           const channelData = channelSnap.data();
           // 현재 사용자가 아닌 다른 참여자의 ID를 찾습니다
-          const otherUserId = channelData.participantsIds.find(
-            (id: string) => id !== currentUserId,
-          );
-
-          // 다른 사용자의 정보를 가져옵니다
-          const otherUserData = await getUser(otherUserId);
 
           return {
             id: channelSnap.id,
             ...channelData,
-            otherUser: otherUserData.error ? null : otherUserData.data,
           } as JobPostingChatChannelType;
         }
         return null;
