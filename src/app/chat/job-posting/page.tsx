@@ -29,9 +29,17 @@ const EmptyState = styled.div`
   color: #666;
 `;
 
-export default function JobPostingChatListPage() {
-  const { userId } = useAuthStore((state) => ({
+interface SearchParams {
+  searchParams: {
+    userId?: string; // userId를 optional parameter로 추가
+  };
+}
+
+export default function JobPostingChatListPage({ searchParams }: SearchParams) {
+  const { userId, login, jwt } = useAuthStore((state) => ({
     userId: state.userId,
+    login: state.login,
+    jwt: state.jwt,
   }));
   const { chatChannelUserMetas, subscribeToChannels, loading } =
     useJobPostingChatChannelStore((state) => ({
@@ -39,6 +47,19 @@ export default function JobPostingChatListPage() {
       subscribeToChannels: state.subscribeToChannels,
       loading: state.loading,
     }));
+
+  const _UserID = searchParams.userId;
+
+  useEffect(() => {
+    const _fetch = async () => {
+      if (!jwt && _UserID) {
+        // jwt가 없고 userId가 있는 경우에만 로그인 시도
+        await login(_UserID);
+      }
+    };
+
+    _fetch();
+  }, [_UserID, jwt, login]);
 
   useEffect(() => {
     if (!userId) return;
@@ -63,6 +84,8 @@ export default function JobPostingChatListPage() {
   }, [userId, subscribeToChannels]);
 
   if (loading) return <CenterSpinner />;
+
+  if (!userId) return <>로그인 실패</>;
 
   return (
     <Container>
