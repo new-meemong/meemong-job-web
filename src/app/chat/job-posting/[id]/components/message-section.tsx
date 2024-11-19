@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import CenterSpinner from "@/components/spinners/center-spinner";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
 import { Timestamp } from "firebase/firestore";
+import { WEB_DOMAIN } from "@/apis/consts";
 import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
@@ -145,6 +146,7 @@ const MessageSection = ({
       unsubscribe();
     };
   }, [channel?.id, channel?.otherUser?.id]);
+
   useEffect(() => {
     if (!channel?.id || !userId || loading) return;
 
@@ -288,10 +290,18 @@ const renderMessageContent = (message: JobPostingChatMessageType) => {
       message.messageType === JobPostingChatMessageTypeEnum.RESUME) &&
     message.metaPathList?.[0]
   ) {
+    let url = `${WEB_DOMAIN}`;
+
+    if (message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING) {
+      url += `/job-posting/${message.metaPathList[0].jobPostingId}`;
+    } else if (message.messageType === JobPostingChatMessageTypeEnum.RESUME) {
+      url += `/resume/${message.metaPathList[0].resumeId}`;
+    }
+
     return (
       <>
         <div>{message.message}</div>
-        <LinkButton href={message.metaPathList[0].href}>
+        <LinkButton href={url}>
           {message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING
             ? "모집공고 보기"
             : "이력서 보기"}

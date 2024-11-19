@@ -5,3 +5,5 @@ export const IMAGE_STORAGE_URL =
 
 export const WEBVIEW_API_KEY =
   "$2b$10$93M3ylHjy9eC0dTahDLxR.ZGDRyRvJEiq44XiFppovFht.nBRe4p.";
+
+export const WEB_DOMAIN = "https://meemong-job-web.vercel.app";
