@@ -59,6 +59,8 @@ interface ChatChannelState {
 
   subscribeToOtherUser: (channelId: string, otherUserId: string) => () => void;
 
+  subscribeToMine: (channelId: string, userId: string) => () => void;
+
   updateChannelUserInfo: (channelId: string, userId: string) => Promise<void>;
 }
 
@@ -337,19 +339,51 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         async (snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.data();
-            const res = await getUser(data.otherUserId);
 
             set({
               otherUserJobPostingChatChannel: {
                 channelId: snapshot.id,
                 ...data,
-                otherUser: res.error ? null : res.data,
               } as UserJobPostingChatChannelType,
             });
           }
         },
         (error) => {
           console.error("상대방 메타데이터 구독 에러:", error);
+        },
+      );
+
+      return unsubscribe;
+    },
+
+    subscribeToMine: (channelId: string, userId: string) => {
+      const ref = doc(
+        db,
+        `users/${userId}/userJobPostingChatChannels`,
+        channelId,
+      );
+
+      const unsubscribe = onSnapshot(
+        ref,
+        async (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+
+            set((state) => ({
+              userJobPostingChatChannels: [
+                {
+                  channelId: snapshot.id,
+                  ...data,
+                } as UserJobPostingChatChannelType,
+                ...state.userJobPostingChatChannels.filter(
+                  (channel) => channel.channelId !== channelId,
+                ),
+              ],
+            }));
+          }
+        },
+        (error) => {
+          console.error("내 메타데이터 구독 에러:", error);
         },
       );
 

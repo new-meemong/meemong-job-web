@@ -40,6 +40,7 @@ const UserImage = styled(Image)`
   height: ${pxToVw(50)};
   border-radius: 50%;
   margin-right: ${pxToVw(10)};
+  object-fit: cover;
 `;
 
 const CenterContentWrapper = styled.div`
@@ -155,7 +156,7 @@ export default function JobPostingChatChannelItem({
 
   const { lastMessage, otherUser } = userJobPostingChatChannel;
   const userImage =
-    otherUser?.ProfilePictureURL || "/images/resume_profile_default.svg";
+    otherUser?.profileUrl || "/images/resume_profile_default.svg";
 
   return (
     <Container>

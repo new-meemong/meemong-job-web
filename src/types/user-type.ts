@@ -8,4 +8,6 @@ export interface UserType {
   Email: string;
   Korean: string;
   FcmToken: string;
+
+  profileUrl?: string;
 }

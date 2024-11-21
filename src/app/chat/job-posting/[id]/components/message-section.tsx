@@ -47,6 +47,7 @@ const ProfileImage = styled.img`
   height: ${pxToVw(40)};
   border-radius: 50%;
   margin-bottom: ${pxToVw(4)};
+  object-fit: cover;
 `;
 
 const ProfileName = styled.span`
@@ -271,7 +272,8 @@ const OtherMessage = ({
     <ProfileContainer>
       <ProfileImage
         src={
-          userChannel?.otherUser?.ProfilePictureURL || "/default-profile.png"
+          userChannel?.otherUser?.profileUrl ||
+          "/images/default_profile_image.jpg"
         }
         alt="프로필"
       />

@@ -13,6 +13,7 @@ import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 import { useJobPostingChatMessageStore } from "@/stores/job-posting-chat-message-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -60,17 +61,19 @@ export default function JobPostingChatDetailPage({
 }: {
   params: { id: string };
 }) {
-  const [channel, setChannel] = useState<JobPostingChatChannelType | null>(
-    null,
-  );
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source");
+
+  const [loading, setLoading] = useState(false);
   const [userChannel, setUserChannel] =
     useState<UserJobPostingChatChannelType | null>(null);
   const [messageText, setMessageText] = useState("");
-  const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState<string | null>(null);
 
-  const { userId } = useAuthStore((state) => ({
+  const { userId, login } = useAuthStore((state) => ({
     userId: state.userId,
+    login: state.login,
   }));
 
   const { subscribeToMessages, sendMessage } = useJobPostingChatMessageStore(
@@ -82,50 +85,62 @@ export default function JobPostingChatDetailPage({
 
   const {
     userJobPostingChatChannels,
-    getChannel,
     updateChannelUserInfo,
     resetUnreadCount,
+    subscribeToMine,
   } = useJobPostingChatChannelStore((state) => ({
     userJobPostingChatChannels: state.userJobPostingChatChannels,
-    getChannel: state.getChannel,
     updateChannelUserInfo: state.updateChannelUserInfo,
     resetUnreadCount: state.resetUnreadCount,
+    subscribeToMine: state.subscribeToMine,
   }));
 
   useEffect(() => {
-    const fetchChannel = async () => {
-      setLoading(true);
-      try {
-        const channelData = await getChannel(params.id);
-        if (channelData) {
-          setChannel(channelData);
-        } else {
-          setError("채널을 찾을 수 없습니다.");
-        }
-      } catch (error) {
-        setError("채널 정보를 불러오는 중 오류가 발생했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    const queryUserId = searchParams.get("userId");
 
-    if (params.id) {
-      fetchChannel();
+    if (!userId && queryUserId) {
+      // 로그인되어 있지 않고 쿼리 파라미터로 userId가 있는 경우
+      login(queryUserId); // 해당 userId로 로그인
     }
-  }, [params.id, getChannel]);
+  }, [userId, searchParams, login]);
 
+  // 웹에서 접근한 경우 리스트에서 채널 찾아서 세팅
   useEffect(() => {
-    if (userJobPostingChatChannels.length > 0 && params.id) {
+    const initializeChannel = async () => {
+      if (source === "app") {
+        return;
+      }
+
       const foundUserChannel = userJobPostingChatChannels.find(
         (channel) => channel.channelId === params.id,
       );
+
       if (foundUserChannel) {
         setUserChannel(foundUserChannel);
-      } else {
+      } else if (userJobPostingChatChannels.length > 0) {
         setError("사용자 채널 정보를 찾을 수 없습니다.");
       }
+    };
+
+    initializeChannel();
+  }, [source, userJobPostingChatChannels, params.id]);
+
+  // 앱에서 접근한 경우 내 채널 구독
+  useEffect(() => {
+    if (source !== "app" || !params.id || !userId) {
+      return;
     }
-  }, [userJobPostingChatChannels, params.id]);
+
+    const unsubscribe = subscribeToMine(params.id, userId);
+
+    return () => unsubscribe();
+  }, [source, params.id, userId, subscribeToMine, userChannel]);
+
+  useEffect(() => {
+    if (userJobPostingChatChannels.length === 1 && !userChannel) {
+      setUserChannel(userJobPostingChatChannels[0]);
+    }
+  }, [userJobPostingChatChannels, userChannel]);
 
   useEffect(() => {
     if (params.id) {
@@ -159,7 +174,13 @@ export default function JobPostingChatDetailPage({
     }
   };
 
-  if (!userChannel) return null;
+  if (!userId) {
+    return <div>로그인이 필요합니다.</div>;
+  }
+
+  if (!userChannel) {
+    return <div>채널 정보를 불러오는 중 오류가 발생했습니다.</div>;
+  }
 
   return (
     <Container>
