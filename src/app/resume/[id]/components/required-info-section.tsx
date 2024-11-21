@@ -34,9 +34,11 @@ const RequiredInfoSection = ({ resume }: RequiredInfoSectionProps) => {
       <SingleInfoItem label="근무 희망 지역" content={_convertedShortRegions} />
       <SingleInfoItem
         label="나이"
-        content={`${moment()
-          .diff(moment(resume.birthday, "YYYY-MM-DD"), "years")
-          .toString()}세`}
+        content={`${
+          isNaN(moment().diff(moment(resume.birthday, "YYYY-MM-DD"), "years"))
+            ? "00"
+            : moment().diff(moment(resume.birthday, "YYYY-MM-DD"), "years")
+        }세`}
       />
       <SingleInfoItem label="지원 분야" content={resume.appliedRole} />
       <SingleInfoItem label="근무 형태" content={resume.workType} />

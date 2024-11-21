@@ -136,9 +136,11 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
                 <Divider />
               </>
             )}
-            <ProfileInfo>{`${moment()
-              .diff(moment(birthday, "YYYY-MM-DD"), "years")
-              .toString()}세`}</ProfileInfo>
+            <ProfileInfo>{`${
+              isNaN(moment().diff(moment(birthday, "YYYY-MM-DD"), "years"))
+                ? "00"
+                : moment().diff(moment(birthday, "YYYY-MM-DD"), "years")
+            }세`}</ProfileInfo>
             <Divider />
             <ProfileInfo>
               {designerLicenses === "없음"
