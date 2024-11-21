@@ -71,7 +71,7 @@ export default function HomePage({ searchParams }: SearchParams) {
           setIsLoginFailed(true);
         } else {
           setProfileImageUri(profileImageUri);
-          setSex(sex);
+          // setSex(sex);
         }
       }
     };

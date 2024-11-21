@@ -81,9 +81,9 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
         setId(null);
       }
 
-      if (sex) {
-        setSex(sex);
-      }
+      // if (sex) {
+      //   setSex(sex);
+      // }
     };
 
     if (_UserID) {

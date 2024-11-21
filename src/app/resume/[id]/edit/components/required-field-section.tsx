@@ -6,6 +6,7 @@ import InternExpectedSalarySelect from "./required-field-section/intern-expected
 import InternExperienceYearNumberSelect from "./required-field-section/intern-experience-year-number-select";
 import RegionsSelect from "./required-field-section/regions-select";
 import SettlementAllowanceSelect from "./required-field-section/settlement-allowance-select";
+import SexSelect from "./required-field-section/sex-select";
 import ShortDescriptionInput from "./required-field-section/short-description-input";
 import UserNameInput from "./required-field-section/user-name-input";
 import WorkTypeSelect from "./required-field-section/work-type-select";
@@ -31,6 +32,7 @@ const RequiredFieldSection = () => {
       <UserNameInput />
       <RegionsSelect />
       <BirthdayInput />
+      <SexSelect />
       <AppliedRoleSelect />
       <WorkTypeSelect />
       {appliedRole === "디자이너" && <SettlementAllowanceSelect />}
