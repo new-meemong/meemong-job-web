@@ -3,6 +3,11 @@ import { FieldValue, Timestamp } from "firebase/firestore";
 import { JobPostingChatMessageType } from "./job-posting-chat-message-type";
 import { UserType } from "../user-type";
 
+export interface UserJobPostingChatChannelTypeEnum {
+  JOB_POSTING_: "jobPosting";
+  RESUME: "resume";
+}
+
 export interface UserJobPostingChatChannelType {
   channelId: string;
   unreadCount: number | FieldValue;
