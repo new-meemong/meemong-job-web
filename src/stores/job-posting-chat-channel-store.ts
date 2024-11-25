@@ -15,11 +15,14 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import {
+  UserJobPostingChatChannelType,
+  UserJobPostingChatChannelTypeEnum,
+} from "@/types/chat/user-job-posting-chat-channel-type";
 
 import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
 import { JobPostingChatMessageType } from "@/types/chat/job-posting-chat-message-type";
-import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
@@ -105,6 +108,20 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             getUser(receiverId),
           ]);
 
+          // 채널 타입 결정
+          const determineChannelType = (userId: string) => {
+            if (jobPostingId) {
+              return userId === senderId
+                ? UserJobPostingChatChannelTypeEnum.JOB_POSTING_APPLICANT
+                : UserJobPostingChatChannelTypeEnum.JOB_POSTING_STORE;
+            } else if (resumeId) {
+              return userId === senderId
+                ? UserJobPostingChatChannelTypeEnum.RESUME_STORE
+                : UserJobPostingChatChannelTypeEnum.RESUME_APPLICANT;
+            }
+            throw new Error("jobPostingId 또는 resumeId가 필요합니다.");
+          };
+
           // 채널 생성
           const newChannel: Omit<JobPostingChatChannelType, "id"> = {
             channelKey,
@@ -129,6 +146,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
             const userJobPostingChatChannel: UserJobPostingChatChannelType = {
               channelId: channelRef.id,
+              channelType: determineChannelType(userId),
               otherUserId,
               userId,
               otherUser: otherUserData,
