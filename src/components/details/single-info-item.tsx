@@ -36,7 +36,7 @@ const SingleInfoItem = ({
   nullString = "상관없음",
 }: InfoItemProps) => {
   const displayContent =
-    content === null
+    content === null || content === "" // 빈 문자열 체크 추가
       ? nullString
       : typeof content === "boolean"
       ? content

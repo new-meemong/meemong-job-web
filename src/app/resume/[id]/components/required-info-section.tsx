@@ -29,6 +29,7 @@ const RequiredInfoSection = ({ resume }: RequiredInfoSectionProps) => {
   return (
     <Container>
       <SectionTitle title="기본 정보" />
+      <SingleInfoItem label="지원 분야" content={resume.appliedRole} />
       <SingleInfoItem label="이름" content={resume.userName} />
       <SingleInfoItem label="성별" content={resume.sex ? resume.sex : ""} />
       <SingleInfoItem label="근무 희망 지역" content={_convertedShortRegions} />
@@ -40,7 +41,6 @@ const RequiredInfoSection = ({ resume }: RequiredInfoSectionProps) => {
             : moment().diff(moment(resume.birthday, "YYYY-MM-DD"), "years")
         }세`}
       />
-      <SingleInfoItem label="지원 분야" content={resume.appliedRole} />
       <SingleInfoItem label="근무 형태" content={resume.workType} />
       {resume.appliedRole === "디자이너" && (
         <SingleInfoItem

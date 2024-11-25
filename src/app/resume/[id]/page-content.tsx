@@ -82,6 +82,7 @@ export default function PageContent({
         resumeId={resume.id}
         isMine={isMine}
         isEnableButton={!!userId}
+        appliedRole={resume.appliedRole}
       />
       <ProfileSection resume={resume} />
       <ContentContainer>

@@ -15,9 +15,9 @@ const buildExperienceContent = (
   companyName: string | null | undefined,
   duration: string | null | undefined,
   role: string | null | undefined,
-): string => {
+): string | null => {
   if (!companyName || !duration || !role) {
-    return "";
+    return null;
   }
   return `${companyName},${duration} / ${role}`;
 };
@@ -37,7 +37,7 @@ const OptionalInfoSection = ({ resume }: OptionalInfoSectionProps) => {
             resume.designerMajorExperienceDuration,
             resume.designerMajorExperienceRole,
           )}
-          nullString="없음"
+          nullString=" - "
         />
       )}
       {resume.appliedRole === "인턴" && (
@@ -48,45 +48,59 @@ const OptionalInfoSection = ({ resume }: OptionalInfoSectionProps) => {
             resume.internMajorExperienceDuration,
             resume.internMajorExperienceRole,
           )}
-          nullString="없음"
+          nullString=" - "
         />
       )}
       {resume.appliedRole === "디자이너" && (
         <SingleInfoItem
           label="이전 매장 평균 매출"
           content={resume.salesLast3MonthsAvg}
+          nullString=" - "
         />
       )}
       <SingleInfoItem
         label="학력"
         content={resume.completedEducationLevels}
-        nullString="없음"
+        nullString=" - "
       />
-      <SingleInfoItem label="희망 휴무일" content={resume.preferredOffDays} />
-      <SingleInfoItem label="근무 주기" content={resume.workCycleTypes} />
+      <SingleInfoItem
+        label="희망 휴무일"
+        content={resume.preferredOffDays}
+        nullString=" - "
+      />
+      <SingleInfoItem
+        label="근무 주기"
+        content={resume.workCycleTypes}
+        nullString=" - "
+      />
       {resume.appliedRole === "인턴" && (
         <SingleInfoItem
           label="디자이너 승급기간"
           content={resume.designerPromotionPeriod}
+          nullString=" - "
         />
       )}
       <SingleInfoItem
         label="기숙사"
         content={resume.isPreferredDormitorySupport ? "필요함" : "필요없음"}
+        nullString=" - "
       />
       <SingleInfoItem
         label="희망 교육"
         content={resume.preferredMonthlyEducationCount}
+        nullString=" - "
       />
       <SingleInfoItem
         label="식대 지원"
         content={resume.isPreferredMealSupport ? "희망" : "필요없음"}
+        nullString=" - "
       />
       <SingleInfoItem
         label="주차 희망 여부"
         content={resume.isPreferredParking ? "희망" : "필요없음"}
+        nullString=" - "
       />
-      <SingleInfoItem label="MBTI" content={resume.mbti} />
+      <SingleInfoItem label="MBTI" content={resume.mbti} nullString=" - " />
     </Container>
   );
 };

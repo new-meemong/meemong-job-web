@@ -25,7 +25,7 @@ const SelfIntroductionSection = ({
   return (
     <Container>
       <SectionTitle title="자기소개서" />
-      <Description>{description}</Description>
+      <Description>{description || " - "}</Description>
     </Container>
   );
 };

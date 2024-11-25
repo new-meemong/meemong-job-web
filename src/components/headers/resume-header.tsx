@@ -42,6 +42,7 @@ interface ResumeHeaderProps {
   resumeId: string;
   isMine: boolean;
   isEnableButton: boolean;
+  appliedRole: string;
 }
 
 const ResumeHeader = ({
@@ -49,6 +50,7 @@ const ResumeHeader = ({
   resumeId,
   isMine,
   isEnableButton,
+  appliedRole,
 }: ResumeHeaderProps) => {
   const router = useRouter();
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
@@ -111,7 +113,7 @@ const ResumeHeader = ({
       <LeftContainer onClick={handleBackClick}>
         {isEnableButton && <BackIcon />}
       </LeftContainer>
-      <Title>{title}</Title>
+      <Title>{`${appliedRole} ${title}`}</Title>
       <RightContainer onClick={handleOptionClick}>
         {isEnableButton && options.length > 0 && <OptionIcon />}
       </RightContainer>
