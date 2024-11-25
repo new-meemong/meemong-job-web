@@ -420,6 +420,45 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         if (!snap.exists()) return;
 
         const userJobPostingChatChannel = snap.data();
+
+        // channelType이 없는 경우 처리
+        if (!userJobPostingChatChannel.channelType) {
+          const channelRef = doc(
+            db,
+            ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+            channelId,
+          );
+          const channelSnap = await getDoc(channelRef);
+
+          if (channelSnap.exists()) {
+            const channelData = channelSnap.data();
+            const channelKey = channelData.channelKey;
+            const keyParts = channelKey.split("_");
+
+            // channelKey 형식: ${channelType}_${참여자ID들}_${채용공고ID}_${이력서ID}
+            const jobPostingId = keyParts[keyParts.length - 2];
+            const resumeId = keyParts[keyParts.length - 1];
+
+            let channelType;
+            if (userId === channelData.channelOpenUserId) {
+              channelType =
+                jobPostingId !== "null"
+                  ? UserJobPostingChatChannelTypeEnum.JOB_POSTING_APPLICANT
+                  : UserJobPostingChatChannelTypeEnum.RESUME_STORE;
+            } else {
+              channelType =
+                jobPostingId !== "null"
+                  ? UserJobPostingChatChannelTypeEnum.JOB_POSTING_STORE
+                  : UserJobPostingChatChannelTypeEnum.RESUME_APPLICANT;
+            }
+
+            await updateDoc(ref, {
+              channelType: channelType,
+              updatedAt: serverTimestamp(),
+            });
+          }
+        }
+
         const userData = await getUser(userJobPostingChatChannel.otherUserId);
 
         if (!userData.error) {
