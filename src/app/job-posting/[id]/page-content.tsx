@@ -214,6 +214,7 @@ export default function PageContent({
         jobPostingId={jobPosting.id}
         isMine={isMine}
         isEnableButton={userId ? true : false}
+        role={jobPosting.role}
       />
       <ImageSlider
         images={
