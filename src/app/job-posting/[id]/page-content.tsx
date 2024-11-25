@@ -206,6 +206,7 @@ export default function PageContent({
       );
     }
   };
+
   return (
     <Container>
       <JobPostingHeader
@@ -231,7 +232,9 @@ export default function PageContent({
               ? IMAGE_STORAGE_URL + JobPostingsStoreImages[0]?.uri
               : "/images/default_profile_image.jpg"
           }
-          storeName={jobPosting.storeName}
+          storeName={
+            jobPosting.isOpeningSoon ? "오픈예정 매장" : jobPosting.storeName
+          }
           storeRegion={jobPosting.storeRegion}
         />
         <Divider />

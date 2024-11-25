@@ -169,6 +169,7 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
     storeRegionSiName,
     postingTitle,
     JobPostingsStoreImages,
+    isOpeningSoon,
   } = jobPosting;
 
   const initialImage = JobPostingsStoreImages?.[0]?.thumbnailUri
@@ -189,10 +190,13 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   const handleClick = () => {
     router.push(`/job-posting/${id}?source=web`);
   };
+
   return (
     <Container onClick={handleClick}>
       <HeaderContainer>
-        <HeaderTitle>{`${storeName}`}</HeaderTitle>
+        <HeaderTitle>{`${
+          isOpeningSoon ? "오픈예정 매장" : storeName
+        }`}</HeaderTitle>
         <Divider />
         {jobPosting.role === "디자이너" && (
           <DesignerRole>{jobPosting.role}</DesignerRole>

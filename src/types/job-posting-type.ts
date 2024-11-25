@@ -34,6 +34,7 @@ export interface JobPostingType {
   id: string;
 
   // 기본 정보
+  isOpeningSoon: boolean; // 오픈예정 매장 여부
   postingTitle: string; // 게시글 제목
   storeName: string; // 매장명
   storeAddress: string; // 매장 주소

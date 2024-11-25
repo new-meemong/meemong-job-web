@@ -9,6 +9,7 @@ export const getJobPosting = async (id: string) => {
       __include: "JobPostingsStoreImages",
     };
     const queryString = new URLSearchParams(defaultParams).toString();
+
     return await apiFetch(`/api/v1/job-postings/${id}?${queryString}`, "GET");
   } catch (e) {
     console.error("[getJobPosting] failed", e);
@@ -17,7 +18,7 @@ export const getJobPosting = async (id: string) => {
 };
 
 export const getMyJobPostings = async (
-  queryParams?: Record<string, string>
+  queryParams?: Record<string, string>,
 ) => {
   try {
     const defaultParams: Record<string, string> = {

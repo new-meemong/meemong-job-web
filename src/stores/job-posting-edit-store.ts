@@ -550,6 +550,7 @@ export const useJobPostingEditStore = create(
         try {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           let jobPostingData: Record<string, any> = {
+            isOpeningSoon: get().isOpeningSoon,
             postingTitle: get().postingTitle, // 게시글 제목
             storeName: get().storeName, // 매장명
             storeAddress: get().storeAddress, // 매장 주소
@@ -680,6 +681,7 @@ export const useJobPostingEditStore = create(
         try {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           let jobPostingData: Record<string, any> = {
+            isOpeningSoon: get().isOpeningSoon,
             postingTitle: get().postingTitle, // 게시글 제목
             storeName: get().storeName, // 매장명
             storeAddress: get().storeAddress, // 매장 주소
@@ -838,7 +840,7 @@ export const useJobPostingEditStore = create(
       },
       setIsOpeningSoon: (isOpeningSoon: boolean) => set({ isOpeningSoon }),
       setStoreRegion: (storeInfo: StoreInfoType) => {
-        const title = get().isOpeningSoon ? "오픈예정 매장" : storeInfo.title;
+        const title = storeInfo.title;
         const address = storeInfo.address;
         const storeRegionSiName = address.split(" ")[0];
         const storeRegion = `${address.split(" ")[0]} ${address.split(" ")[1]}`;
