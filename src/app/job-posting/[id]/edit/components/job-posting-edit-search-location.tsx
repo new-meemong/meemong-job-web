@@ -5,6 +5,7 @@ import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ const Label = styled.span`
   margin-top: ${pxToVw(12)};
 `;
 
-const Button = styled(Link)`
+const Button = styled.div`
   ${fonts.purplePrimaryBold14}
   display: flex;
   justify-content: center;
@@ -41,18 +42,22 @@ const LocationInfo = styled.div`
 `;
 
 const JobPostingEditSearchLocation = () => {
+  const router = useRouter();
+
   const {
     storeName,
     storeAddress,
     role,
     hasDesignerOptionNull,
     hasInternOptionNull,
+    setIsOpeningSoon,
   } = useJobPostingEditStore((state) => ({
     storeName: state.storeName,
     storeAddress: state.storeAddress,
     hasDesignerOptionNull: state.hasDesignerOptionNull,
     hasInternOptionNull: state.hasInternOptionNull,
     role: state.role,
+    setIsOpeningSoon: state.setIsOpeningSoon,
   }));
 
   let hasError = false;
@@ -62,13 +67,18 @@ const JobPostingEditSearchLocation = () => {
     hasError = !storeAddress && hasInternOptionNull;
   }
 
+  const handleSearchLocation = () => {
+    setIsOpeningSoon(false);
+    router.push("/search-naver");
+  };
+
   return (
     <Container>
       <Label>
         매장주소 검색*{" "}
         {hasError && <ErrorMessage>{`매장 주소를 검색해주세요.`}</ErrorMessage>}
       </Label>
-      <Button href="/search-naver">주소 검색</Button>
+      <Button onClick={handleSearchLocation}>주소 검색</Button>
       <Label>매장주소*</Label>
       <LocationInfo>
         {storeAddress ? storeAddress : "주소를 검색해주세요"}

@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useState } from "react";
 
+import IsOpeningSoon from "./components/is-opening-soon";
 import SearchNaverHeader from "@/components/headers/search-naver-header";
 import SearchResultItem from "./components/search-result-item";
 import { colors } from "@/styles/colors";
@@ -113,6 +114,7 @@ export default function SearchNaver() {
   return (
     <Container>
       <SearchNaverHeader />
+      <IsOpeningSoon />
       <InputContainer>
         <SearchInput
           type="text"

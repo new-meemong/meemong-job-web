@@ -66,6 +66,8 @@ type JobPostingsStoreImageType = {
 type JobPostingEditState = {
   id: string | null;
   postingTitle: string | null;
+
+  isOpeningSoon: boolean;
   storeName: string | null;
   storeRegion: string | null;
   storeRegionSiName: string | null;
@@ -228,6 +230,7 @@ type JobPostingEditActions = {
   setHasInternOptionNull: (hasInternOptionNull: boolean) => void;
   setJobPostingsStoreImages: (images: JobPostingsStoreImageType[]) => void;
   setStoreRegion: (storeRegion: StoreInfoType) => void;
+  setIsOpeningSoon: (isOpeningSoon: boolean) => void;
 
   // 내부 함수들
   // 공고 제출
@@ -241,6 +244,7 @@ type JobPostingEditActions = {
 const defaultJobPostingEditState: JobPostingEditState = {
   id: null,
   postingTitle: null,
+  isOpeningSoon: false,
   storeName: null,
   storeRegion: null,
   storeRegionSiName: null,
@@ -832,8 +836,9 @@ export const useJobPostingEditStore = create(
           jobPostingsStoreImages: newImages,
         });
       },
+      setIsOpeningSoon: (isOpeningSoon: boolean) => set({ isOpeningSoon }),
       setStoreRegion: (storeInfo: StoreInfoType) => {
-        const title = storeInfo.title;
+        const title = get().isOpeningSoon ? "오픈예정 매장" : storeInfo.title;
         const address = storeInfo.address;
         const storeRegionSiName = address.split(" ")[0];
         const storeRegion = `${address.split(" ")[0]} ${address.split(" ")[1]}`;
