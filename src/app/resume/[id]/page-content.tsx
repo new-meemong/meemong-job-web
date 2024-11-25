@@ -87,7 +87,9 @@ export default function PageContent({
       <ProfileSection resume={resume} />
       <ContentContainer>
         <UserProfile
-          userImage={resume.User.ProfilePictureURL}
+          userImage={
+            resume.User.profileUrl || "/images/resume_profile_default.svg"
+          }
           userName={resume.User.DisplayName || resume.userName}
           userId={resume.User.id}
         />
