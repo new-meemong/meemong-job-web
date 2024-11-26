@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import DeleteIcon from "@/components/icons/delete-icon";
 import Image from "next/image";
 import PinListIcon from "@/components/icons/pin-list-icon";
@@ -9,7 +11,7 @@ import { fonts } from "@/styles/fonts";
 import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/auth-store";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -127,8 +129,14 @@ export default function JobPostingChatChannelItem({
   userJobPostingChatChannel,
 }: JobPostingChatChannelItemProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [offset, setOffset] = useState(0);
   const [startX, setStartX] = useState(0);
+
+  const { UserID } = useAuthStore((state) => ({
+    UserID: state.UserID,
+  }));
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setStartX(e.touches[0].clientX);
@@ -154,6 +162,20 @@ export default function JobPostingChatChannelItem({
     setOffset(0);
   };
 
+  const handleChannelClick = () => {
+    const isAppSource = searchParams.get("source") === "app";
+
+    if (!UserID) return;
+    if (isAppSource && window.openChatChannel) {
+      window.openChatChannel({
+        userId: UserID,
+        chatChannelId: userJobPostingChatChannel.channelId,
+      });
+    } else {
+      router.push(`/chat/job-posting/${userJobPostingChatChannel.channelId}`);
+    }
+  };
+
   const { lastMessage, otherUser } = userJobPostingChatChannel;
   const userImage =
     otherUser?.profileUrl || "/images/resume_profile_default.svg";
@@ -165,11 +187,7 @@ export default function JobPostingChatChannelItem({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onClick={() => {
-          router.push(
-            `/chat/job-posting/${userJobPostingChatChannel.channelId}`,
-          );
-        }}
+        onClick={handleChannelClick}
       >
         <UserImage
           src={userImage}

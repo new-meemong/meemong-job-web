@@ -8,4 +8,6 @@ interface Window {
   closeWebview: (message: string) => void;
 
   externalLink: (message: string) => void;
+
+  openChatChannel: (message: { userId: string; chatChannelId: string }) => void;
 }
