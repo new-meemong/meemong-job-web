@@ -62,7 +62,7 @@ export default function JobPostingChatDetailPage({
   params: { id: string };
 }) {
   const searchParams = useSearchParams();
-  const source = searchParams.get("source");
+  const source = searchParams.get("source") || "web";
 
   const [loading, setLoading] = useState(false);
   const [userChannel, setUserChannel] =
@@ -186,6 +186,7 @@ export default function JobPostingChatDetailPage({
     <Container>
       <JobPostingChatDetailHeader
         otherUserDisplayName={userChannel?.otherUser?.DisplayName || ""}
+        source={source}
       />
 
       <MessageSection loading={loading} userChannel={userChannel} />

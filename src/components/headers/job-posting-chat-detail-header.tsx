@@ -36,13 +36,19 @@ const Title = styled.span`
 
 const JobPostingChatDetailHeader = ({
   otherUserDisplayName,
+  source,
 }: {
   otherUserDisplayName: string;
+  source: string;
 }) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    router.back();
+    if (source === "app") {
+      window.closeWebview("close");
+    } else {
+      router.back();
+    }
   };
 
   return (
