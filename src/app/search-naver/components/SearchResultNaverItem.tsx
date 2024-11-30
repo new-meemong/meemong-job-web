@@ -14,7 +14,7 @@ const Address = styled.div`
   padding-top: ${pxToVw(8)};
   ${fonts.blackNormal14};
 `;
-export const SearchResultItem = (item: SearchResultItemType) => {
+export const SearchResultNaverItem = (item: SearchResultItemType) => {
   const { setStoreRegion } = useJobPostingEditStore();
   const router = useRouter();
 
@@ -36,4 +36,4 @@ export const SearchResultItem = (item: SearchResultItemType) => {
   );
 };
 
-export default SearchResultItem;
+export default SearchResultNaverItem;

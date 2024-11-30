@@ -230,6 +230,7 @@ type JobPostingEditActions = {
   setHasInternOptionNull: (hasInternOptionNull: boolean) => void;
   setJobPostingsStoreImages: (images: JobPostingsStoreImageType[]) => void;
   setStoreRegion: (storeRegion: StoreInfoType) => void;
+  setStoreRegionAddress: (storeRegionAddress: { roadAddr: string }) => void;
   setIsOpeningSoon: (isOpeningSoon: boolean) => void;
 
   // 내부 함수들
@@ -852,6 +853,22 @@ export const useJobPostingEditStore = create(
           storeAddress: address,
           storeAddressNaverMapx: storeInfo.mapx,
           storeAddressNaverMapy: storeInfo.mapy,
+        });
+      },
+      setStoreRegionAddress: (storeRegionAddress: { roadAddr: string }) => {
+        const address = storeRegionAddress.roadAddr;
+        const storeRegionSiName = address.split(" ")[0];
+        const storeRegion = `${address.split(" ")[0]} ${address.split(" ")[1]}`;
+
+        console.log("storeRegion", storeRegion);
+        console.log("storeRegionSiName", storeRegionSiName);
+        console.log("address", address);
+
+        set({
+          storeName: "오픈예정 매장",
+          storeRegion,
+          storeRegionSiName,
+          storeAddress: address,
         });
       },
       setIsEdit: (isEdit: boolean) => set({ isEdit }),
