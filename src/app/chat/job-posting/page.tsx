@@ -44,10 +44,11 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
     login: state.login,
     jwt: state.jwt,
   }));
-  const { userJobPostingChatChannels, subscribeToChannels } =
+  const { userJobPostingChatChannels, subscribeToChannels, loading } =
     useJobPostingChatChannelStore((state) => ({
       userJobPostingChatChannels: state.userJobPostingChatChannels,
       subscribeToChannels: state.subscribeToChannels,
+      loading: state.loading,
     }));
 
   const _UserID = searchParams.userId;
@@ -93,9 +94,9 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
     };
   }, [userId, subscribeToChannels]);
 
-  if (isLoading) return <CenterSpinner />;
+  if (isLoading || loading) return <CenterSpinner />;
 
-  if (!userId && !isLoading && _UserID) return <>로그인 실패</>;
+  if (!userId && !isLoading && _UserID && !loading) return <>로그인 실패</>;
 
   return (
     <Container>
