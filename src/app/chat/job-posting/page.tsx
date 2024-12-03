@@ -38,7 +38,7 @@ interface SearchParams {
 }
 
 export default function JobPostingChatListPage({ searchParams }: SearchParams) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { userId, login, jwt } = useAuthStore((state) => ({
     userId: state.userId,
     login: state.login,
