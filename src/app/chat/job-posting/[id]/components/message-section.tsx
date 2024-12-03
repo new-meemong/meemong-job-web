@@ -5,10 +5,12 @@ import {
 import { useEffect, useRef } from "react";
 
 import CenterSpinner from "@/components/spinners/center-spinner";
-import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
+import Link from "next/link";
 import { Timestamp } from "firebase/firestore";
 import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import { WEB_DOMAIN } from "@/apis/consts";
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
 import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
@@ -38,7 +40,7 @@ const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: ${(props) => (props.theme.isMine ? "0 0 0 8px" : "0 8px 0 0")};
+  margin-right: ${pxToVw(8)};
   width: ${pxToVw(40)};
 `;
 
@@ -58,8 +60,10 @@ const ProfileName = styled.span`
 `;
 
 const MessageItem = styled.div<{ $isMine: boolean }>`
+  ${(props) => (props.$isMine ? fonts.whiteNormal14 : fonts.blackNormal14)}
   padding: ${pxToVw(8)} ${pxToVw(12)};
-  background-color: ${(props) => (props.$isMine ? "#007bff" : "#f5f5f5")};
+  background-color: ${(props) =>
+    props.$isMine ? colors.modelSecondary : colors.purpleBackground2};
   color: ${(props) => (props.$isMine ? "white" : "black")};
   border-radius: ${pxToVw(8)};
 `;
@@ -86,7 +90,7 @@ const ReadStatusText = styled.span`
   min-width: ${pxToVw(20)};
 `;
 
-const LinkButton = styled.a`
+const LinkButton = styled(Link)`
   display: inline-block;
   margin-top: ${pxToVw(8)};
   padding: ${pxToVw(6)} ${pxToVw(12)};
@@ -105,21 +109,26 @@ const MessageTime = styled.span`
   font-size: ${pxToVw(12)};
   color: #666;
   align-self: flex-end;
-  min-width: ${pxToVw(55)};
+  min-width: ${pxToVw(60)};
 `;
 
 const MessageSection = ({
   loading,
   userChannel,
+  source,
 }: {
   loading: boolean;
   userChannel: UserJobPostingChatChannelType;
+  source: string;
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages } = useJobPostingChatMessageStore((state) => ({
-    messages: state.messages,
-  }));
+  const { messages, clearMessages } = useJobPostingChatMessageStore(
+    (state) => ({
+      messages: state.messages,
+      clearMessages: state.clearMessages,
+    }),
+  );
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
   }));
@@ -154,12 +163,17 @@ const MessageSection = ({
 
     // 메시지가 변경될 때마다 lastReadAt 업데이트
     updateUserLastReadAt(userChannel.channelId, userId);
-
-    // cleanup 함수에서 채팅방을 나갈 때 unreadCount 초기화
-    return () => {
-      resetUnreadCount(userChannel.channelId, userId);
-    };
   }, [userChannel?.channelId, userId, messages.length, loading]);
+
+  // cleanup을 위한 별도 useEffect
+  useEffect(() => {
+    return () => {
+      if (userId && userChannel?.channelId) {
+        resetUnreadCount(userChannel.channelId, userId);
+        clearMessages();
+      }
+    };
+  }, [userChannel?.channelId, userId]);
 
   useEffect(() => {
     if (!userChannel?.channelId || !userId) return;
@@ -251,7 +265,7 @@ const MyMessage = ({
         <ReadStatusText>{isRead ? "읽음" : "1"}</ReadStatusText>
         <MessageTime>
           {moment((message.createdAt as Timestamp)?.toDate()).format(
-            "MM-DD HH:mm",
+            "MM.DD HH:mm",
           )}
         </MessageTime>
       </MessageStatusContainer>
@@ -285,7 +299,7 @@ const OtherMessage = ({
       <MessageItem $isMine={false}>{renderMessageContent(message)}</MessageItem>
       <MessageTime>
         {moment((message.createdAt as Timestamp).toDate()).format(
-          "MM-DD HH:mm",
+          "MM.DD HH:mm",
         )}
       </MessageTime>
     </MessageContainer>
@@ -299,6 +313,7 @@ const renderMessageContent = (message: JobPostingChatMessageType) => {
     message.metaPathList?.[0]
   ) {
     let url = `${WEB_DOMAIN}`;
+    // let url = "http://localhost:3008";
 
     if (message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING) {
       url += `/job-posting/${message.metaPathList[0].jobPostingId}`;
@@ -309,7 +324,11 @@ const renderMessageContent = (message: JobPostingChatMessageType) => {
     return (
       <>
         <div>{message.message}</div>
-        <LinkButton href={url}>
+        <LinkButton
+          href={`${url}?noButton=true`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING
             ? "모집공고 보기"
             : "이력서 보기"}

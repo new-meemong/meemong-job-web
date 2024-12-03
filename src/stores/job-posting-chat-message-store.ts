@@ -42,6 +42,8 @@ interface JobPostingChatMessageState {
     messageType: JobPostingChatMessageTypeEnum;
     metaPathList?: MetaPathType[];
   }) => Promise<{ success: boolean; channelId: string | null }>;
+
+  clearMessages: () => void;
 }
 
 export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
@@ -167,6 +169,10 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         set({ error: "메시지 전송에 실패했습니다." });
         return { success: false, channelId: null };
       }
+    },
+
+    clearMessages: () => {
+      set({ messages: [] });
     },
   }),
 );

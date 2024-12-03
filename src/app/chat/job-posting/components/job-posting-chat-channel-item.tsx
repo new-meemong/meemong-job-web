@@ -32,15 +32,14 @@ const ContentWrapper = styled.div<{ $offset: number }>`
   z-index: 1;
   padding-top: ${pxToVw(10)};
   padding-bottom: ${pxToVw(10)};
-  height: ${pxToVw(80)};
   padding-right: ${pxToVw(24)};
   padding-left: ${pxToVw(24)};
 `;
 
 const UserImage = styled(Image)`
-  width: ${pxToVw(50)};
-  height: ${pxToVw(50)};
-  border-radius: 50%;
+  width: ${pxToVw(80)};
+  height: ${pxToVw(80)};
+  border-radius: ${pxToVw(20)};
   margin-right: ${pxToVw(10)};
   object-fit: cover;
 `;

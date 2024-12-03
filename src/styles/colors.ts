@@ -29,4 +29,6 @@ export const colors = {
   lightRed: "#FF4444",
   deepCyan: "#1584A0",
   naverGreen: "#03CF5D",
+
+  modelSecondary: "#19A1C4",
 };

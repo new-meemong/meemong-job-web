@@ -76,6 +76,7 @@ export default function PageContent({
 
   const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
   const source = searchParams.get("source") || undefined;
+  const noButton = searchParams.get("noButton") || undefined; // 앱 채팅에서 하단 버튼 없이 view만 보여줄때
 
   const isMine = jobPosting.userId.toString() === userId;
 
@@ -250,7 +251,7 @@ export default function PageContent({
         <Divider />
         <StoreLocation storeAddress={jobPosting.storeAddress} />
       </ContentContainer>
-      {userId && !isMine && (
+      {userId && !isMine && !noButton && (
         <BottomFloatingButton
           title="지원하기"
           onClick={async () => {
@@ -308,7 +309,9 @@ export default function PageContent({
           }}
         />
       )}
-      {!userId && <StoreFloatingButton title={"어플 다운 후 채팅하기"} />}
+      {!userId && !noButton && (
+        <StoreFloatingButton title={"어플 다운 후 채팅하기"} />
+      )}
     </Container>
   );
 }

@@ -31,8 +31,11 @@ const InputContainer = styled.div`
   padding: ${pxToVw(16)};
   border-top: 1px solid #eee;
   background: white;
-  position: sticky; // 추가
+  position: fixed; // 추가
   bottom: 0;
+  left: 0; // 추가
+  right: 0; // 추가
+  width: 100%;
 `;
 
 const MessageInput = styled.input`
@@ -174,11 +177,11 @@ export default function JobPostingChatDetailPage({
     }
   };
 
-  if (!userId) {
+  if (!userId && source !== "app") {
     return <div>로그인이 필요합니다.</div>;
   }
 
-  if (!userChannel) {
+  if (!userChannel && source !== "app") {
     return <div>채널 정보를 불러오는 중 오류가 발생했습니다.</div>;
   }
 
@@ -189,7 +192,11 @@ export default function JobPostingChatDetailPage({
         source={source}
       />
 
-      <MessageSection loading={loading} userChannel={userChannel} />
+      <MessageSection
+        loading={loading}
+        userChannel={userChannel!}
+        source={source}
+      />
       <InputContainer>
         <MessageInput
           type="text"

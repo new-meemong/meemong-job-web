@@ -17,6 +17,7 @@ import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -55,6 +56,9 @@ export default function PageContent({
   }));
 
   const isMine = resume?.userId?.toString() === userId;
+
+  const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
+  const noButton = searchParams.get("noButton") || undefined; // 앱 채팅에서 하단 버튼 없이 view만 보여줄때
 
   useEffect(() => {
     window.scrollTo(0, 0); // 페이지 로드 시 스크롤을 최상단으로 이동
@@ -102,7 +106,7 @@ export default function PageContent({
         <Divider />
         <SelfIntroductionSection description={resume.description} />
       </ContentContainer>
-      {userId && !isMine && (
+      {userId && !isMine && !noButton && (
         <BottomButtonSection
           postUserId={resume.User.id.toString()}
           postId={resume.id}
