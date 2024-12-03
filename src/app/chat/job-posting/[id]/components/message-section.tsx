@@ -27,6 +27,7 @@ const MessagesContainer = styled.div`
   min-height: 0;
   display: flex;
   flex-direction: column;
+  padding-bottom: ${pxToVw(60)};
 `;
 
 const MessageWrapper = styled.div<{ isMine: boolean }>`
