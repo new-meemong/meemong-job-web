@@ -346,6 +346,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
     },
 
     subscribeToOtherUser: (channelId: string, otherUserId: string) => {
+      set({ loading: true });
       const ref = doc(
         db,
         `users/${otherUserId}/userJobPostingChatChannels`,
@@ -363,11 +364,19 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
                 channelId: snapshot.id,
                 ...data,
               } as UserJobPostingChatChannelType,
+              loading: false,
+            });
+          } else {
+            set({
+              loading: false,
             });
           }
         },
         (error) => {
           console.error("상대방 메타데이터 구독 에러:", error);
+          set({
+            loading: false,
+          });
         },
       );
 
