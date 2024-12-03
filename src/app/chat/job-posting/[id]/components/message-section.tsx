@@ -113,20 +113,19 @@ const MessageTime = styled.span`
 `;
 
 const MessageSection = ({
-  loading,
   userChannel,
   source,
 }: {
-  loading: boolean;
   userChannel: UserJobPostingChatChannelType;
   source: string;
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages, clearMessages } = useJobPostingChatMessageStore(
+  const { messages, clearMessages, loading } = useJobPostingChatMessageStore(
     (state) => ({
       messages: state.messages,
       clearMessages: state.clearMessages,
+      loading: state.loading,
     }),
   );
   const { userId } = useAuthStore((state) => ({

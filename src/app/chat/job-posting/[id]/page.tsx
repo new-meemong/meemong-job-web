@@ -67,7 +67,6 @@ export default function JobPostingChatDetailPage({
   const searchParams = useSearchParams();
   const source = searchParams.get("source") || "web";
 
-  const [loading, setLoading] = useState(false);
   const [userChannel, setUserChannel] =
     useState<UserJobPostingChatChannelType | null>(null);
   const [messageText, setMessageText] = useState("");
@@ -192,11 +191,7 @@ export default function JobPostingChatDetailPage({
         source={source}
       />
 
-      <MessageSection
-        loading={loading}
-        userChannel={userChannel!}
-        source={source}
-      />
+      <MessageSection userChannel={userChannel!} source={source} />
       <InputContainer>
         <MessageInput
           type="text"
