@@ -58,6 +58,7 @@ export default function PageContent({
   const isMine = resume?.userId?.toString() === userId;
 
   const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
+
   const noButton = searchParams.get("noButton") || undefined; // 앱 채팅에서 하단 버튼 없이 view만 보여줄때
 
   useEffect(() => {

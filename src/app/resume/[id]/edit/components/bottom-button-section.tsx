@@ -113,6 +113,7 @@ const BottomButtonSection = ({ source }: { source?: string }) => {
             }
 
             if (
+              source == "app" &&
               typeof window !== "undefined" &&
               window.closeWebview &&
               !source

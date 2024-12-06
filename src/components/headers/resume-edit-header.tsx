@@ -1,9 +1,9 @@
-import styled from "styled-components";
 import BackIcon from "./header-icons/back-icon";
-import { useRouter } from "next/navigation";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -41,7 +41,11 @@ const ResumeEditHeader = ({ source }: { source?: string }) => {
       router.back();
     }
 
-    if (typeof window !== "undefined" && window.closeWebview && !source) {
+    if (
+      typeof window !== "undefined" &&
+      window.closeWebview &&
+      source === "app"
+    ) {
       window.closeWebview("close");
     }
 
