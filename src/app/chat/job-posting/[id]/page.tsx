@@ -6,7 +6,8 @@ import CenterSpinner from "@/components/spinners/center-spinner";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
 import JobPostingChatDetailHeader from "@/components/headers/job-posting-chat-detail-header";
 import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
-import MessageSection from "./components/message-section";
+import MessageSection from "./components/MessageSection";
+import TopButtonSection from "./components/TopButtonSection";
 import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
@@ -190,6 +191,8 @@ export default function JobPostingChatDetailPage({
         otherUserDisplayName={userChannel?.otherUser?.DisplayName || ""}
         source={source}
       />
+
+      <TopButtonSection />
 
       <MessageSection userChannel={userChannel!} source={source} />
       <InputContainer>
