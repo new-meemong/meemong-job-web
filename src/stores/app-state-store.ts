@@ -15,7 +15,7 @@ export type AppActions = {
 export type AppStateStore = AppState & AppActions;
 
 export const defaultAppState: AppState = {
-  homeTopTab: "resume",
+  homeTopTab: "jobPosting",
 };
 
 export const useAppStateStore = create(
