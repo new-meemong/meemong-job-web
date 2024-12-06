@@ -44,7 +44,7 @@ const ResumeEditHeader = ({ source }: { source?: string }) => {
     if (
       typeof window !== "undefined" &&
       window.closeWebview &&
-      source === "app"
+      (source === "app" || !source)
     ) {
       window.closeWebview("close");
     }
