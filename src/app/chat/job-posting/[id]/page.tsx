@@ -10,6 +10,7 @@ import MessageSection from "./components/MessageSection";
 import TopButtonSection from "./components/TopButtonSection";
 import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import pxToVw from "@/lib/dpi-converter";
+import { sendPushNotification } from "@/apis/push-notification";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
@@ -172,6 +173,7 @@ export default function JobPostingChatDetailPage({
         messageType: JobPostingChatMessageTypeEnum.TEXT,
       });
       setMessageText(""); // 메시지 전송 후 입력창 초기화
+      await sendPushNotification(userChannel.otherUser.id, messageText);
     } catch (error) {
       console.error("메시지 전송 실패:", error);
     }
