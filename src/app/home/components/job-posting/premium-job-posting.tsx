@@ -1,10 +1,11 @@
 import ArrowRightGreyOutlineIcon from "@/components/icons/arrow-right-grey-outline";
 import JobPostingItem from "@/components/job-posting-item";
-import pxToVw from "@/lib/dpi-converter";
+import { JobPostingType } from "@/types/job-posting-type";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { JobPostingType } from "@/types/job-posting-type";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   margin-top: ${pxToVw(20)};
@@ -57,6 +58,9 @@ const SnapItem = styled.div<{ $isFirst: boolean }>`
 `;
 
 const PremiumJobPosting = () => {
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
+
   const jobPostings: JobPostingType[] = [];
   return (
     <Container>
@@ -70,7 +74,7 @@ const PremiumJobPosting = () => {
       <JobPostingContainer>
         {jobPostings.map((jobPosting, index) => (
           <SnapItem key={index} $isFirst={index === 0}>
-            <JobPostingItem jobPosting={jobPosting} />
+            <JobPostingItem jobPosting={jobPosting} source={source} />
           </SnapItem>
         ))}
       </JobPostingContainer>
