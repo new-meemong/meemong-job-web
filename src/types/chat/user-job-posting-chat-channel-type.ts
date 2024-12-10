@@ -28,6 +28,7 @@ export interface UserJobPostingChatChannelType {
 
   createdAt: Timestamp | FieldValue;
   updatedAt: Timestamp | FieldValue;
+  deletedAt: Timestamp | FieldValue | null;
 
   otherUser: UserType;
 }

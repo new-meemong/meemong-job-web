@@ -85,6 +85,27 @@ const MessageStatusContainer = styled.div`
   gap: ${pxToVw(4)};
 `;
 
+const SystemMessageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: ${pxToVw(10)} 0;
+`;
+
+const SystemMessageTime = styled.span`
+  font-size: ${pxToVw(12)};
+  color: #666;
+  margin-bottom: ${pxToVw(4)};
+`;
+
+const SystemMessageText = styled.div`
+  ${fonts.blackNormal14}
+  text-align: center;
+  /* background-color: ${colors.greyBackground}; */
+  padding: ${pxToVw(4)} ${pxToVw(12)};
+  max-width: 80%;
+`;
+
 const ReadStatusText = styled.span`
   font-size: ${pxToVw(12)};
   color: #666;
@@ -112,6 +133,15 @@ const MessageTime = styled.span`
   align-self: flex-end;
   min-width: ${pxToVw(60)};
 `;
+
+const SystemMessage = ({ message }: { message: JobPostingChatMessageType }) => (
+  <SystemMessageWrapper>
+    <SystemMessageTime>
+      {moment((message.createdAt as Timestamp).toDate()).format("MM.DD HH:mm")}
+    </SystemMessageTime>
+    <SystemMessageText>{message.message}</SystemMessageText>
+  </SystemMessageWrapper>
+);
 
 const MessageSection = ({
   userChannel,
@@ -231,6 +261,10 @@ const MessageSection = ({
           {messages.map((message) => {
             const messageCreatedAt = message.createdAt as Timestamp;
             const isRead = checkIsRead(messageCreatedAt, message);
+
+            if (message.messageType === JobPostingChatMessageTypeEnum.SYSTEM) {
+              return <SystemMessage key={message.id} message={message} />;
+            }
 
             return message.senderId === userId ? (
               <MyMessage key={message.id} message={message} isRead={isRead} />

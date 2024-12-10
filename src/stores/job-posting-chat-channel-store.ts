@@ -1,4 +1,8 @@
 import {
+  JobPostingChatMessageType,
+  JobPostingChatMessageTypeEnum,
+} from "@/types/chat/job-posting-chat-message-type";
+import {
   Timestamp,
   collection,
   doc,
@@ -22,7 +26,6 @@ import {
 
 import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
-import { JobPostingChatMessageType } from "@/types/chat/job-posting-chat-message-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
@@ -65,6 +68,8 @@ interface ChatChannelState {
   subscribeToMine: (channelId: string, userId: string) => () => void;
 
   updateChannelUserInfo: (channelId: string, userId: string) => Promise<void>;
+
+  leaveChannel: (channelId: string, userId: string) => Promise<void>;
 }
 
 export const useJobPostingChatChannelStore = create<ChatChannelState>(
@@ -97,8 +102,37 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         // 트랜잭션을 사용하여 채널 생성 및 중복 방지
         const result = await runTransaction(db, async (transaction) => {
           const channelSnapshot = await transaction.get(channelRef);
+
           if (channelSnapshot.exists()) {
-            // 채널이 이미 존재하면 반환
+            // 채널이 존재하는 경우 삭제 여부 확인
+            const participantRefs = participantIds.map((userId) =>
+              doc(
+                db,
+                `users/${userId}/userJobPostingChatChannels`,
+                channelRef.id,
+              ),
+            );
+
+            const participantSnapshots = await Promise.all(
+              participantRefs.map((ref) => transaction.get(ref)),
+            );
+
+            // 참여자 중 한명이라도 deletedAt이 있으면 채널 재활성화
+            const hasDeletedChannel = participantSnapshots.some(
+              (snap) => snap.exists() && snap.data().deletedAt,
+            );
+
+            if (hasDeletedChannel) {
+              // 모든 참여자의 채널을 재활성화
+              participantRefs.forEach((ref) => {
+                transaction.update(ref, {
+                  deletedAt: null,
+                  updatedAt: serverTimestamp(),
+                });
+              });
+              return { channelId: channelRef.id, isCreated: true };
+            }
+
             return { channelId: channelRef.id, isCreated: false };
           }
 
@@ -158,6 +192,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
               lastReadAt: null,
               createdAt: serverTimestamp(),
               updatedAt: serverTimestamp(),
+              deletedAt: null,
             };
             transaction.set(userChannelRef, userJobPostingChatChannel);
           });
@@ -182,10 +217,15 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         ref,
         async (snapshot) => {
           try {
-            const channels = snapshot.docs.map((doc) => ({
-              channelId: doc.id,
-              ...doc.data(),
-            })) as UserJobPostingChatChannelType[];
+            const channels = snapshot.docs
+              .filter((doc) => {
+                const data = doc.data();
+                return !data.deletedAt; // null이거나 undefined인 경우 true
+              })
+              .map((doc) => ({
+                channelId: doc.id,
+                ...doc.data(),
+              })) as UserJobPostingChatChannelType[];
 
             const sortedChannels = sortChannels(channels);
 
@@ -478,6 +518,61 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         }
       } catch (error) {
         console.error("사용자 정보 업데이트 중 오류 발생:", error);
+      }
+    },
+
+    leaveChannel: async (channelId: string, userId: string) => {
+      try {
+        // 1. 시스템 메시지 전송
+        const messageRef = doc(
+          collection(
+            db,
+            `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/messages`,
+          ),
+        );
+
+        await setDoc(messageRef, {
+          id: messageRef.id,
+          message: "상대방이 나갔습니다.",
+          messageType: JobPostingChatMessageTypeEnum.SYSTEM,
+          metaPathList: [],
+          senderId: "system",
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+
+        // 2. 유저의 채널 메타데이터 업데이트
+        const userChannelRef = doc(
+          db,
+          `users/${userId}/userJobPostingChatChannels`,
+          channelId,
+        );
+        await updateDoc(userChannelRef, {
+          deletedAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+
+        // 3. 채널의 참여자 목록에서 유저 제거
+        const channelRef = doc(
+          db,
+          ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+          channelId,
+        );
+        const channelSnap = await getDoc(channelRef);
+
+        if (channelSnap.exists()) {
+          const channelData = channelSnap.data();
+          const updatedParticipants = channelData.participantsIds.filter(
+            (id: string) => id !== userId,
+          );
+
+          await updateDoc(channelRef, {
+            participantsIds: updatedParticipants,
+            updatedAt: serverTimestamp(),
+          });
+        }
+      } catch (error) {
+        console.error("채널 나가기 중 오류 발생:", error);
       }
     },
   }),

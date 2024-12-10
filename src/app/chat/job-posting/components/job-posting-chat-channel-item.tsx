@@ -1,5 +1,6 @@
 import { useRouter, useSearchParams } from "next/navigation";
 
+import ConfirmModal from "@/components/modals/confirm-modal";
 import DeleteIcon from "@/components/icons/delete-icon";
 import Image from "next/image";
 import PinListIcon from "@/components/icons/pin-list-icon";
@@ -12,6 +13,7 @@ import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
+import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -133,8 +135,15 @@ export default function JobPostingChatChannelItem({
   const [offset, setOffset] = useState(0);
   const [startX, setStartX] = useState(0);
 
-  const { UserID } = useAuthStore((state) => ({
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
+
+  const { UserID, userId } = useAuthStore((state) => ({
     UserID: state.UserID,
+    userId: state.userId,
+  }));
+
+  const { leaveChannel } = useJobPostingChatChannelStore((state) => ({
+    leaveChannel: state.leaveChannel,
   }));
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -173,6 +182,20 @@ export default function JobPostingChatChannelItem({
     } else {
       router.push(`/chat/job-posting/${userJobPostingChatChannel.channelId}`);
     }
+  };
+
+  const handleLeaveChannel = async () => {
+    if (!userId) return;
+    try {
+      await leaveChannel(userJobPostingChatChannel.channelId, userId);
+      setOffset(0);
+    } catch (error) {
+      console.error("채널 나가기 실패:", error);
+    }
+  };
+
+  const handleDeleteClick = () => {
+    setIsLeaveModalOpen(true);
   };
 
   const { lastMessage, otherUser } = userJobPostingChatChannel;
@@ -221,10 +244,18 @@ export default function JobPostingChatChannelItem({
           isPinned={userJobPostingChatChannel.isPinned}
           onToggle={handleToggle}
         />
-        <DeleteButton>
+        <DeleteButton onClick={handleDeleteClick}>
           <DeleteIcon />
         </DeleteButton>
       </RightButtonWrapper>
+      <ConfirmModal
+        isOpen={isLeaveModalOpen}
+        onClose={() => setIsLeaveModalOpen(false)}
+        onConfirm={handleLeaveChannel}
+        message="정말 채팅방을 나가시겠습니까?"
+        confirmText="나가기"
+        isWarning={true}
+      />
     </Container>
   );
 }

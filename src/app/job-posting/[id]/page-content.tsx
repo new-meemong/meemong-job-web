@@ -289,7 +289,11 @@ export default function PageContent({
                 }
               }
 
-              if (typeof window !== "undefined" && window.startChat) {
+              if (
+                source === "app" &&
+                typeof window !== "undefined" &&
+                window.startChat
+              ) {
                 const postUrl = window.location.href;
                 const postId = postUrl.split("/").pop() as string;
                 const message = {
@@ -299,8 +303,6 @@ export default function PageContent({
                   chatChannelId: channelId,
                 };
                 window.startChat(message);
-              } else {
-                console.log("startChat function is not available.");
               }
             } catch (error) {
               console.error("요청 실패:", error);
