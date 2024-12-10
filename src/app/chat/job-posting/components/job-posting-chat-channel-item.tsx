@@ -24,6 +24,7 @@ const Container = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 `;
 
 const ContentWrapper = styled.div<{ $offset: number }>`
@@ -191,7 +192,11 @@ export default function JobPostingChatChannelItem({
   const handleLeaveChannel = async () => {
     if (!userId) return;
     try {
-      await leaveChannel(userJobPostingChatChannel.channelId, userId);
+      await leaveChannel(
+        userJobPostingChatChannel.channelId,
+        userId,
+        otherUser?.DisplayName || "",
+      );
       setOffset(0);
     } catch (error) {
       console.error("채널 나가기 실패:", error);

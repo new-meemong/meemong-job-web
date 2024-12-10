@@ -14,9 +14,11 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     borderRadius: pxToVw(10),
     padding: 0,
+    zIndex: 100,
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)", // 어두운 배경 설정
+    zIndex: 100,
   },
 };
 

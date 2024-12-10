@@ -69,7 +69,11 @@ interface ChatChannelState {
 
   updateChannelUserInfo: (channelId: string, userId: string) => Promise<void>;
 
-  leaveChannel: (channelId: string, userId: string) => Promise<void>;
+  leaveChannel: (
+    channelId: string,
+    userId: string,
+    userName: string,
+  ) => Promise<void>;
 }
 
 export const useJobPostingChatChannelStore = create<ChatChannelState>(
@@ -521,7 +525,11 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       }
     },
 
-    leaveChannel: async (channelId: string, userId: string) => {
+    leaveChannel: async (
+      channelId: string,
+      userId: string,
+      userName: string,
+    ) => {
       try {
         // 1. 시스템 메시지 전송
         const messageRef = doc(
@@ -533,7 +541,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
         await setDoc(messageRef, {
           id: messageRef.id,
-          message: "상대방이 나갔습니다.",
+          message: `${userName}님이 나갔습니다.`,
           messageType: JobPostingChatMessageTypeEnum.SYSTEM,
           metaPathList: [],
           senderId: "system",
