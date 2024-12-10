@@ -28,7 +28,7 @@ const ResumeList = () => {
     <Container>
       <Title>맞춤 검색 결과</Title>
       {resumeList.map((resume) => (
-        <ResumeItem key={resume.id} resume={resume} source={source} />
+        <ResumeItem key={resume.id} resume={resume} />
       ))}
     </Container>
   );

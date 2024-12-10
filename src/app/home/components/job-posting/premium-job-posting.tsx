@@ -1,3 +1,5 @@
+"use client";
+
 import ArrowRightGreyOutlineIcon from "@/components/icons/arrow-right-grey-outline";
 import JobPostingItem from "@/components/job-posting-item";
 import { JobPostingType } from "@/types/job-posting-type";
@@ -74,7 +76,7 @@ const PremiumJobPosting = () => {
       <JobPostingContainer>
         {jobPostings.map((jobPosting, index) => (
           <SnapItem key={index} $isFirst={index === 0}>
-            <JobPostingItem jobPosting={jobPosting} source={source} />
+            <JobPostingItem jobPosting={jobPosting} />
           </SnapItem>
         ))}
       </JobPostingContainer>

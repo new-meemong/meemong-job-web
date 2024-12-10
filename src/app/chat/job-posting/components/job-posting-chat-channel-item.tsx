@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
 
 import ConfirmModal from "@/components/modals/confirm-modal";

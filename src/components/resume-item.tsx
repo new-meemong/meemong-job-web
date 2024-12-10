@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import Image from "next/image";
 import { ResumeType } from "@/types/resume-type";
@@ -7,7 +9,6 @@ import { fonts } from "@/styles/fonts";
 import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -86,10 +87,9 @@ const Divider = styled.div`
 interface ResumeItemProps {
   resume: ResumeType;
   // viewCount: number;
-  source: string;
 }
 
-const ResumeItem = ({ resume, source }: ResumeItemProps) => {
+const ResumeItem = ({ resume }: ResumeItemProps) => {
   const {
     id,
     preferredStoreRegions,
@@ -108,6 +108,8 @@ const ResumeItem = ({ resume, source }: ResumeItemProps) => {
     : "/images/default_profile_image.jpg";
   const [imgSrc, setImgSrc] = useState(imageUri);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
 
   const shortRegion = convertToShortRegionFromQuery(
     preferredStoreRegions,

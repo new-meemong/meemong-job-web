@@ -24,13 +24,7 @@ const JobPostingList = () => {
     <Container>
       <Title>매장 취업하기</Title>
       {jobPostingList.map((jobPosting) => {
-        return (
-          <JobPostingItem
-            key={jobPosting.id}
-            jobPosting={jobPosting}
-            source={source}
-          />
-        );
+        return <JobPostingItem key={jobPosting.id} jobPosting={jobPosting} />;
       })}
     </Container>
   );

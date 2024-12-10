@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import Image from "next/image";
 import { JobPostingType } from "@/types/job-posting-type";
@@ -6,7 +8,6 @@ import { convertToShortRegionFromQuery } from "@/lib/convert-region";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -158,14 +159,13 @@ const infoByRole = (jobPosting: JobPostingType) => {
 
 interface JobPostingItemProps {
   jobPosting: JobPostingType;
-  source: string;
 }
 
-const JobPostingItem = ({
-  jobPosting,
-  source = "app",
-}: JobPostingItemProps) => {
+const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
+
   const {
     id,
     storeName,
