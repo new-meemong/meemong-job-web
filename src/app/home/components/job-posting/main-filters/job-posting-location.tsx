@@ -7,6 +7,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { siNmShort } from "@/types/location-type";
 import styled from "styled-components";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -67,6 +68,9 @@ const LocationButton = styled(Link)`
 // `;
 
 const JobPostingLocation = () => {
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
+
   const { _postingRegions } = useJobPostingListStore((state) => ({
     _postingRegions: state._postingRegions,
   }));
@@ -98,7 +102,9 @@ const JobPostingLocation = () => {
                 </React.Fragment>
               ))}
         </Location>
-        <LocationButton href={"/select-location?target=jobPostingList"}>
+        <LocationButton
+          href={`/select-location?target=jobPostingList&source=${source}`}
+        >
           지역선택하기
           <ArrowRightPurpleIcon />
         </LocationButton>

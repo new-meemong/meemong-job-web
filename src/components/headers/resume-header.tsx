@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import BackIcon from "./header-icons/back-icon";
 import ConfirmModal from "../modals/confirm-modal";
 import NoticeModal from "../modals/notice-modal";
@@ -7,7 +9,6 @@ import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -53,6 +54,8 @@ const ResumeHeader = ({
   appliedRole,
 }: ResumeHeaderProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
     useState(false);
@@ -82,7 +85,7 @@ const ResumeHeader = ({
 
   const handleOptionSelect = (option: string | null) => {
     if (option === "수정") {
-      router.push(`/resume/${resumeId}/edit?source=web`);
+      router.push(`/resume/${resumeId}/edit?source=${source}`);
     } else if (option === "삭제") {
       setIsDeleteConfirmModalOpen(true);
     }

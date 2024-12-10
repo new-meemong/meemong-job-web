@@ -1,13 +1,14 @@
-import pxToVw from "@/lib/dpi-converter";
+import { useRouter, useSearchParams } from "next/navigation";
+
 // import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 // import { parseQueryString } from "@/lib/parse-query-string";
 // import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import pxToVw from "@/lib/dpi-converter";
 // import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
+import { useState } from "react";
 
 const Button = styled.div`
   ${fonts.whiteBold14}
@@ -23,6 +24,8 @@ const Button = styled.div`
 const JobSearchButton = () => {
   const [text] = useState("매장 탐색하기");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "";
   // const [isLoading, setIsLoading] = useState(false);
   // const { jobPostingFilterQueries } = useJobPostingListStore((state) => ({
   //   jobPostingFilterQueries: state.jobPostingFilterQueries
@@ -30,7 +33,7 @@ const JobSearchButton = () => {
   // }));
 
   const handleClick = async () => {
-    router.push("/search-result/job-posting-list");
+    router.push(`/search-result/job-posting-list?source=${source}`);
     // setIsLoading(true);
     // try {
     //   const parsedQueries = parseQueryString(jobPostingFilterQueries);

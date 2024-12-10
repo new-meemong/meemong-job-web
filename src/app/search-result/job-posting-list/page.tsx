@@ -13,6 +13,7 @@ import { parseQueryString } from "@/lib/parse-query-string";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div``;
 
@@ -31,6 +32,8 @@ const Title = styled.span`
 
 export default function JobPostingListPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const {
     jobPostingFilterQueries,
     searchJobPostingList,
@@ -91,7 +94,11 @@ export default function JobPostingListPage() {
         <ContentContainer>
           <Title>맞춤 검색 결과</Title>
           {filteredJobPostingList.map((jobPosting) => (
-            <JobPostingItem key={jobPosting.id} jobPosting={jobPosting} />
+            <JobPostingItem
+              key={jobPosting.id}
+              jobPosting={jobPosting}
+              source={source}
+            />
           ))}
         </ContentContainer>
       )}

@@ -158,9 +158,13 @@ const infoByRole = (jobPosting: JobPostingType) => {
 
 interface JobPostingItemProps {
   jobPosting: JobPostingType;
+  source: string;
 }
 
-const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
+const JobPostingItem = ({
+  jobPosting,
+  source = "app",
+}: JobPostingItemProps) => {
   const router = useRouter();
   const {
     id,
@@ -188,7 +192,8 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   };
 
   const handleClick = () => {
-    router.push(`/job-posting/${id}?source=web`);
+    console.log("moonsae source", source);
+    router.push(`/job-posting/${id}?source=${source}`);
   };
 
   return (

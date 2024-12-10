@@ -8,6 +8,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { siNmShort } from "@/types/location-type";
 import styled from "styled-components";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -81,6 +82,9 @@ const LocationButton = styled(Link)<{ $hasError: boolean }>`
 // `;
 
 const SelectJobPostingRegions = () => {
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
+
   const { _postingRegions, hasDesignerOptionNull, hasInternOptionNull, role } =
     useJobPostingEditStore((state) => ({
       _postingRegions: state._postingRegions,
@@ -127,7 +131,7 @@ const SelectJobPostingRegions = () => {
           )}
         </Location>
         <LocationButton
-          href="/select-location?target=jobPostingEdit"
+          href={`/select-location?target=jobPostingEdit&source=${source}`}
           $hasError={hasError}
         >
           지역선택하기

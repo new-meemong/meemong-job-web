@@ -267,12 +267,18 @@ const MessageSection = ({
             }
 
             return message.senderId === userId ? (
-              <MyMessage key={message.id} message={message} isRead={isRead} />
+              <MyMessage
+                key={message.id}
+                message={message}
+                isRead={isRead}
+                source={source}
+              />
             ) : (
               <OtherMessage
                 key={message.id}
                 message={message}
                 userChannel={userChannel}
+                source={source}
               />
             );
           })}
@@ -289,9 +295,11 @@ export default MessageSection;
 const MyMessage = ({
   message,
   isRead,
+  source,
 }: {
   message: JobPostingChatMessageType;
   isRead: boolean;
+  source: string;
 }) => (
   <MessageWrapper isMine={true}>
     <MessageContainer>
@@ -303,7 +311,9 @@ const MyMessage = ({
           )}
         </MessageTime>
       </MessageStatusContainer>
-      <MessageItem $isMine={true}>{renderMessageContent(message)}</MessageItem>
+      <MessageItem $isMine={true}>
+        {renderMessageContent(message, source)}
+      </MessageItem>
     </MessageContainer>
   </MessageWrapper>
 );
@@ -312,9 +322,11 @@ const MyMessage = ({
 const OtherMessage = ({
   message,
   userChannel,
+  source,
 }: {
   message: JobPostingChatMessageType;
   userChannel: UserJobPostingChatChannelType;
+  source: string;
 }) => (
   <MessageWrapper isMine={false}>
     <ProfileContainer>
@@ -330,7 +342,9 @@ const OtherMessage = ({
       </ProfileName>
     </ProfileContainer>
     <MessageContainer>
-      <MessageItem $isMine={false}>{renderMessageContent(message)}</MessageItem>
+      <MessageItem $isMine={false}>
+        {renderMessageContent(message, source)}
+      </MessageItem>
       <MessageTime>
         {moment((message.createdAt as Timestamp).toDate()).format(
           "MM.DD HH:mm",
@@ -340,7 +354,10 @@ const OtherMessage = ({
   </MessageWrapper>
 );
 
-const renderMessageContent = (message: JobPostingChatMessageType) => {
+const renderMessageContent = (
+  message: JobPostingChatMessageType,
+  source: string,
+) => {
   if (
     (message.messageType === JobPostingChatMessageTypeEnum.JOB_POSTING ||
       message.messageType === JobPostingChatMessageTypeEnum.RESUME) &&
@@ -359,7 +376,7 @@ const renderMessageContent = (message: JobPostingChatMessageType) => {
       <>
         <div>{message.message}</div>
         <LinkButton
-          href={`${url}?noButton=true`}
+          href={`${url}?noButton=true&source=${source}`}
           target="_blank"
           rel="noopener noreferrer"
         >

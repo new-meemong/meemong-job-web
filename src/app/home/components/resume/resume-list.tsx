@@ -3,6 +3,7 @@ import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   padding: ${pxToVw(24)};
@@ -16,6 +17,9 @@ const Title = styled.span`
 `;
 
 const ResumeList = () => {
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
+
   const { resumeList } = useResumeListStore((state) => ({
     resumeList: state.resumeList,
   }));
@@ -24,7 +28,7 @@ const ResumeList = () => {
     <Container>
       <Title>맞춤 검색 결과</Title>
       {resumeList.map((resume) => (
-        <ResumeItem key={resume.id} resume={resume} />
+        <ResumeItem key={resume.id} resume={resume} source={source} />
       ))}
     </Container>
   );

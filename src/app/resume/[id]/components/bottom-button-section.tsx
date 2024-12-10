@@ -38,11 +38,13 @@ const SuggestButton = styled.div`
 interface BottomButtonSectionProps {
   postUserId: string;
   postId: string;
+  source: string;
 }
 
 const BottomButtonSection = ({
   postUserId,
   postId,
+  source,
 }: BottomButtonSectionProps) => {
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
@@ -92,7 +94,11 @@ const BottomButtonSection = ({
         }
       }
 
-      if (typeof window !== "undefined" && window.startChat) {
+      if (
+        source === "app" &&
+        typeof window !== "undefined" &&
+        window.startChat
+      ) {
         const postUrl = window.location.href;
         const postId = postUrl.split("/").pop() as string;
         const message = {

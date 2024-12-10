@@ -46,6 +46,8 @@ export default function PageContent({
   initialResume: ResumeType;
 }) {
   const [resume, setResume] = useState<ResumeType>(initialResume);
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
 
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
@@ -56,8 +58,6 @@ export default function PageContent({
   }));
 
   const isMine = resume?.userId?.toString() === userId;
-
-  const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
 
   const noButton = searchParams.get("noButton") || undefined; // 앱 채팅에서 하단 버튼 없이 view만 보여줄때
 
@@ -111,6 +111,7 @@ export default function PageContent({
         <BottomButtonSection
           postUserId={resume.User.id.toString()}
           postId={resume.id}
+          source={source}
         />
       )}
       {!userId && <StoreFloatingButton title={"어플 다운 후 채팅하기"} />}

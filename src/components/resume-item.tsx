@@ -86,9 +86,10 @@ const Divider = styled.div`
 interface ResumeItemProps {
   resume: ResumeType;
   // viewCount: number;
+  source: string;
 }
 
-const ResumeItem = ({ resume }: ResumeItemProps) => {
+const ResumeItem = ({ resume, source }: ResumeItemProps) => {
   const {
     id,
     preferredStoreRegions,
@@ -118,7 +119,7 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
   };
 
   const handleClick = () => {
-    router.push(`/resume/${id}`);
+    router.push(`/resume/${id}?source=${source}`);
   };
 
   return (

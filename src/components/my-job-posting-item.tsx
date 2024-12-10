@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import Image from "next/image";
 import { JobPostingType } from "@/types/job-posting-type";
@@ -6,7 +8,6 @@ import { convertToShortRegionFromQuery } from "@/lib/convert-region";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -162,6 +163,8 @@ interface JobPostingItemProps {
 
 const MyJobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const {
     id,
     storeName,
@@ -187,7 +190,7 @@ const MyJobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
   };
 
   const handleClick = () => {
-    router.push(`/job-posting/${id}?source=web`);
+    router.push(`/job-posting/${id}?source=${source}`);
   };
   return (
     <Container onClick={handleClick}>

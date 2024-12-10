@@ -8,6 +8,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { siNmShort } from "@/types/location-type";
 import styled from "styled-components";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -68,6 +69,8 @@ const CancelText = styled.span`
 `;
 
 const SelectLocation = () => {
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const { _preferredStoreRegions } = useResumeListStore((state) => ({
     _preferredStoreRegions: state._preferredStoreRegions,
   }));
@@ -99,7 +102,9 @@ const SelectLocation = () => {
                 </React.Fragment>
               ))}
         </Location>
-        <LocationButton href={"/select-location?target=resumeList"}>
+        <LocationButton
+          href={`/select-location?target=resumeList&source=${source}`}
+        >
           지역선택하기
           <ArrowRightPurpleIcon />
         </LocationButton>

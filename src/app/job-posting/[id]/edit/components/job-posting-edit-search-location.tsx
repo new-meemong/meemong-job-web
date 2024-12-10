@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { ErrorMessage } from "@/components/error-message";
 import Link from "next/link";
 import { colors } from "@/styles/colors";
@@ -5,7 +7,6 @@ import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
-import { useRouter } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -43,7 +44,8 @@ const LocationInfo = styled.div`
 
 const JobPostingEditSearchLocation = () => {
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const {
     storeName,
     storeAddress,
@@ -69,7 +71,7 @@ const JobPostingEditSearchLocation = () => {
 
   const handleSearchLocation = () => {
     setIsOpeningSoon(false);
-    router.push("/search-naver");
+    router.push(`/search-naver?source=${source}`);
   };
 
   return (

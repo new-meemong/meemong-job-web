@@ -9,6 +9,7 @@ import pxToVw from "@/lib/dpi-converter";
 import { siNmShort } from "@/types/location-type";
 import styled from "styled-components";
 import { useResumeEditStore } from "@/stores/resume-edit-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -53,6 +54,9 @@ const LocationButton = styled(Link)<{ $hasError: boolean }>`
 `;
 
 const RegionsSelect = () => {
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
+
   const {
     _preferredStoreRegions,
     hasDesignerOptionNull,
@@ -102,7 +106,7 @@ const RegionsSelect = () => {
           )}
         </Location>
         <LocationButton
-          href="/select-location?target=resumeEdit"
+          href={`/select-location?target=resumeEdit&source=${source}`}
           $hasError={hasError}
         >
           지역선택하기

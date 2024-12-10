@@ -13,6 +13,7 @@ import { parseQueryString } from "@/lib/parse-query-string";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useResumeListStore } from "@/stores/resume-list-store";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div``;
 
@@ -32,6 +33,8 @@ const Title = styled.span`
 
 export default function ResumeListPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const { resumeFilterQueries, searchResumeList, searchResultResumeList } =
     useResumeListStore((state) => ({
       resumeFilterQueries: state.resumeFilterQueries,
@@ -93,7 +96,7 @@ export default function ResumeListPage() {
         <ContentContainer>
           <Title>맞춤 검색 결과</Title>
           {filteredResumeList.map((resume) => (
-            <ResumeItem key={resume.id} resume={resume} />
+            <ResumeItem key={resume.id} resume={resume} source={source} />
           ))}
         </ContentContainer>
       )}

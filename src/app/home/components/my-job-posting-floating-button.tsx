@@ -1,9 +1,10 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import WriteIcon from "@/components/icons/write-icon";
 import { colors } from "@/styles/colors";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
-import { useRouter } from "next/navigation";
 
 const Container = styled.div``;
 
@@ -35,12 +36,14 @@ const WriteButtonText = styled.span`
 
 const MyJobPostingFloatingButton = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const { UserID } = useAuthStore((state) => ({
     UserID: state.UserID,
   }));
 
   const handleClick = () => {
-    router.push(`/my/job-posting-list?userId=${UserID}&source=web`);
+    router.push(`/my/job-posting-list?userId=${UserID}&source=${source}`);
   };
 
   return (

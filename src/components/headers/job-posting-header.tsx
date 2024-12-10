@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import BackIcon from "./header-icons/back-icon";
 import ConfirmModal from "../modals/confirm-modal";
 import NoticeModal from "../modals/notice-modal";
@@ -9,7 +11,6 @@ import styled from "styled-components";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
 import { useMyJobPostingListStore } from "@/stores/my-job-posting-list-store";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -55,6 +56,8 @@ const JobPostingHeader = ({
   role,
 }: ResumeHeaderProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] =
     useState(false);
@@ -102,7 +105,7 @@ const JobPostingHeader = ({
         setFromJobPosting(jobPosting); // 해당 id의 데이터를 스토어에 설정
       }
 
-      router.push(`/job-posting/${jobPostingId}/edit`);
+      router.push(`/job-posting/${jobPostingId}/edit?source=${source}`);
     } else if (option === "삭제") {
       setIsDeleteConfirmModalOpen(true);
     }

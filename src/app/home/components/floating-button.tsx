@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from "next/navigation";
+
 import WriteIcon from "@/components/icons/write-icon";
 import { colors } from "@/styles/colors";
 import numberToVw from "@/lib/dpi-number-converter";
@@ -6,7 +8,6 @@ import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Container = styled.div``;
@@ -52,6 +53,8 @@ const AdditionalButtonText = styled(WriteButtonText)`
 const FloatingButton = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   const { checkMyResumeExist } = useResumeListStore((state) => ({
     checkMyResumeExist: state.checkMyResumeExist,
   }));
@@ -73,15 +76,15 @@ const FloatingButton = () => {
     const { status, data } = await checkMyResumeExist();
 
     if (status) {
-      router.push(`/resume/${data!.id}/edit?source=web`);
+      router.push(`/resume/${data!.id}/edit?source=${source}`);
     } else {
-      router.push("/resume/new/edit?source=web");
+      router.push(`/resume/new/edit?source=${source}`);
     }
   };
 
   const handleJobPostingClick = () => {
     setRole(null);
-    router.push("/job-posting/new/edit?");
+    router.push(`/job-posting/new/edit?source=${source}`);
   };
 
   return (

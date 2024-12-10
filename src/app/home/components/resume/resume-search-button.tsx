@@ -1,12 +1,13 @@
-import pxToVw from "@/lib/dpi-converter";
+import { useRouter, useSearchParams } from "next/navigation";
+
 // import { parseQueryString } from "@/lib/parse-query-string";
 // import { useResumeListStore } from "@/stores/resume-list-store";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import pxToVw from "@/lib/dpi-converter";
 // import { ClipLoader } from "react-spinners";
 import styled from "styled-components";
+import { useState } from "react";
 
 const Button = styled.div`
   ${fonts.whiteBold14}
@@ -23,6 +24,8 @@ const Button = styled.div`
 const ResumeSearchButton = () => {
   const [text] = useState("인재 탐색하기");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source") || "app";
   // const [isLoading, setIsLoading] = useState(false);
   // const { resumeFilterQueries, getResumeList } = useResumeListStore(
   //   (state) => ({
@@ -32,7 +35,7 @@ const ResumeSearchButton = () => {
   // );
 
   const handleClick = async () => {
-    router.push("/search-result/resume-list");
+    router.push(`/search-result/resume-list?source=${source}`);
     // setIsLoading(true);
     // const parsedQueries = parseQueryString(resumeFilterQueries);
     // await getResumeList(parsedQueries);
