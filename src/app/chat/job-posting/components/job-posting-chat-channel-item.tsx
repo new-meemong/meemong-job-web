@@ -141,9 +141,10 @@ export default function JobPostingChatChannelItem({
 
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 
-  const { UserID, userId } = useAuthStore((state) => ({
+  const { UserID, userId, user } = useAuthStore((state) => ({
     UserID: state.UserID,
     userId: state.userId,
+    user: state.user,
   }));
 
   const { leaveChannel } = useJobPostingChatChannelStore((state) => ({
@@ -199,7 +200,7 @@ export default function JobPostingChatChannelItem({
       await leaveChannel(
         userJobPostingChatChannel.channelId,
         userId,
-        otherUser?.DisplayName || "",
+        user?.DisplayName || "",
       );
       setOffset(0);
     } catch (error) {
