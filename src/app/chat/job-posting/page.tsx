@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import CenterSpinner from "@/components/spinners/center-spinner";
+import CenterSpinner from "@/components/spinners/CenterSpinner";
 import JobPostingChatChannelItem from "./components/job-posting-chat-channel-item";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";

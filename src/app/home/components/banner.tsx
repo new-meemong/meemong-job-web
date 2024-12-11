@@ -1,12 +1,14 @@
 "use client";
 
+import { Suspense, useEffect } from "react";
+
+import CenterSpinner from "@/components/spinners/CenterSpinner";
 import Image from "next/image";
 import Link from "next/link";
 import { colors } from "@/styles/colors";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useBannerStore } from "@/stores/banner-store";
-import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
@@ -25,7 +27,7 @@ const BannerImage = styled(Image)`
   height: ${pxToVw(80)};
 `;
 
-const Banner = () => {
+const BannerContent = () => {
   const searchParams = useSearchParams();
   const source = searchParams.get("source");
 
@@ -70,6 +72,14 @@ const Banner = () => {
         />
       )}
     </Container>
+  );
+};
+
+const Banner = () => {
+  return (
+    <Suspense fallback={<CenterSpinner />}>
+      <BannerContent />
+    </Suspense>
   );
 };
 

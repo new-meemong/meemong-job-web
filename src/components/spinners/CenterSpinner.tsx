@@ -1,5 +1,5 @@
-import { colors } from "@/styles/colors";
 import { ClipLoader } from "react-spinners";
+import { colors } from "@/styles/colors";
 import styled from "styled-components";
 
 const SpinnerWrapper = styled.div`
