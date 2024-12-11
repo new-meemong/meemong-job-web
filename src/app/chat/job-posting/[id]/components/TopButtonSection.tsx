@@ -19,12 +19,15 @@ const Container = styled.div`
 const TopButtonSection = ({
   userChannel,
 }: {
-  userChannel: UserJobPostingChatChannelType;
+  userChannel: UserJobPostingChatChannelType | null;
 }) => {
   const source = useSearchParams().get("source");
   // console.log("moonsae topButtonSection channel", userChannel);
+
+  if (!userChannel) return null;
+
   const { channelType } = userChannel;
-  console.log("moonsae topButtonSection channelType", channelType);
+
   const renderButtons = () => {
     switch (channelType) {
       case "jobPostingApplicant":
