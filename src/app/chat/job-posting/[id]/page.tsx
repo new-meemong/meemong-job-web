@@ -141,11 +141,16 @@ export default function JobPostingChatDetailPage({
     return () => unsubscribe();
   }, [source, params.id, userId, subscribeToMine, userChannel]);
   // 앱에서 접근한 경우 내채널 구독후 해당 채널 userChannel로 등록
+
   useEffect(() => {
-    if (userJobPostingChatChannels.length === 1 && !userChannel) {
+    if (
+      source === "app" &&
+      userJobPostingChatChannels.length === 1 &&
+      !userChannel
+    ) {
       setUserChannel(userJobPostingChatChannels[0]);
     }
-  }, [userJobPostingChatChannels, userChannel]);
+  }, [source, userJobPostingChatChannels, userChannel]);
 
   useEffect(() => {
     if (params.id) {
@@ -188,6 +193,10 @@ export default function JobPostingChatDetailPage({
     return <div>채널 정보를 불러오는 중 오류가 발생했습니다.</div>;
   }
 
+  if (source === "app" && !userChannel) {
+    return <CenterSpinner />;
+  }
+
   return (
     <Container>
       <JobPostingChatDetailHeader
@@ -195,7 +204,7 @@ export default function JobPostingChatDetailPage({
         source={source}
       />
 
-      <TopButtonSection userChannel={userChannel!} />
+      <TopButtonSection userChannel={userChannel} />
 
       <MessageSection userChannel={userChannel!} source={source} />
       <InputContainer>

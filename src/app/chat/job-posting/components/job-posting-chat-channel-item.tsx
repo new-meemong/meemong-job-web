@@ -177,12 +177,15 @@ export default function JobPostingChatChannelItem({
     const source = searchParams.get("source");
 
     if (!UserID) return;
+
     if (source === "app" && window.openChatChannel) {
       window.openChatChannel({
         userId: UserID,
         chatChannelId: userJobPostingChatChannel.channelId,
       });
-    } else {
+    }
+
+    if (source === "web") {
       router.push(
         `/chat/job-posting/${userJobPostingChatChannel.channelId}?source=${source}`,
       );
