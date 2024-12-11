@@ -1,6 +1,6 @@
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import Metadata from "@/app/resume/[id]/components/metadata";
-import PageContent from "./page-content";
+import PageContent from "./PageContent";
 import { getJobPosting } from "@/apis/job-postings";
 
 export default async function JobPostingPage({

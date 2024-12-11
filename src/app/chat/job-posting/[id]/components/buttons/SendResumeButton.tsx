@@ -10,7 +10,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: ${pxToVw(2)};
-  width: fit-content;
+  width: ${pxToVw(70)};
+
   height: fit-content;
   cursor: pointer;
 `;

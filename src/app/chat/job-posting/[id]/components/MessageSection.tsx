@@ -30,9 +30,9 @@ const MessagesContainer = styled.div`
   padding-bottom: ${pxToVw(60)};
 `;
 
-const MessageWrapper = styled.div<{ isMine: boolean }>`
+const MessageWrapper = styled.div<{ $isMine: boolean }>`
   display: flex;
-  flex-direction: ${(props) => (props.isMine ? "row-reverse" : "row")};
+  flex-direction: ${(props) => (props.$isMine ? "row-reverse" : "row")};
   align-items: flex-start;
   margin-bottom: ${pxToVw(20)};
 `;
@@ -301,7 +301,7 @@ const MyMessage = ({
   isRead: boolean;
   source: string;
 }) => (
-  <MessageWrapper isMine={true}>
+  <MessageWrapper $isMine={true}>
     <MessageContainer>
       <MessageStatusContainer>
         <ReadStatusText>{isRead ? "읽음" : "1"}</ReadStatusText>
@@ -328,7 +328,7 @@ const OtherMessage = ({
   userChannel: UserJobPostingChatChannelType;
   source: string;
 }) => (
-  <MessageWrapper isMine={false}>
+  <MessageWrapper $isMine={false}>
     <ProfileContainer>
       <ProfileImage
         src={

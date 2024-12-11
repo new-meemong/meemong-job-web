@@ -94,7 +94,7 @@ const ConfirmModal = ({
     onConfirm();
     onClose();
   };
-  console.log("ConfirmModal");
+
   return (
     <Modal
       isOpen={isOpen}

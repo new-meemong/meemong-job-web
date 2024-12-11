@@ -1,6 +1,6 @@
 import { JobPostingType } from "@/types/job-posting-type";
 import SingleInfoItem from "../../../components/details/single-info-item";
-import SingleInfoLinkItem from "@/components/details/single-info-link-item";
+import SingleInfoLinkItem from "@/components/details/SingleInfoLinkItem";
 import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
@@ -13,20 +13,20 @@ const Container = styled.div`
   padding-right: ${pxToVw(24)};
 `;
 
-type DetailInfoInternProps = Pick<
+type DetailInfoDesignerProps = Pick<
   JobPostingType,
   "startWorkTime" | "endWorkTime" | "storeUrl" | "mainHairDye"
 > & {
-  source?: string; // 추가된 source 속성
+  source?: string;
 };
 
-const DetailStoreEtcInfoIntern = ({
+const DetailStoreEtcInfoDesigner = ({
   startWorkTime,
   endWorkTime,
   storeUrl,
   mainHairDye,
   source,
-}: DetailInfoInternProps) => {
+}: DetailInfoDesignerProps) => {
   return (
     <Container>
       <SingleInfoItem
@@ -52,4 +52,4 @@ const DetailStoreEtcInfoIntern = ({
   );
 };
 
-export default DetailStoreEtcInfoIntern;
+export default DetailStoreEtcInfoDesigner;

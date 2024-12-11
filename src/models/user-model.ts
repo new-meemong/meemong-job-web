@@ -15,5 +15,6 @@ export interface UserModel {
   appIdentifierId: string | null;
   id: string; // 숫자형 ID
   isExistPassword: boolean; // 비밀번호가 존재하는지 여부
+  phone: string;
   token: string; // JWT 토큰 문자열
 }

@@ -10,6 +10,7 @@ export type AuthState = {
   UserID: string | null;
   profileImageUri: string | null;
   sex: string | null;
+  user: UserModel | null;
 };
 
 export type AuthActions = {
@@ -28,6 +29,7 @@ export const defaultAuthState: AuthState = {
   UserID: null,
   profileImageUri: null,
   sex: null,
+  user: null,
 };
 
 export const useAuthStore = create(
@@ -41,12 +43,13 @@ export const useAuthStore = create(
           }
 
           const { data }: { data: UserModel } = await webviewLogin(UserID);
-
+          console.log("moonsae login data", data);
           if (data && data.token) {
             set({
               jwt: data.token, // JWT 토큰을 상태에 저장
               userId: String(data.id), // userId를 상태에 저장
               UserID: String(data.UserID),
+              user: data,
             });
 
             return true;
@@ -59,7 +62,7 @@ export const useAuthStore = create(
         }
       },
       logout: () => {
-        set({ jwt: null, userId: null });
+        set({ jwt: null, userId: null, user: null });
       },
       setProfileImageUri: (profileImageUri: string) => {
         set({ profileImageUri });

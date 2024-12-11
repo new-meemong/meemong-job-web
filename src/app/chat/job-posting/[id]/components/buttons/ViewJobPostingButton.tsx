@@ -1,8 +1,6 @@
-import ChatHowToUseIcon from "@/components/icons/chats/ChatHowToUseIcon";
-import ChatLeaveIcon from "@/components/icons/chats/ChatLeaveIcon";
-import ChatSendResumeIcon from "@/components/icons/chats/ChatSendResumeIcon";
+import { useParams, useSearchParams } from "next/navigation";
+
 import ChatViewJobPostingIcon from "@/components/icons/chats/ChatViewJobPostingIcon";
-import ChatViewResumeIcon from "@/components/icons/chats/ChatViewResumeIcon";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
@@ -12,7 +10,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: ${pxToVw(2)};
-  width: fit-content;
+  width: ${pxToVw(70)};
+
   height: fit-content;
   cursor: pointer;
 `;
@@ -22,8 +21,36 @@ const Label = styled.div`
 `;
 
 const ViewJobPostingButton = () => {
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source");
+
+  const channelId = Array.isArray(params.id) ? params.id[0] : params.id;
+
+  const handleClick = () => {
+    // channelId에서 jobPosting id 추출
+    const jobPostingId = channelId.split("_")[3];
+
+    if (source === "web") {
+      // 새 탭에서 job posting 페이지 열기
+      window.open(
+        `/job-posting/${jobPostingId}?noButton=true&source=${source}`,
+        "_blank",
+      );
+    }
+
+    if (
+      source === "app" &&
+      typeof window !== "undefined" &&
+      window.externalLink
+    ) {
+      window.externalLink(
+        `/job-posting/${jobPostingId}?noButton=true&source=${source}`,
+      );
+    }
+  };
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <ChatViewJobPostingIcon />
       <Label>모집공고 보기</Label>
     </Container>

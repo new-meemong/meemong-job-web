@@ -130,6 +130,7 @@ export default function JobPostingChatDetailPage({
   }, [source, userJobPostingChatChannels, params.id]);
 
   // 앱에서 접근한 경우 내 채널 구독
+  // => 앱에서는 리스트와 상관없이 해당 채널 방을 바로 웹뷰로 띄우기 때문에 새로운 구독 필요
   useEffect(() => {
     if (source !== "app" || !params.id || !userId) {
       return;
@@ -139,7 +140,7 @@ export default function JobPostingChatDetailPage({
 
     return () => unsubscribe();
   }, [source, params.id, userId, subscribeToMine, userChannel]);
-
+  // 앱에서 접근한 경우 내채널 구독후 해당 채널 userChannel로 등록
   useEffect(() => {
     if (userJobPostingChatChannels.length === 1 && !userChannel) {
       setUserChannel(userJobPostingChatChannels[0]);
@@ -194,7 +195,7 @@ export default function JobPostingChatDetailPage({
         source={source}
       />
 
-      <TopButtonSection />
+      <TopButtonSection userChannel={userChannel!} />
 
       <MessageSection userChannel={userChannel!} source={source} />
       <InputContainer>

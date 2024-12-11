@@ -7,6 +7,7 @@ import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useBannerStore } from "@/stores/banner-store";
 import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
   margin-top: ${pxToVw(24)};
@@ -25,6 +26,9 @@ const BannerImage = styled(Image)`
 `;
 
 const Banner = () => {
+  const searchParams = useSearchParams();
+  const source = searchParams.get("source");
+
   const { banner, fetchBanner } = useBannerStore((state) => ({
     banner: state.banner,
     fetchBanner: state.fetchBanner,
@@ -37,8 +41,16 @@ const Banner = () => {
   }, [banner]);
 
   const handleBannerClick = () => {
-    if (typeof window !== "undefined" && banner?.redirect_url) {
+    if (
+      source === "app" &&
+      typeof window !== "undefined" &&
+      banner?.redirect_url
+    ) {
       window.externalLink(banner?.redirect_url);
+    }
+
+    if (source === "web") {
+      window.open(banner?.redirect_url, "_blank");
     }
   };
 

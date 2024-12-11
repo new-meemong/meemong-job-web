@@ -71,11 +71,11 @@ const SingleInfoLinkItem = ({
   const handleClick = () => {
     if (!validUrl) return;
 
-    if (source === "web") {
+    if (source === SourceType.WEB) {
       window.open(validUrl, "_blank");
     }
 
-    if (!source) {
+    if (!source || source === SourceType.APP) {
       window.externalLink(validUrl);
     }
   };
