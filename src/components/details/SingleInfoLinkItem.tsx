@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SourceType } from "@/types/source-type-enum";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";

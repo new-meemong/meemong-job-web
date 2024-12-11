@@ -1,4 +1,4 @@
-enum SourceType {
+export enum SourceType {
   WEB = "web",
   APP = "app",
 }
