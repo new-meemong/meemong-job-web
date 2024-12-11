@@ -7,6 +7,7 @@ import DeleteIcon from "@/components/icons/delete-icon";
 import Image from "next/image";
 import PinListIcon from "@/components/icons/pin-list-icon";
 import PinToggleButton from "./pin-toggle-button";
+import { SourceType } from "@/types/source-type-enum";
 import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
 import { UserType } from "@/types/user-type";
 import { colors } from "@/styles/colors";
@@ -178,14 +179,14 @@ export default function JobPostingChatChannelItem({
 
     if (!UserID) return;
 
-    if (source === "app" && window.openChatChannel) {
+    if (source === SourceType.APP && window.openChatChannel) {
       window.openChatChannel({
         userId: UserID,
         chatChannelId: userJobPostingChatChannel.channelId,
       });
     }
 
-    if (source === "web") {
+    if (!source || source === SourceType.WEB) {
       router.push(
         `/chat/job-posting/${userJobPostingChatChannel.channelId}?source=${source}`,
       );

@@ -1,6 +1,7 @@
 import { useParams, useSearchParams } from "next/navigation";
 
 import ChatViewJobPostingIcon from "@/components/icons/chats/ChatViewJobPostingIcon";
+import { WEB_DOMAIN } from "@/apis/consts";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
@@ -45,7 +46,7 @@ const ViewJobPostingButton = () => {
       window.externalLink
     ) {
       window.externalLink(
-        `/job-posting/${jobPostingId}?noButton=true&source=${source}`,
+        `${WEB_DOMAIN}/job-posting/${jobPostingId}?noButton=true&source=${source}`,
       );
     }
   };
