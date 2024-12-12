@@ -2,6 +2,7 @@ import ChatHowToUseIcon from "@/components/icons/chats/ChatHowToUseIcon";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div`
   display: flex;
@@ -19,8 +20,12 @@ const Label = styled.div`
 `;
 
 const HowToUseButton = () => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/chat/job-posting/how-to-use");
+  };
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <ChatHowToUseIcon />
       <Label>이용방법</Label>
     </Container>
