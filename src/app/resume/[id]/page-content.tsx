@@ -107,14 +107,16 @@ export default function PageContent({
         <Divider />
         <SelfIntroductionSection description={resume.description} />
       </ContentContainer>
-      {userId && !isMine && !noButton && (
-        <BottomButtonSection
-          postUserId={resume.User.id.toString()}
-          postId={resume.id}
-          source={source}
-        />
-      )}
-      {!userId && <StoreFloatingButton title={"어플 다운 후 채팅하기"} />}
+      {(userId && !isMine) ||
+        (!noButton && (
+          <BottomButtonSection
+            postUserId={resume.User.id.toString()}
+            postId={resume.id}
+            source={source}
+          />
+        ))}
+      {!userId ||
+        (!noButton && <StoreFloatingButton title={"어플 다운 후 채팅하기"} />)}
     </Container>
   );
 }

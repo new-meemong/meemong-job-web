@@ -6,7 +6,7 @@ import JobPostingEditBaseOption from "./components/job-posting-edit-base-option"
 import JobPostingEditConfirmButton from "./components/job-posting-edit-confirm-button";
 import JobPostingEditDetailOption from "./components/job-posting-edit-detail-option";
 import JobPostingEditEtcOption from "./components/job-posting-edit-etc-option";
-import JobPostingEditHeader from "@/components/headers/job-posting-edit-header";
+import JobPostingEditHeader from "@/components/headers/JobPostingEditHeader";
 import JobPostingEditNote from "./components/job-posting-edit-note";
 import JobPostingEditSearchLocation from "./components/job-posting-edit-search-location";
 import JobPostingEditStoreImage from "./components/job-posting-edit-store-image";

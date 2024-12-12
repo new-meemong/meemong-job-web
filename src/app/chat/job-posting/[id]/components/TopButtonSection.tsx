@@ -18,15 +18,17 @@ const Container = styled.div`
 
 const TopButtonSection = ({
   userChannel,
+  userId,
 }: {
   userChannel: UserJobPostingChatChannelType | null;
+  userId: string | null;
 }) => {
   const source = useSearchParams().get("source");
   // console.log("moonsae topButtonSection channel", userChannel);
 
   if (!userChannel) return null;
 
-  const { channelType } = userChannel;
+  const { channelType, channelId, otherUser } = userChannel;
 
   const renderButtons = () => {
     switch (channelType) {
@@ -35,7 +37,11 @@ const TopButtonSection = ({
           <>
             <HowToUseButton />
             <ArrangeInterviewButton />
-            <SendResumeButton />
+            <SendResumeButton
+              channelId={channelId}
+              senderId={userId}
+              receiverId={otherUser.id}
+            />
             <ViewJobPostingButton />
             <LeaveButton />
           </>

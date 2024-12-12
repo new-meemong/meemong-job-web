@@ -204,7 +204,7 @@ export default function JobPostingChatDetailPage({
         source={source}
       />
 
-      <TopButtonSection userChannel={userChannel} />
+      <TopButtonSection userChannel={userChannel} userId={userId || null} />
 
       <MessageSection userChannel={userChannel!} source={source} />
       <InputContainer>
