@@ -47,8 +47,8 @@ const Description = styled.div`
 `;
 
 const Button = styled.div`
-  position: absolute;
-  bottom: ${pxToVw(30)};
+  position: fixed;
+  bottom: ${pxToVw(24)};
   ${fonts.whiteBold16}
   width: calc(100% - ${pxToVw(48)});
   height: ${pxToVw(48)};
