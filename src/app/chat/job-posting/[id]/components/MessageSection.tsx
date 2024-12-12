@@ -136,10 +136,16 @@ const MessageTime = styled.span`
 
 const SystemMessage = ({ message }: { message: JobPostingChatMessageType }) => (
   <SystemMessageWrapper>
-    <SystemMessageTime>
-      {moment((message.createdAt as Timestamp).toDate()).format("MM.DD HH:mm")}
-    </SystemMessageTime>
-    <SystemMessageText>{message.message}</SystemMessageText>
+    {message && (
+      <>
+        <SystemMessageTime>
+          {moment((message.createdAt as Timestamp).toDate()).format(
+            "MM.DD HH:mm",
+          )}
+        </SystemMessageTime>
+        <SystemMessageText>{message.message}</SystemMessageText>
+      </>
+    )}
   </SystemMessageWrapper>
 );
 
