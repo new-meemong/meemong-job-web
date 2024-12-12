@@ -63,7 +63,7 @@ const JobPostingChatDetailHeader = ({
   };
 
   const handleOptionClick = () => {
-    setIsOptionModalOpen(true);
+    // setIsOptionModalOpen(true);
   };
 
   const handleOptionSelect = (option: string | null) => {
@@ -83,7 +83,7 @@ const JobPostingChatDetailHeader = ({
       </LeftContainer>
       <Title>{otherUserDisplayName}</Title>
       <RightContainer onClick={handleOptionClick}>
-        <OptionIcon />
+        {/* <OptionIcon /> */}
       </RightContainer>
       <SingleSelectBottomModal
         isOpen={isOptionModalOpen}
