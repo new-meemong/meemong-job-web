@@ -76,8 +76,8 @@ const BottomButtonSection = ({
       if (isCreated) {
         const { success } = await sendMessage({
           channelId,
-          message: `구인구직 공고를 보고 대화를 시작했습니다.`,
-          messageType: JobPostingChatMessageTypeEnum.RESUME,
+          message: `이력서를 보고 대화를 시작했습니다.`,
+          messageType: JobPostingChatMessageTypeEnum.SYSTEM,
           metaPathList: [
             {
               resumeId: postId,
@@ -102,7 +102,7 @@ const BottomButtonSection = ({
         const postUrl = window.location.href;
         const postId = postUrl.split("/").pop() as string;
         const message = {
-          type: "resume" as messageType,
+          type: "system" as messageType,
           postId,
           postUserId,
           chatChannelId: channelId,

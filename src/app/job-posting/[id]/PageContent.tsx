@@ -271,8 +271,8 @@ export default function PageContent({
               if (isCreated) {
                 const { success } = await sendMessage({
                   channelId,
-                  message: `구인구직 공고를 보고 대화를 시작했습니다.`,
-                  messageType: JobPostingChatMessageTypeEnum.JOB_POSTING,
+                  message: `모집공고를 보고 대화를 시작했습니다.`,
+                  messageType: JobPostingChatMessageTypeEnum.SYSTEM,
                   metaPathList: [
                     {
                       jobPostingId: jobPosting.id,
@@ -297,7 +297,7 @@ export default function PageContent({
                 const postUrl = window.location.href;
                 const postId = postUrl.split("/").pop() as string;
                 const message = {
-                  type: "job-posting" as messageType,
+                  type: "system" as messageType,
                   postId,
                   postUserId: jobPosting.User?.UserID.toString(),
                   chatChannelId: channelId,

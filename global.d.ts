@@ -1,6 +1,6 @@
 interface Window {
   startChat: (message: {
-    type: "job-posting" | "resume";
+    type: "job-posting" | "resume" | "system" | "text";
     postId: string;
     postUserId: string;
   }) => void;
