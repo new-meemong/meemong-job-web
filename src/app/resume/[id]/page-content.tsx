@@ -115,8 +115,9 @@ export default function PageContent({
             source={source}
           />
         ))}
-      {!userId ||
-        (!noButton && <StoreFloatingButton title={"어플 다운 후 채팅하기"} />)}
+      {!userId && !noButton && (
+        <StoreFloatingButton title={"어플 다운 후 채팅하기"} />
+      )}
     </Container>
   );
 }
