@@ -1,5 +1,5 @@
 import ChatArrangeInterviewIcon from "@/components/icons/chats/ChatArrangeInterviewIcon";
-import NoticeModal from "@/components/modals/notice-modal";
+import NoticeModal from "@/components/modals/NoticeModal";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";

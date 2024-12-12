@@ -1,4 +1,4 @@
-import NoticeModal from "@/components/modals/notice-modal";
+import NoticeModal from "@/components/modals/NoticeModal";
 import { ResumeType } from "@/types/resume-type";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";

@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import BackIcon from "./header-icons/back-icon";
-import { useRouter } from "next/navigation";
+import BackIcon from "./header-icons/BackIcon";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
+import { useRouter } from "next/navigation";
 // import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 
 const Container = styled.div`

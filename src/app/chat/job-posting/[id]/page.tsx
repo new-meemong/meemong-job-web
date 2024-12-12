@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import CenterSpinner from "@/components/spinners/CenterSpinner";
 import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
-import JobPostingChatDetailHeader from "@/components/headers/job-posting-chat-detail-header";
+import JobPostingChatDetailHeader from "@/components/headers/JobPostingChatDetailHeader";
 import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
 import MessageSection from "./components/MessageSection";
 import TopButtonSection from "./components/TopButtonSection";

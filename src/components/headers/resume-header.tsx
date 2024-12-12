@@ -1,9 +1,9 @@
 import { useRouter, useSearchParams } from "next/navigation";
 
-import BackIcon from "./header-icons/back-icon";
-import ConfirmModal from "../modals/confirm-modal";
-import NoticeModal from "../modals/notice-modal";
-import OptionIcon from "./header-icons/option-icon";
+import BackIcon from "./header-icons/BackIcon";
+import ConfirmModal from "../modals/ConfirmModal";
+import NoticeModal from "../modals/NoticeModal";
+import OptionIcon from "./header-icons/OptionIcon";
 import SingleSelectBottomModal from "../modals/single-select-bottom-modal";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";

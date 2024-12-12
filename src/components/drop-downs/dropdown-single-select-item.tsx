@@ -1,5 +1,5 @@
 import ArrowDownGreyIcon from "../icons/arrow-down-grey-icon";
-import NoticeModal from "../modals/notice-modal";
+import NoticeModal from "../modals/NoticeModal";
 import SingleSelectBottomModal from "@/components/modals/single-select-bottom-modal";
 import TooltipIcon from "../icons/tooltip";
 import { fonts } from "@/styles/fonts";

@@ -1,7 +1,7 @@
 import { useParams, useRouter } from "next/navigation";
 
 import { JobPostingType } from "@/types/job-posting-type";
-import NoticeModal from "@/components/modals/notice-modal";
+import NoticeModal from "@/components/modals/NoticeModal";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";

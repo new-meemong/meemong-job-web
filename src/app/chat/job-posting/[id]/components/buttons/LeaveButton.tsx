@@ -1,7 +1,7 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 import ChatLeaveIcon from "@/components/icons/chats/ChatLeaveIcon";
-import ConfirmModal from "@/components/modals/confirm-modal";
+import ConfirmModal from "@/components/modals/ConfirmModal";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";

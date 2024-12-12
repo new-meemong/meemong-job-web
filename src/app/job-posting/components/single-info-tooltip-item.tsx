@@ -1,9 +1,9 @@
+import NoticeModal from "@/components/modals/NoticeModal";
 import TooltipIcon from "@/components/icons/tooltip";
-import NoticeModal from "@/components/modals/notice-modal";
-import pxToVw from "@/lib/dpi-converter";
 import { fonts } from "@/styles/fonts";
-import { useState } from "react";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;

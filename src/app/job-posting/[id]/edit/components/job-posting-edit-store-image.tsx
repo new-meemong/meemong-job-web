@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
 import CenterSpinner from "@/components/spinners/CenterSpinner";
-import ConfirmModal from "@/components/modals/confirm-modal";
+import ConfirmModal from "@/components/modals/ConfirmModal";
 import { ErrorMessage } from "@/components/error-message";
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import Image from "next/image";

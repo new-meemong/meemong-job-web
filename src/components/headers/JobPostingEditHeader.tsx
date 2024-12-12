@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import BackIcon from "./header-icons/back-icon";
-import { useRouter } from "next/navigation";
+import BackIcon from "./header-icons/BackIcon";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
+import styled from "styled-components";
 import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
+import { useRouter } from "next/navigation";
 
 const Container = styled.div`
   display: flex;

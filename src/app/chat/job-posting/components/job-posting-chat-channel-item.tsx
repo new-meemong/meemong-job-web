@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-import ConfirmModal from "@/components/modals/confirm-modal";
+import ConfirmModal from "@/components/modals/ConfirmModal";
 import DeleteIcon from "@/components/icons/delete-icon";
 import Image from "next/image";
 import PinListIcon from "@/components/icons/pin-list-icon";

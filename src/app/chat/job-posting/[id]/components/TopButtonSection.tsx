@@ -54,7 +54,6 @@ const TopButtonSection = ({
           <>
             <HowToUseButton />
             <ArrangeInterviewButton />
-            <SendResumeButton />
             <ViewResumeButton />
             <LeaveButton />
           </>

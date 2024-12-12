@@ -1,6 +1,6 @@
 "use client";
 
-import BackIcon from "./header-icons/back-icon";
+import BackIcon from "./header-icons/BackIcon";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
