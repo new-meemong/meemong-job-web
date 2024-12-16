@@ -1,4 +1,5 @@
 import BackIcon from "./header-icons/BackIcon";
+import { SourceType } from "@/types/source-type-enum";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
@@ -38,11 +39,15 @@ const MyJobPostingListHeader = ({ source }: { source?: string }) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    if (source && source === "web") {
+    if (source && source === SourceType.WEB) {
       router.back();
     }
 
-    if (typeof window !== "undefined" && window.closeWebview && !source) {
+    if (
+      typeof window !== "undefined" &&
+      window.closeWebview &&
+      (!source || source === SourceType.APP)
+    ) {
       window.closeWebview("close");
     }
   };

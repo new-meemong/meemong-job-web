@@ -1,5 +1,6 @@
 import NoticeModal from "@/components/modals/NoticeModal";
 import { ResumeType } from "@/types/resume-type";
+import { SourceType } from "@/types/source-type-enum";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
@@ -108,12 +109,12 @@ const BottomButtonSection = ({ source }: { source?: string }) => {
             (appliedRole === "디자이너" && !hasDesignerOptionNull) ||
             (appliedRole === "인턴" && !hasInternOptionNull)
           ) {
-            if (source && source === "web") {
+            if (source && source === SourceType.WEB) {
               router.back();
             }
 
             if (
-              (source === "app" || !source) &&
+              (source === SourceType.APP || !source) &&
               typeof window !== "undefined" &&
               window.closeWebview
             ) {

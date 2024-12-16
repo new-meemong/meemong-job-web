@@ -48,10 +48,6 @@ const ResumeEditHeader = ({ source }: { source?: string }) => {
     ) {
       window.closeWebview("close");
     }
-
-    // if (!source && window.closeWebview) {
-
-    // }
   };
 
   return (
