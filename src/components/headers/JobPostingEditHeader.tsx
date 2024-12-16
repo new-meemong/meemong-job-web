@@ -50,7 +50,7 @@ const JobPostingEditHeader = () => {
       <LeftContainer onClick={handleBackClick}>
         <BackIcon />
       </LeftContainer>
-      <Title>구인 공고 작성</Title>
+      <Title>모집공고 작성</Title>
       <RightContainer />
     </Container>
   );

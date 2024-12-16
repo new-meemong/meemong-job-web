@@ -211,7 +211,7 @@ export default function PageContent({
   return (
     <Container>
       <JobPostingHeader
-        title={"구인공고"}
+        title={"모집공고"}
         jobPostingId={jobPosting.id}
         isMine={isMine}
         isEnableButton={userId ? true : false}

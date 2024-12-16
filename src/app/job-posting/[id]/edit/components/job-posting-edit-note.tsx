@@ -1,6 +1,6 @@
-import pxToVw from "@/lib/dpi-converter";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
+import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -45,7 +45,7 @@ const JobPostingEditNote = () => {
           <InfoDot />
         </DotContainer>
         <Content>
-          모집 공고는 ‘공고 노출 지역’에서 선택한 지역 기준으로 지역별로 최대
+          모집공고는 ‘공고 노출 지역’에서 선택한 지역 기준으로 지역별로 최대
           5개까지 올릴 수 있습니다.
         </Content>
       </ContentContainer>

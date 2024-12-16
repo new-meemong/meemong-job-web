@@ -20,7 +20,7 @@ export default async function JobPostingPage({
           ogTitle={"없음 메타데이터"}
           ogDescription="존재하지 않는 이력서입니다."
         />
-        <div>존재하지 않는 구인공고입니다.</div>
+        <div>존재하지 않는 공고입니다.</div>
       </>
     );
   }

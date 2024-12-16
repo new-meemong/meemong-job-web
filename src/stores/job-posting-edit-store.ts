@@ -609,14 +609,14 @@ export const useJobPostingEditStore = create(
             return {
               status: false,
               message:
-                "디자이너, 인턴 중 선택해야\n구인공고를 등록할 수 있습니다.",
+                "디자이너, 인턴 중 선택해야\n모집공고를 등록할 수 있습니다.",
             };
           }
 
           if (jobPostingData.role !== "디자이너") {
             return {
               status: false,
-              message: "디자이너 구인 공고만 등록 가능합니다.",
+              message: "디자이너 모집공고만 등록 가능합니다.",
             };
           }
           console.log("jobPostingData", jobPostingData);
@@ -633,7 +633,7 @@ export const useJobPostingEditStore = create(
 
             return {
               status: false,
-              message: "필수 항목을 입력해야\n구인공고를 등록할 수 있습니다.",
+              message: "필수 항목을 입력해야\n모집공고를 등록할 수 있습니다.",
             };
           } else {
             set({ hasDesignerOptionNull: false });
@@ -660,21 +660,21 @@ export const useJobPostingEditStore = create(
             // set({ ...defaultJobPostingEditState });
             return {
               status: true,
-              message: "디자이너 구인공고가\n성공적으로 등록되었습니다.",
+              message: "디자이너 모집공고가\n성공적으로 등록되었습니다.",
               data: response.data,
             };
           } else {
             return {
               status: false,
-              message: "구인공고 등록중 오류가 발생했습니다.",
+              message: "공고 등록중 오류가 발생했습니다.",
             };
           }
         } catch (e) {
-          console.error("디자이너 구인 공고 등록 중 오류 발생:", e);
+          console.error("디자이너 모집공고 등록 중 오류 발생:", e);
 
           return {
             status: false,
-            message: "구인공고 등록중 오류가 발생했습니다.",
+            message: "모집공고 등록중 오류가 발생했습니다.",
           };
         }
       },
@@ -739,14 +739,14 @@ export const useJobPostingEditStore = create(
             return {
               status: false,
               message:
-                "디자이너, 인턴 중 선택해야\n구인공고를 등록할 수 있습니다.",
+                "디자이너, 인턴 중 선택해야\n모집공고를 등록할 수 있습니다.",
             };
           }
 
           if (jobPostingData.role !== "인턴") {
             return {
               status: false,
-              message: "인턴 구인 공고를 등록해야 합니다.",
+              message: "인턴 모집공고를 등록해야 합니다.",
             };
           }
           console.log("jobPostingData", jobPostingData);
@@ -762,7 +762,7 @@ export const useJobPostingEditStore = create(
             set({ hasInternOptionNull: true });
             return {
               status: false,
-              message: "필수 항목을 입력해야\n구인공고를 등록할 수 있습니다.",
+              message: "필수 항목을 입력해야\n모집공고를 등록할 수 있습니다.",
             };
           } else {
             set({ hasInternOptionNull: false });
@@ -790,20 +790,20 @@ export const useJobPostingEditStore = create(
             // set({ ...defaultJobPostingEditState });
             return {
               status: true,
-              message: "인턴 구인공고가\n성공적으로 등록되었습니다.",
+              message: "인턴 모집공고가\n성공적으로 등록되었습니다.",
               data: response.data,
             };
           } else {
             return {
               status: false,
-              message: "구인공고 등록중 오류가 발생했습니다.",
+              message: "모집공고 등록중 오류가 발생했습니다.",
             };
           }
         } catch (e) {
-          console.error("인턴 구인 공고 등록 중 오류 발생:", e);
+          console.error("인턴 모집공고 등록 중 오류 발생:", e);
           return {
             status: false,
-            message: "구인공고 등록중 오류가 발생했습니다.",
+            message: "모집공고 등록중 오류가 발생했습니다.",
           };
         }
       },

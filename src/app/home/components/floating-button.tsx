@@ -96,7 +96,7 @@ const FloatingButton = () => {
             onClick={handleJobPostingClick}
           >
             <WriteIcon />
-            <AdditionalButtonText>{`구인공고\n등록`}</AdditionalButtonText>
+            <AdditionalButtonText>{`모집공고\n등록`}</AdditionalButtonText>
           </AdditionalButton>
           <AdditionalButton
             offset={numberToVw(230)}
