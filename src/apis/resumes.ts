@@ -105,3 +105,12 @@ export const uploadResumeProfileImage = async (image: File) => {
     return { error: e || "Failed to upload resume profile" };
   }
 };
+
+export const postResumeViewCount = async (resumeId: string) => {
+  try {
+    return await apiFetch(`/api/v1/resumes/${resumeId}/view`, "POST");
+  } catch (e) {
+    console.error("[postResumeViewCount] failed", e);
+    return { error: e || "Failed to post resume view count" };
+  }
+};

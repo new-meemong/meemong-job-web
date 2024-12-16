@@ -4,6 +4,7 @@ import {
   getMyResume,
   getResume,
   getResumes,
+  postResumeViewCount,
 } from "@/apis/resumes";
 
 import { ResponseResultType } from "@/types/response-result-type";
@@ -32,6 +33,7 @@ export type ResumeListActions = {
   searchResumeList: (queryParams?: Record<string, any>) => Promise<void>;
   updateResume: (updatedResume: ResumeType) => void;
   deleteResume: (id: string) => Promise<ResponseResultType>;
+  addResumeViewCount: (id: string) => Promise<ResponseResultType>;
   getResumeFilterQuery: (key: string) => string | null;
   addResumeFilterQuery: (query: string) => void;
   removeResumeFilterQuery: (key: string) => void;
@@ -128,6 +130,10 @@ export const useResumeListStore = create(
           console.error("[deleteResume] failed", e);
           return { status: false, message: "삭제에 실패했습니다." };
         }
+      },
+      addResumeViewCount: async (id: string) => {
+        const res = await postResumeViewCount(id);
+        return res;
       },
       getResumeFilterQuery: (key: string) => {
         const state = get();
