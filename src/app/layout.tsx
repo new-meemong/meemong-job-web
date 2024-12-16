@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from "next";
 
 import BaseContainer from "@/components/base-container";
 import { FirebaseNavigationLogging } from "@/components/fireabses/navigation-loging";
+import MixpanelRouteListener from "@/components/mixpanels/MixpanelRouteListener";
 import Script from "next/script";
 import StyledComponentsRegistry from "./registry";
 import { Suspense } from "react";
@@ -47,6 +48,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <FirebaseNavigationLogging />
         </Suspense>
+        <MixpanelRouteListener />
         <StyledComponentsRegistry>
           <BaseContainer>{children}</BaseContainer>
         </StyledComponentsRegistry>
