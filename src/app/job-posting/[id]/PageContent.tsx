@@ -63,9 +63,12 @@ export default function PageContent({
     userId: state.userId,
   }));
 
-  const { getJobPosting } = useJobPostingListStore((state) => ({
-    getJobPosting: state.getJobPosting,
-  }));
+  const { getJobPosting, addJobPostingViewCount } = useJobPostingListStore(
+    (state) => ({
+      getJobPosting: state.getJobPosting,
+      addJobPostingViewCount: state.addJobPostingViewCount,
+    }),
+  );
 
   const { findOrCreateChannel } = useJobPostingChatChannelStore((state) => ({
     findOrCreateChannel: state.findOrCreateChannel,
@@ -82,6 +85,24 @@ export default function PageContent({
 
   const { JobPostingsStoreImages }: { JobPostingsStoreImages: ImageType[] } =
     jobPosting;
+
+  // 모집공고 조회수 증가
+  // session당 1번만 증가
+  useEffect(() => {
+    const handleJobPostingView = async () => {
+      const sessionKey = `jobPostingView_${initialJobPosting.id}`;
+
+      const hasIncremented = sessionStorage.getItem(sessionKey);
+
+      if (!hasIncremented) {
+        sessionStorage.setItem(sessionKey, "true");
+
+        await addJobPostingViewCount(initialJobPosting.id);
+      }
+    };
+
+    handleJobPostingView();
+  }, [initialJobPosting.id]);
 
   useEffect(() => {
     window.scrollTo(0, 0); // 페이지 로드 시 스크롤을 최상단으로 이동

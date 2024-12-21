@@ -107,3 +107,12 @@ export const uploadJobPostingImage = async (image: File) => {
     return { error: e || "Failed to upload image" };
   }
 };
+
+export const postJobPostingViewCount = async (jobPostingId: string) => {
+  try {
+    return await apiFetch(`/api/v1/job-postings/${jobPostingId}/view`, "POST");
+  } catch (e) {
+    console.error("[postJobPostingViewCount] failed", e);
+    return { error: e || "Failed to post job posting view count" };
+  }
+};

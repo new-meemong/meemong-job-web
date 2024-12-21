@@ -3,6 +3,7 @@ import {
   deleteJobPosting,
   getJobPosting,
   getJobPostings,
+  postJobPostingViewCount,
 } from "@/apis/job-postings";
 
 import { JobPostingType } from "@/types/job-posting-type";
@@ -29,6 +30,7 @@ export type JobPostingListActions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchJobPosingList: (queryParams?: Record<string, any>) => Promise<void>;
   deleteJobPosting: (id: string) => Promise<ResponseResultType>;
+  addJobPostingViewCount: (id: string) => Promise<ResponseResultType>;
   updateJobPosting: (updatedJobPosting: JobPostingType) => void;
   getJobPostingFilterQuery: (key: string) => string | null;
   addJobPostingFilterQuery: (query: string) => void;
@@ -110,6 +112,10 @@ export const useJobPostingListStore = create(
           console.error("[deleteJobPosting] failed", e);
           return { status: false, message: "삭제에 실패했습니다." };
         }
+      },
+      addJobPostingViewCount: async (id: string) => {
+        const res = await postJobPostingViewCount(id);
+        return res;
       },
       getJobPostingFilterQuery: (key: string) => {
         const state = get();

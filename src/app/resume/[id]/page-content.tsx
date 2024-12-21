@@ -53,13 +53,31 @@ export default function PageContent({
     userId: state.userId,
   }));
 
-  const { getResume } = useResumeListStore((state) => ({
+  const { getResume, addResumeViewCount } = useResumeListStore((state) => ({
     getResume: state.getResume,
+    addResumeViewCount: state.addResumeViewCount,
   }));
 
   const isMine = resume?.userId?.toString() === userId;
 
   const noButton = searchParams.get("noButton") || undefined; // 앱 채팅에서 하단 버튼 없이 view만 보여줄때
+
+  // 이력서 조회수 증가
+  // session당 1번만 증가
+  useEffect(() => {
+    const handleResumeView = async () => {
+      const sessionKey = `resumeView_${initialResume.id}`;
+      const hasIncremented = sessionStorage.getItem(sessionKey);
+
+      if (!hasIncremented) {
+        sessionStorage.setItem(sessionKey, "true");
+
+        await addResumeViewCount(initialResume.id);
+      }
+    };
+
+    handleResumeView();
+  }, [initialResume.id]);
 
   useEffect(() => {
     window.scrollTo(0, 0); // 페이지 로드 시 스크롤을 최상단으로 이동
