@@ -37,7 +37,8 @@ const WriteButtonText = styled.span`
 const MyJobPostingFloatingButton = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const source = searchParams.get("source") || "app";
+  // const source = searchParams.get("source") || "web";
+  const source = "web"; // 앱내의 웹에서 들어가는 버튼이라 무조건 웹
   const { UserID } = useAuthStore((state) => ({
     UserID: state.UserID,
   }));
