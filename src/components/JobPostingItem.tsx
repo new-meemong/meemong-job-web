@@ -102,10 +102,10 @@ const ProfileInfo = styled.span`
   ${fonts.greyText2Normal10}
 `;
 
-// const ViewCount = styled.span`
-//   ${fonts.greyNormal10}
-//   margin-top: ${pxToVw(6)};
-// `;
+const ViewCount = styled.span`
+  ${fonts.greyNormal10}
+  margin-top: ${pxToVw(2)};
+`;
 
 const StoreImage = styled(Image)`
   width: ${pxToVw(91)};
@@ -174,6 +174,7 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
     postingTitle,
     JobPostingsStoreImages,
     isOpeningSoon,
+    viewCount,
   } = jobPosting;
 
   const initialImage = JobPostingsStoreImages?.[0]?.thumbnailUri
@@ -227,6 +228,7 @@ const JobPostingItem = ({ jobPosting }: JobPostingItemProps) => {
           onError={handleImageError}
         />
       </ContentContainer>
+      <ViewCount>{`조회 ${viewCount}`}</ViewCount>
     </Container>
   );
 };

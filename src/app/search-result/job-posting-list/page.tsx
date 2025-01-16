@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import Banner from "@/app/home/components/banner";
 import CenterSpinner from "@/components/spinners/CenterSpinner";
-import JobPostingItem from "@/components/job-posting-item";
+import JobPostingItem from "@/components/JobPostingItem";
 import { JobPostingType } from "@/types/job-posting-type";
 import SearchFilterInput from "@/components/search-filter-input";
 import SearchResultHeader from "@/components/headers/search-result-header";

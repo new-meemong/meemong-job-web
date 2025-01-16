@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import Banner from "@/app/home/components/banner";
 import CenterSpinner from "@/components/spinners/CenterSpinner";
-import ResumeItem from "@/components/resume-item";
+import ResumeItem from "@/components/ResumeItem";
 import { ResumeType } from "@/types/resume-type";
 import SearchFilterInput from "@/components/search-filter-input";
 import SearchResultHeader from "@/components/headers/search-result-header";

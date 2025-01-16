@@ -79,10 +79,10 @@ const Divider = styled.div`
   background-color: ${colors.greyBacground4};
 `;
 
-// const ViewCount = styled.span`
-//   ${fonts.greyNormal10}
-//   margin-top: ${pxToVw(6)};
-// `;
+const ViewCount = styled.span`
+  ${fonts.greyNormal10}
+  margin-top: ${pxToVw(2)};
+`;
 
 interface ResumeItemProps {
   resume: ResumeType;
@@ -102,6 +102,7 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
     designerExperienceYearNumber,
     internExperienceYearNumber,
     profileImageThumbnailUri,
+    viewCount,
   } = resume;
   const imageUri = profileImageThumbnailUri
     ? `${IMAGE_STORAGE_URL}${profileImageThumbnailUri}`
@@ -159,7 +160,6 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
                 : `경력 ${internExperienceYearNumber}`}
             </ProfileInfo>
           </InfoTextContainer>
-          {/* <ViewCount>{`조회 ${viewCount}`}</ViewCount> */}
         </ProfileInfoContainer>
         <ProfileImage
           src={imgSrc}
@@ -169,6 +169,7 @@ const ResumeItem = ({ resume }: ResumeItemProps) => {
           onError={handleImageError}
         />
       </ContentContainer>
+      <ViewCount>{`조회 ${viewCount}`}</ViewCount>
     </Container>
   );
 };

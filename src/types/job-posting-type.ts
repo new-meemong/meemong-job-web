@@ -105,6 +105,7 @@ export interface JobPostingType {
   description: string; // 공고 설명
   storeUrl: string; // 매장 URL 또는 링크
   isExposure: boolean; // 노출 여부
+  viewCount: number; // 조회 수
 
   // 이미지
   jobPostingsStoreImages: ImageType[]; // 매장 이미지 리스트

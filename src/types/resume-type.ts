@@ -61,6 +61,7 @@ export interface ResumeType {
   mbti: string;
   description: string;
   isExposure: IsExposureKeyResume;
+  viewCount: number;
 
   // 타임스탬프
   createdAt: string; // 생성 일시 (ISO 8601 형식)

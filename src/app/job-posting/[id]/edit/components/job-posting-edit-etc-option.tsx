@@ -1,8 +1,8 @@
+import InputMainHairDye from "./etc-option-components/input-main-haire-dye";
+import InputStoreInstagramUrl from "./etc-option-components/input-store-url";
+import InputWorkTime from "./etc-option-components/InputWorkTime";
 import { fonts } from "@/styles/fonts";
 import styled from "styled-components";
-import InputWorkTime from "./etc-option-components/input-work-time";
-import InputStoreInstagramUrl from "./etc-option-components/input-store-url";
-import InputMainHairDye from "./etc-option-components/input-main-haire-dye";
 
 const Container = styled.div``;
 

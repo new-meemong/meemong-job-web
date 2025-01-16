@@ -1,7 +1,7 @@
 "use client";
 
 import ArrowRightGreyOutlineIcon from "@/components/icons/arrow-right-grey-outline";
-import JobPostingItem from "@/components/job-posting-item";
+import JobPostingItem from "@/components/JobPostingItem";
 import { JobPostingType } from "@/types/job-posting-type";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";

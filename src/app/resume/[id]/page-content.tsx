@@ -67,11 +67,22 @@ export default function PageContent({
   useEffect(() => {
     const handleResumeView = async () => {
       const sessionKey = `resumeView_${initialResume.id}`;
+      const timestampKey = `resumeViewTimestamp_${initialResume.id}`;
+
       const hasIncremented = sessionStorage.getItem(sessionKey);
+      const lastViewTimestamp = sessionStorage.getItem(timestampKey);
+      const currentTime = new Date().getTime();
+      const oneHour = 60 * 60 * 1000; // 1시간을 밀리초로 변환
 
-      if (!hasIncremented) {
-        sessionStorage.setItem(sessionKey, "true");
-
+      // 마지막 조회 시간이 1시간 이상 지났거나, 처음 조회하는 경우
+      if (
+        !lastViewTimestamp ||
+        currentTime - Number(lastViewTimestamp) >= oneHour
+      ) {
+        if (!hasIncremented) {
+          sessionStorage.setItem(sessionKey, "true");
+        }
+        sessionStorage.setItem(timestampKey, currentTime.toString());
         await addResumeViewCount(initialResume.id);
       }
     };

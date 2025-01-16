@@ -1,4 +1,4 @@
-import JobPostingItem from "@/components/job-posting-item";
+import JobPostingItem from "@/components/JobPostingItem";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";

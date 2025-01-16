@@ -1,4 +1,4 @@
-import ResumeItem from "@/components/resume-item";
+import ResumeItem from "@/components/ResumeItem";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
