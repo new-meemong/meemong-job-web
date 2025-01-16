@@ -54,7 +54,7 @@ const FloatingButton = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const source = searchParams.get("source") || "app";
+  const source = "web"; // floating은 항상 웹
   const { checkMyResumeExist } = useResumeListStore((state) => ({
     checkMyResumeExist: state.checkMyResumeExist,
   }));
