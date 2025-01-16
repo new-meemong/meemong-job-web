@@ -65,6 +65,7 @@ export const useJobPostingListStore = create(
         set({ jobPostingListLoading: true });
         const _queryParams = {
           __cursorOrder: "createdAtDesc",
+          __limit: "1000",
           ...queryParams,
         };
         const res = await getJobPostings(_queryParams);

@@ -86,6 +86,7 @@ export const useResumeListStore = create(
         set({ resumeListLoading: true });
         const _queryParams = {
           __cursorOrder: "createdAtDesc",
+          __limit: "1000",
           ...queryParams,
         };
         const res = await getResumes(_queryParams);
