@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import BottomArea from "./components/bottom-area";
 import CheckboxSelectIcon from "@/components/icons/checkbox-select-icon";
 import CheckboxUnselectIcon from "@/components/icons/checkbox-unselect-icon";
-import LocationHeader from "@/components/headers/location-header";
+import LocationHeader from "@/components/headers/LocationHeader";
 import PageContainer from "@/components/page-container";
 import { TargetType } from "./types/target-type";
 import { colors } from "@/styles/colors";

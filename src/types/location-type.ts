@@ -5,14 +5,14 @@ type SiSggList = Record<
 
 export const siNmShort = [
   { key: "서울특별시", value: "서울" },
+  { key: "경기도", value: "경기" },
+  { key: "인천광역시", value: "인천" },
   { key: "부산광역시", value: "부산" },
   { key: "대구광역시", value: "대구" },
-  { key: "인천광역시", value: "인천" },
   { key: "광주광역시", value: "광주" },
   { key: "대전광역시", value: "대전" },
   { key: "울산광역시", value: "울산" },
   { key: "세종특별자치시", value: "세종" },
-  { key: "경기도", value: "경기" },
   { key: "충청북도", value: "충북" },
   { key: "충청남도", value: "충남" },
   { key: "전라북도", value: "전북" },
