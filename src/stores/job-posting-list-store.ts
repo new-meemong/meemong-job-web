@@ -64,7 +64,7 @@ export const useJobPostingListStore = create(
       getJobPostingList: async (queryParams) => {
         set({ jobPostingListLoading: true });
         const _queryParams = {
-          __cursorOrder: "createdAtDesc",
+          __cursorOrder: "dataUpdatedAtDesc",
           __limit: "1000",
           ...queryParams,
         };
@@ -76,7 +76,8 @@ export const useJobPostingListStore = create(
       },
       searchJobPosingList: async (queryParams) => {
         const _queryParams = {
-          __cursorOrder: "createdAtDesc",
+          __cursorOrder: "dataUpdatedAtDesc",
+          __limit: "1000",
           ...queryParams,
         };
 

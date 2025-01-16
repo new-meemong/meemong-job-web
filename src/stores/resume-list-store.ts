@@ -85,7 +85,7 @@ export const useResumeListStore = create(
       getResumeList: async (queryParams) => {
         set({ resumeListLoading: true });
         const _queryParams = {
-          __cursorOrder: "createdAtDesc",
+          __cursorOrder: "dataUpdatedAtDesc",
           __limit: "1000",
           ...queryParams,
         };
@@ -97,7 +97,8 @@ export const useResumeListStore = create(
       },
       searchResumeList: async (queryParams) => {
         const _queryParams = {
-          __cursorOrder: "createdAtDesc",
+          __cursorOrder: "dataUpdatedAtDesc",
+          __limit: "1000",
           ...queryParams,
         };
         const res = await getResumes(_queryParams);
