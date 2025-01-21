@@ -1,6 +1,6 @@
 import InfoTitle from "./info-title";
 import { JobPostingType } from "@/types/job-posting-type";
-import MultiInfoItem from "../../../components/details/multi-info-item";
+import MultiInfoItem from "../../../components/details/MultiInfoItem";
 import SingleInfoItem from "../../../components/details/single-info-item";
 import { formatPriceWithCommas } from "@/lib/price-comma";
 import pxToVw from "@/lib/dpi-converter";

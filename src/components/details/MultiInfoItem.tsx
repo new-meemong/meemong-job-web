@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   padding-left: ${pxToVw(4)};
+  /* min-height: ${pxToVw(100)}; */
 `;
 
 const Label = styled.div`
@@ -12,11 +13,18 @@ const Label = styled.div`
   width: ${pxToVw(140)};
   height: ${pxToVw(24)};
 `;
-const ContentContainer = styled.div``;
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: ${pxToVw(4)};
+`;
 
 const Content = styled.div`
   ${fonts.greyTextSemi16};
-  height: ${pxToVw(24)};
+  min-height: ${pxToVw(24)};
+  word-break: keep-all;
+  white-space: pre-wrap;
 `;
 
 interface InfoItemProps {
@@ -31,7 +39,7 @@ const MultiInfoItem = ({
   nullString = "상관없음",
 }: InfoItemProps) => {
   const displayContent = content === null ? [nullString] : content.split(",");
-
+  console.log("moonsae displayContent", displayContent);
   return (
     <Container>
       <Label>{label}</Label>

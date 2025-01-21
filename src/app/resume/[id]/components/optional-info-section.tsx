@@ -1,4 +1,4 @@
-import MultiInfoItem from "@/components/details/multi-info-item";
+import MultiInfoItem from "@/components/details/MultiInfoItem";
 import { ResumeType } from "@/types/resume-type";
 import SectionTitle from "./base/section-title";
 import SingleInfoItem from "@/components/details/single-info-item";

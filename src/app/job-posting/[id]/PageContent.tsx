@@ -90,25 +90,26 @@ export default function PageContent({
   // session당 1번만 증가
   useEffect(() => {
     const handleJobPostingView = async () => {
-      const sessionKey = `jobPostingView_${initialJobPosting.id}`;
-      const timestampKey = `jobPostingViewTimestamp_${initialJobPosting.id}`;
+      await addJobPostingViewCount(initialJobPosting.id);
+      // const sessionKey = `jobPostingView_${initialJobPosting.id}`;
+      // const timestampKey = `jobPostingViewTimestamp_${initialJobPosting.id}`;
 
-      const hasIncremented = sessionStorage.getItem(sessionKey);
-      const lastViewTimestamp = sessionStorage.getItem(timestampKey);
-      const currentTime = new Date().getTime();
-      const oneHour = 60 * 60 * 1000; // 1시간을 밀리초로 변환
+      // const hasIncremented = sessionStorage.getItem(sessionKey);
+      // const lastViewTimestamp = sessionStorage.getItem(timestampKey);
+      // const currentTime = new Date().getTime();
+      // const oneHour = 60 * 60 * 1000; // 1시간을 밀리초로 변환
 
-      // 마지막 조회 시간이 1시간 이상 지났거나, 처음 조회하는 경우
-      if (
-        !lastViewTimestamp ||
-        currentTime - Number(lastViewTimestamp) >= oneHour
-      ) {
-        if (!hasIncremented) {
-          sessionStorage.setItem(sessionKey, "true");
-        }
-        sessionStorage.setItem(timestampKey, currentTime.toString());
-        await addJobPostingViewCount(initialJobPosting.id);
-      }
+      // // 마지막 조회 시간이 1시간 이상 지났거나, 처음 조회하는 경우
+      // if (
+      //   !lastViewTimestamp ||
+      //   currentTime - Number(lastViewTimestamp) >= oneHour
+      // ) {
+      //   if (!hasIncremented) {
+      //     sessionStorage.setItem(sessionKey, "true");
+      //   }
+      //   sessionStorage.setItem(timestampKey, currentTime.toString());
+      //   await addJobPostingViewCount(initialJobPosting.id);
+      // }
     };
 
     handleJobPostingView();

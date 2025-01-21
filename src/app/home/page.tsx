@@ -3,7 +3,7 @@
 import { HomeTopTabType, useAppStateStore } from "@/stores/app-state-store";
 import { useEffect, useState } from "react";
 
-import BaseTopTabs from "./components/base-top-tab";
+import BaseTopTabs from "./components/BaseTopTab";
 import FloatingButton from "./components/floating-button";
 import HomeTitle from "./components/home-title";
 import JobPostingSection from "./components/job-posting-section";
