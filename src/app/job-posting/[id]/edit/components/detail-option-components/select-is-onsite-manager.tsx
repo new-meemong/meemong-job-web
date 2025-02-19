@@ -26,10 +26,10 @@ const SelectIsOnsiteManger = () => {
   let hasError = false;
 
   if (role === "디자이너") {
-    hasError = !isOnsiteManager && hasDesignerOptionNull;
+    hasError = isOnsiteManager === null && hasDesignerOptionNull;
   }
   if (role === "인턴") {
-    hasError = !isOnsiteManager && hasInternOptionNull;
+    hasError = isOnsiteManager === null && hasInternOptionNull;
   }
 
   const handleSelect = (selectedOption: boolean | null) => {
