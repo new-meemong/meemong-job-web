@@ -1,6 +1,7 @@
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import Metadata from "./components/metadata";
 import PageContent from "./page-content";
+import ResumeHeader from "@/components/headers/resume-header";
 import { getResume } from "@/apis/resumes";
 
 export default async function ResumePage({
@@ -20,7 +21,16 @@ export default async function ResumePage({
           ogTitle={"없음 메타데이터"}
           ogDescription="존재하지 않는 이력서입니다."
         />
-        <div>존재하지 않는 이력서입니다.</div>
+        <>
+          <ResumeHeader
+            title="이력서"
+            resumeId={resumeId}
+            isMine={false}
+            isEnableButton={true}
+            appliedRole={""}
+          />
+          <>존재하지 않는 이력서입니다.</>
+        </>
       </>
     );
   }

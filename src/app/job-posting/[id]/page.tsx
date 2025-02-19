@@ -1,4 +1,5 @@
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
+import JobPostingHeader from "@/components/headers/JobPostingHeader";
 import Metadata from "@/app/resume/[id]/components/metadata";
 import PageContent from "./PageContent";
 import { getJobPosting } from "@/apis/job-postings";
@@ -18,9 +19,18 @@ export default async function JobPostingPage({
           ogUrl={`https://meemong-job-web.vercel.app/job-posting/${jobPostingId}`}
           ogImage={``}
           ogTitle={"없음 메타데이터"}
-          ogDescription="존재하지 않는 이력서입니다."
+          ogDescription="존재하지 않는 공고입니다."
         />
-        <div>존재하지 않는 공고입니다.</div>
+        <>
+          <JobPostingHeader
+            title="공고"
+            jobPostingId={jobPostingId}
+            isMine={false}
+            isEnableButton={true}
+            role={""}
+          />
+          <div>존재하지 않는 공고입니다.</div>
+        </>
       </>
     );
   }
