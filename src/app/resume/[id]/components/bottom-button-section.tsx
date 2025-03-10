@@ -1,4 +1,4 @@
-import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
+import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting/job-posting-chat-message-type";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import { messageType } from "@/types/send-app-message-type";

@@ -2,7 +2,7 @@ import ArrangeInterviewButton from "./buttons/ArrangeInterviewButton";
 import HowToUseButton from "./buttons/HowToUseButton";
 import LeaveButton from "./buttons/LeaveButton";
 import SendResumeButton from "./buttons/SendResumeButton";
-import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
+import { UserJobPostingChatChannelType } from "@/types/chat/job-posting/user-job-posting-chat-channel-type";
 import ViewJobPostingButton from "./buttons/ViewJobPostingButton";
 import ViewResumeButton from "./buttons/ViewResumeButton";
 import pxToVw from "@/lib/dpi-converter";

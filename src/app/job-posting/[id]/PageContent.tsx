@@ -16,7 +16,7 @@ import EtcInfo from "../components/etc-info";
 import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import ImageSlider from "../components/image-slider";
 import { ImageType } from "@/types/image-type";
-import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
+import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting/job-posting-chat-message-type";
 import JobPostingHeader from "@/components/headers/JobPostingHeader";
 import { JobPostingType } from "@/types/job-posting-type";
 import PostingTitle from "../components/posting-title";

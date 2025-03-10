@@ -1,5 +1,5 @@
 import ChatSendResumeIcon from "@/components/icons/chats/ChatSendResumeIcon";
-import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
+import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting/job-posting-chat-message-type";
 import NoticeModal from "@/components/modals/NoticeModal";
 import { fonts } from "@/styles/fonts";
 import pxToVw from "@/lib/dpi-converter";

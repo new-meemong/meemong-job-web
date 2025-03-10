@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 
 import CenterSpinner from "@/components/spinners/CenterSpinner";
-import { JobPostingChatChannelType } from "@/types/chat/job-posting-chat-channel-type";
+import { JobPostingChatChannelType } from "@/types/chat/job-posting/job-posting-chat-channel-type";
 import JobPostingChatDetailHeader from "@/components/headers/JobPostingChatDetailHeader";
-import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting-chat-message-type";
+import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting/job-posting-chat-message-type";
 import MessageSection from "./components/MessageSection";
 import TopButtonSection from "./components/TopButtonSection";
-import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
+import { UserJobPostingChatChannelType } from "@/types/chat/job-posting/user-job-posting-chat-channel-type";
 import pxToVw from "@/lib/dpi-converter";
 import { sendPushNotification } from "@/apis/push-notification";
 import styled from "styled-components";

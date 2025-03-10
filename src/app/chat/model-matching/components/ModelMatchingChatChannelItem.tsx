@@ -6,9 +6,9 @@ import ConfirmModal from "@/components/modals/ConfirmModal";
 import DeleteIcon from "@/components/icons/delete-icon";
 import Image from "next/image";
 import PinListIcon from "@/components/icons/pin-list-icon";
-import PinToggleButton from "./pin-toggle-button";
+import PinToggleButton from "../../job-posting/components/PinToggleButton";
 import { SourceType } from "@/types/source-type-enum";
-import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
+import { UserModelMatchingChatChannelType } from "@/types/chat/model-matching/user-model-matching-chat-channel-type";
 import { UserType } from "@/types/user-type";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
@@ -16,7 +16,7 @@ import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
-import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
+import { useModelMatchingChatChannelStore } from "@/stores/model-matching-chat-channel-store";
 import { useState } from "react";
 
 const Container = styled.div`
@@ -126,13 +126,13 @@ const DeleteButton = styled.button`
   justify-content: center;
 `;
 
-interface JobPostingChatChannelItemProps {
-  userJobPostingChatChannel: UserJobPostingChatChannelType;
+interface ModelMatchingChatChannelItemProps {
+  userModelMatchingChatChannel: UserModelMatchingChatChannelType;
 }
 
-export default function JobPostingChatChannelItem({
-  userJobPostingChatChannel,
-}: JobPostingChatChannelItemProps) {
+export default function ModelMatchingChatChannelItem({
+  userModelMatchingChatChannel,
+}: ModelMatchingChatChannelItemProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -147,7 +147,7 @@ export default function JobPostingChatChannelItem({
     user: state.user,
   }));
 
-  const { leaveChannel } = useJobPostingChatChannelStore((state) => ({
+  const { leaveChannel } = useModelMatchingChatChannelStore((state) => ({
     leaveChannel: state.leaveChannel,
   }));
 
@@ -183,13 +183,13 @@ export default function JobPostingChatChannelItem({
     if (source === SourceType.APP && window.openChatChannel) {
       window.openChatChannel({
         userId: UserID,
-        chatChannelId: userJobPostingChatChannel.channelId,
+        chatChannelId: userModelMatchingChatChannel.channelId,
       });
     }
 
     if (!source || source === SourceType.WEB) {
       router.push(
-        `/chat/job-posting/${userJobPostingChatChannel.channelId}?source=${source}`,
+        `/chat/model-matching/${userModelMatchingChatChannel.channelId}?source=${source}`,
       );
     }
   };
@@ -198,7 +198,7 @@ export default function JobPostingChatChannelItem({
     if (!userId) return;
     try {
       await leaveChannel(
-        userJobPostingChatChannel.channelId,
+        userModelMatchingChatChannel.channelId,
         userId,
         user?.DisplayName || "",
       );
@@ -212,7 +212,7 @@ export default function JobPostingChatChannelItem({
     setIsLeaveModalOpen(true);
   };
 
-  const { lastMessage, otherUser } = userJobPostingChatChannel;
+  const { lastMessage, otherUser } = userModelMatchingChatChannel;
   const userImage =
     otherUser?.profileUrl || "/images/resume_profile_default.svg";
 
@@ -234,7 +234,7 @@ export default function JobPostingChatChannelItem({
         <CenterContentWrapper>
           <UserNameWrapper>
             <UserName>{otherUser?.DisplayName || "알수없음"}</UserName>
-            {userJobPostingChatChannel.isPinned && <PinListIcon />}
+            {userModelMatchingChatChannel.isPinned && <PinListIcon />}
           </UserNameWrapper>
           <Message>{lastMessage.message}</Message>
         </CenterContentWrapper>
@@ -244,18 +244,18 @@ export default function JobPostingChatChannelItem({
               ? moment(lastMessage.updatedAt.toDate()).format("MM-DD HH:mm")
               : ""}
           </LatestMessageDate>
-          {Number(userJobPostingChatChannel.unreadCount) > 0 && (
+          {Number(userModelMatchingChatChannel.unreadCount) > 0 && (
             <UnreadCount>
-              {Number(userJobPostingChatChannel.unreadCount)}
+              {Number(userModelMatchingChatChannel.unreadCount)}
             </UnreadCount>
           )}
         </RightContentWrapper>
       </ContentWrapper>
       <RightButtonWrapper>
         <PinToggleButton
-          channelId={userJobPostingChatChannel.channelId}
-          userId={userJobPostingChatChannel.userId}
-          isPinned={userJobPostingChatChannel.isPinned}
+          channelId={userModelMatchingChatChannel.channelId}
+          userId={userModelMatchingChatChannel.userId}
+          isPinned={userModelMatchingChatChannel.isPinned}
           onToggle={handleToggle}
         />
         <DeleteButton onClick={handleDeleteClick}>

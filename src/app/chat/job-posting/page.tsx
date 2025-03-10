@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import CenterSpinner from "@/components/spinners/CenterSpinner";
-import JobPostingChatChannelItem from "./components/job-posting-chat-channel-item";
+import JobPostingChatChannelItem from "./components/JobPostingChatChannelItem";
 import pxToVw from "@/lib/dpi-converter";
 import styled from "styled-components";
 import toast from "react-hot-toast";
@@ -82,7 +82,6 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
       console.error("채널 구독 중 오류 발생:", error);
     }
     setIsLoading(false);
-
     return () => {
       if (unsubscribe) {
         try {
@@ -94,6 +93,7 @@ export default function JobPostingChatListPage({ searchParams }: SearchParams) {
     };
   }, [userId, subscribeToChannels]);
 
+  if (!_UserID) return <>로그인 실패</>;
   if (isLoading || loading) return <CenterSpinner />;
 
   if (!userId && !isLoading && _UserID && !loading) return <>로그인 실패</>;

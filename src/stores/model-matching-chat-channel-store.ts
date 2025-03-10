@@ -1,7 +1,7 @@
 import {
-  JobPostingChatMessageType,
-  JobPostingChatMessageTypeEnum,
-} from "@/types/chat/job-posting/job-posting-chat-message-type";
+  ModelMatchingChatMessageType,
+  ModelMatchingChatMessageTypeEnum,
+} from "@/types/chat/model-matching/model-matching-chat-message-type";
 import {
   Timestamp,
   collection,
@@ -19,21 +19,18 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import {
-  UserJobPostingChatChannelType,
-  UserJobPostingChatChannelTypeEnum,
-} from "@/types/chat/job-posting/user-job-posting-chat-channel-type";
 
 import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
-import { JobPostingChatChannelType } from "@/types/chat/job-posting/job-posting-chat-channel-type";
+import { ModelMatchingChatChannelType } from "@/types/chat/model-matching/model-matching-chat-channel-type";
+import { UserModelMatchingChatChannelType } from "@/types/chat/model-matching/user-model-matching-chat-channel-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
 import { useAuthStore } from "./auth-store";
 
 interface ChatChannelState {
-  userJobPostingChatChannels: UserJobPostingChatChannelType[];
-  otherUserJobPostingChatChannel: UserJobPostingChatChannelType | null;
+  userModelMatchingChatChannels: UserModelMatchingChatChannelType[];
+  otherUserModelMatchingChatChannel: UserModelMatchingChatChannelType | null;
   loading: boolean;
   error: string | null;
 
@@ -41,8 +38,6 @@ interface ChatChannelState {
   findOrCreateChannel: (params: {
     senderId: string;
     receiverId: string;
-    jobPostingId: string | null; // 선택적 매개변수 추가
-    resumeId: string | null; // 선택적 매개변수 추가
   }) => Promise<{ channelId: string | null; isCreated: boolean }>;
 
   subscribeToChannels: (userId: string) => () => void;
@@ -61,7 +56,9 @@ interface ChatChannelState {
   // 해당 채널 차단 해제
   unblockChannel: (channelId: string, userId: string) => Promise<void>;
 
-  getChannel: (channelId: string) => Promise<JobPostingChatChannelType | null>;
+  getChannel: (
+    channelId: string,
+  ) => Promise<ModelMatchingChatChannelType | null>;
 
   subscribeToOtherUser: (channelId: string, otherUserId: string) => () => void;
 
@@ -76,30 +73,25 @@ interface ChatChannelState {
   ) => Promise<void>;
 }
 
-export const useJobPostingChatChannelStore = create<ChatChannelState>(
+export const useModelMatchingChatChannelStore = create<ChatChannelState>(
   (set) => ({
-    userJobPostingChatChannels: [],
+    userModelMatchingChatChannels: [],
     loading: false,
     error: null,
-    otherUserJobPostingChatChannel: null,
+    otherUserModelMatchingChatChannel: null,
 
-    findOrCreateChannel: async ({
-      senderId,
-      receiverId,
-      jobPostingId,
-      resumeId,
-    }) => {
+    findOrCreateChannel: async ({ senderId, receiverId }) => {
       try {
         // 참여자 ID 정렬 및 channelKey 생성
         const participantIds = [senderId, receiverId].sort();
         const channelKey = `${
-          ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS
-        }_${participantIds.join("_")}_${jobPostingId}_${resumeId}`;
+          ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS
+        }_${participantIds.join("_")}`;
 
         // 채널 레퍼런스 생성
         const channelRef = doc(
           db,
-          ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+          ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS,
           channelKey,
         );
 
@@ -112,7 +104,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             const participantRefs = participantIds.map((userId) =>
               doc(
                 db,
-                `users/${userId}/userJobPostingChatChannels`,
+                `users/${userId}/userModelMatchingChatChannels`,
                 channelRef.id,
               ),
             );
@@ -146,22 +138,8 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             getUser(receiverId),
           ]);
 
-          // 채널 타입 결정
-          const determineChannelType = (userId: string) => {
-            if (jobPostingId) {
-              return userId === senderId
-                ? UserJobPostingChatChannelTypeEnum.JOB_POSTING_APPLICANT
-                : UserJobPostingChatChannelTypeEnum.JOB_POSTING_STORE;
-            } else if (resumeId) {
-              return userId === senderId
-                ? UserJobPostingChatChannelTypeEnum.RESUME_STORE
-                : UserJobPostingChatChannelTypeEnum.RESUME_APPLICANT;
-            }
-            throw new Error("jobPostingId 또는 resumeId가 필요합니다.");
-          };
-
           // 채널 생성
-          const newChannel: Omit<JobPostingChatChannelType, "id"> = {
+          const newChannel: Omit<ModelMatchingChatChannelType, "id"> = {
             channelKey,
             participantsIds: participantIds,
             channelOpenUserId: senderId,
@@ -175,30 +153,30 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
           participantIds.forEach((userId) => {
             const userChannelRef = doc(
               db,
-              `users/${userId}/userJobPostingChatChannels`,
+              `users/${userId}/userModelMatchingChatChannels`,
               channelRef.id,
             );
             const otherUserId = participantIds.filter((id) => id !== userId)[0];
             const otherUserData =
               userId === senderId ? receiverData.data : senderData.data;
 
-            const userJobPostingChatChannel: UserJobPostingChatChannelType = {
-              channelId: channelRef.id,
-              channelType: determineChannelType(userId),
-              otherUserId,
-              userId,
-              otherUser: otherUserData,
-              unreadCount: 0,
-              isBlockChannel: false,
-              lastMessage: {} as JobPostingChatMessageType,
-              isPinned: false,
-              pinnedAt: null,
-              lastReadAt: null,
-              createdAt: serverTimestamp(),
-              updatedAt: serverTimestamp(),
-              deletedAt: null,
-            };
-            transaction.set(userChannelRef, userJobPostingChatChannel);
+            const userModelMatchingChatChannel: UserModelMatchingChatChannelType =
+              {
+                channelId: channelRef.id,
+                otherUserId,
+                userId,
+                otherUser: otherUserData,
+                unreadCount: 0,
+                isBlockChannel: false,
+                lastMessage: {} as ModelMatchingChatMessageType,
+                isPinned: false,
+                pinnedAt: null,
+                lastReadAt: null,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp(),
+                deletedAt: null,
+              };
+            transaction.set(userChannelRef, userModelMatchingChatChannel);
           });
 
           return { channelId: channelRef.id, isCreated: true };
@@ -213,9 +191,12 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
     },
 
     subscribeToChannels: (userId: string) => {
-      set({ loading: true, userJobPostingChatChannels: [] });
+      set({ loading: true, userModelMatchingChatChannels: [] });
       // 사용자별 채널 메타데이터 구독 (경로 변경)
-      const ref = collection(db, `users/${userId}/userJobPostingChatChannels`);
+      const ref = collection(
+        db,
+        `users/${userId}/userModelMatchingChatChannels`,
+      );
 
       const unsubscribe = onSnapshot(
         ref,
@@ -229,12 +210,12 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
               .map((doc) => ({
                 channelId: doc.id,
                 ...doc.data(),
-              })) as UserJobPostingChatChannelType[];
+              })) as UserModelMatchingChatChannelType[];
 
             const sortedChannels = sortChannels(channels);
 
             set({
-              userJobPostingChatChannels: sortedChannels,
+              userModelMatchingChatChannels: sortedChannels,
               loading: false,
             });
           } catch (error) {
@@ -242,7 +223,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             set({
               error: "채널 정보를 불러오는 중 오류가 발생했습니다.",
               loading: false,
-              userJobPostingChatChannels: [],
+              userModelMatchingChatChannels: [],
             });
           }
         },
@@ -251,7 +232,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
           set({
             error: "채널 메타데이터를 불러오는 중 오류가 발생했습니다.",
             loading: false,
-            userJobPostingChatChannels: [],
+            userModelMatchingChatChannels: [],
           });
         },
       );
@@ -263,7 +244,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       try {
         const ref = doc(
           db,
-          `users/${userId}/userJobPostingChatChannels`,
+          `users/${userId}/userModelMatchingChatChannels`,
           channelId,
         );
 
@@ -280,7 +261,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       try {
         const ref = doc(
           db,
-          `users/${userId}/userJobPostingChatChannels`,
+          `users/${userId}/userModelMatchingChatChannels`,
           channelId,
         );
 
@@ -297,7 +278,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       try {
         const ref = doc(
           db,
-          `users/${userId}/userJobPostingChatChannels`,
+          `users/${userId}/userModelMatchingChatChannels`,
           channelId,
         );
 
@@ -314,7 +295,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       try {
         const ref = doc(
           db,
-          `users/${userId}/userJobPostingChatChannels`,
+          `users/${userId}/userModelMatchingChatChannels`,
           channelId,
         );
 
@@ -331,7 +312,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       try {
         const ref = doc(
           db,
-          `users/${userId}/userJobPostingChatChannels`,
+          `users/${userId}/userModelMatchingChatChannels`,
           channelId,
         );
 
@@ -349,7 +330,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       try {
         const ref = doc(
           db,
-          `users/${userId}/userJobPostingChatChannels`,
+          `users/${userId}/userModelMatchingChatChannels`,
           channelId,
         );
 
@@ -368,7 +349,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         const currentUserId = useAuthStore.getState().userId;
         const channelRef = doc(
           db,
-          ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+          ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS,
           channelId,
         );
         const channelSnap = await getDoc(channelRef);
@@ -380,7 +361,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
           return {
             id: channelSnap.id,
             ...channelData,
-          } as JobPostingChatChannelType;
+          } as ModelMatchingChatChannelType;
         }
         return null;
       } catch (error) {
@@ -393,7 +374,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       set({ loading: true });
       const ref = doc(
         db,
-        `users/${otherUserId}/userJobPostingChatChannels`,
+        `users/${otherUserId}/userModelMatchingChatChannels`,
         channelId,
       );
 
@@ -404,10 +385,10 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             const data = snapshot.data();
 
             set({
-              otherUserJobPostingChatChannel: {
+              otherUserModelMatchingChatChannel: {
                 channelId: snapshot.id,
                 ...data,
-              } as UserJobPostingChatChannelType,
+              } as UserModelMatchingChatChannelType,
               loading: false,
             });
           } else {
@@ -430,7 +411,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
     subscribeToMine: (channelId: string, userId: string) => {
       const ref = doc(
         db,
-        `users/${userId}/userJobPostingChatChannels`,
+        `users/${userId}/userModelMatchingChatChannels`,
         channelId,
       );
 
@@ -441,12 +422,12 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             const data = snapshot.data();
 
             set((state) => ({
-              userJobPostingChatChannels: [
+              userModelMatchingChatChannels: [
                 {
                   channelId: snapshot.id,
                   ...data,
-                } as UserJobPostingChatChannelType,
-                ...state.userJobPostingChatChannels.filter(
+                } as UserModelMatchingChatChannelType,
+                ...state.userModelMatchingChatChannels.filter(
                   (channel) => channel.channelId !== channelId,
                 ),
               ],
@@ -465,54 +446,18 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       try {
         const ref = doc(
           db,
-          `users/${userId}/userJobPostingChatChannels`,
+          `users/${userId}/userModelMatchingChatChannels`,
           channelId,
         );
 
         const snap = await getDoc(ref);
         if (!snap.exists()) return;
 
-        const userJobPostingChatChannel = snap.data();
+        const userModelMatchingChatChannel = snap.data();
 
-        // channelType이 없는 경우 처리
-        if (!userJobPostingChatChannel.channelType) {
-          const channelRef = doc(
-            db,
-            ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
-            channelId,
-          );
-          const channelSnap = await getDoc(channelRef);
-
-          if (channelSnap.exists()) {
-            const channelData = channelSnap.data();
-            const channelKey = channelData.channelKey;
-            const keyParts = channelKey.split("_");
-
-            // channelKey 형식: ${channelType}_${참여자ID들}_${채용공고ID}_${이력서ID}
-            const jobPostingId = keyParts[keyParts.length - 2];
-            const resumeId = keyParts[keyParts.length - 1];
-
-            let channelType;
-            if (userId === channelData.channelOpenUserId) {
-              channelType =
-                jobPostingId !== "null"
-                  ? UserJobPostingChatChannelTypeEnum.JOB_POSTING_APPLICANT
-                  : UserJobPostingChatChannelTypeEnum.RESUME_STORE;
-            } else {
-              channelType =
-                jobPostingId !== "null"
-                  ? UserJobPostingChatChannelTypeEnum.JOB_POSTING_STORE
-                  : UserJobPostingChatChannelTypeEnum.RESUME_APPLICANT;
-            }
-
-            await updateDoc(ref, {
-              channelType: channelType,
-              updatedAt: serverTimestamp(),
-            });
-          }
-        }
-
-        const userData = await getUser(userJobPostingChatChannel.otherUserId);
+        const userData = await getUser(
+          userModelMatchingChatChannel.otherUserId,
+        );
 
         if (!userData.error) {
           await updateDoc(ref, {
@@ -535,14 +480,14 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         const messageRef = doc(
           collection(
             db,
-            `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/messages`,
+            `${ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS}/${channelId}/messages`,
           ),
         );
 
         await setDoc(messageRef, {
           id: messageRef.id,
           message: `${userName}님이 나갔습니다.`,
-          messageType: JobPostingChatMessageTypeEnum.SYSTEM,
+          messageType: ModelMatchingChatMessageTypeEnum.SYSTEM,
           metaPathList: [],
           senderId: "system",
           createdAt: serverTimestamp(),
@@ -552,7 +497,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         // 2. 유저의 채널 메타데이터 업데이트
         const userChannelRef = doc(
           db,
-          `users/${userId}/userJobPostingChatChannels`,
+          `users/${userId}/userModelMatchingChatChannels`,
           channelId,
         );
         await updateDoc(userChannelRef, {
@@ -563,7 +508,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         // 3. 채널의 참여자 목록에서 유저 제거
         const channelRef = doc(
           db,
-          ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+          ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS,
           channelId,
         );
         const channelSnap = await getDoc(channelRef);
@@ -587,7 +532,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 );
 
 // 채널 데이터를 정렬하는 함수
-const sortChannels = (channels: UserJobPostingChatChannelType[]) => {
+const sortChannels = (channels: UserModelMatchingChatChannelType[]) => {
   return channels.sort((a, b) => {
     // 둘 다 고정된 경우 pinnedAt으로 비교
     if (a.isPinned && b.isPinned) {

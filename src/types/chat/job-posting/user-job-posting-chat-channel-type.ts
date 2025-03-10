@@ -1,7 +1,7 @@
 import { FieldValue, Timestamp } from "firebase/firestore";
 
 import { JobPostingChatMessageType } from "./job-posting-chat-message-type";
-import { UserType } from "../user-type";
+import { UserType } from "../../user-type";
 
 export enum UserJobPostingChatChannelTypeEnum {
   JOB_POSTING_STORE = "jobPostingStore",

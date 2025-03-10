@@ -1,13 +1,13 @@
 import {
   JobPostingChatMessageType,
   JobPostingChatMessageTypeEnum,
-} from "@/types/chat/job-posting-chat-message-type";
+} from "@/types/chat/job-posting/job-posting-chat-message-type";
 import { useEffect, useRef } from "react";
 
 import CenterSpinner from "@/components/spinners/CenterSpinner";
 import Link from "next/link";
 import { Timestamp } from "firebase/firestore";
-import { UserJobPostingChatChannelType } from "@/types/chat/user-job-posting-chat-channel-type";
+import { UserJobPostingChatChannelType } from "@/types/chat/job-posting/user-job-posting-chat-channel-type";
 import { WEB_DOMAIN } from "@/apis/consts";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
