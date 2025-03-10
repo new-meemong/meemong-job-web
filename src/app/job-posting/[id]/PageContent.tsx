@@ -19,6 +19,7 @@ import { ImageType } from "@/types/image-type";
 import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting/job-posting-chat-message-type";
 import JobPostingHeader from "@/components/headers/JobPostingHeader";
 import { JobPostingType } from "@/types/job-posting-type";
+import { ModelMatchingChatMessageTypeEnum } from "@/types/chat/model-matching/model-matching-chat-message-type";
 import PostingTitle from "../components/posting-title";
 import StoreFloatingButton from "@/components/buttons/store-floating-button";
 import StoreInfo from "../components/store-info";
@@ -32,6 +33,8 @@ import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 import { useJobPostingChatMessageStore } from "@/stores/job-posting-chat-message-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
+import { useModelMatchingChatChannelStore } from "@/stores/model-matching-chat-channel-store";
+import { useModelMatchingChatMessageStore } from "@/stores/model-matching-chat-message-store";
 import { useSearchParams } from "next/navigation";
 
 const Container = styled.div`
@@ -70,10 +73,16 @@ export default function PageContent({
     }),
   );
 
-  const { findOrCreateChannel } = useJobPostingChatChannelStore((state) => ({
+  // const { findOrCreateChannel } = useJobPostingChatChannelStore((state) => ({
+  //   findOrCreateChannel: state.findOrCreateChannel,
+  // }));
+  // const { sendMessage } = useJobPostingChatMessageStore((state) => ({
+  //   sendMessage: state.sendMessage,
+  // }));
+  const { findOrCreateChannel } = useModelMatchingChatChannelStore((state) => ({
     findOrCreateChannel: state.findOrCreateChannel,
   }));
-  const { sendMessage } = useJobPostingChatMessageStore((state) => ({
+  const { sendMessage } = useModelMatchingChatMessageStore((state) => ({
     sendMessage: state.sendMessage,
   }));
 
@@ -291,10 +300,9 @@ export default function PageContent({
               const { channelId, isCreated } = await findOrCreateChannel({
                 senderId: userId,
                 receiverId: jobPosting.userId.toString(),
-                jobPostingId: jobPosting.id,
-                resumeId: null,
               });
-
+              console.log("moonsae isCreated", isCreated);
+              console.log("moonsae channelId", channelId);
               if (!channelId) {
                 toast.error("채널 생성 중 오류가 발생했습니다.");
                 return;
@@ -303,8 +311,8 @@ export default function PageContent({
               if (isCreated) {
                 const { success } = await sendMessage({
                   channelId,
-                  message: `모집공고를 보고 대화를 시작했습니다.`,
-                  messageType: JobPostingChatMessageTypeEnum.SYSTEM,
+                  message: `모델매칭 대화를 시작했습니다.`,
+                  messageType: ModelMatchingChatMessageTypeEnum.SYSTEM,
                   metaPathList: [
                     {
                       jobPostingId: jobPosting.id,
