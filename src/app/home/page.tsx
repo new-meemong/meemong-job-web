@@ -4,11 +4,13 @@ import { HomeTopTabType, useAppStateStore } from "@/stores/app-state-store";
 import { useEffect, useState } from "react";
 
 import BaseTopTabs from "./components/BaseTopTab";
-import FloatingButton from "./components/floating-button";
-import HomeTitle from "./components/home-title";
-import JobPostingSection from "./components/job-posting-section";
-import MyJobPostingFloatingButton from "./components/my-job-posting-floating-button";
-import ResumeSection from "./components/resume-section";
+import FloatingButton from "./components/FloatingButton";
+import HomeTitle from "./components/HomeTitle";
+import JobPostingChatListButton from "./components/JobPostingChatListButton";
+import JobPostingSection from "./components/JobPostingSection";
+import ModelMatchingChatListButton from "./components/ModelMatchingChatListButton";
+import MyJobPostingFloatingButton from "./components/MyJobPostingFloatingButton";
+import ResumeSection from "./components/ResumeSection";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingListStore } from "@/stores/job-posting-list-store";
@@ -100,6 +102,8 @@ export default function HomePage({ searchParams }: SearchParams) {
       {homeTopTab === "jobPosting" ? <JobPostingSection /> : <ResumeSection />}
       <MyJobPostingFloatingButton />
       <FloatingButton />
+      {/* <JobPostingChatListButton />
+    <ModelMatchingChatListButton /> */}
     </Container>
   );
 }

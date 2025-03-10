@@ -113,7 +113,7 @@ export const useModelMatchingChatChannelStore = create<ChatChannelState>(
               participantRefs.map((ref) => transaction.get(ref)),
             );
 
-            // 참여자 중 한명이라도 deletedAt이 있으면 채널 재활성화
+            // 참여자 중 한명이라도 deletedAt이 있으면 모든 참여자의 채널 재활성화
             const hasDeletedChannel = participantSnapshots.some(
               (snap) => snap.exists() && snap.data().deletedAt,
             );

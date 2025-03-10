@@ -1,8 +1,8 @@
 import {
-  JobPostingChatMessageType,
-  JobPostingChatMessageTypeEnum,
   MetaPathType,
-} from "@/types/chat/job-posting/job-posting-chat-message-type";
+  ModelMatchingChatMessageType,
+  ModelMatchingChatMessageTypeEnum,
+} from "@/types/chat/model-matching/model-matching-chat-message-type";
 import {
   Timestamp,
   collection,
@@ -25,8 +25,8 @@ import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 
-interface JobPostingChatMessageState {
-  messages: JobPostingChatMessageType[];
+interface ModelMatchingChatMessageState {
+  messages: ModelMatchingChatMessageType[];
   loading: boolean;
   error: string | null;
 
@@ -39,15 +39,15 @@ interface JobPostingChatMessageState {
     senderId: string;
     receiverId: string;
     message: string;
-    messageType: JobPostingChatMessageTypeEnum;
+    messageType: ModelMatchingChatMessageTypeEnum;
     metaPathList?: MetaPathType[];
   }) => Promise<{ success: boolean; channelId: string | null }>;
 
   clearMessages: () => void;
 }
 
-export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
-  (set, get) => ({
+export const useModelMatchingChatMessageStore =
+  create<ModelMatchingChatMessageState>((set, get) => ({
     messages: [],
     loading: false,
     error: null,
@@ -60,7 +60,7 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
       const q = query(
         collection(
           db,
-          `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/messages`,
+          `${ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS}/${channelId}/messages`,
         ),
         orderBy("createdAt", "desc"),
       );
@@ -71,7 +71,7 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
           const messages = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
-          })) as JobPostingChatMessageType[];
+          })) as ModelMatchingChatMessageType[];
 
           set({
             messages: messages.reverse(),
@@ -107,11 +107,11 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         const messageRef = doc(
           collection(
             db,
-            `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/messages`,
+            `${ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS}/${channelId}/messages`,
           ),
         );
 
-        const newMessage: Omit<JobPostingChatMessageType, "id"> = {
+        const newMessage: Omit<ModelMatchingChatMessageType, "id"> = {
           message,
           messageType,
           metaPathList,
@@ -125,7 +125,7 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         // 채널의 lastMessage 업데이트
         const channelRef = doc(
           db,
-          ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+          ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS,
           channelId,
         );
         await updateDoc(channelRef, {
@@ -135,12 +135,12 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         // 양쪽 사용자의 메타데이터에 lastMessage 업데이트
         const senderMetaRef = doc(
           db,
-          `users/${senderId}/userJobPostingChatChannels`,
+          `users/${senderId}/userModelMatchingChatChannels`,
           channelId,
         );
         const receiverMetaRef = doc(
           db,
-          `users/${receiverId}/userJobPostingChatChannels`,
+          `users/${receiverId}/userModelMatchingChatChannels`,
           channelId,
         );
 
@@ -174,5 +174,4 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
     clearMessages: () => {
       set({ messages: [] });
     },
-  }),
-);
+  }));
