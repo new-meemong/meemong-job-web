@@ -1,7 +1,7 @@
 import {
   JobPostingContactCompleteType,
   JobPostingContactType,
-} from "@/types/chat/job-posting-contact-type";
+} from "@/types/chat/job-posting/job-posting-contact-type";
 
 import { apiFetch } from "./fetch";
 
