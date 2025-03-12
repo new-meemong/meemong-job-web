@@ -10,7 +10,12 @@ import { useJobPostingEditStore } from "@/stores/job-posting-edit-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { useState } from "react";
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+`;
 
 const WriteButton = styled.div`
   width: ${pxToVw(60)};
@@ -23,9 +28,9 @@ const WriteButton = styled.div`
   align-items: center;
   box-shadow: ${pxToVw(0)} ${pxToVw(0)} ${pxToVw(10)} ${pxToVw(1)}
     rgba(93, 84, 183, 0.7);
-  position: fixed; /* 화면에 고정 */
-  right: ${pxToVw(15)}; /* 오른쪽에서 15px */
-  bottom: ${pxToVw(85)}; /* 하단에서 15px */
+  position: fixed;
+  right: max(${pxToVw(15)}, calc((100% - 600px) / 2 + ${pxToVw(15)}));
+  bottom: ${pxToVw(15)};
 `;
 
 const WriteButtonText = styled.span`
@@ -39,22 +44,21 @@ const WriteButtonText = styled.span`
 `;
 
 const AdditionalButton = styled(WriteButton)<{ offset: number }>`
-  background-color: ${colors.purpleSecondary};
+  background-color: ${colors.black};
   bottom: ${(props) => props.offset}px;
-  right: ${pxToVw(17.5)};
+  right: max(${pxToVw(17.5)}, calc((100% - 600px) / 2 + ${pxToVw(17.5)}));
   width: ${pxToVw(55)};
   height: ${pxToVw(55)};
 `;
 
 const AdditionalButtonText = styled(WriteButtonText)`
-  color: ${colors.black};
+  color: ${colors.white};
 `;
 
 const FloatingButton = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const source = "web"; // floating은 항상 웹
+  const source = "web";
   const { checkMyResumeExist } = useResumeListStore((state) => ({
     checkMyResumeExist: state.checkMyResumeExist,
   }));
@@ -64,10 +68,6 @@ const FloatingButton = () => {
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
   }));
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
 
   const handleResumeClick = async () => {
     if (!userId) {
@@ -89,28 +89,14 @@ const FloatingButton = () => {
 
   return (
     <Container>
-      {isExpanded && (
-        <>
-          <AdditionalButton
-            offset={numberToVw(160)}
-            onClick={handleJobPostingClick}
-          >
-            <WriteIcon />
-            <AdditionalButtonText>{`모집공고\n등록`}</AdditionalButtonText>
-          </AdditionalButton>
-          <AdditionalButton
-            offset={numberToVw(230)}
-            onClick={handleResumeClick}
-          >
-            <WriteIcon />
-            <AdditionalButtonText>{`이력서\n작성`}</AdditionalButtonText>
-          </AdditionalButton>
-        </>
-      )}
-      <WriteButton onClick={toggleExpand}>
+      <AdditionalButton offset={numberToVw(15)} onClick={handleJobPostingClick}>
         <WriteIcon />
-        <WriteButtonText>글쓰기</WriteButtonText>
-      </WriteButton>
+        <AdditionalButtonText>{`매장공고\n등록`}</AdditionalButtonText>
+      </AdditionalButton>
+      <AdditionalButton offset={numberToVw(85)} onClick={handleResumeClick}>
+        <WriteIcon />
+        <AdditionalButtonText>{`이력서\n작성`}</AdditionalButtonText>
+      </AdditionalButton>
     </Container>
   );
 };

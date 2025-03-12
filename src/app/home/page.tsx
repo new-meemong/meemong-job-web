@@ -100,7 +100,7 @@ export default function HomePage({ searchParams }: SearchParams) {
       <BaseTopTabs activeTab={homeTopTab} setActiveTab={setHomeTopTab} />
       <HomeTitle />
       {homeTopTab === "jobPosting" ? <JobPostingSection /> : <ResumeSection />}
-      <MyJobPostingFloatingButton />
+      {/* <MyJobPostingFloatingButton /> */}
       <FloatingButton />
       {/* <JobPostingChatListButton />
     <ModelMatchingChatListButton /> */}
