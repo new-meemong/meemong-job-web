@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 
 import CenterSpinner from "@/components/spinners/CenterSpinner";
+import MessageSection from "./components/MessageSection";
+import ModelMatchingChatDetailHeader from "@/components/headers/ModelMatchingChatDetailHeader";
 import { ModelMatchingChatMessageTypeEnum } from "@/types/chat/model-matching/model-matching-chat-message-type";
 import { UserModelMatchingChatChannelType } from "@/types/chat/model-matching/user-model-matching-chat-channel-type";
 import pxToVw from "@/lib/dpi-converter";
@@ -191,5 +193,27 @@ export default function ModelMatchingChatPage({
     return <CenterSpinner />;
   }
 
-  return <Container></Container>;
+  return (
+    <Container>
+      <ModelMatchingChatDetailHeader
+        otherUserDisplayName={userChannel?.otherUser?.DisplayName || ""}
+        source={source}
+      />
+      <MessageSection userChannel={userChannel!} source={source} />
+      <InputContainer>
+        <MessageInput
+          type="text"
+          value={messageText}
+          onChange={(e) => setMessageText(e.target.value)}
+          placeholder="메시지를 입력하세요..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSendMessage();
+            }
+          }}
+        />
+        <SendButton onClick={handleSendMessage}>전송</SendButton>
+      </InputContainer>
+    </Container>
+  );
 }
