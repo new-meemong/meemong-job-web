@@ -24,8 +24,7 @@ const Button = styled.div<{
   $size: string;
   $hasError: boolean;
 }>`
-  ${(props) =>
-    props.$isSelected ? fonts.purplePrimaryNormal12 : fonts.greyNormal12};
+  ${(props) => (props.$isSelected ? fonts.whiteNormal12 : fonts.greyNormal12)};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,6 +36,8 @@ const Button = styled.div<{
       ? pxToVw(77)
       : pxToVw(86)}; /* medium에 대한 기본값 설정 */
   border-radius: ${pxToVw(4)};
+  background-color: ${(props) =>
+    props.$isSelected ? colors.purplePrimary : "transparent"};
   border: ${pxToVw(1)} solid
     ${(props) =>
       props.$isSelected

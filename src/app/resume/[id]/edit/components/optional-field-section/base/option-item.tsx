@@ -7,8 +7,7 @@ const OptionItem = styled.div<{
   $isSelected: boolean;
   $size: string;
 }>`
-  ${(props) =>
-    props.$isSelected ? fonts.purplePrimaryNormal12 : fonts.greyNormal12};
+  ${(props) => (props.$isSelected ? fonts.whiteNormal12 : fonts.greyNormal12)};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,6 +19,8 @@ const OptionItem = styled.div<{
       ? pxToVw(77)
       : pxToVw(86)};
   border-radius: ${pxToVw(4)};
+  background-color: ${(props) =>
+    props.$isSelected ? colors.purplePrimary : "transparent"};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
   cursor: pointer;

@@ -45,11 +45,12 @@ const OptionItem = styled.div<{ $isSelected: boolean }>`
   border-radius: ${pxToVw(4)};
   white-space: pre-wrap;
   text-align: center;
+  background-color: ${(props) =>
+    props.$isSelected ? colors.purplePrimary : "transparent"};
   border: ${pxToVw(1)} solid
     ${(props) => (props.$isSelected ? colors.purplePrimary : colors.grey)};
 
-  ${(props) =>
-    props.$isSelected ? fonts.purplePrimarySemi12 : fonts.greySemi12}
+  ${(props) => (props.$isSelected ? fonts.whiteNormal12 : fonts.greySemi12)}
 `;
 
 const UnexpandItemContainer = styled.div`

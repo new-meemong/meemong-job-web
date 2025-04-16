@@ -28,8 +28,9 @@ const Button = styled.div<{
   $size: string;
   $hasError: boolean;
 }>`
-  ${(props) =>
-    props.$isSelected ? fonts.purplePrimaryNormal12 : fonts.greyNormal12};
+  ${(props) => (props.$isSelected ? fonts.whiteNormal12 : fonts.greyNormal12)};
+  background-color: ${(props) =>
+    props.$isSelected ? colors.purplePrimary : "transparent"};
   display: flex;
   justify-content: center;
   align-items: center;
