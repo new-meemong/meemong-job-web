@@ -141,8 +141,7 @@ export default function JobPostingChatChannelItem({
 
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 
-  const { UserID, userId, user } = useAuthStore((state) => ({
-    UserID: state.UserID,
+  const { userId, user } = useAuthStore((state) => ({
     userId: state.userId,
     user: state.user,
   }));
@@ -178,11 +177,11 @@ export default function JobPostingChatChannelItem({
   const handleChannelClick = () => {
     const source = searchParams.get("source");
 
-    if (!UserID) return;
+    if (!userId) return;
 
     if (source === SourceType.APP && window.openChatChannel) {
       window.openChatChannel({
-        userId: UserID,
+        userId: userId,
         chatChannelId: userJobPostingChatChannel.channelId,
       });
     }

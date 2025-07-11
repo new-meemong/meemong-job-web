@@ -13,9 +13,8 @@ export function FirebaseNavigationLogging() {
   const { logPageView } = useAnalyticsStore((state) => ({
     logPageView: state.logPageView,
   }));
-  const { userId, UserID } = useAuthStore((state) => ({
+  const { userId } = useAuthStore((state) => ({
     userId: state.userId,
-    UserID: state.UserID,
   }));
 
   useEffect(() => {
@@ -26,9 +25,8 @@ export function FirebaseNavigationLogging() {
 
     logPageView(url, {
       userId: userId,
-      UserID: UserID,
     });
-  }, [pathname, searchParams, logPageView, userId, UserID, analytics]);
+  }, [pathname, searchParams, logPageView, userId, analytics]);
 
   return null;
 }

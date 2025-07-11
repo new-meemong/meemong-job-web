@@ -7,7 +7,6 @@ import { webviewLogin } from "@/apis/auth";
 export type AuthState = {
   jwt: string | null;
   userId: string | null;
-  UserID: string | null;
   profileImageUri: string | null;
   sex: string | null;
   user: UserModel | null;
@@ -26,7 +25,6 @@ export type AuthStore = AuthState & AuthActions;
 export const defaultAuthState: AuthState = {
   jwt: null,
   userId: null,
-  UserID: null,
   profileImageUri: null,
   sex: null,
   user: null,
@@ -36,19 +34,18 @@ export const useAuthStore = create(
   persist<AuthStore>(
     (set) => ({
       ...defaultAuthState,
-      login: async (UserID: string) => {
+      login: async (userId: string) => {
         try {
-          if (!UserID) {
+          if (!userId) {
             throw new Error("userId is required");
           }
 
-          const { data }: { data: UserModel } = await webviewLogin(UserID);
+          const { data }: { data: UserModel } = await webviewLogin(userId);
           console.log("moonsae login data", data);
           if (data && data.token) {
             set({
               jwt: data.token, // JWT 토큰을 상태에 저장
               userId: String(data.id), // userId를 상태에 저장
-              UserID: String(data.UserID),
               user: data,
             });
 

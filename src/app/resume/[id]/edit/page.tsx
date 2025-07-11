@@ -41,9 +41,9 @@ interface SearchParams {
 export default function ResumeEditPage({ searchParams }: SearchParams) {
   const { id } = useParams();
   const resumeId = Array.isArray(id) ? id[0] : id;
-  const { UserID, sex, login, jwt } = useAuthStore((state) => ({
+  const { userId, sex, login, jwt } = useAuthStore((state) => ({
     sex: state.sex,
-    UserID: state.UserID,
+    userId: state.userId,
     login: state.login,
     jwt: state.jwt,
   }));
@@ -59,7 +59,7 @@ export default function ResumeEditPage({ searchParams }: SearchParams) {
     checkMyResumeExist: state.checkMyResumeExist,
   }));
 
-  const _UserID = UserID ? UserID : searchParams.userId;
+  const _UserID = userId ? userId : searchParams.userId;
   const source = searchParams.source;
 
   useEffect(() => {

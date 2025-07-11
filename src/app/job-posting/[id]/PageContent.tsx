@@ -331,7 +331,7 @@ export default function PageContent({
                 const message = {
                   type: "system" as messageType,
                   postId,
-                  postUserId: jobPosting.User?.UserID.toString(),
+                  postUserId: jobPosting.User?.id.toString(),
                   chatChannelId: channelId,
                 };
                 window.startChat(message);

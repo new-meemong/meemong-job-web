@@ -11,7 +11,6 @@ export interface UserModel {
   Role: string | null;
   Sex: string | null;
   UpdatedAt: string; // ISO 8601 날짜 형식 (예: "2024-09-05T05:51:01.000Z")
-  UserID: string | null;
   appIdentifierId: string | null;
   id: string; // 숫자형 ID
   isExistPassword: boolean; // 비밀번호가 존재하는지 여부

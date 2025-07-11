@@ -44,7 +44,7 @@ export default function HomePage({ searchParams }: SearchParams) {
     setHomeTopTab: state.setHomeTopTab,
   }));
 
-  const UserID = searchParams.userId;
+  const userId = searchParams.userId;
   const profileImageUri = searchParams.profileImageUri;
   const sex = searchParams.sex;
   const [loading, setLoading] = useState(true);
@@ -67,8 +67,8 @@ export default function HomePage({ searchParams }: SearchParams) {
 
   useEffect(() => {
     const _login = async () => {
-      if (UserID && !jwt) {
-        const result = await login(UserID);
+      if (userId && !jwt) {
+        const result = await login(userId);
         if (!result) {
           setIsLoginFailed(true);
         } else {
@@ -78,7 +78,7 @@ export default function HomePage({ searchParams }: SearchParams) {
       }
     };
     _login();
-  }, [UserID, login, jwt]);
+  }, [userId, login, jwt]);
 
   useEffect(() => {
     if (jwt) {
