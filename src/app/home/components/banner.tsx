@@ -46,13 +46,13 @@ const BannerContent = () => {
     if (
       source === "app" &&
       typeof window !== "undefined" &&
-      banner?.redirect_url
+      banner?.redirectUrl
     ) {
-      window.externalLink(banner?.redirect_url);
+      window.externalLink(banner?.redirectUrl);
     }
 
     if (source === "web") {
-      window.open(banner?.redirect_url, "_blank");
+      window.open(banner?.redirectUrl, "_blank");
     }
   };
 
@@ -60,7 +60,7 @@ const BannerContent = () => {
     <Container onClick={handleBannerClick}>
       {banner && (
         <BannerImage
-          src={banner?.image_url}
+          src={banner?.imageUrl}
           alt="banner"
           width={390}
           height={80}

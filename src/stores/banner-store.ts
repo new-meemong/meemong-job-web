@@ -4,13 +4,13 @@ import { getBanner } from "@/apis/banner";
 
 export type BannerType = {
   id: number;
-  user_type: string;
-  banner_type: string;
-  display_type: string;
-  image_url: string;
-  redirect_url: string;
-  created_at: string;
-  updated_at: string;
+  userType: string;
+  bannerType: string;
+  displayType: string;
+  imageUrl: string;
+  redirectUrl: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type BannerState = {
@@ -35,9 +35,9 @@ export const useBannerStore = create<BannerStateStore>((set) => ({
       return;
     }
 
-    const banner = res.data.filter(
-      (_banner: BannerType) => _banner.banner_type === "구인구직",
-    )[0];
-    set({ banner: banner });
+    const banner = res.data[0];
+    if (banner) {
+      set({ banner: banner });
+    }
   },
 }));
