@@ -17,7 +17,7 @@ export default function Metadata({
   ogImage = "",
   ogTitle = "미몽 - 구인구직",
   ogDescription = "헤어 디자이너 구인구직 플랫폼222",
-  ogUrl = "https://meemong.com/",
+  ogUrl = "https://www.meemong.com/",
   ogSiteName = "미몽",
   ogLocale = "ko_KR",
 }: Props) {

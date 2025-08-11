@@ -1,6 +1,6 @@
 export const getBanner = async () => {
   try {
-    const url = "https://meemong.com/auth/member/getBanners";
+    const url = "https://api.meemong.com/auth/member/getBanners";
     const res = await fetch(url, {
       headers: {
         Authorization: "Bearer xxxx",
