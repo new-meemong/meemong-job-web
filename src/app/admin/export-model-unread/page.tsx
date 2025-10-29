@@ -1,6 +1,16 @@
 "use client";
 
-import { collectionGroup, getDocs } from "firebase/firestore";
+import {
+  DocumentSnapshot,
+  Query,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  collectionGroup,
+  getDocs,
+  limit,
+  query,
+  startAfter,
+} from "firebase/firestore";
 import { useCallback, useMemo, useState } from "react";
 
 import { db } from "@/lib/firebase";
@@ -27,6 +37,7 @@ export default function ExportModelUnreadPage() {
   const [includeJobPosting, setIncludeJobPosting] = useState(false);
   const [rows, setRows] = useState<ExportResultRow[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState<string>("");
 
   const selectedCollections = useMemo(() => {
     const list: string[] = [];
@@ -38,38 +49,95 @@ export default function ExportModelUnreadPage() {
   const fetchUnreadByUser = useCallback(async () => {
     setIsLoading(true);
     setError(null);
+    setProgress("");
     try {
       // 1) 컬렉션 그룹에서 모든 메타 문서를 조회하여 사용자별 미읽음 합계 계산
       const userIdToUnreadSum = new Map<string, number>();
 
-      for (const collName of selectedCollections) {
-        const snap = await getDocs(collectionGroup(db, collName));
-        snap.forEach((doc) => {
-          const data = doc.data() as Partial<ChannelMetaDoc>;
-          const userId = String(data.userId ?? "");
-          if (!userId) return;
-          const unread = Number(data.unreadCount ?? 0);
-          userIdToUnreadSum.set(
-            userId,
-            (userIdToUnreadSum.get(userId) || 0) + unread,
-          );
-        });
+      for (let collIdx = 0; collIdx < selectedCollections.length; collIdx++) {
+        const collName = selectedCollections[collIdx];
+        setProgress(
+          `[1/2] Firestore 조회 중... (${collIdx + 1}/${
+            selectedCollections.length
+          }) - ${collName}`,
+        );
+        let lastDoc: DocumentSnapshot | null = null;
+        let totalFetched = 0;
+        const PAGE_SIZE = 500;
+
+        // 페이지네이션으로 데이터 가져오기
+        while (true) {
+          try {
+            const q: Query = lastDoc
+              ? query(
+                  collectionGroup(db, collName),
+                  limit(PAGE_SIZE),
+                  startAfter(lastDoc),
+                )
+              : query(collectionGroup(db, collName), limit(PAGE_SIZE));
+
+            const snap: QuerySnapshot = await getDocs(q);
+
+            if (snap.empty) break;
+
+            snap.forEach((doc: QueryDocumentSnapshot) => {
+              const data = doc.data() as Partial<ChannelMetaDoc>;
+              const userId = String(data.userId ?? "");
+              if (!userId) return;
+              const unread = Number(data.unreadCount ?? 0);
+              userIdToUnreadSum.set(
+                userId,
+                (userIdToUnreadSum.get(userId) || 0) + unread,
+              );
+            });
+
+            totalFetched += snap.size;
+            lastDoc = snap.docs[snap.docs.length - 1];
+
+            setProgress(
+              `[1/2] Firestore 조회 중... (${collIdx + 1}/${
+                selectedCollections.length
+              }) - ${collName}: ${totalFetched}개 문서`,
+            );
+
+            // 마지막 페이지인 경우 종료
+            if (snap.size < PAGE_SIZE) break;
+
+            // 타임아웃 방지를 위해 잠시 대기
+            await new Promise((resolve) => setTimeout(resolve, 100));
+          } catch (e) {
+            console.error(`컬렉션 ${collName} 조회 중 오류:`, e);
+            throw e;
+          }
+        }
       }
 
       if (userIdToUnreadSum.size === 0) {
         setRows([]);
+        setProgress("데이터가 없습니다.");
         setIsLoading(false);
         return;
       }
 
       // 2) 백엔드 API로 Role 확인 후 Role=1(모델)만 필터링
       const userIds = Array.from(userIdToUnreadSum.keys());
+      const totalUsers = userIds.length;
+
+      setProgress(
+        `[2/2] Role 확인 중... (0/${totalUsers}) - 총 ${totalUsers}명의 사용자`,
+      );
 
       // 병렬로 조회하되, 과도한 동시요청 방지를 위해 배치 처리
       const batchSize = 25;
       const resultRows: ExportResultRow[] = [];
       for (let i = 0; i < userIds.length; i += batchSize) {
         const batch = userIds.slice(i, i + batchSize);
+        const processed = Math.min(i + batch.length, totalUsers);
+        const progressPercent = Math.round((processed / totalUsers) * 100);
+
+        setProgress(
+          `[2/2] Role 확인 중... (${processed}/${totalUsers}, ${progressPercent}%) - 모델 ${resultRows.length}명 발견`,
+        );
         const responses = await Promise.all(
           batch.map(async (uid) => {
             try {
@@ -106,6 +174,7 @@ export default function ExportModelUnreadPage() {
         return a.userId.localeCompare(b.userId);
       });
 
+      setProgress(`완료! 총 ${resultRows.length}명의 모델 발견`);
       setRows(resultRows);
     } catch (e) {
       setError("데이터 수집 중 오류가 발생했습니다.");
@@ -174,6 +243,19 @@ export default function ExportModelUnreadPage() {
       </div>
 
       {error && <div style={{ color: "red" }}>{error}</div>}
+
+      {isLoading && progress && (
+        <div
+          style={{
+            padding: 12,
+            backgroundColor: "#f5f5f5",
+            borderRadius: 4,
+            fontSize: 14,
+          }}
+        >
+          {progress}
+        </div>
+      )}
 
       {rows.length > 0 && (
         <div style={{ fontSize: 12, color: "#666" }}>
