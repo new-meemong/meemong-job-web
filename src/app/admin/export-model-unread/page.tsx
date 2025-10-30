@@ -1,194 +1,174 @@
 "use client";
 
 import {
-  DocumentSnapshot,
-  Query,
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-  collectionGroup,
+  collection,
   getDocs,
-  limit,
   query,
-  startAfter,
 } from "firebase/firestore";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { db } from "@/lib/firebase";
-import { getUser } from "@/apis/user";
 
 type ChannelMetaDoc = {
   userId: string;
   unreadCount: number;
 };
 
-type ExportResultRow = {
-  userId: string;
-  totalUnreadCount: number;
+type CsvRow = {
+  uid: string;
+  가입일: string;
+  최근접속일: string;
+  이메일: string;
+  전화번호: string;
 };
 
-const chatMetaCollections = {
-  modelMatching: "userModelMatchingChatChannels",
-  jobPosting: "userJobPostingChatChannels",
-} as const;
+type ExportResultRow = CsvRow & {
+  안읽은채팅수: number;
+};
+
+const BATCH_SIZE = 1000;
+const PARALLEL_SIZE = 50; // 병렬 처리 개수
 
 export default function ExportModelUnreadPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const [includeModelMatching, setIncludeModelMatching] = useState(true);
-  const [includeJobPosting, setIncludeJobPosting] = useState(false);
   const [rows, setRows] = useState<ExportResultRow[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<string>("");
+  const [totalProcessed, setTotalProcessed] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [csvFile, setCsvFile] = useState<File | null>(null);
 
-  const selectedCollections = useMemo(() => {
-    const list: string[] = [];
-    if (includeModelMatching) list.push(chatMetaCollections.modelMatching);
-    if (includeJobPosting) list.push(chatMetaCollections.jobPosting);
-    return list;
-  }, [includeModelMatching, includeJobPosting]);
+  // CSV 파싱 함수
+  const parseCsv = (csvText: string): CsvRow[] => {
+    const lines = csvText.trim().split("\n");
+    const headers = lines[0].split(",");
+    const rows: CsvRow[] = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(",");
+      rows.push({
+        uid: values[0],
+        가입일: values[1],
+        최근접속일: values[2],
+        이메일: values[3],
+        전화번호: values[4] || "NULL",
+      });
+    }
+    return rows;
+  };
+
+  // 특정 userId의 unreadCount 합계 조회
+  const fetchUnreadForUser = async (userId: string): Promise<number> => {
+    try {
+      const channelsRef = collection(
+        db,
+        "users",
+        userId,
+        "userModelMatchingChatChannels",
+      );
+      const snap = await getDocs(query(channelsRef));
+
+      let total = 0;
+      snap.forEach((doc) => {
+        const data = doc.data() as Partial<ChannelMetaDoc>;
+        total += Number(data.unreadCount ?? 0);
+      });
+      return total;
+    } catch (e) {
+      console.error(`User ${userId} 조회 실패:`, e);
+      return 0;
+    }
+  };
 
   const fetchUnreadByUser = useCallback(async () => {
+    if (!csvFile) {
+      setError("CSV 파일을 먼저 선택해주세요.");
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     setProgress("");
+    setTotalProcessed(0);
+    setRows([]);
+
     try {
-      // 1) 컬렉션 그룹에서 모든 메타 문서를 조회하여 사용자별 미읽음 합계 계산
-      const userIdToUnreadSum = new Map<string, number>();
+      // 1) CSV 파일 읽기
+      setProgress("CSV 파일 읽는 중...");
+      const csvText = await csvFile.text();
+      const csvRows = parseCsv(csvText);
 
-      for (let collIdx = 0; collIdx < selectedCollections.length; collIdx++) {
-        const collName = selectedCollections[collIdx];
-        setProgress(
-          `[1/2] Firestore 조회 중... (${collIdx + 1}/${
-            selectedCollections.length
-          }) - ${collName}`,
-        );
-        let lastDoc: DocumentSnapshot | null = null;
-        let totalFetched = 0;
-        const PAGE_SIZE = 500;
+      setTotalUsers(csvRows.length);
+      setProgress(`CSV 로드 완료: 총 ${csvRows.length}명`);
 
-        // 페이지네이션으로 데이터 가져오기
-        while (true) {
-          try {
-            const q: Query = lastDoc
-              ? query(
-                  collectionGroup(db, collName),
-                  limit(PAGE_SIZE),
-                  startAfter(lastDoc),
-                )
-              : query(collectionGroup(db, collName), limit(PAGE_SIZE));
+      const allResults: ExportResultRow[] = [];
 
-            const snap: QuerySnapshot = await getDocs(q);
-
-            if (snap.empty) break;
-
-            snap.forEach((doc: QueryDocumentSnapshot) => {
-              const data = doc.data() as Partial<ChannelMetaDoc>;
-              const userId = String(data.userId ?? "");
-              if (!userId) return;
-              const unread = Number(data.unreadCount ?? 0);
-              userIdToUnreadSum.set(
-                userId,
-                (userIdToUnreadSum.get(userId) || 0) + unread,
-              );
-            });
-
-            totalFetched += snap.size;
-            lastDoc = snap.docs[snap.docs.length - 1];
-
-            setProgress(
-              `[1/2] Firestore 조회 중... (${collIdx + 1}/${
-                selectedCollections.length
-              }) - ${collName}: ${totalFetched}개 문서`,
-            );
-
-            // 마지막 페이지인 경우 종료
-            if (snap.size < PAGE_SIZE) break;
-
-            // 타임아웃 방지를 위해 잠시 대기
-            await new Promise((resolve) => setTimeout(resolve, 100));
-          } catch (e) {
-            console.error(`컬렉션 ${collName} 조회 중 오류:`, e);
-            throw e;
-          }
-        }
-      }
-
-      if (userIdToUnreadSum.size === 0) {
-        setRows([]);
-        setProgress("데이터가 없습니다.");
-        setIsLoading(false);
-        return;
-      }
-
-      // 2) 백엔드 API로 Role 확인 후 Role=1(모델)만 필터링
-      const userIds = Array.from(userIdToUnreadSum.keys());
-      const totalUsers = userIds.length;
-
-      setProgress(
-        `[2/2] Role 확인 중... (0/${totalUsers}) - 총 ${totalUsers}명의 사용자`,
-      );
-
-      // 병렬로 조회하되, 과도한 동시요청 방지를 위해 배치 처리
-      const batchSize = 25;
-      const resultRows: ExportResultRow[] = [];
-      for (let i = 0; i < userIds.length; i += batchSize) {
-        const batch = userIds.slice(i, i + batchSize);
-        const processed = Math.min(i + batch.length, totalUsers);
-        const progressPercent = Math.round((processed / totalUsers) * 100);
+      // 2) 1000명씩 배치 처리
+      for (let batchIdx = 0; batchIdx < csvRows.length; batchIdx += BATCH_SIZE) {
+        const batch = csvRows.slice(batchIdx, batchIdx + BATCH_SIZE);
+        const batchNum = Math.floor(batchIdx / BATCH_SIZE) + 1;
+        const totalBatches = Math.ceil(csvRows.length / BATCH_SIZE);
 
         setProgress(
-          `[2/2] Role 확인 중... (${processed}/${totalUsers}, ${progressPercent}%) - 모델 ${resultRows.length}명 발견`,
-        );
-        const responses = await Promise.all(
-          batch.map(async (uid) => {
-            try {
-              const res = await getUser(uid);
-              return { uid, res } as const;
-            } catch (e) {
-              return { uid, res: { error: true } } as const;
-            }
-          }),
+          `배치 ${batchNum}/${totalBatches} 처리 중... (${batchIdx}/${csvRows.length}명)`,
         );
 
-        for (const { uid, res } of responses) {
-          /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-          if ((res as any)?.error) continue;
-          /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-          const data = (res as any).data;
-          // 백엔드 모델에서 Role은 string | null로 정의됨. "1"이 모델, "2"가 디자이너
-          const roleStr = (data?.Role ?? null) as string | null;
-          const roleNum = roleStr != null ? Number(roleStr) : NaN;
-          if (roleNum === 1) {
-            resultRows.push({
-              userId: uid,
-              totalUnreadCount: userIdToUnreadSum.get(uid) || 0,
-            });
-          }
+        // 3) 각 배치 내에서 병렬 처리 (50명씩)
+        const batchResults: ExportResultRow[] = [];
+        for (let i = 0; i < batch.length; i += PARALLEL_SIZE) {
+          const parallel = batch.slice(i, i + PARALLEL_SIZE);
+
+          const results = await Promise.all(
+            parallel.map(async (row) => {
+              const unreadCount = await fetchUnreadForUser(row.uid);
+              return {
+                ...row,
+                안읽은채팅수: unreadCount,
+              };
+            }),
+          );
+
+          batchResults.push(...results);
+
+          const processed = batchIdx + i + parallel.length;
+          const percent = Math.round((processed / csvRows.length) * 100);
+          setTotalProcessed(processed);
+          setProgress(
+            `배치 ${batchNum}/${totalBatches} 처리 중... (${processed}/${csvRows.length}명, ${percent}%)`,
+          );
+
+          // 과부하 방지 delay
+          await new Promise((resolve) => setTimeout(resolve, 100));
         }
+
+        allResults.push(...batchResults);
+        setRows([...allResults]); // 중간 결과 표시
       }
 
-      // 3) 정렬: 미읽음 내림차순, 동일하면 userId 오름차순
-      resultRows.sort((a, b) => {
-        if (b.totalUnreadCount !== a.totalUnreadCount) {
-          return b.totalUnreadCount - a.totalUnreadCount;
-        }
-        return a.userId.localeCompare(b.userId);
-      });
-
-      setProgress(`완료! 총 ${resultRows.length}명의 모델 발견`);
-      setRows(resultRows);
+      setProgress(`완료! 총 ${allResults.length}명 처리 완료`);
+      setRows(allResults);
     } catch (e) {
       setError("데이터 수집 중 오류가 발생했습니다.");
       console.error(e);
     } finally {
       setIsLoading(false);
     }
-  }, [selectedCollections]);
+  }, [csvFile]);
 
   const toCsv = useCallback((items: ExportResultRow[]) => {
-    const header = ["userId", "totalUnreadCount"];
+    const header = ["uid", "가입일", "최근접속일", "이메일", "전화번호", "안읽은채팅수"];
     const lines = [header.join(",")];
     for (const r of items) {
-      lines.push([r.userId, String(r.totalUnreadCount)].join(","));
+      lines.push(
+        [
+          r.uid,
+          r.가입일,
+          r.최근접속일,
+          r.이메일,
+          r.전화번호,
+          String(r.안읽은채팅수),
+        ].join(","),
+      );
     }
     return lines.join("\n");
   }, []);
@@ -211,30 +191,34 @@ export default function ExportModelUnreadPage() {
   return (
     <div style={{ padding: 16, display: "grid", gap: 12 }}>
       <h2 style={{ fontSize: 18, fontWeight: 600 }}>
-        모델(ROLE=1) 미읽음 합계 CSV 내보내기
+        모델 미읽은 채팅 수 집계 (CSV 기반)
       </h2>
 
-      <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-        <label style={{ display: "flex", gap: 6, alignItems: "center" }}>
-          <input
-            type="checkbox"
-            checked={includeModelMatching}
-            onChange={(e) => setIncludeModelMatching(e.target.checked)}
-          />
-          modelMatching 포함
+      <div style={{ display: "grid", gap: 8 }}>
+        <label style={{ fontSize: 14, fontWeight: 500 }}>
+          CSV 파일 선택:
         </label>
-        <label style={{ display: "flex", gap: 6, alignItems: "center" }}>
-          <input
-            type="checkbox"
-            checked={includeJobPosting}
-            onChange={(e) => setIncludeJobPosting(e.target.checked)}
-          />
-          jobPosting 포함
-        </label>
+        <input
+          type="file"
+          accept=".csv"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              setCsvFile(file);
+              setError(null);
+            }
+          }}
+          disabled={isLoading}
+        />
+        {csvFile && (
+          <div style={{ fontSize: 12, color: "#666" }}>
+            선택된 파일: {csvFile.name} ({Math.round(csvFile.size / 1024)}KB)
+          </div>
+        )}
       </div>
 
       <div style={{ display: "flex", gap: 8 }}>
-        <button onClick={fetchUnreadByUser} disabled={isLoading}>
+        <button onClick={fetchUnreadByUser} disabled={isLoading || !csvFile}>
           {isLoading ? "집계 중..." : "집계 실행"}
         </button>
         <button onClick={downloadCsv} disabled={isLoading || rows.length === 0}>
@@ -244,7 +228,7 @@ export default function ExportModelUnreadPage() {
 
       {error && <div style={{ color: "red" }}>{error}</div>}
 
-      {isLoading && progress && (
+      {progress && (
         <div
           style={{
             padding: 12,
@@ -257,6 +241,13 @@ export default function ExportModelUnreadPage() {
         </div>
       )}
 
+      {totalUsers > 0 && (
+        <div style={{ fontSize: 12, color: "#666" }}>
+          진행률: {totalProcessed}/{totalUsers}명 (
+          {Math.round((totalProcessed / totalUsers) * 100)}%)
+        </div>
+      )}
+
       {rows.length > 0 && (
         <div style={{ fontSize: 12, color: "#666" }}>
           {`결과: ${rows.length}명 (표시는 상위 20명)`}
@@ -265,8 +256,8 @@ export default function ExportModelUnreadPage() {
 
       <ul style={{ margin: 0, paddingLeft: 16 }}>
         {rows.slice(0, 20).map((r) => (
-          <li key={r.userId}>
-            {r.userId} — {r.totalUnreadCount}
+          <li key={r.uid}>
+            {r.uid} — {r.이메일} — 안읽은채팅: {r.안읽은채팅수}
           </li>
         ))}
       </ul>
