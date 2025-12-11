@@ -24,6 +24,7 @@ import {
 import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
+import { updateChattingUnreadCount } from "@/features/chat/api/use-update-user-unread-count";
 
 interface ModelMatchingChatMessageState {
   messages: ModelMatchingChatMessageType[];
@@ -162,6 +163,14 @@ export const useModelMatchingChatMessageStore =
         });
 
         await Promise.all([updateSenderMeta, updateReceiverMeta]);
+
+        // 서버 unreadCount 동기화: 상대방의 unreadCount 1 증가
+        try {
+          await updateChattingUnreadCount(Number(receiverId), 1);
+        } catch (error) {
+          // 서버 동기화 실패 시에도 메시지 전송은 성공 처리
+          console.error("서버 unreadCount 동기화 실패:", error);
+        }
 
         return { success: true, channelId };
       } catch (error) {

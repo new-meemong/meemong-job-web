@@ -29,6 +29,7 @@ import { JobPostingChatChannelType } from "@/types/chat/job-posting/job-posting-
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
+import { updateChattingUnreadCount } from "@/features/chat/api/use-update-user-unread-count";
 import { useAuthStore } from "./auth-store";
 
 interface ChatChannelState {
@@ -267,10 +268,30 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
           channelId,
         );
 
+        // 현재 unreadCount 값을 읽어옴
+        const snap = await getDoc(ref);
+        const currentUnreadCount = snap.exists()
+          ? snap.data().unreadCount || 0
+          : 0;
+
+        // Firestore 업데이트
         await updateDoc(ref, {
           unreadCount: 0,
           updatedAt: serverTimestamp(),
         });
+
+        // 서버 unreadCount 동기화: 현재 사용자의 unreadCount 감소
+        if (currentUnreadCount > 0) {
+          try {
+            await updateChattingUnreadCount(
+              Number(userId),
+              -currentUnreadCount,
+            );
+          } catch (error) {
+            // 서버 동기화 실패 시에도 Firestore 업데이트는 성공 처리
+            console.error("서버 unreadCount 동기화 실패:", error);
+          }
+        }
       } catch (error) {
         console.error("안 읽은 메시지 카운트 리셋 중 오류 발생:", error);
       }
@@ -531,6 +552,17 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       userName: string,
     ) => {
       try {
+        // 현재 unreadCount 값을 읽어옴
+        const userChannelRef = doc(
+          db,
+          `users/${userId}/userJobPostingChatChannels`,
+          channelId,
+        );
+        const userMetaSnap = await getDoc(userChannelRef);
+        const currentUnreadCount = userMetaSnap.exists()
+          ? userMetaSnap.data().unreadCount || 0
+          : 0;
+
         // 1. 시스템 메시지 전송
         const messageRef = doc(
           collection(
@@ -550,11 +582,6 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         });
 
         // 2. 유저의 채널 메타데이터 업데이트
-        const userChannelRef = doc(
-          db,
-          `users/${userId}/userJobPostingChatChannels`,
-          channelId,
-        );
         await updateDoc(userChannelRef, {
           deletedAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
@@ -578,6 +605,19 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
             participantsIds: updatedParticipants,
             updatedAt: serverTimestamp(),
           });
+        }
+
+        // 서버 unreadCount 동기화: 현재 사용자의 unreadCount 감소
+        if (currentUnreadCount > 0) {
+          try {
+            await updateChattingUnreadCount(
+              Number(userId),
+              -currentUnreadCount,
+            );
+          } catch (error) {
+            // 서버 동기화 실패 시에도 채널 나가기는 성공 처리
+            console.error("서버 unreadCount 동기화 실패:", error);
+          }
         }
       } catch (error) {
         console.error("채널 나가기 중 오류 발생:", error);
