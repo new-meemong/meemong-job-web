@@ -33,7 +33,7 @@ export const apiFetch = async (url: string, method: string, body?: any) => {
     if (!response.ok) {
       throw new Error("API fetch failed");
     }
-    const responseData = await response.json();
+    const responseData = response.status === 204 ? null : await response.json();
     console.log("=== API Response ===");
     console.log(response.status, response.statusText, fullUrl);
     // console.log("Status:", response.status);

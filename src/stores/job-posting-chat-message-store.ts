@@ -25,6 +25,7 @@ import { ChatChannelTypeEnum } from "@/types/chat/chat-channel-type";
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
 import { updateChattingUnreadCount } from "@/features/chat/api/use-update-user-unread-count";
+import { updateDesignerLastChatReceivedAtAfterSend } from "@/apis/designer-last-chat-received-at";
 
 interface JobPostingChatMessageState {
   messages: JobPostingChatMessageType[];
@@ -163,6 +164,8 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         });
 
         await Promise.all([updateSenderMeta, updateReceiverMeta]);
+
+        void updateDesignerLastChatReceivedAtAfterSend(receiverId);
 
         // 서버 unreadCount 동기화: 상대방의 unreadCount 1 증가
         try {
