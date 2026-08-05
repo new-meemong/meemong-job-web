@@ -17,15 +17,20 @@ import { IMAGE_STORAGE_URL } from "@/apis/consts";
 import ImageSlider from "../components/image-slider";
 import { ImageType } from "@/types/image-type";
 import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting/job-posting-chat-message-type";
+import {
+  ChatOriginEntrySource,
+  ChatV2ChannelType,
+  ChatV2PostType,
+} from "@/types/chat/chat-start-request";
 import JobPostingHeader from "@/components/headers/JobPostingHeader";
 import { JobPostingType } from "@/types/job-posting-type";
 import PostingTitle from "../components/posting-title";
 import StoreFloatingButton from "@/components/buttons/store-floating-button";
 import StoreInfo from "../components/store-info";
 import StoreLocation from "../components/store-location";
-import { messageType } from "@/types/send-app-message-type";
 import pxToVw from "@/lib/dpi-converter";
 import { removeQueryParams } from "@/lib/remove-query-params";
+import { startChatChannelInApp } from "@/lib/start-chat-channel-bridge";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores/auth-store";
@@ -288,6 +293,20 @@ export default function PageContent({
           title="지원하기"
           onClick={async () => {
             try {
+              if (
+                source === "app" &&
+                startChatChannelInApp({
+                  channelType: ChatV2ChannelType.JOB_POSTING,
+                  postType: ChatV2PostType.JOB_POSTING,
+                  postId: jobPosting.id.toString(),
+                  targetUserId: jobPosting.userId.toString(),
+                  originEntrySource:
+                    ChatOriginEntrySource.JOB_POSTING_DETAIL_APPLY_CHAT,
+                })
+              ) {
+                return;
+              }
+
               const { channelId, isCreated } = await findOrCreateChannel({
                 senderId: userId,
                 receiverId: jobPosting.userId.toString(),
@@ -329,7 +348,7 @@ export default function PageContent({
                 const postUrl = window.location.href;
                 const postId = postUrl.split("/").pop() as string;
                 const message = {
-                  type: "system" as messageType,
+                  type: "system" as const,
                   postId,
                   postUserId: jobPosting.User?.id.toString(),
                   chatChannelId: channelId,

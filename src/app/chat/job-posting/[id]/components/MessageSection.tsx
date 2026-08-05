@@ -158,10 +158,9 @@ const MessageSection = ({
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages, clearMessages, loading } = useJobPostingChatMessageStore(
+  const { messages, loading } = useJobPostingChatMessageStore(
     (state) => ({
       messages: state.messages,
-      clearMessages: state.clearMessages,
       loading: state.loading,
     }),
   );
@@ -170,15 +169,14 @@ const MessageSection = ({
   }));
 
   const {
-    updateUserLastReadAt,
+    markJobPostingChannelMessagesRead,
     otherUserJobPostingChatChannel,
     subscribeToOtherUser,
-    resetUnreadCount,
   } = useJobPostingChatChannelStore((state) => ({
-    updateUserLastReadAt: state.updateUserLastReadAt,
+    markJobPostingChannelMessagesRead:
+      state.markJobPostingChannelMessagesRead,
     otherUserJobPostingChatChannel: state.otherUserJobPostingChatChannel,
     subscribeToOtherUser: state.subscribeToOtherUser,
-    resetUnreadCount: state.resetUnreadCount,
   }));
 
   useEffect(() => {
@@ -192,31 +190,30 @@ const MessageSection = ({
     return () => {
       unsubscribe();
     };
-  }, [userChannel?.channelId, userChannel?.otherUser?.id]);
+  }, [
+    userChannel?.channelId,
+    userChannel?.otherUser?.id,
+    subscribeToOtherUser,
+  ]);
 
   useEffect(() => {
     if (!userChannel?.channelId || !userId || loading) return;
 
-    // 메시지가 변경될 때마다 lastReadAt 업데이트
-    updateUserLastReadAt(userChannel.channelId, userId);
-  }, [userChannel?.channelId, userId, messages.length, loading]);
-
-  // cleanup을 위한 별도 useEffect
-  useEffect(() => {
-    return () => {
-      if (userId && userChannel?.channelId) {
-        resetUnreadCount(userChannel.channelId, userId);
-        clearMessages();
-      }
-    };
-  }, [userChannel?.channelId, userId]);
+    markJobPostingChannelMessagesRead(userChannel.channelId, userId);
+  }, [
+    userChannel?.channelId,
+    userId,
+    messages.length,
+    loading,
+    markJobPostingChannelMessagesRead,
+  ]);
 
   useEffect(() => {
     if (!userChannel?.channelId || !userId) return;
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        updateUserLastReadAt(userChannel.channelId, userId);
+        markJobPostingChannelMessagesRead(userChannel.channelId, userId);
       }
     };
 
@@ -225,7 +222,7 @@ const MessageSection = ({
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [userChannel?.channelId, userId]);
+  }, [userChannel?.channelId, userId, markJobPostingChannelMessagesRead]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

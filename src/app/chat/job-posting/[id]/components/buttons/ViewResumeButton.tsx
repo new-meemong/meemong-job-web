@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import ChatHowToUseIcon from "@/components/icons/chats/ChatHowToUseIcon";
 import ChatLeaveIcon from "@/components/icons/chats/ChatLeaveIcon";
@@ -23,23 +23,16 @@ const Label = styled.div`
   ${fonts.greyNormal12}
 `;
 
-const ViewResumeButton = () => {
-  const params = useParams();
+const ViewResumeButton = ({ postId }: { postId?: string }) => {
   const searchParams = useSearchParams();
   const source = searchParams.get("source");
 
-  const channelId = Array.isArray(params.id) ? params.id[0] : params.id;
-
   const handleClick = () => {
-    // channelId에서 jobPosting id 추출
-    const resumeId = channelId.split("_")[4];
+    if (!postId) return;
 
     if (source === "web") {
       // 새 탭에서 job posting 페이지 열기
-      window.open(
-        `/resume/${resumeId}?noButton=true&source=${source}`,
-        "_blank",
-      );
+      window.open(`/resume/${postId}?noButton=true&source=${source}`, "_blank");
     }
 
     if (
@@ -48,7 +41,7 @@ const ViewResumeButton = () => {
       window.externalLink
     ) {
       window.externalLink(
-        `${WEB_DOMAIN}/resume/${resumeId}?noButton=true&source=${source}`,
+        `${WEB_DOMAIN}/resume/${postId}?noButton=true&source=${source}`,
       );
     }
   };

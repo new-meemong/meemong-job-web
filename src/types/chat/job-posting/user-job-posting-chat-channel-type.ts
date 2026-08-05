@@ -13,6 +13,9 @@ export enum UserJobPostingChatChannelTypeEnum {
 export interface UserJobPostingChatChannelType {
   channelId: string;
   channelType: UserJobPostingChatChannelTypeEnum;
+  schemaVersion?: number;
+  postType?: "JOB_POSTING" | "RESUME";
+  postId?: string;
   unreadCount: number | FieldValue;
   isBlockChannel: boolean;
 

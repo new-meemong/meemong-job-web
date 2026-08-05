@@ -80,22 +80,23 @@ export default function JobPostingChatDetailPage({
     login: state.login,
   }));
 
-  const { subscribeToMessages, sendMessage } = useJobPostingChatMessageStore(
-    (state) => ({
+  const { subscribeToMessages, sendMessage, clearMessages } =
+    useJobPostingChatMessageStore((state) => ({
       subscribeToMessages: state.subscribeToMessages,
       sendMessage: state.sendMessage,
-    }),
-  );
+      clearMessages: state.clearMessages,
+    }));
 
   const {
     userJobPostingChatChannels,
+    markV2JobPostingChannelOpenedOnEntry,
     updateChannelUserInfo,
-    resetUnreadCount,
     subscribeToMine,
   } = useJobPostingChatChannelStore((state) => ({
     userJobPostingChatChannels: state.userJobPostingChatChannels,
+    markV2JobPostingChannelOpenedOnEntry:
+      state.markV2JobPostingChannelOpenedOnEntry,
     updateChannelUserInfo: state.updateChannelUserInfo,
-    resetUnreadCount: state.resetUnreadCount,
     subscribeToMine: state.subscribeToMine,
   }));
 
@@ -139,33 +140,43 @@ export default function JobPostingChatDetailPage({
     const unsubscribe = subscribeToMine(params.id, userId);
 
     return () => unsubscribe();
-  }, [source, params.id, userId, subscribeToMine, userChannel]);
+  }, [source, params.id, userId, subscribeToMine]);
   // 앱에서 접근한 경우 내채널 구독후 해당 채널 userChannel로 등록
 
   useEffect(() => {
-    if (
-      source === "app" &&
-      userJobPostingChatChannels.length === 1 &&
-      !userChannel
-    ) {
-      setUserChannel(userJobPostingChatChannels[0]);
+    if (source !== "app") return;
+
+    const currentChannel = userJobPostingChatChannels.find(
+      (channel) => channel.channelId === params.id,
+    );
+    if (currentChannel) {
+      setUserChannel(currentChannel);
     }
-  }, [source, userJobPostingChatChannels, userChannel]);
+  }, [source, userJobPostingChatChannels, params.id]);
 
   useEffect(() => {
-    if (params.id) {
-      const unsubscribe = subscribeToMessages(params.id);
-      return () => unsubscribe();
-    }
-  }, [params.id, subscribeToMessages]);
+    if (!params.id) return;
+
+    clearMessages();
+    const unsubscribe = subscribeToMessages(params.id);
+    return () => {
+      unsubscribe();
+      clearMessages();
+    };
+  }, [params.id, subscribeToMessages, clearMessages]);
 
   useEffect(() => {
     if (!userId || !params.id) return;
 
     // 채팅방 입장 시 상대방 정보 업데이트
     updateChannelUserInfo(params.id, userId);
-    resetUnreadCount(params.id, userId);
-  }, [userId, params.id, updateChannelUserInfo, resetUnreadCount]);
+    markV2JobPostingChannelOpenedOnEntry(params.id, userId);
+  }, [
+    userId,
+    params.id,
+    updateChannelUserInfo,
+    markV2JobPostingChannelOpenedOnEntry,
+  ]);
 
   const handleSendMessage = async () => {
     if (!messageText.trim() || !userChannel?.otherUser?.id || !userId) return;
@@ -179,7 +190,12 @@ export default function JobPostingChatDetailPage({
         messageType: JobPostingChatMessageTypeEnum.TEXT,
       });
       setMessageText(""); // 메시지 전송 후 입력창 초기화
-      await sendPushNotification(userChannel.otherUser.id, messageText);
+      await sendPushNotification({
+        userId: userChannel.otherUser.id,
+        message: messageText,
+        chatChannelId: userChannel.channelId,
+        schemaVersion: userChannel.schemaVersion ?? 1,
+      });
     } catch (error) {
       console.error("메시지 전송 실패:", error);
     }

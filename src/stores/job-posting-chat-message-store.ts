@@ -14,10 +14,9 @@ import {
   onSnapshot,
   orderBy,
   query,
+  runTransaction,
   serverTimestamp,
-  setDoc,
   startAfter,
-  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -113,28 +112,22 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
           ),
         );
 
+        const activityAt = serverTimestamp();
         const newMessage: Omit<JobPostingChatMessageType, "id"> = {
           message,
           messageType,
           metaPathList,
           senderId,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
+          createdAt: activityAt,
+          updatedAt: activityAt,
         };
 
-        await setDoc(messageRef, newMessage);
-
-        // 채널의 lastMessage 업데이트
+        // 메인 채널과 양쪽 사용자 메타데이터 참조
         const channelRef = doc(
           db,
           ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
           channelId,
         );
-        await updateDoc(channelRef, {
-          updatedAt: serverTimestamp(),
-        });
-
-        // 양쪽 사용자의 메타데이터에 lastMessage 업데이트
         const senderMetaRef = doc(
           db,
           `users/${senderId}/userJobPostingChatChannels`,
@@ -151,19 +144,39 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
           ...newMessage,
         };
 
-        // 사용자 메타데이터 업데이트
-        const updateSenderMeta = updateDoc(senderMetaRef, {
-          lastMessage: lastMessageData,
-          updatedAt: serverTimestamp(),
-        });
+        // v2 첫 답장 latch와 메시지, 양쪽 사용자 메타데이터를 함께 반영한다.
+        await runTransaction(db, async (transaction) => {
+          const channelSnapshot = await transaction.get(channelRef);
+          if (!channelSnapshot.exists()) {
+            throw new Error("구인구직 채팅방을 찾을 수 없습니다.");
+          }
 
-        const updateReceiverMeta = updateDoc(receiverMetaRef, {
-          lastMessage: lastMessageData,
-          updatedAt: serverTimestamp(),
-          unreadCount: increment(1),
-        });
+          const channelData = channelSnapshot.data();
+          const marksFirstReply =
+            channelData.schemaVersion === 2 &&
+            channelData.hasFirstReply !== true &&
+            channelData.channelOpenUserId !== senderId;
 
-        await Promise.all([updateSenderMeta, updateReceiverMeta]);
+          transaction.set(messageRef, newMessage);
+          transaction.update(channelRef, {
+            lastActivityAt: activityAt,
+            updatedAt: activityAt,
+            ...(marksFirstReply ? { hasFirstReply: true } : {}),
+          });
+          transaction.update(senderMetaRef, {
+            lastMessage: lastMessageData,
+            lastActivityAt: activityAt,
+            updatedAt: activityAt,
+            ...(marksFirstReply ? { hasFirstReply: true } : {}),
+          });
+          transaction.update(receiverMetaRef, {
+            lastMessage: lastMessageData,
+            lastActivityAt: activityAt,
+            updatedAt: activityAt,
+            unreadCount: increment(1),
+            ...(marksFirstReply ? { hasFirstReply: true } : {}),
+          });
+        });
 
         void updateDesignerLastChatReceivedAtAfterSend(receiverId);
 

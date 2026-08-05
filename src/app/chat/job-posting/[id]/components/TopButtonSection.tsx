@@ -28,7 +28,14 @@ const TopButtonSection = ({
 
   if (!userChannel) return null;
 
-  const { channelType, channelId, otherUser } = userChannel;
+  const { channelType, channelId, otherUser, postId } = userChannel;
+  const legacyChannelParts =
+    userChannel.schemaVersion === 2 ? [] : channelId.split("_");
+  const resolvedPostId =
+    postId ??
+    (channelType === "jobPostingApplicant" || channelType === "jobPostingStore"
+      ? legacyChannelParts[legacyChannelParts.length - 2]
+      : legacyChannelParts[legacyChannelParts.length - 1]);
 
   const renderButtons = () => {
     switch (channelType) {
@@ -42,7 +49,7 @@ const TopButtonSection = ({
               senderId={userId}
               receiverId={otherUser.id}
             />
-            <ViewJobPostingButton />
+            <ViewJobPostingButton postId={resolvedPostId} />
             <LeaveButton />
           </>
         );
@@ -51,7 +58,7 @@ const TopButtonSection = ({
           <>
             <HowToUseButton />
             <ArrangeInterviewButton />
-            <ViewJobPostingButton />
+            <ViewJobPostingButton postId={resolvedPostId} />
             <LeaveButton />
           </>
         );
@@ -60,7 +67,7 @@ const TopButtonSection = ({
           <>
             <HowToUseButton />
             <ArrangeInterviewButton />
-            <ViewResumeButton />
+            <ViewResumeButton postId={resolvedPostId} />
             <LeaveButton />
           </>
         );
@@ -69,7 +76,7 @@ const TopButtonSection = ({
           <>
             <HowToUseButton />
             <ArrangeInterviewButton />
-            <ViewResumeButton />
+            <ViewResumeButton postId={resolvedPostId} />
             <LeaveButton />
           </>
         );

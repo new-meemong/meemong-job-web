@@ -1,9 +1,14 @@
 import { JobPostingChatMessageTypeEnum } from "@/types/chat/job-posting/job-posting-chat-message-type";
+import {
+  ChatOriginEntrySource,
+  ChatV2ChannelType,
+  ChatV2PostType,
+} from "@/types/chat/chat-start-request";
 import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
-import { messageType } from "@/types/send-app-message-type";
 import pxToVw from "@/lib/dpi-converter";
 import { removeQueryParams } from "@/lib/remove-query-params";
+import { startChatChannelInApp } from "@/lib/start-chat-channel-bridge";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores/auth-store";
@@ -61,6 +66,18 @@ const BottomButtonSection = ({
   const handleSuggestButtonClick = async () => {
     try {
       if (!userId) return;
+      if (
+        source === "app" &&
+        startChatChannelInApp({
+          channelType: ChatV2ChannelType.JOB_POSTING,
+          postType: ChatV2PostType.RESUME,
+          postId,
+          targetUserId: postUserId,
+          originEntrySource: ChatOriginEntrySource.RESUME_DETAIL_OFFER_CHAT,
+        })
+      ) {
+        return;
+      }
       const { channelId, isCreated } = await findOrCreateChannel({
         senderId: userId,
         receiverId: postUserId,
@@ -102,7 +119,7 @@ const BottomButtonSection = ({
         const postUrl = window.location.href;
         const postId = postUrl.split("/").pop() as string;
         const message = {
-          type: "system" as messageType,
+          type: "system" as const,
           postId,
           postUserId,
           chatChannelId: channelId,

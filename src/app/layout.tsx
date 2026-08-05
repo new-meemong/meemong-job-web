@@ -63,6 +63,15 @@ export default function RootLayout({
             }
             window.startChat = startChat;
 
+            function startChatChannel(message) {
+              if(window.StartChatChannel) {
+                window.StartChatChannel.postMessage(JSON.stringify(message));
+              } else {
+                console.log("StartChatChannel channel is not available.");
+              }
+            }
+            window.startChatChannel = startChatChannel;
+
             function closeWebview(message) {
               if(window.GoBack) {
                 window.GoBack.postMessage(JSON.stringify(message));

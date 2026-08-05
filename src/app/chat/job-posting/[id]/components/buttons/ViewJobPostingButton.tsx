@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import ChatViewJobPostingIcon from "@/components/icons/chats/ChatViewJobPostingIcon";
 import { WEB_DOMAIN } from "@/apis/consts";
@@ -21,21 +21,17 @@ const Label = styled.div`
   ${fonts.greyNormal12}
 `;
 
-const ViewJobPostingButton = () => {
-  const params = useParams();
+const ViewJobPostingButton = ({ postId }: { postId?: string }) => {
   const searchParams = useSearchParams();
   const source = searchParams.get("source");
 
-  const channelId = Array.isArray(params.id) ? params.id[0] : params.id;
-
   const handleClick = () => {
-    // channelId에서 jobPosting id 추출
-    const jobPostingId = channelId.split("_")[3];
+    if (!postId) return;
 
     if (source === "web") {
       // 새 탭에서 job posting 페이지 열기
       window.open(
-        `/job-posting/${jobPostingId}?noButton=true&source=${source}`,
+        `/job-posting/${postId}?noButton=true&source=${source}`,
         "_blank",
       );
     }
@@ -46,7 +42,7 @@ const ViewJobPostingButton = () => {
       window.externalLink
     ) {
       window.externalLink(
-        `${WEB_DOMAIN}/job-posting/${jobPostingId}?noButton=true&source=${source}`,
+        `${WEB_DOMAIN}/job-posting/${postId}?noButton=true&source=${source}`,
       );
     }
   };

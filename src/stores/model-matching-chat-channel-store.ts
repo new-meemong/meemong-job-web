@@ -28,6 +28,7 @@ import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
 import { useAuthStore } from "./auth-store";
 import { updateChattingUnreadCount } from "@/features/chat/api/use-update-user-unread-count";
+import { leaveChatChannelAtomically } from "./chat/leave-chat-channel";
 
 interface ChatChannelState {
   userModelMatchingChatChannels: UserModelMatchingChatChannelType[];
@@ -497,60 +498,15 @@ export const useModelMatchingChatChannelStore = create<ChatChannelState>(
       userName: string,
     ) => {
       try {
-        // 현재 unreadCount 값을 읽어옴
-        const userChannelRef = doc(
-          db,
-          `users/${userId}/userModelMatchingChatChannels`,
+        const currentUnreadCount = await leaveChatChannelAtomically({
+          firestore: db,
           channelId,
-        );
-        const userMetaSnap = await getDoc(userChannelRef);
-        const currentUnreadCount = userMetaSnap.exists()
-          ? userMetaSnap.data().unreadCount || 0
-          : 0;
-
-        // 1. 시스템 메시지 전송
-        const messageRef = doc(
-          collection(
-            db,
-            `${ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS}/${channelId}/messages`,
-          ),
-        );
-
-        await setDoc(messageRef, {
-          id: messageRef.id,
-          message: `${userName}님이 나갔습니다.`,
-          messageType: ModelMatchingChatMessageTypeEnum.SYSTEM,
-          metaPathList: [],
-          senderId: "system",
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
+          userId,
+          userName,
+          sourceCollection: ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS,
+          userChannelCollection: "userModelMatchingChatChannels",
+          systemMessageType: ModelMatchingChatMessageTypeEnum.SYSTEM,
         });
-
-        // 2. 유저의 채널 메타데이터 업데이트
-        await updateDoc(userChannelRef, {
-          deletedAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        });
-
-        // 3. 채널의 참여자 목록에서 유저 제거
-        const channelRef = doc(
-          db,
-          ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS,
-          channelId,
-        );
-        const channelSnap = await getDoc(channelRef);
-
-        if (channelSnap.exists()) {
-          const channelData = channelSnap.data();
-          const updatedParticipants = channelData.participantsIds.filter(
-            (id: string) => id !== userId,
-          );
-
-          await updateDoc(channelRef, {
-            participantsIds: updatedParticipants,
-            updatedAt: serverTimestamp(),
-          });
-        }
 
         // 서버 unreadCount 동기화: 현재 사용자의 unreadCount 감소
         if (currentUnreadCount > 0) {
@@ -566,6 +522,7 @@ export const useModelMatchingChatChannelStore = create<ChatChannelState>(
         }
       } catch (error) {
         console.error("채널 나가기 중 오류 발생:", error);
+        throw error;
       }
     },
   }),

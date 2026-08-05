@@ -31,6 +31,7 @@ import { db } from "@/lib/firebase";
 import { getUser } from "@/apis/user";
 import { updateChattingUnreadCount } from "@/features/chat/api/use-update-user-unread-count";
 import { useAuthStore } from "./auth-store";
+import { leaveChatChannelAtomically } from "./chat/leave-chat-channel";
 
 interface ChatChannelState {
   userJobPostingChatChannels: UserJobPostingChatChannelType[];
@@ -48,10 +49,15 @@ interface ChatChannelState {
 
   subscribeToChannels: (userId: string) => () => void;
 
-  // 해당 채널의 유저 unreadCount 초기화
-  resetUnreadCount: (channelId: string, userId: string) => Promise<void>;
+  markJobPostingChannelMessagesRead: (
+    channelId: string,
+    userId: string,
+  ) => Promise<void>;
 
-  updateUserLastReadAt: (channelId: string, userId: string) => Promise<void>;
+  markV2JobPostingChannelOpenedOnEntry: (
+    channelId: string,
+    userId: string,
+  ) => Promise<void>;
 
   pinChannel: (channelId: string, userId: string) => Promise<void>;
   unpinChannel: (channelId: string, userId: string) => Promise<void>;
@@ -260,7 +266,10 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       return unsubscribe;
     },
 
-    resetUnreadCount: async (channelId: string, userId: string) => {
+    markJobPostingChannelMessagesRead: async (
+      channelId: string,
+      userId: string,
+    ) => {
       try {
         const ref = doc(
           db,
@@ -268,36 +277,47 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
           channelId,
         );
 
-        // 현재 unreadCount 값을 읽어옴
-        const snap = await getDoc(ref);
-        const currentUnreadCount = snap.exists()
-          ? snap.data().unreadCount || 0
-          : 0;
+        const currentUnreadCount = await runTransaction(
+          db,
+          async (transaction) => {
+            const snapshot = await transaction.get(ref);
+            if (!snapshot.exists()) return 0;
 
-        // Firestore 업데이트
-        await updateDoc(ref, {
-          unreadCount: 0,
-          updatedAt: serverTimestamp(),
-        });
+            const rawUnreadCount = snapshot.data().unreadCount;
+            const unreadCount =
+              typeof rawUnreadCount === "number" && rawUnreadCount > 0
+                ? rawUnreadCount
+                : 0;
 
-        // 서버 unreadCount 동기화: 현재 사용자의 unreadCount 감소
-        if (currentUnreadCount > 0) {
-          try {
-            await updateChattingUnreadCount(
-              Number(userId),
-              -currentUnreadCount,
-            );
-          } catch (error) {
-            // 서버 동기화 실패 시에도 Firestore 업데이트는 성공 처리
-            console.error("서버 unreadCount 동기화 실패:", error);
-          }
+            transaction.update(ref, {
+              unreadCount: 0,
+              lastReadAt: serverTimestamp(),
+              updatedAt: serverTimestamp(),
+            });
+            return unreadCount;
+          },
+        );
+
+        if (currentUnreadCount <= 0) return;
+
+        try {
+          await updateChattingUnreadCount(
+            Number(userId),
+            -currentUnreadCount,
+          );
+        } catch (error) {
+          // 서버 동기화 실패 시에도 Firestore 읽음 처리는 성공으로 유지한다.
+          console.error("서버 unreadCount 동기화 실패:", error);
         }
       } catch (error) {
-        console.error("안 읽은 메시지 카운트 리셋 중 오류 발생:", error);
+        console.error("구인구직 채팅 읽음 처리 중 오류 발생:", error);
       }
     },
 
-    updateUserLastReadAt: async (channelId: string, userId: string) => {
+    markV2JobPostingChannelOpenedOnEntry: async (
+      channelId: string,
+      userId: string,
+    ) => {
       try {
         const ref = doc(
           db,
@@ -305,12 +325,27 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
           channelId,
         );
 
-        await updateDoc(ref, {
-          lastReadAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
+        await runTransaction(db, async (transaction) => {
+          const snapshot = await transaction.get(ref);
+          if (!snapshot.exists()) return;
+
+          const metadata = snapshot.data();
+          if (
+            metadata.schemaVersion !== 2 ||
+            metadata.openState !== "NOT_OPENED"
+          ) {
+            return;
+          }
+
+          transaction.update(ref, {
+            openState: "OPENED",
+            openMethod: "NONE",
+            openedAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          });
         });
       } catch (error) {
-        console.error("사용자 lastReadAt 업데이트 중 오류 발생:", error);
+        console.error("v2 구인구직 채팅방 개봉 상태 업데이트 실패:", error);
       }
     },
 
@@ -552,60 +587,15 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
       userName: string,
     ) => {
       try {
-        // 현재 unreadCount 값을 읽어옴
-        const userChannelRef = doc(
-          db,
-          `users/${userId}/userJobPostingChatChannels`,
+        const currentUnreadCount = await leaveChatChannelAtomically({
+          firestore: db,
           channelId,
-        );
-        const userMetaSnap = await getDoc(userChannelRef);
-        const currentUnreadCount = userMetaSnap.exists()
-          ? userMetaSnap.data().unreadCount || 0
-          : 0;
-
-        // 1. 시스템 메시지 전송
-        const messageRef = doc(
-          collection(
-            db,
-            `${ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS}/${channelId}/messages`,
-          ),
-        );
-
-        await setDoc(messageRef, {
-          id: messageRef.id,
-          message: `${userName}님이 나갔습니다.`,
-          messageType: JobPostingChatMessageTypeEnum.SYSTEM,
-          metaPathList: [],
-          senderId: "system",
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
+          userId,
+          userName,
+          sourceCollection: ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+          userChannelCollection: "userJobPostingChatChannels",
+          systemMessageType: JobPostingChatMessageTypeEnum.SYSTEM,
         });
-
-        // 2. 유저의 채널 메타데이터 업데이트
-        await updateDoc(userChannelRef, {
-          deletedAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        });
-
-        // 3. 채널의 참여자 목록에서 유저 제거
-        const channelRef = doc(
-          db,
-          ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
-          channelId,
-        );
-        const channelSnap = await getDoc(channelRef);
-
-        if (channelSnap.exists()) {
-          const channelData = channelSnap.data();
-          const updatedParticipants = channelData.participantsIds.filter(
-            (id: string) => id !== userId,
-          );
-
-          await updateDoc(channelRef, {
-            participantsIds: updatedParticipants,
-            updatedAt: serverTimestamp(),
-          });
-        }
 
         // 서버 unreadCount 동기화: 현재 사용자의 unreadCount 감소
         if (currentUnreadCount > 0) {
@@ -621,6 +611,7 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
         }
       } catch (error) {
         console.error("채널 나가기 중 오류 발생:", error);
+        throw error;
       }
     },
   }),

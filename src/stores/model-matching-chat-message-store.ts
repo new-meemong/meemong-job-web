@@ -15,9 +15,8 @@ import {
   orderBy,
   query,
   serverTimestamp,
-  setDoc,
   startAfter,
-  updateDoc,
+  writeBatch,
   where,
 } from "firebase/firestore";
 
@@ -112,28 +111,22 @@ export const useModelMatchingChatMessageStore =
           ),
         );
 
+        const activityAt = serverTimestamp();
         const newMessage: Omit<ModelMatchingChatMessageType, "id"> = {
           message,
           messageType,
           metaPathList,
           senderId,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
+          createdAt: activityAt,
+          updatedAt: activityAt,
         };
 
-        await setDoc(messageRef, newMessage);
-
-        // 채널의 lastMessage 업데이트
+        // 메인 채널과 양쪽 사용자 메타데이터 참조
         const channelRef = doc(
           db,
           ChatChannelTypeEnum.MODEL_MATCHING_CHAT_CHANNELS,
           channelId,
         );
-        await updateDoc(channelRef, {
-          updatedAt: serverTimestamp(),
-        });
-
-        // 양쪽 사용자의 메타데이터에 lastMessage 업데이트
         const senderMetaRef = doc(
           db,
           `users/${senderId}/userModelMatchingChatChannels`,
@@ -150,19 +143,25 @@ export const useModelMatchingChatMessageStore =
           ...newMessage,
         };
 
-        // 사용자 메타데이터 업데이트
-        const updateSenderMeta = updateDoc(senderMetaRef, {
-          lastMessage: lastMessageData,
-          updatedAt: serverTimestamp(),
+        // 메시지와 채널 활동 시각, 양쪽 사용자 메타데이터를 함께 반영한다.
+        const batch = writeBatch(db);
+        batch.set(messageRef, newMessage);
+        batch.update(channelRef, {
+          lastActivityAt: activityAt,
+          updatedAt: activityAt,
         });
-
-        const updateReceiverMeta = updateDoc(receiverMetaRef, {
+        batch.update(senderMetaRef, {
           lastMessage: lastMessageData,
-          updatedAt: serverTimestamp(),
+          lastActivityAt: activityAt,
+          updatedAt: activityAt,
+        });
+        batch.update(receiverMetaRef, {
+          lastMessage: lastMessageData,
+          lastActivityAt: activityAt,
+          updatedAt: activityAt,
           unreadCount: increment(1),
         });
-
-        await Promise.all([updateSenderMeta, updateReceiverMeta]);
+        await batch.commit();
 
         // 서버 unreadCount 동기화: 상대방의 unreadCount 1 증가
         try {

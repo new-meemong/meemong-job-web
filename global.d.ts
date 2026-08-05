@@ -1,13 +1,26 @@
-interface Window {
-  startChat: (message: {
-    type: "job-posting" | "resume" | "system" | "text";
-    postId: string;
-    postUserId: string;
-  }) => void;
+import type { ChatStartRequest } from "@/types/chat/chat-start-request";
 
-  closeWebview: (message: string) => void;
+declare global {
+  interface Window {
+    startChat: (message: {
+      type: "job-posting" | "resume" | "system" | "text";
+      postId: string;
+      postUserId: string;
+    }) => void;
 
-  externalLink: (message: string) => void;
+    closeWebview: (message: string) => void;
 
-  openChatChannel: (message: { userId: string; chatChannelId: string }) => void;
+    externalLink: (message: string) => void;
+
+    openChatChannel: (message: {
+      userId: string;
+      chatChannelId: string;
+    }) => void;
+    StartChatChannel?: {
+      postMessage: (message: string) => void;
+    };
+    startChatChannel?: (message: ChatStartRequest) => void;
+  }
 }
+
+export {};
