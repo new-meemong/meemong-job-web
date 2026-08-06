@@ -1,5 +1,3 @@
-import type { ChatStartRequest } from "@/types/chat/chat-start-request";
-
 declare global {
   interface Window {
     startChat: (message: {
@@ -19,7 +17,6 @@ declare global {
     StartChatChannel?: {
       postMessage: (message: string) => void;
     };
-    startChatChannel?: (message: ChatStartRequest) => void;
   }
 }
 

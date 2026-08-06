@@ -16,6 +16,7 @@ import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
 import { useJobPostingChatMessageStore } from "@/stores/job-posting-chat-message-store";
 import { useSearchParams } from "next/navigation";
+import { JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR } from "@/stores/chat/job-posting-chat-message-policy";
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +31,7 @@ const Container = styled.div`
 
 const InputContainer = styled.div`
   display: flex;
+  flex-direction: column;
   padding: ${pxToVw(16)};
   border-top: 1px solid #eee;
   background: white;
@@ -40,12 +42,28 @@ const InputContainer = styled.div`
   width: 100%;
 `;
 
+const MessageInputRow = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const ChannelUnavailableNotice = styled.div`
+  margin-bottom: ${pxToVw(8)};
+  color: #666;
+  text-align: center;
+`;
+
 const MessageInput = styled.input`
   flex: 1;
   padding: ${pxToVw(8)} ${pxToVw(12)};
   border: ${pxToVw(1)} solid #ddd;
   border-radius: ${pxToVw(4)};
   margin-right: ${pxToVw(8)};
+
+  &:disabled {
+    background-color: #f5f5f5;
+    color: #999;
+  }
 `;
 
 const SendButton = styled.button`
@@ -58,6 +76,11 @@ const SendButton = styled.button`
 
   &:hover {
     background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: default;
   }
 `;
 
@@ -72,8 +95,14 @@ export default function JobPostingChatDetailPage({
   const [userChannel, setUserChannel] =
     useState<UserJobPostingChatChannelType | null>(null);
   const [messageText, setMessageText] = useState("");
+  const [sendUnavailable, setSendUnavailable] = useState(false);
 
   const [error, setError] = useState<string | null>(null);
+
+  const channelUnavailable =
+    sendUnavailable ||
+    userChannel?.deletedAt != null ||
+    userChannel?.otherUserLeft === true;
 
   const { userId, login } = useAuthStore((state) => ({
     userId: state.userId,
@@ -166,6 +195,10 @@ export default function JobPostingChatDetailPage({
   }, [params.id, subscribeToMessages, clearMessages]);
 
   useEffect(() => {
+    setSendUnavailable(false);
+  }, [params.id]);
+
+  useEffect(() => {
     if (!userId || !params.id) return;
 
     // 채팅방 입장 시 상대방 정보 업데이트
@@ -179,16 +212,31 @@ export default function JobPostingChatDetailPage({
   ]);
 
   const handleSendMessage = async () => {
-    if (!messageText.trim() || !userChannel?.otherUser?.id || !userId) return;
+    if (
+      channelUnavailable ||
+      !messageText.trim() ||
+      !userChannel?.otherUser?.id ||
+      !userId
+    ) {
+      return;
+    }
 
     try {
-      await sendMessage({
+      const result = await sendMessage({
         channelId: params.id,
         senderId: userId, // TODO: 실제 사용자 ID로 교체 필요
         receiverId: userChannel.otherUser.id,
         message: messageText,
         messageType: JobPostingChatMessageTypeEnum.TEXT,
       });
+      if (!result.success) {
+        if (
+          result.errorCode === JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR
+        ) {
+          setSendUnavailable(true);
+        }
+        return;
+      }
       setMessageText(""); // 메시지 전송 후 입력창 초기화
       await sendPushNotification({
         userId: userChannel.otherUser.id,
@@ -224,18 +272,35 @@ export default function JobPostingChatDetailPage({
 
       <MessageSection userChannel={userChannel!} source={source} />
       <InputContainer>
-        <MessageInput
-          type="text"
-          value={messageText}
-          onChange={(e) => setMessageText(e.target.value)}
-          placeholder="메시지를 입력하세요..."
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleSendMessage();
+        {channelUnavailable && (
+          <ChannelUnavailableNotice>
+            상대방이 나간 채팅방입니다.
+          </ChannelUnavailableNotice>
+        )}
+        <MessageInputRow>
+          <MessageInput
+            type="text"
+            value={messageText}
+            disabled={channelUnavailable}
+            onChange={(e) => setMessageText(e.target.value)}
+            placeholder={
+              channelUnavailable
+                ? "메시지를 보낼 수 없습니다."
+                : "메시지를 입력하세요..."
             }
-          }}
-        />
-        <SendButton onClick={handleSendMessage}>전송</SendButton>
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSendMessage();
+              }
+            }}
+          />
+          <SendButton
+            disabled={channelUnavailable}
+            onClick={handleSendMessage}
+          >
+            전송
+          </SendButton>
+        </MessageInputRow>
       </InputContainer>
     </Container>
   );

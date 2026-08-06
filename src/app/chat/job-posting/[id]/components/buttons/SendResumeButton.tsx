@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import { useJobPostingChatMessageStore } from "@/stores/job-posting-chat-message-store";
 import { useResumeListStore } from "@/stores/resume-list-store";
 import { useState } from "react";
+import { JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR } from "@/stores/chat/job-posting-chat-message-policy";
 
 const Container = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ const SendResumeButton = ({
     const result = await checkMyResumeExist();
 
     if (result.status === true && result.data) {
-      await sendMessage({
+      const sendResult = await sendMessage({
         channelId,
         senderId,
         receiverId,
@@ -61,6 +62,14 @@ const SendResumeButton = ({
           },
         ],
       });
+      if (!sendResult.success) {
+        toast.error(
+          sendResult.errorCode ===
+            JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR
+            ? "상대방이 나간 채팅방입니다."
+            : "이력서 전송에 실패했습니다.",
+        );
+      }
     } else {
       setIsOpenModal(true);
     }

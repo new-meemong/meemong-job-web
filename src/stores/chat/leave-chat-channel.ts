@@ -76,6 +76,10 @@ export function resolveChatV2StartPointerId(
   return `${channelType}_${postType}_${roomIdentityId}_${sortedParticipantIds[0]}_${sortedParticipantIds[1]}`;
 }
 
+export function buildLeaveChatSystemMessage(userName: string): string {
+  return `${userName}님이\n채팅방을 나갔어요`;
+}
+
 export async function leaveChatChannelAtomically({
   firestore,
   channelId,
@@ -140,7 +144,7 @@ export async function leaveChatChannelAtomically({
 
     transaction.set(messageRef, {
       id: messageRef.id,
-      message: `${userName}님이 나갔습니다.`,
+      message: buildLeaveChatSystemMessage(userName),
       messageType: systemMessageType,
       metaPathList: [],
       senderId: "system",

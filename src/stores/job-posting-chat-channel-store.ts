@@ -4,6 +4,7 @@ import {
 } from "@/types/chat/job-posting/job-posting-chat-message-type";
 import {
   Timestamp,
+  arrayUnion,
   collection,
   doc,
   getDoc,
@@ -138,8 +139,14 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
               participantRefs.forEach((ref) => {
                 transaction.update(ref, {
                   deletedAt: null,
+                  deleteReason: null,
+                  otherUserLeft: false,
                   updatedAt: serverTimestamp(),
                 });
+              });
+              transaction.update(channelRef, {
+                participantsIds: arrayUnion(...participantIds),
+                updatedAt: serverTimestamp(),
               });
               return { channelId: channelRef.id, isCreated: true };
             }

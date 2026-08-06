@@ -1,7 +1,17 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { resolveChatV2StartPointerId } from "./leave-chat-channel.ts";
+import {
+  buildLeaveChatSystemMessage,
+  resolveChatV2StartPointerId,
+} from "./leave-chat-channel.ts";
+
+test("matches the Flutter leave system message", () => {
+  assert.equal(
+    buildLeaveChatSystemMessage("문새"),
+    "문새님이\n채팅방을 나갔어요",
+  );
+});
 
 test("builds the canonical job-posting v2 start pointer ID", () => {
   assert.equal(

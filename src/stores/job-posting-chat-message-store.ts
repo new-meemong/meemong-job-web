@@ -25,6 +25,11 @@ import { create } from "zustand";
 import { db } from "@/lib/firebase";
 import { updateChattingUnreadCount } from "@/features/chat/api/use-update-user-unread-count";
 import { updateDesignerLastChatReceivedAtAfterSend } from "@/apis/designer-last-chat-received-at";
+import {
+  isJobPostingChatChannelUnavailable,
+  JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR,
+  shouldMarkJobPostingFirstReply,
+} from "./chat/job-posting-chat-message-policy";
 
 interface JobPostingChatMessageState {
   messages: JobPostingChatMessageType[];
@@ -42,7 +47,11 @@ interface JobPostingChatMessageState {
     message: string;
     messageType: JobPostingChatMessageTypeEnum;
     metaPathList?: MetaPathType[];
-  }) => Promise<{ success: boolean; channelId: string | null }>;
+  }) => Promise<{
+    success: boolean;
+    channelId: string | null;
+    errorCode?: string;
+  }>;
 
   clearMessages: () => void;
 }
@@ -146,16 +155,33 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
 
         // v2 첫 답장 latch와 메시지, 양쪽 사용자 메타데이터를 함께 반영한다.
         await runTransaction(db, async (transaction) => {
-          const channelSnapshot = await transaction.get(channelRef);
-          if (!channelSnapshot.exists()) {
+          const [channelSnapshot, senderMetaSnapshot, receiverMetaSnapshot] =
+            await Promise.all([
+              transaction.get(channelRef),
+              transaction.get(senderMetaRef),
+              transaction.get(receiverMetaRef),
+            ]);
+          if (
+            !channelSnapshot.exists() ||
+            !senderMetaSnapshot.exists() ||
+            !receiverMetaSnapshot.exists()
+          ) {
             throw new Error("구인구직 채팅방을 찾을 수 없습니다.");
           }
 
           const channelData = channelSnapshot.data();
-          const marksFirstReply =
-            channelData.schemaVersion === 2 &&
-            channelData.hasFirstReply !== true &&
-            channelData.channelOpenUserId !== senderId;
+          if (
+            isJobPostingChatChannelUnavailable(
+              senderMetaSnapshot.data(),
+              receiverMetaSnapshot.data(),
+            )
+          ) {
+            throw new Error(JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR);
+          }
+          const marksFirstReply = shouldMarkJobPostingFirstReply(
+            channelData,
+            senderId,
+          );
 
           transaction.set(messageRef, newMessage);
           transaction.update(channelRef, {
@@ -167,7 +193,6 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
             lastMessage: lastMessageData,
             lastActivityAt: activityAt,
             updatedAt: activityAt,
-            ...(marksFirstReply ? { hasFirstReply: true } : {}),
           });
           transaction.update(receiverMetaRef, {
             lastMessage: lastMessageData,
@@ -191,8 +216,22 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
         return { success: true, channelId };
       } catch (error) {
         console.error("Error sending message:", error);
-        set({ error: "메시지 전송에 실패했습니다." });
-        return { success: false, channelId: null };
+        const errorCode =
+          error instanceof Error &&
+          error.message === JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR
+            ? JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR
+            : undefined;
+        set({
+          error:
+            errorCode === JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR
+              ? "상대방이 나간 채팅방입니다."
+              : "메시지 전송에 실패했습니다.",
+        });
+        return {
+          success: false,
+          channelId: null,
+          ...(errorCode ? { errorCode } : {}),
+        };
       }
     },
 
