@@ -109,16 +109,15 @@ const BottomButtonSection = ({ source }: { source?: string }) => {
             (appliedRole === "디자이너" && !hasDesignerOptionNull) ||
             (appliedRole === "인턴" && !hasInternOptionNull)
           ) {
-            if (source && source === SourceType.WEB) {
-              router.back();
-            }
-
-            if (
-              (source === SourceType.APP || !source) &&
+            const shouldRequestNativeClose =
+              !source || source === SourceType.APP;
+            const didRequestNativeClose =
+              shouldRequestNativeClose &&
               typeof window !== "undefined" &&
-              window.closeWebview
-            ) {
+              typeof window.closeWebview === "function" &&
               window.closeWebview("close");
+            if (!didRequestNativeClose) {
+              router.back();
             }
           }
         }}

@@ -6,7 +6,7 @@ declare global {
       postUserId: string;
     }) => void;
 
-    closeWebview: (message: string) => void;
+    closeWebview: (message: string) => boolean;
 
     externalLink: (message: string) => void;
 

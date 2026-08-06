@@ -9,15 +9,11 @@ type LastMessageLike = {
 };
 
 type JobPostingChatListMetadata = {
-  schemaVersion?: unknown;
-  postType?: unknown;
-  channelType?: unknown;
   lastMessage?: LastMessageLike;
+  pendingStartMessagePreview?: unknown;
   lastActivityAt?: unknown;
-  updatedAt?: unknown;
   createdAt?: unknown;
   unreadCount?: unknown;
-  hasReceivedFirst?: unknown;
 };
 
 export type JobPostingChatListItemContent = {
@@ -33,50 +29,20 @@ export function resolveJobPostingChatListItemContent(
   const storedMessage = toNonEmptyString(metadata.lastMessage?.message);
   const fallbackMessage = hasStoredMessage
     ? null
-    : resolveV2StartMessage(metadata);
+    : toNonEmptyString(metadata.pendingStartMessagePreview);
   const message = storedMessage ?? fallbackMessage ?? "";
   const occurredAt = firstDate(
     metadata.lastMessage?.updatedAt,
     metadata.lastActivityAt,
-    metadata.updatedAt,
     metadata.createdAt,
   );
   const storedUnreadCount = toUnreadCount(metadata.unreadCount);
-  const hasPendingInitialMessage =
-    !hasStoredMessage &&
-    fallbackMessage != null &&
-    metadata.hasReceivedFirst === true;
 
   return {
     message,
     occurredAt,
-    unreadCount:
-      storedUnreadCount > 0 || !hasPendingInitialMessage
-        ? storedUnreadCount
-        : 1,
+    unreadCount: storedUnreadCount,
   };
-}
-
-function resolveV2StartMessage(
-  metadata: JobPostingChatListMetadata,
-): string | null {
-  if (metadata.schemaVersion !== 2) return null;
-
-  if (
-    metadata.postType === "JOB_POSTING" ||
-    metadata.channelType === "jobPostingStore" ||
-    metadata.channelType === "jobPostingApplicant"
-  ) {
-    return "모집공고를 보고 대화를 시작했습니다.";
-  }
-  if (
-    metadata.postType === "RESUME" ||
-    metadata.channelType === "resumeStore" ||
-    metadata.channelType === "resumeApplicant"
-  ) {
-    return "이력서를 보고 대화를 시작했습니다.";
-  }
-  return null;
 }
 
 function firstDate(...values: unknown[]): Date | null {

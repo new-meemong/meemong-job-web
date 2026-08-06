@@ -62,12 +62,25 @@ const JobPostingChatDetailHeader = ({
     setIsNavigatingBack(true);
     try {
       await onBeforeBack?.();
-    } finally {
-      if (source === "app") {
-        window.closeWebview("close");
-      } else {
-        router.back();
+    } catch (error) {
+      console.error("채팅 읽음 처리 실패:", error);
+    }
+
+    if (source === "app" && typeof window.closeWebview === "function") {
+      try {
+        const didRequestNativeClose = window.closeWebview("close");
+        if (didRequestNativeClose) return;
+      } catch (error) {
+        console.error("앱 WebView 닫기 실패:", error);
       }
+    }
+
+    try {
+      router.back();
+    } catch (error) {
+      console.error("채팅 뒤로가기 실패:", error);
+    } finally {
+      setIsNavigatingBack(false);
     }
   };
 

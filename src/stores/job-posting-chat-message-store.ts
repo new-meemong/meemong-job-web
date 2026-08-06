@@ -6,6 +6,7 @@ import {
 import {
   Timestamp,
   collection,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -191,11 +192,13 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
           });
           transaction.update(senderMetaRef, {
             lastMessage: lastMessageData,
+            pendingStartMessagePreview: deleteField(),
             lastActivityAt: activityAt,
             updatedAt: activityAt,
           });
           transaction.update(receiverMetaRef, {
             lastMessage: lastMessageData,
+            pendingStartMessagePreview: deleteField(),
             lastActivityAt: activityAt,
             updatedAt: activityAt,
             unreadCount: increment(1),

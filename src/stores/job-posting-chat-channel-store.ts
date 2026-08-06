@@ -308,15 +308,13 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
         if (currentUnreadCount <= 0) return;
 
-        try {
-          await updateChattingUnreadCount(
-            Number(userId),
-            -currentUnreadCount,
-          );
-        } catch (error) {
+        void updateChattingUnreadCount(
+          Number(userId),
+          -currentUnreadCount,
+        ).catch((error) => {
           // 서버 동기화 실패 시에도 Firestore 읽음 처리는 성공으로 유지한다.
           console.error("서버 unreadCount 동기화 실패:", error);
-        }
+        });
       } catch (error) {
         console.error("구인구직 채팅 읽음 처리 중 오류 발생:", error);
       }
@@ -627,23 +625,35 @@ export const useJobPostingChatChannelStore = create<ChatChannelState>(
 
 // 채널 데이터를 정렬하는 함수
 const sortChannels = (channels: UserJobPostingChatChannelType[]) => {
-  return channels.sort((a, b) => {
-    // 둘 다 고정된 경우 pinnedAt으로 비교
-    if (a.isPinned && b.isPinned) {
-      const aTime = a.pinnedAt instanceof Timestamp ? a.pinnedAt.toMillis() : 0;
-      const bTime = b.pinnedAt instanceof Timestamp ? b.pinnedAt.toMillis() : 0;
-      return bTime - aTime;
-    }
+  return channels
+    .map((channel) => ({
+      channel,
+      occurredAt:
+        resolveJobPostingChatListItemContent(channel).occurredAt?.getTime() ??
+        0,
+    }))
+    .sort((a, b) => {
+      const aChannel = a.channel;
+      const bChannel = b.channel;
+      // 둘 다 고정된 경우 pinnedAt으로 비교
+      if (aChannel.isPinned && bChannel.isPinned) {
+        const aTime =
+          aChannel.pinnedAt instanceof Timestamp
+            ? aChannel.pinnedAt.toMillis()
+            : 0;
+        const bTime =
+          bChannel.pinnedAt instanceof Timestamp
+            ? bChannel.pinnedAt.toMillis()
+            : 0;
+        return bTime - aTime;
+      }
 
-    // 고정된 항목을 위로
-    if (a.isPinned) return -1;
-    if (b.isPinned) return 1;
+      // 고정된 항목을 위로
+      if (aChannel.isPinned) return -1;
+      if (bChannel.isPinned) return 1;
 
-    // 시작 메시지 메타 반영 전에는 lastActivityAt/createdAt으로 정렬한다.
-    const aTime =
-      resolveJobPostingChatListItemContent(a).occurredAt?.getTime() ?? 0;
-    const bTime =
-      resolveJobPostingChatListItemContent(b).occurredAt?.getTime() ?? 0;
-    return bTime - aTime;
-  });
+      // 시작 메시지 메타 반영 전에는 lastActivityAt/createdAt으로 정렬한다.
+      return b.occurredAt - a.occurredAt;
+    })
+    .map(({ channel }) => channel);
 };

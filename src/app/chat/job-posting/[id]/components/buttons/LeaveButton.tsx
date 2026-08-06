@@ -54,13 +54,12 @@ const LeaveButton = () => {
       await leaveChannel(channelId, userId, userName);
 
       const source = searchParams.get("source");
-      if (
+      const didRequestNativeClose =
         source === "app" &&
         typeof window !== "undefined" &&
-        window.closeWebview
-      ) {
+        typeof window.closeWebview === "function" &&
         window.closeWebview("close");
-      } else {
+      if (!didRequestNativeClose) {
         router.back();
       }
     } catch (error) {

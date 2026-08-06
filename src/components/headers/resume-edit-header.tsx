@@ -37,16 +37,14 @@ const ResumeEditHeader = ({ source }: { source?: string }) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    if (source && source === "web") {
-      router.back();
-    }
-
-    if (
+    const shouldRequestNativeClose = source === "app" || !source;
+    const didRequestNativeClose =
+      shouldRequestNativeClose &&
       typeof window !== "undefined" &&
-      window.closeWebview &&
-      (source === "app" || !source)
-    ) {
+      typeof window.closeWebview === "function" &&
       window.closeWebview("close");
+    if (!didRequestNativeClose) {
+      router.back();
     }
   };
 

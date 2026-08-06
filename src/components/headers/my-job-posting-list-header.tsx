@@ -39,16 +39,14 @@ const MyJobPostingListHeader = ({ source }: { source?: string }) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    if (source && source === SourceType.WEB) {
-      router.back();
-    }
-
-    if (
+    const shouldRequestNativeClose = !source || source === SourceType.APP;
+    const didRequestNativeClose =
+      shouldRequestNativeClose &&
       typeof window !== "undefined" &&
-      window.closeWebview &&
-      (!source || source === SourceType.APP)
-    ) {
+      typeof window.closeWebview === "function" &&
       window.closeWebview("close");
+    if (!didRequestNativeClose) {
+      router.back();
     }
   };
 
