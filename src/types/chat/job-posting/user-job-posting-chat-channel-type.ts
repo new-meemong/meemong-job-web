@@ -34,6 +34,8 @@ export interface UserJobPostingChatChannelType {
   deletedAt: Timestamp | FieldValue | null;
   otherUserLeft?: boolean;
   hasFirstReply?: boolean;
+  hasReceivedFirst?: boolean;
+  lastActivityAt?: Timestamp | FieldValue;
 
   otherUser: UserType;
 }

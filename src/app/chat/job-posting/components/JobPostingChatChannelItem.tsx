@@ -14,6 +14,7 @@ import { colors } from "@/styles/colors";
 import { fonts } from "@/styles/fonts";
 import moment from "moment";
 import pxToVw from "@/lib/dpi-converter";
+import { resolveJobPostingChatListItemContent } from "@/stores/chat/job-posting-chat-list-item-content";
 import styled from "styled-components";
 import { useAuthStore } from "@/stores/auth-store";
 import { useJobPostingChatChannelStore } from "@/stores/job-posting-chat-channel-store";
@@ -211,7 +212,10 @@ export default function JobPostingChatChannelItem({
     setIsLeaveModalOpen(true);
   };
 
-  const { lastMessage, otherUser } = userJobPostingChatChannel;
+  const { otherUser } = userJobPostingChatChannel;
+  const listItemContent = resolveJobPostingChatListItemContent(
+    userJobPostingChatChannel,
+  );
   const userImage =
     otherUser?.profileUrl || "/images/resume_profile_default.svg";
 
@@ -235,18 +239,16 @@ export default function JobPostingChatChannelItem({
             <UserName>{otherUser?.DisplayName || "알수없음"}</UserName>
             {userJobPostingChatChannel.isPinned && <PinListIcon />}
           </UserNameWrapper>
-          <Message>{lastMessage.message}</Message>
+          <Message>{listItemContent.message}</Message>
         </CenterContentWrapper>
         <RightContentWrapper>
           <LatestMessageDate>
-            {lastMessage.updatedAt && "toDate" in lastMessage.updatedAt
-              ? moment(lastMessage.updatedAt.toDate()).format("MM-DD HH:mm")
+            {listItemContent.occurredAt
+              ? moment(listItemContent.occurredAt).format("MM-DD HH:mm")
               : ""}
           </LatestMessageDate>
-          {Number(userJobPostingChatChannel.unreadCount) > 0 && (
-            <UnreadCount>
-              {Number(userJobPostingChatChannel.unreadCount)}
-            </UnreadCount>
+          {listItemContent.unreadCount > 0 && (
+            <UnreadCount>{listItemContent.unreadCount}</UnreadCount>
           )}
         </RightContentWrapper>
       </ContentWrapper>

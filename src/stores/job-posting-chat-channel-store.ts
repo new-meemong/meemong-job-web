@@ -33,6 +33,7 @@ import { getUser } from "@/apis/user";
 import { updateChattingUnreadCount } from "@/features/chat/api/use-update-user-unread-count";
 import { useAuthStore } from "./auth-store";
 import { leaveChatChannelAtomically } from "./chat/leave-chat-channel";
+import { resolveJobPostingChatListItemContent } from "./chat/job-posting-chat-list-item-content";
 
 interface ChatChannelState {
   userJobPostingChatChannels: UserJobPostingChatChannelType[];
@@ -638,15 +639,11 @@ const sortChannels = (channels: UserJobPostingChatChannelType[]) => {
     if (a.isPinned) return -1;
     if (b.isPinned) return 1;
 
-    // 나머지는 lastMessage.updatedAt으로 정렬
+    // 시작 메시지 메타 반영 전에는 lastActivityAt/createdAt으로 정렬한다.
     const aTime =
-      a.lastMessage.updatedAt instanceof Timestamp
-        ? a.lastMessage.updatedAt.toMillis()
-        : 0;
+      resolveJobPostingChatListItemContent(a).occurredAt?.getTime() ?? 0;
     const bTime =
-      b.lastMessage.updatedAt instanceof Timestamp
-        ? b.lastMessage.updatedAt.toMillis()
-        : 0;
+      resolveJobPostingChatListItemContent(b).occurredAt?.getTime() ?? 0;
     return bTime - aTime;
   });
 };
