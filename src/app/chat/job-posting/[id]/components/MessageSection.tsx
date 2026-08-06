@@ -158,23 +158,24 @@ const MessageSection = ({
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages, loading } = useJobPostingChatMessageStore(
-    (state) => ({
-      messages: state.messages,
-      loading: state.loading,
-    }),
-  );
+  const { messages, loading } = useJobPostingChatMessageStore((state) => ({
+    messages: state.messages,
+    loading: state.loading,
+  }));
   const { userId } = useAuthStore((state) => ({
     userId: state.userId,
   }));
+  const currentUnreadCount =
+    typeof userChannel.unreadCount === "number" && userChannel.unreadCount > 0
+      ? userChannel.unreadCount
+      : 0;
 
   const {
     markJobPostingChannelMessagesRead,
     otherUserJobPostingChatChannel,
     subscribeToOtherUser,
   } = useJobPostingChatChannelStore((state) => ({
-    markJobPostingChannelMessagesRead:
-      state.markJobPostingChannelMessagesRead,
+    markJobPostingChannelMessagesRead: state.markJobPostingChannelMessagesRead,
     otherUserJobPostingChatChannel: state.otherUserJobPostingChatChannel,
     subscribeToOtherUser: state.subscribeToOtherUser,
   }));
@@ -199,12 +200,13 @@ const MessageSection = ({
   useEffect(() => {
     if (!userChannel?.channelId || !userId || loading) return;
 
-    markJobPostingChannelMessagesRead(userChannel.channelId, userId);
+    void markJobPostingChannelMessagesRead(userChannel.channelId, userId);
   }, [
     userChannel?.channelId,
     userId,
     messages.length,
     loading,
+    currentUnreadCount,
     markJobPostingChannelMessagesRead,
   ]);
 
@@ -213,7 +215,7 @@ const MessageSection = ({
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        markJobPostingChannelMessagesRead(userChannel.channelId, userId);
+        void markJobPostingChannelMessagesRead(userChannel.channelId, userId);
       }
     };
 

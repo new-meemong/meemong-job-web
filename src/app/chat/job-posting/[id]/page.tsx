@@ -118,11 +118,13 @@ export default function JobPostingChatDetailPage({
 
   const {
     userJobPostingChatChannels,
+    markJobPostingChannelMessagesRead,
     markV2JobPostingChannelOpenedOnEntry,
     updateChannelUserInfo,
     subscribeToMine,
   } = useJobPostingChatChannelStore((state) => ({
     userJobPostingChatChannels: state.userJobPostingChatChannels,
+    markJobPostingChannelMessagesRead: state.markJobPostingChannelMessagesRead,
     markV2JobPostingChannelOpenedOnEntry:
       state.markV2JobPostingChannelOpenedOnEntry,
     updateChannelUserInfo: state.updateChannelUserInfo,
@@ -230,9 +232,7 @@ export default function JobPostingChatDetailPage({
         messageType: JobPostingChatMessageTypeEnum.TEXT,
       });
       if (!result.success) {
-        if (
-          result.errorCode === JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR
-        ) {
+        if (result.errorCode === JOB_POSTING_V2_CHANNEL_UNAVAILABLE_ERROR) {
           setSendUnavailable(true);
         }
         return;
@@ -247,6 +247,11 @@ export default function JobPostingChatDetailPage({
     } catch (error) {
       console.error("메시지 전송 실패:", error);
     }
+  };
+
+  const handleBeforeBack = async () => {
+    if (!userId || !params.id) return;
+    await markJobPostingChannelMessagesRead(params.id, userId);
   };
 
   if (!userId && source !== "app") {
@@ -266,6 +271,7 @@ export default function JobPostingChatDetailPage({
       <JobPostingChatDetailHeader
         otherUserDisplayName={userChannel?.otherUser?.DisplayName || ""}
         source={source}
+        onBeforeBack={handleBeforeBack}
       />
 
       <TopButtonSection userChannel={userChannel} userId={userId || null} />
@@ -294,10 +300,7 @@ export default function JobPostingChatDetailPage({
               }
             }}
           />
-          <SendButton
-            disabled={channelUnavailable}
-            onClick={handleSendMessage}
-          >
+          <SendButton disabled={channelUnavailable} onClick={handleSendMessage}>
             전송
           </SendButton>
         </MessageInputRow>

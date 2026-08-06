@@ -41,24 +41,33 @@ const Title = styled.span`
 const JobPostingChatDetailHeader = ({
   otherUserDisplayName,
   source,
+  onBeforeBack,
 }: {
   otherUserDisplayName: string;
   source: string;
+  onBeforeBack?: () => Promise<void>;
 }) => {
   const router = useRouter();
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isNavigatingBack, setIsNavigatingBack] = useState(false);
   const options = [
     { key: "차단하기", value: "차단하기" },
     { key: "신고하기", value: "신고하기" },
   ];
 
-  const handleBackClick = () => {
-    if (source === "app") {
-      window.closeWebview("close");
-    } else {
-      router.back();
+  const handleBackClick = async () => {
+    if (isNavigatingBack) return;
+    setIsNavigatingBack(true);
+    try {
+      await onBeforeBack?.();
+    } finally {
+      if (source === "app") {
+        window.closeWebview("close");
+      } else {
+        router.back();
+      }
     }
   };
 
