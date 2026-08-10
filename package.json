@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test src/stores/chat/*.test.mjs"
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test src/stores/chat/*.test.mjs src/types/chat/*.test.mjs"
   },
   "dependencies": {
     "@types/react-modal": "^3.16.3",
