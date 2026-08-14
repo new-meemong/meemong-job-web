@@ -6,7 +6,13 @@ import {
   runTransaction,
   serverTimestamp,
 } from "firebase/firestore";
-import type { DocumentData, Firestore } from "firebase/firestore";
+import type {
+  DocumentData,
+  DocumentReference,
+  FieldValue,
+  Firestore,
+  Transaction,
+} from "firebase/firestore";
 
 const CHAT_V2_SCHEMA_VERSION = 2;
 const CHAT_V2_START_POINTER_COLLECTION = "chatRoomStartPointers";
@@ -20,6 +26,41 @@ type LeaveChatChannelParams = {
   sourceCollection: string;
   userChannelCollection: string;
   systemMessageType: string;
+};
+
+type ApplyLeaveChatChannelWritesParams = {
+  transaction: Pick<Transaction, "set" | "update">;
+  messageRef: DocumentReference;
+  userChannelRef: DocumentReference;
+  otherUserChannelRef: DocumentReference | null;
+  channelRef: DocumentReference | null;
+  startPointerRef: DocumentReference | null;
+  userId: string;
+  userName: string;
+  systemMessageType: string;
+  timestamp: FieldValue;
+  fieldValueFactory?: LeaveFieldValueFactory;
+};
+
+type ResolveLeaveWriteTargetsParams = {
+  otherUserChannelRef: DocumentReference | null;
+  otherUserChannelExists: boolean;
+  channelRef: DocumentReference;
+  channelExists: boolean;
+  startPointerRef: DocumentReference | null;
+  startPointerExists: boolean;
+  startPointerTargetChannelId: unknown;
+  channelId: string;
+};
+
+type LeaveFieldValueFactory = {
+  arrayRemove: (value: string) => FieldValue;
+  deleteField: () => FieldValue;
+};
+
+const firebaseLeaveFieldValueFactory: LeaveFieldValueFactory = {
+  arrayRemove,
+  deleteField,
 };
 
 function nonEmptyString(value: unknown): string | null {
@@ -78,6 +119,92 @@ export function resolveChatV2StartPointerId(
 
 export function buildLeaveChatSystemMessage(userName: string): string {
   return `${userName}님이\n채팅방을 나갔어요`;
+}
+
+export function resolveLeaveWriteTargets({
+  otherUserChannelRef,
+  otherUserChannelExists,
+  channelRef,
+  channelExists,
+  startPointerRef,
+  startPointerExists,
+  startPointerTargetChannelId,
+  channelId,
+}: ResolveLeaveWriteTargetsParams): Pick<
+  ApplyLeaveChatChannelWritesParams,
+  "otherUserChannelRef" | "channelRef" | "startPointerRef"
+> {
+  return {
+    otherUserChannelRef:
+      otherUserChannelRef !== null && otherUserChannelExists
+        ? otherUserChannelRef
+        : null,
+    channelRef: channelExists ? channelRef : null,
+    startPointerRef:
+      startPointerRef !== null &&
+      startPointerExists &&
+      startPointerTargetChannelId === channelId
+        ? startPointerRef
+        : null,
+  };
+}
+
+/**
+ * 나가기에서 허용된 모든 Firestore write를 동일 transaction에 적용한다.
+ * 필드 계약 정본은 meemong-flutter-app의
+ * lib/data/chat/chat_channel_participant_exit_lifecycle.dart이다.
+ */
+export function applyLeaveChatChannelWrites({
+  transaction,
+  messageRef,
+  userChannelRef,
+  otherUserChannelRef,
+  channelRef,
+  startPointerRef,
+  userId,
+  userName,
+  systemMessageType,
+  timestamp,
+  fieldValueFactory = firebaseLeaveFieldValueFactory,
+}: ApplyLeaveChatChannelWritesParams): void {
+  transaction.set(messageRef, {
+    id: messageRef.id,
+    message: buildLeaveChatSystemMessage(userName),
+    messageType: systemMessageType,
+    metaPathList: [],
+    senderId: "system",
+    createdAt: timestamp,
+    updatedAt: timestamp,
+  });
+  transaction.update(userChannelRef, {
+    deletedAt: timestamp,
+    deleteReason: USER_DELETED_REASON,
+    unreadCount: 0,
+    updatedAt: timestamp,
+  });
+  if (otherUserChannelRef !== null) {
+    // 사용자 나가기는 계정 비활성화와 별개이므로 이전 비활성 표시를 남기지 않는다.
+    transaction.update(otherUserChannelRef, {
+      otherUserLeft: true,
+      otherUserDeactivated: false,
+      updatedAt: timestamp,
+    });
+  }
+  if (channelRef !== null) {
+    // participantIds는 불변 identity이고 participantsIds만 활성 참여자 mirror이다.
+    transaction.update(channelRef, {
+      participantsIds: fieldValueFactory.arrayRemove(userId),
+      updatedAt: timestamp,
+    });
+  }
+  if (startPointerRef !== null) {
+    // 방 순번은 보존해 다음 생성이 기존 roomInstanceId와 충돌하지 않게 한다.
+    transaction.update(startPointerRef, {
+      targetChannelId: fieldValueFactory.deleteField(),
+      targetSourceCollection: fieldValueFactory.deleteField(),
+      updatedAt: timestamp,
+    });
+  }
 }
 
 export async function leaveChatChannelAtomically({
@@ -141,47 +268,29 @@ export async function leaveChatChannelAtomically({
         ? userChannelData.unreadCount
         : 0;
     const timestamp = serverTimestamp();
+    const writeTargets = resolveLeaveWriteTargets({
+      otherUserChannelRef,
+      otherUserChannelExists: otherUserChannelSnapshot?.exists() === true,
+      channelRef,
+      channelExists: channelSnapshot.exists(),
+      startPointerRef,
+      startPointerExists: startPointerSnapshot?.exists() === true,
+      startPointerTargetChannelId: startPointerSnapshot?.exists()
+        ? startPointerSnapshot.data().targetChannelId
+        : null,
+      channelId,
+    });
 
-    transaction.set(messageRef, {
-      id: messageRef.id,
-      message: buildLeaveChatSystemMessage(userName),
-      messageType: systemMessageType,
-      metaPathList: [],
-      senderId: "system",
-      createdAt: timestamp,
-      updatedAt: timestamp,
+    applyLeaveChatChannelWrites({
+      transaction,
+      messageRef,
+      userChannelRef,
+      ...writeTargets,
+      userId,
+      userName,
+      systemMessageType,
+      timestamp,
     });
-    transaction.update(userChannelRef, {
-      deletedAt: timestamp,
-      deleteReason: USER_DELETED_REASON,
-      unreadCount: 0,
-      updatedAt: timestamp,
-    });
-    if (otherUserChannelRef !== null && otherUserChannelSnapshot?.exists()) {
-      transaction.update(otherUserChannelRef, {
-        otherUserLeft: true,
-        otherUserDeactivated: false,
-        updatedAt: timestamp,
-      });
-    }
-    if (channelSnapshot.exists()) {
-      transaction.update(channelRef, {
-        participantsIds: arrayRemove(userId),
-        updatedAt: timestamp,
-      });
-    }
-    if (
-      startPointerRef !== null &&
-      startPointerSnapshot?.exists() &&
-      startPointerSnapshot.data().targetChannelId === channelId
-    ) {
-      // 방 순번은 보존해 다음 생성이 기존 roomInstanceId와 충돌하지 않게 한다.
-      transaction.update(startPointerRef, {
-        targetChannelId: deleteField(),
-        targetSourceCollection: deleteField(),
-        updatedAt: timestamp,
-      });
-    }
 
     return currentUnreadCount;
   });
