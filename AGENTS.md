@@ -50,6 +50,10 @@ The repository currently has no automated test script. Add focused tests when in
 - Preserve unread-count, pin, block, and last-read behavior when refactoring chat stores.
 - Follow the established local style in touched legacy code; avoid broad modernization unrelated to the requested change.
 
+## Meemong Figma implementation
+
+For Figma implementation, follow [Meemong Figma workflow](../../meemong-flutter-app/docs/meemong-figma-workflow.md), owned by the Meemong Flutter repository for the app and its hair-consultation, jobs/resumes, and shampoo-area webviews. Build or align reusable code components corresponding to Figma components before composing pages; do not duplicate those components per page. Follow this repository's component/layer conventions. If the relative link is unavailable in a different checkout layout, locate `meemong-flutter-app/docs/meemong-figma-workflow.md` in the available workspace before implementing; do not maintain a separate policy copy here.
+
 ## Verification
 
 - Run `npm run lint` for all code changes.
