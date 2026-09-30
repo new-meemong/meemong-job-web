@@ -59,6 +59,7 @@ test("ChatOriginEntrySource matches the shared Flutter 33-value contract", () =>
 
 test("ChatOriginPricingType matches the shared Flutter wire contract", () => {
   assert.deepEqual(enumWireValues("ChatOriginPricingType"), [
+    "default_model",
     "pay",
     "new",
     "recent_male",
