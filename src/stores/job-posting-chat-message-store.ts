@@ -1,4 +1,8 @@
 import {
+  chatMessageRecording,
+  recordAcceptedChatMessage,
+} from "@/lib/chat-message-recording";
+import {
   JobPostingChatMessageType,
   JobPostingChatMessageTypeEnum,
   MetaPathType,
@@ -66,6 +70,7 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
     lastMessage: null,
 
     subscribeToMessages: (channelId: string) => {
+      void chatMessageRecording.flush();
       set({ loading: true });
 
       const q = query(
@@ -206,6 +211,16 @@ export const useJobPostingChatMessageStore = create<JobPostingChatMessageState>(
           });
         });
 
+        recordAcceptedChatMessage(
+          {
+            sourceCollection: ChatChannelTypeEnum.JOB_POSTING_CHAT_CHANNELS,
+            channelId,
+            messageId: messageRef.id,
+            senderId,
+            receiverUserId: Number(receiverId),
+          },
+          messageType,
+        );
         void updateDesignerLastChatReceivedAtAfterSend(receiverId);
 
         // 서버 unreadCount 동기화: 상대방의 unreadCount 1 증가
